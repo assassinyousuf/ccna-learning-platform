@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
-import { getAllModules } from "@/lib/curriculum";
+import { curriculum, getAllModules } from "@/lib/curriculum";
 import {
   LayoutDashboard,
   CheckCircle2,
@@ -17,12 +17,18 @@ import {
   ArrowRight,
   ExternalLink,
   Clock,
-  Sparkles
+  Sparkles,
+  BookOpen,
+  Terminal,
+  Layers,
+  ChevronRight,
+  ChevronDown
 } from "lucide-react";
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
-  const modules = getAllModules();
+  const allModules = getAllModules();
+  const [selectedVolume, setSelectedVolume] = useState<1 | 2>(1);
   const [progress, setProgress] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
 
@@ -44,10 +50,13 @@ export default function DashboardPage() {
     loadProgress();
   }, [session]);
 
-  const completedCount = modules.filter(
+  const currentVolumeData = curriculum.volumes.find((v) => v.volumeNumber === selectedVolume);
+  const volumeModules = allModules.filter((m) => m.volume === selectedVolume);
+
+  const completedCount = allModules.filter(
     (m) => progress[m.id] === "COMPLETED" || progress[`${m.id}_video`] === "SUBMITTED"
   ).length;
-  const progressPercent = Math.round((completedCount / modules.length) * 100);
+  const progressPercent = Math.round((completedCount / allModules.length) * 100);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -71,11 +80,11 @@ export default function DashboardPage() {
                   Welcome back, {session?.user?.name || "Cadet Engineer"}
                 </h1>
                 <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  Enrolled
+                  CCNA 200-301 Track
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1 font-mono">
-                {session?.user?.email || "student@ccna.academy"} • Cisco CCNA 200-301 Track
+                {session?.user?.email || "student@ccna.academy"} • Following Jeremy McDowell&apos;s Learning Protocol
               </p>
             </div>
           </div>
@@ -86,7 +95,7 @@ export default function DashboardPage() {
               <span className="text-[11px] font-mono text-slate-400 uppercase">Curriculum Progress</span>
               <div className="flex items-baseline gap-2 mt-0.5">
                 <span className="text-2xl font-black text-cyan-400 font-mono">{progressPercent}%</span>
-                <span className="text-xs text-slate-500 font-mono">({completedCount}/{modules.length} Modules)</span>
+                <span className="text-xs text-slate-500 font-mono">({completedCount}/{allModules.length} Chapters)</span>
               </div>
             </div>
             <div className="w-12 h-12 rounded-full border-4 border-slate-800 border-t-cyan-400 flex items-center justify-center">
@@ -99,142 +108,180 @@ export default function DashboardPage() {
         <div className="mt-6 pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-4 text-xs font-mono text-slate-400">
           <span className="flex items-center gap-1.5 text-emerald-400">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            Google OAuth Session Active
+            Active Learning Session
           </span>
           <span className="text-slate-600">•</span>
           <span className="flex items-center gap-1.5 text-blue-400">
             <HardDrive className="w-3.5 h-3.5" />
-            5TB Google Drive Storage Ready
+            5TB Google Drive Ready
           </span>
           <span className="text-slate-600">•</span>
           <span className="flex items-center gap-1.5 text-emerald-400">
             <FileSpreadsheet className="w-3.5 h-3.5" />
             Google Sheets Gradebook Synced
           </span>
+          <span className="text-slate-600">•</span>
+          <span className="flex items-center gap-1.5 text-purple-400">
+            <Terminal className="w-3.5 h-3.5" />
+            367 CLI Commands (App B)
+          </span>
         </div>
       </div>
 
-      {/* Modules Progress Grid */}
-      <div className="mb-10">
-        <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-          <BookOpenIcon className="w-5 h-5 text-cyan-400" />
-          <span>Module Learning &amp; Assessment Road</span>
-        </h2>
+      {/* Volume Selector Tabs */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-cyan-400" />
+            <span>Textbook Chapters &amp; Milestone Track</span>
+          </h2>
+          <p className="text-xs text-slate-400 mt-1">
+            Complete the 5 active learning pillars for each chapter to unlock full CCNA certification readiness.
+          </p>
+        </div>
 
-        <div className="space-y-4">
-          {modules.map((m, idx) => {
-            const isCompleted = progress[m.id] === "COMPLETED";
-            const isQuizPassed = progress[`${m.id}_quiz`] === "PASSED";
-            const isVideoSubmitted = progress[`${m.id}_video`] === "SUBMITTED";
-            const isUnlocked = idx === 0 || progress[modules[idx - 1].id] === "COMPLETED" || isCompleted;
+        <div className="flex items-center p-1.5 rounded-2xl bg-slate-900 border border-slate-800 shrink-0">
+          <button
+            onClick={() => setSelectedVolume(1)}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              selectedVolume === 1
+                ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            Volume 1: Fundamentals (24 Ch)
+          </button>
+          <button
+            onClick={() => setSelectedVolume(2)}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              selectedVolume === 2
+                ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            Volume 2: Advanced & Security (25 Ch)
+          </button>
+        </div>
+      </div>
+
+      {/* Parts & Chapters List */}
+      {currentVolumeData && (
+        <div className="space-y-10">
+          {currentVolumeData.parts.map((part) => {
+            const partChapters = volumeModules.filter((m) => m.partNumber === part.partNumber);
+            if (partChapters.length === 0) return null;
 
             return (
-              <div
-                key={m.id}
-                className={`p-6 rounded-2xl border transition-all ${
-                  isCompleted
-                    ? "bg-slate-900/40 border-emerald-500/30"
-                    : isUnlocked
-                    ? "bg-slate-900/80 border-slate-800 hover:border-cyan-500/40"
-                    : "bg-slate-950/40 border-slate-900 opacity-60"
-                }`}
-              >
-                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-                  {/* Module Details */}
-                  <div className="flex items-start gap-4">
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center font-mono font-bold text-lg shrink-0 ${
-                        isCompleted
-                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                          : isUnlocked
-                          ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
-                          : "bg-slate-800 text-slate-500"
-                      }`}
-                    >
-                      {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : `0${m.number}`}
+              <div key={part.partNumber} className="space-y-4">
+                {/* Part Header */}
+                <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
+                      <span>Volume {selectedVolume}</span>
+                      <span>•</span>
+                      <span>Part 0{part.partNumber}</span>
                     </div>
+                    <h3 className="text-lg font-bold text-white">{part.partTitle}</h3>
+                    <p className="text-xs text-slate-400 mt-0.5">{part.description}</p>
+                  </div>
+                  <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 shrink-0">
+                    {partChapters.length} Chapters
+                  </span>
+                </div>
 
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider">
-                          Module {m.number} • Vol {m.volume}
-                        </span>
-                        {isCompleted && (
-                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
-                            PASSED &amp; VERIFIED
-                          </span>
-                        )}
+                {/* Chapter Cards within Part */}
+                <div className="space-y-3">
+                  {partChapters.map((m) => {
+                    const isCompleted = progress[m.id] === "COMPLETED";
+                    const isQuizPassed = progress[`${m.id}_quiz`] === "PASSED";
+                    const isVideoSubmitted = progress[`${m.id}_video`] === "SUBMITTED";
+
+                    return (
+                      <div
+                        key={m.id}
+                        className={`p-5 rounded-2xl border transition-all ${
+                          isCompleted
+                            ? "bg-slate-900/40 border-emerald-500/30"
+                            : "bg-slate-900/70 border-slate-800/80 hover:border-cyan-500/40"
+                        }`}
+                      >
+                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                          {/* Chapter Title & Meta */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <span className="text-xs font-mono text-cyan-400 font-semibold">
+                                Chapter {m.chapterNumber}
+                              </span>
+                              <span className="text-slate-600">•</span>
+                              <span className="text-xs font-mono text-slate-500">
+                                {m.readTime}
+                              </span>
+                              {m.ciscoCommands.length > 0 && (
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">
+                                  {m.ciscoCommands.length} CLI cmds
+                                </span>
+                              )}
+                              {m.quiz.length > 0 && (
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-emerald-300">
+                                  {m.quiz.length} Quiz Qs
+                                </span>
+                              )}
+                            </div>
+                            <h4 className="text-base font-bold text-white truncate">
+                              {m.rawTitle}
+                            </h4>
+                            <p className="text-xs text-slate-400 mt-1 line-clamp-1">
+                              {m.description}
+                            </p>
+                          </div>
+
+                          {/* 5-Pillar Milestones Status Badges */}
+                          <div className="flex items-center gap-2 shrink-0">
+                            {/* Quiz status */}
+                            <Link
+                              href={`/modules/${m.id}/quiz`}
+                              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-colors ${
+                                isQuizPassed
+                                  ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
+                                  : "bg-slate-800/80 text-slate-400 hover:text-emerald-300 hover:bg-slate-800"
+                              }`}
+                            >
+                              <HelpCircle className="w-3.5 h-3.5" />
+                              <span>{isQuizPassed ? "Quiz Passed (App C)" : "Quiz (App C)"}</span>
+                            </Link>
+
+                            {/* Video submission status */}
+                            <Link
+                              href={`/modules/${m.id}/submit-video`}
+                              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-colors ${
+                                isVideoSubmitted
+                                  ? "bg-purple-500/10 text-purple-400 border border-purple-500/30"
+                                  : "bg-slate-800/80 text-slate-400 hover:text-purple-300 hover:bg-slate-800"
+                              }`}
+                            >
+                              <Video className="w-3.5 h-3.5" />
+                              <span>{isVideoSubmitted ? "Video on Drive" : "Submit Lab"}</span>
+                            </Link>
+
+                            {/* Study Reader Link */}
+                            <Link
+                              href={`/modules/${m.id}`}
+                              className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition-colors"
+                            >
+                              <span>Study Chapter</span>
+                              <ChevronRight className="w-3.5 h-3.5" />
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                      <h3 className="text-lg font-bold text-white mt-0.5">{m.title}</h3>
-                      <p className="text-xs text-slate-400 max-w-xl mt-1 leading-relaxed">{m.description}</p>
-                    </div>
-                  </div>
-
-                  {/* Verification Pipeline Badges */}
-                  <div className="flex flex-wrap items-center gap-3">
-                    {/* Step 1: Study */}
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300">
-                      <PlayCircle className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>{m.lessons.length} Lessons</span>
-                    </div>
-
-                    {/* Step 2: Quiz */}
-                    <div
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono ${
-                        isQuizPassed
-                          ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-                          : "bg-slate-950 border-slate-800 text-slate-400"
-                      }`}
-                    >
-                      <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>Quiz: {isQuizPassed ? "Passed" : "Pending"}</span>
-                    </div>
-
-                    {/* Step 3: Video Demo */}
-                    <div
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono ${
-                        isVideoSubmitted
-                          ? "bg-purple-500/10 border-purple-500/20 text-purple-400"
-                          : "bg-slate-950 border-slate-800 text-slate-400"
-                      }`}
-                    >
-                      <Video className="w-3.5 h-3.5 text-purple-400" />
-                      <span>Video: {isVideoSubmitted ? "Stored in Drive" : "Pending"}</span>
-                    </div>
-
-                    {/* Action Link */}
-                    {isUnlocked ? (
-                      <Link
-                        href={`/modules/${m.id}`}
-                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-500 text-slate-950 hover:bg-cyan-400 transition-colors ml-2"
-                      >
-                        <span>{isCompleted ? "Review" : "Study & Test"}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
-                    ) : (
-                      <button
-                        disabled
-                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono bg-slate-800 text-slate-500 cursor-not-allowed ml-2"
-                      >
-                        <Lock className="w-3.5 h-3.5" />
-                        <span>Locked</span>
-                      </button>
-                    )}
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             );
           })}
         </div>
-      </div>
+      )}
     </div>
-  );
-}
-
-function BookOpenIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-    </svg>
   );
 }

@@ -1,6 +1,7 @@
 import curriculumData from "@/data/curriculum.json";
 
 export interface CiscoCommand {
+  mode?: string;
   cmd: string;
   desc: string;
 }
@@ -10,51 +11,80 @@ export interface Diagram {
   caption: string;
 }
 
-export interface Lesson {
-  id: string;
-  number: number;
-  title: string;
-  readTime: string;
-  summary: string;
-  keyPoints: string[];
-  ciscoCommands: CiscoCommand[];
-  diagrams: Diagram[];
-  content: string;
-}
-
 export interface QuizQuestion {
   id: string;
+  number: number;
   question: string;
   options: string[];
   correctAnswer: number;
+  answerLetter?: string;
+  officialAnswer?: string;
   explanation: string;
 }
 
-export interface LabAssignment {
-  title: string;
-  duration: string;
-  deliverable: string;
-  rubric: string[];
+export interface LabMission {
+  scenario: string;
+  objectives: string[];
+  verificationCommands: string[];
+  videoSubmissionPrompt: string;
+}
+
+export interface LearningMethodStep {
+  step: number;
+  name: string;
+  desc: string;
 }
 
 export interface Module {
   id: string;
-  number: number;
-  title: string;
   volume: number;
+  volumeTitle: string;
+  partNumber: number;
+  partTitle: string;
+  chapterNumber: number;
+  title: string;
+  rawTitle: string;
   description: string;
-  estimatedHours: number;
-  badge: string;
-  color: string;
-  lessons: Lesson[];
+  readTime: string;
+  learningMethodSteps: LearningMethodStep[];
+  keyPoints: string[];
+  diagrams: Diagram[];
+  ciscoCommands: CiscoCommand[];
   quiz: QuizQuestion[];
-  labAssignment: LabAssignment;
+  labMission: LabMission;
+  content: string;
+}
+
+export interface Part {
+  partNumber: number;
+  partTitle: string;
+  description: string;
+  chapters: number[];
+}
+
+export interface Volume {
+  volumeNumber: number;
+  title: string;
+  parts: Part[];
+}
+
+export interface PedagogicalPillar {
+  pillar: number;
+  title: string;
+  description: string;
+}
+
+export interface PedagogicalMethod {
+  name: string;
+  summary: string;
+  pillars: PedagogicalPillar[];
 }
 
 export interface Curriculum {
   title: string;
-  subtitle: string;
   author: string;
+  pedagogicalMethod: PedagogicalMethod;
+  volumes: Volume[];
   totalModules: number;
   modules: Module[];
 }
@@ -65,12 +95,30 @@ export function getAllModules(): Module[] {
   return curriculum.modules;
 }
 
+export function getModulesByVolume(vol: number): Module[] {
+  return curriculum.modules.filter((m) => m.volume === vol);
+}
+
+export function getModulesByPart(vol: number, partNum: number): Module[] {
+  return curriculum.modules.filter((m) => m.volume === vol && m.partNumber === partNum);
+}
+
 export function getModuleById(id: string): Module | undefined {
   return curriculum.modules.find((m) => m.id === id);
 }
 
-export function getLessonById(moduleId: string, lessonId: string): Lesson | undefined {
-  const mod = getModuleById(moduleId);
-  if (!mod) return undefined;
-  return mod.lessons.find((l) => l.id === lessonId);
+export function getNextModule(currentId: string): Module | undefined {
+  const index = curriculum.modules.findIndex((m) => m.id === currentId);
+  if (index >= 0 && index < curriculum.modules.length - 1) {
+    return curriculum.modules[index + 1];
+  }
+  return undefined;
+}
+
+export function getPreviousModule(currentId: string): Module | undefined {
+  const index = curriculum.modules.findIndex((m) => m.id === currentId);
+  if (index > 0) {
+    return curriculum.modules[index - 1];
+  }
+  return undefined;
 }
