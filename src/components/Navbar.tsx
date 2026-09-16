@@ -109,13 +109,22 @@ export function Navbar() {
                 </button>
               </div>
             ) : (
-              <button
-                onClick={() => signIn("google", { callbackUrl: "/dashboard" }).catch(() => signIn("demo-student"))}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 hover:opacity-90 transition-opacity glow-cyan"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Sign In with Google</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => signIn("demo-student", { callbackUrl: "/dashboard" })}
+                  className="px-3 py-1.5 rounded-xl text-xs font-medium border border-slate-700 bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                  title="Instant access without Google OAuth setup"
+                >
+                  Demo Student
+                </button>
+                <button
+                  onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 hover:opacity-90 transition-opacity glow-cyan"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  <span>Sign In with Google</span>
+                </button>
+              </div>
             )}
           </div>
 
@@ -162,12 +171,26 @@ export function Navbar() {
                 </button>
               </div>
             ) : (
-              <button
-                onClick={() => signIn()}
-                className="w-full py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950"
-              >
-                Sign In with Google
-              </button>
+              <div className="space-y-2 w-full">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    signIn("demo-student", { callbackUrl: "/dashboard" });
+                  }}
+                  className="w-full py-2 rounded-xl text-xs font-medium border border-slate-700 bg-slate-900 text-slate-200"
+                >
+                  Instant Student Access
+                </button>
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    signIn("google", { callbackUrl: "/dashboard" });
+                  }}
+                  className="w-full py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950"
+                >
+                  Sign In with Google
+                </button>
+              </div>
             )}
           </div>
         </div>
