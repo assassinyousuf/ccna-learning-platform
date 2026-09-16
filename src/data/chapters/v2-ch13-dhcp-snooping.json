@@ -1,0 +1,306 @@
+{
+  "id": "v2-ch13-dhcp-snooping",
+  "volume": 2,
+  "volumeTitle": "Volume 2: Advanced Networking and Security",
+  "partNumber": 2,
+  "partTitle": "Security fundamentals",
+  "chapterNumber": 13,
+  "title": "Chapter 13: DHCP Snooping",
+  "rawTitle": "DHCP Snooping",
+  "description": "Defend against rogue DHCP servers and DHCP starvation attacks: trusted vs untrusted ports, DHCP Snooping binding table, and Option 82 insertion.",
+  "readTime": "32 min",
+  "keyPoints": [
+    "DHCP-based attacks such as DHCP poisoning"
+  ],
+  "tableOfContents": [
+    {
+      "title": "13 DHCP Snooping",
+      "anchor": "13-dhcp-snooping",
+      "level": 2
+    },
+    {
+      "title": "13.1 DHCP-based attacks",
+      "anchor": "13-1-dhcp-based-attacks",
+      "level": 2
+    },
+    {
+      "title": "13.2 DHCP Snooping",
+      "anchor": "13-2-dhcp-snooping",
+      "level": 2
+    },
+    {
+      "title": "13.2.1 How DHCP Snooping filters DHCP messages",
+      "anchor": "13-2-1-how-dhcp-snooping-filters-dhcp-messages",
+      "level": 2
+    },
+    {
+      "title": "DHCP MESSAGE TYPES",
+      "anchor": "dhcp-message-types",
+      "level": 2
+    },
+    {
+      "title": "DHCP SNOOPING TRUSTED AND UNTRUSTED PORTS",
+      "anchor": "dhcp-snooping-trusted-and-untrusted-ports",
+      "level": 2
+    },
+    {
+      "title": "❶ Configures G0/1 as a trusted port",
+      "anchor": "configures-g0-1-as-a-trusted-port",
+      "level": 2
+    },
+    {
+      "title": "INSPECTING CLIENT MESSAGES",
+      "anchor": "inspecting-client-messages",
+      "level": 2
+    },
+    {
+      "title": "The purpose of the chaddr field",
+      "anchor": "the-purpose-of-the-chaddr-field",
+      "level": 2
+    },
+    {
+      "title": "THE DHCP SNOOPING BINDING TABLE",
+      "anchor": "the-dhcp-snooping-binding-table",
+      "level": 2
+    },
+    {
+      "title": "13.2.2 DHCP option 82",
+      "anchor": "13-2-2-dhcp-option-82",
+      "level": 2
+    },
+    {
+      "title": "❶ Disables option 82 insertion",
+      "anchor": "disables-option-82-insertion",
+      "level": 2
+    },
+    {
+      "title": "DHCP options",
+      "anchor": "dhcp-options",
+      "level": 2
+    },
+    {
+      "title": "13.2.3 Rate-limiting DHCP messages",
+      "anchor": "13-2-3-rate-limiting-dhcp-messages",
+      "level": 2
+    },
+    {
+      "title": "Summary",
+      "anchor": "summary",
+      "level": 2
+    }
+  ],
+  "diagrams": [
+    {
+      "src": "/extracted/vol2/images/page_199_image_body_10.jpg",
+      "caption": "Figure: DHCP Snooping"
+    },
+    {
+      "src": "/extracted/vol2/images/page_200_image_body_4.jpg",
+      "caption": "Figure: DHCP Snooping"
+    },
+    {
+      "src": "/extracted/vol2/images/page_201_image_body_12.jpg",
+      "caption": "Figure: DHCP Snooping"
+    },
+    {
+      "src": "/extracted/vol2/images/page_202_image_body_7.jpg",
+      "caption": "Figure: DHCP Snooping"
+    },
+    {
+      "src": "/extracted/vol2/images/page_204_image_body_1.jpg",
+      "caption": "Figure: DHCP Snooping"
+    },
+    {
+      "src": "/extracted/vol2/images/page_205_image_body_6.jpg",
+      "caption": "Figure: DHCP Snooping"
+    },
+    {
+      "src": "/extracted/vol2/images/page_207_image_body_8.jpg",
+      "caption": "Figure: DHCP Snooping"
+    }
+  ],
+  "ciscoCommands": [
+    {
+      "mode": "(config)#",
+      "cmd": "ip dhcp snooping",
+      "desc": "Enable DHCP Snooping."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ip dhcp snooping vlan vlans",
+      "desc": "Activate DHCP Snoopingon VLANs."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "no ip dhcp snooping informationoption",
+      "desc": "Disable option 82insertion."
+    },
+    {
+      "mode": "(config-if)#",
+      "cmd": "ip dhcp snooping trust",
+      "desc": "Configure the port as aDHCP Snooping trustedport."
+    },
+    {
+      "mode": "(config-if)#",
+      "cmd": "ip dhcp snooping limit ratepps",
+      "desc": "Rate-limit DHCP messageson the port."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "errdisable recovery cause dhcp-rate-limit",
+      "desc": "Enable ErrDisableRecovery for ports disabledby DHCP Snooping ratelimiting."
+    },
+    {
+      "mode": "#",
+      "cmd": "show ip dhcp snooping",
+      "desc": "View DHCP Snoopingstatus and settings."
+    },
+    {
+      "mode": "#",
+      "cmd": "show ip dhcp snooping binding",
+      "desc": "View the DHCP Snoopingbinding table."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q13-1",
+      "number": 1,
+      "question": "Which DHCP messages are always discarded when received on a DHCP Snooping untrusted port?",
+      "options": [
+        "A. ACK, REQUEST",
+        "B. DISCOVER, OFFER",
+        "C. ACK, OFFER",
+        "D. REQUEST, DISCOVER"
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: ACK, OFFER",
+      "explanation": "DHCP Snooping always discards DHCP server messages received on untrusted ports. In the DHCP DORA (DISCOVER, OFFER, REQUEST, ACK) exchange, the OFFER and ACK messages are sent by the server, and will always be discarded if received on a DHCP Snooping untrusted port."
+    },
+    {
+      "id": "q13-2",
+      "number": 2,
+      "question": "Which table is used by DHCP Snooping to inspect client DHCP RELEASE and DECLINE messages?",
+      "options": [
+        "A. The DAI table",
+        "B. The DHCP binding table",
+        "C. The DHCP Snooping binding table",
+        "D. The ARP table"
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: The DHCP Snooping binding table",
+      "explanation": "The DHCP Snooping binding table holds information about successful DHCP leases that were observed by the DHCP Snooping-enabled switch. This table is then used to inspect and validate DHCP RELEASE and DECLINE messages received on untrusted ports."
+    },
+    {
+      "id": "q13-3",
+      "number": 3,
+      "question": "Which command disables option 82 insertion on untrusted ports?",
+      "options": [
+        "A. no ip dhcp snooping option 82",
+        "B. no ip dhcp snooping information option",
+        "C. no ip dhcp snooping insert 82",
+        "D. no ip dhcp snooping information insert"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: no ip dhcp snooping information option",
+      "explanation": "The no ip dhcp snooping information option command disables the insertion of DHCP option 82 into messages received on untrusted ports. This is often necessary when configuring DHCP Snooping to allow clients to successfully lease addresses."
+    },
+    {
+      "id": "q13-4",
+      "number": 4,
+      "question": "Which of the following statements is true?",
+      "options": [
+        "A. DHCP Snooping doesn’t work when a relay agent is used.",
+        "B. DHCP Snooping inspects messages received on trusted ports.",
+        "C. DHCP Snooping is enabled by default if DHCP is used.",
+        "D. DHCP Snooping must be enabled globally and per-VLAN."
+      ],
+      "correctAnswer": 3,
+      "answerLetter": "D",
+      "officialAnswer": "D: DHCP Snooping must be enabled globally and per-VLAN.",
+      "explanation": "Enabling DHCP Snooping requires two commands: ip dhcp snooping to enable it globally, and then ip dhcp snooping vlan vlans to enable it on each VLAN. Without both commands, DHCP Snooping won’t function on the switch."
+    },
+    {
+      "id": "q13-5",
+      "number": 5,
+      "question": "How does DHCP Snooping treat a DHCP message received on a trusted port?",
+      "options": [
+        "A. It allows the message.",
+        "B. It allows the message if it is a DHCP server message.",
+        "C. It allows the message if it is a DHCP client message.",
+        "D. It inspects the message to decide which action to take."
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: It allows the message.",
+      "explanation": "DHCP Snooping allows all DHCP messages received on trusted ports; it only inspects messages received on untrusted ports."
+    },
+    {
+      "id": "q13-6",
+      "number": 6,
+      "question": "Which of the following messages are sent by DHCP clients? (select four)",
+      "options": [
+        "A. NAK",
+        "B. REQUEST",
+        "C. ACK",
+        "D. OFFER",
+        "E. RELEASE",
+        "F. DISCOVER H. DECLINE"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: REQUEST",
+      "explanation": "E: RELEASE F: DISCOVER G: DECLINE In addition to the DISCOVER and REQUEST messages sent in the DORA exchange, DHCP clients can also send RELEASE and DECLINE messages. OFFER, ACK, and NAK are server messages."
+    },
+    {
+      "id": "q13-7",
+      "number": 7,
+      "question": "What does DHCP Snooping provide in addition to DHCP message inspection?",
+      "options": [
+        "A. Automated DHCP pool configuration",
+        "B. Rate-limiting of DHCP messages",
+        "C. Inspection of standard data frames",
+        "D. Client credential authentication"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "## B: Rate-limiting of DHCP messages DHCP Snooping provides rate-limiting of DHCP messages to prevent DHCP starvation attacks. It can be enabled on a per-port basis with ip dhcp snooping limit rate pps ."
+    },
+    {
+      "id": "q13-8",
+      "number": 8,
+      "question": "Which two fields does DHCP Snooping inspect in client DISCOVER and REQUEST messages?",
+      "options": [
+        "A. Source MAC and chaddr",
+        "B. Source MAC and source IP",
+        "C. Source MAC and destination MAC",
+        "D. Destination MAC and destination IP"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "## A: Source MAC and chaddr DISCOVER and REQUEST messages are sent before the client has successfully leased an IP address, so the client doesn’t have an entry in the DHCP Snooping binding table yet. To inspect and validate these messages, the switch ensures that the Ethernet source MAC address and the “chaddr” (client hardware address) field of the DHCP message match."
+    }
+  ],
+  "labMission": {
+    "scenario": "Deploy, configure, and verify DHCP Snooping inside Cisco Packet Tracer according to Jeremy McDowell's lab specifications.",
+    "objectives": [
+      "Download and open Cisco Packet Tracer (free at http://mng.bz/2Kra).",
+      "Construct the topology for Chapter 13: DHCP Snooping.",
+      "Implement core CLI commands: ip dhcp snooping, ip dhcp snooping vlan vlans, no ip dhcp snooping informationoption.",
+      "Verify operational state and capture verification output."
+    ],
+    "verificationCommands": [
+      "ip dhcp snooping",
+      "ip dhcp snooping vlan vlans",
+      "no ip dhcp snooping informationoption",
+      "ip dhcp snooping trust",
+      "ip dhcp snooping limit ratepps"
+    ],
+    "videoSubmissionPrompt": "Record a 2 to 5-minute screen and microphone walkthrough of your Packet Tracer lab for Chapter 13: DHCP Snooping. Explain the core concepts in your own words, show your CLI configurations, and run verification commands to demonstrate mastery."
+  },
+  "fullText": "## 13 DHCP Snooping\n\n## This chapter covers\n\nDHCP-based attacks such as DHCP poisoning\n\nHow DHCP Snooping protects against DHCP-based attacks\n\nConfiguring DHCP Snooping on Cisco IOS switches\n\nDHCP is almost ubiquitous in modern networks, allowing for the automatic configuration of IP addresses, netmasks, default gateways, DNS servers, and other configuration information on hosts; we covered DHCP in chapter 4. However, DHCP contains vulnerabilities that can be exploited if sufficient care is not taken. We looked at one example in chapter 11: DHCP exhaustion, which is a type of DoS attack that prevents legitimate user devices from leasing IP addresses from a DHCP server.\n\nIn this chapter, we’ll cover DHCP Snooping, a security feature on Cisco switches that protects against DHCP-based attacks by inspecting DHCP messages as they are received by the switch. DHCP Snooping is part of CCNA exam topic 5.7: Configure and verify Layer 2 security features (DHCP Snooping, Dynamic ARP Inspection, and Port Security).\n\n## 13.1 DHCP-based attacks\n\nAlthough DHCP is an essential part of modern networks, attackers can exploit it to harm the confidentiality, integrity, and availability of a network. We have already covered DHCP exhaustion attacks and how Port Security can be used to mitigate against them. In this section, we’ll look at how DHCP can be exploited to perform a manin-the-middle attack: DHCP poisoning.\n\nIn a DHCP poisoning attack, the attacker configures a rogue DHCP server (sometimes called a spurious DHCP server) to lease IP addresses to clients. The rogue server leases valid IP addresses, but the point of the attack is to tell the clients to use the rogue server as their default gateway—not the LAN’s legitimate router. This allows the rogue server to intercept clients’ communications, gaining access to (and possibly altering) their contents before relaying them to the router. Figure 13.1 demonstrates a DHCP poisoning attack.\n\n![](/extracted/vol2/images/page_199_image_body_10.jpg)\n\nFigure 13.1 A DHCP poisoning attack. The rogue DHCP server replies to PC1’s DHCP messages, assigning it an IP address and telling it to use the rogue server as its default gateway. The rogue server then intercepts PC1’s communications.\n\n**NOTE** DHCP poisoning may remind you of a similarly named attack that we covered in chapter 11: ARP poisoning. Both attacks allow the attacker’s device to act as a man-in-the-middle, secretly intercepting targets’ communications.\n\nDHCP clients tend to accept the first OFFER message they receive in response to their DISCOVER, so the rogue server’s goal is to respond before any legitimate DHCP servers. If both the rogue and legitimate DHCP servers are in the same LAN, it’s a race to reply first. But if the legitimate DHCP server is in a different LAN, introducing additional delay between the client and the server, the rogue server’s “poisoned” OFFER has a good chance of reaching the client first due to its lower latency.\n\nPort Security, which we covered in chapter 12, doesn’t mitigate against DHCP poisoning attacks. The rogue server sends DHCP messages from a single MAC address, so limiting the number of MAC addresses on the port doesn’t help. To defend your network against DHCP poisoning attacks, you should use DHCP Snooping.\n\n## 13.2 DHCP Snooping\n\nDHCP Snooping works by examining and filtering DHCP messages received by the switch. That’s an important point: DHCP only filters DHCP messages—non-DHCP messages are unaffected by DHCP Snooping. Let’s look at how DHCP Snooping works and how to configure it on Cisco switches. Figure 13.2 shows the network we’ll configure.\n\n![](/extracted/vol2/images/page_200_image_body_4.jpg)\n\nFigure 13.2 Configuring DHCP Snooping on Cisco switches. Ports leading toward the DHCP Server are trusted, and ports leading toward users are untrusted. Only SW1’s configurations are shown, but the same commands should be configured on SW2.\n\nThe first step in configuring DHCP Snooping is to enable the feature; it is disabled by default. Doing so requires two separate commands:\n\nEnable DHCP Snooping— ip dhcp snooping\n\nActivate DHCP Snooping on each VLAN— ip dhcp snooping vlan vlans\n\nip dhcp snooping enables DHCP Snooping, but it won’t actually take effect until you use the second command ( ip dhcp snooping vlan vlans ) to activate it on each VLAN in the LAN. To keep things simple, the example network we will use in this chapter has a single VLAN (VLAN 1), but in a LAN with multiple VLANs, you should enable it on each VLAN that has hosts using DHCP. You can activate DHCP Snooping on multiple VLANs with a single command by using commas and hyphens in the vlans argument— for example:\n\nAll VLANs— ip dhcp snooping vlan 1-4094\n\nVLANs 1, 3, 4, 5, 7, 9, 10, and 11— ip dhcp snooping vlan 1,3-5,7,9-11\n\nIn the following example, I configure DHCP Snooping on SW2 and verify with show ip dhcp snooping (I issued the same commands on SW1 too):\n\n```txt\nSW2(config)# ip dhcp snooping ❶\nSW2(config)# ip dhcp snooping vlan 1 ❷\nSW2(config)# do show ip dhcp snooping\nSwitch DHCP snooping is enabled ❸\nDHCP snooping is configured on following VLANs: ❹\n1 ❹\nDHCP snooping is operational on following VLANs: ❺\n1 ❺\n```\n\n❶ Enables DHCP Snooping\n\n❷ Activates DHCP Snooping on VLAN 1\n\n❸ DHCP Snooping is enabled.\n\n❹ DHCP Snooping is configured on VLAN 1.\n\n❺ DHCP Snooping is operational on VLAN 1.\n\n**NOTE** A VLAN might appear as configured , but not operational , if you enable DHCP Snooping for the VLAN but the VLAN itself is disabled on the switch.\n\n## 13.2.1 How DHCP Snooping filters DHCP messages\n\nDHCP Snooping works by filtering DHCP messages. However, it doesn’t filter DHCP messages received on all ports; it only filters those received on untrusted ports. Messages received on trusted ports are not filtered. In this section, we’ll review the different DHCP message types that we covered in chapter 4 (and look at some new ones) and then examine the concepts of trusted/untrusted ports and how DHCP Snooping filters messages.\n\n## DHCP MESSAGE TYPES\n\nYou should already be familiar with the messages in the DHCP DORA exchange: DISCOVER, OFFER, REQUEST, ACK. However, there are some other DHCP message types that you should know (although not to the same level of detail as DORA). Figure 13.3 lists some of the different DHCP message types.\n\n![](/extracted/vol2/images/page_201_image_body_12.jpg)\n\nFigure 13.3 DHCP message types. Client messages include DISCOVER, REQUEST, DECLINE, and RELEASE. Server messages include OFFER, ACK, and NAK.\n\nWhen DHCP Snooping filters DHCP messages, it differentiates between messages sent by DHCP clients and those sent by DHCP servers. Messages sent by DHCP clients include DISCOVER, REQUEST, DECLINE, and RELEASE. Messages sent by DHCP servers include OFFER, ACK, and NAK. Here’s a quick description of each message type we haven’t covered yet:\n\nDECLINE—Used to tell the server that the leased IP address is already in use\n\nRELEASE—Used to tell the server that the client no longer needs its IP address\n\nNAK (negative ACK) —The opposite of ACK; used to decline a client’s REQUEST\n\n**EXAM TIP** You don’t have to know the details of these additional message types, but you should know which are sent by clients and which are sent by servers. Other DHCP message types exist, but I wouldn’t expect to see them on the CCNA exam.\n\n## DHCP SNOOPING TRUSTED AND UNTRUSTED PORTS\n\nThe concept of trusted and untrusted ports is fundamental to how DHCP Snooping works. DHCP Snooping filters DHCP messages received on untrusted ports based on a set of rules, and all ports are untrusted by default. All DHCP messages received on trusted ports, however, are allowed. You need to manually specify each trusted port with ip dhcp snooping trust . Figure 13.4 demonstrates trusted and untrusted ports.\n\n![](/extracted/vol2/images/page_202_image_body_7.jpg)\n\nFigure 13.4 DHCP Snooping trusted ports lead toward the DHCP server. Untrusted ports lead away from the DHCP server and block server messages like OFFER.\n\nPorts that lead toward the DHCP server (the G0/1 ports of SW1 and SW2 in figure 13.4) should be trusted. DHCP Snooping forwards DHCP messages received on those ports without any further inspection.\n\nPorts that lead away from the DHCP server—toward end hosts—should remain in the default untrusted state. When a DHCP message is received on an untrusted port, the switch will inspect it and act as follows:\n\nIf it is a DHCP server message (OFFER, ACK, or NAK), discard it.\n\nThis is why PC2’s OFFER is discarded in figure 13.4.\n\nIf it is a DHCP client message (DISCOVER, REQUEST, DECLINE, or RELEASE), inspect it further to determine if it is legitimate.\n\nIf a client successfully leases an IP address, create a new entry in the DHCP Snooping binding table— more on that later in this section.\n\n**NOTE** Because all ports are untrusted by default, if you don’t configure any trusted ports, DHCP won’t work; all messages from DHCP servers will be discarded.\n\nIn the following example, I configure SW2 G0/1 as a trusted port and confirm by looking at some more output of show ip dhcp snooping :\n\n```txt\nSW2(config)# interface g0/1 ❶\nSW2(config-if)# ip dhcp snooping trust ❶\nSW2(config-if)# do show ip dhcp snooping\nDHCP snooping trust/rate is configured on the following Interfaces:\nInterface Trusted Allow option Rate limit (pps)\nGigabitEthernet0/1 yes yes unlimited ❷\n```\n\n## ❶ Configures G0/1 as a trusted port\n\n❷ The Trusted column states yes.\n\n## INSPECTING CLIENT MESSAGES\n\nUntrusted ports only accept DHCP client messages. However, they don’t blindly accept all client messages; they perform additional checks to verify that the message is valid before accepting it. The checks that the switch performs depend on the message type:\n\nMessages involved in the DORA process—DISCOVER and REQUEST. Check that the Ethernet source MAC address and DHCP chaddr match.\n\nMessages sent after the client has leased an IP—RELEASE and DECLINE. Verify the message using the DHCP Snooping binding table.\n\nFor the first category, DISCOVER and REQUEST messages, the switch compares two fields: the source MAC address field of the Ethernet header and the chaddr (client hardware address) field of the DHCP message (which indicates the client’s MAC address). If the addresses in the two fields match, the switch permits the message. If the two addresses don’t match, the switch discards the message.\n\n## The purpose of the chaddr field\n\nThe chaddr field (written in lowercase to align with RFC 2131, which defines DHCP) represents the client’s hardware address, typically a MAC address in modern networks (where Ethernet dominates). You might wonder, why have this field when the client’s MAC address is already present in the Ethernet frame’s source MAC address field?\n\nThere are multiple reasons, but a primary one is to support situations where the DHCP client and server are in separate LANs (and a DHCP relay agent is used). In such situations, by the time the client’s DHCP message reaches the server, the source MAC address of the Ethernet frame won’t be the client’s MAC address. Instead, it will be the MAC address of the last router that forwarded the message to the server. The chaddr field ensures that the client’s MAC address is still conveyed to the server in such scenarios.\n\nThese two fields should match when the client’s message reaches the switch; they should only differ if the message is forwarded by a DHCP relay agent. However, an attacker might repeatedly send spoofed DHCP DISCOVER messages from a single source MAC address (to bypass Port Security’s MAC address limit), each with a unique address in the chaddr field to perform a DHCP exhaustion attack. Verifying that these fields match protects against such an attack, as shown in figure 13.5.\n\n```txt\nSW2# show ip dhcp snooping\n```\n\n![](/extracted/vol2/images/page_204_image_body_1.jpg)\n\nFigure 13.5 DHCP Snooping prevents a DHCP starvation attack by verifying that the source MAC address and chaddr of the attacker’s messages match.\n\nThe second category of DHCP client messages, RELEASE and DECLINE, are sent after the client has leased an IP address. DECLINE is used if after receiving the final ACK from the server, the client detects that the IP address is already in use by another device. RELEASE is used any time the client decides it no longer needs its leased IP address—for example, if it disconnects from the network.\n\nHowever, these messages can be exploited by an attacker. For example, the attacker could send a RELEASE message to tell the server to release a particular client’s IP address, and then the attacker could attempt to lease that address for itself. To verify that RELEASE and DECLINE messages are legitimate, the switch will verify the message by checking the DHCP Snooping binding table, which we’ll cover next.\n\n## THE DHCP SNOOPING BINDING TABLE\n\nAs a DHCP Snooping-enabled switch observes DHCP exchanges between clients and servers, it builds a table of the clients that have successfully leased an IP address; that table is called the DHCP Snooping binding table, and you can view it with show ip dhcp snooping binding . The following example shows the DHCP Snooping binding table:\n\n```txt\nSW2# show ip dhcp snooping binding\nMacAddress IpAddress Lease(sec) Type VLAN Interface\n52:54:00:08:D3:E0 10.0.0.6 84617 dhcp-snooping 1 Gi0/2\n52:54:00:02:F4:E1 10.0.0.7 84623 dhcp-snooping 1 Gi0/3\nTotal number of bindings: 2\n```\n\nThe DHCP Snooping binding table includes information like the client’s MAC address, the leased IP address and duration of the lease, the VLAN, and the interface (or port—the terms are interchangeable) the client is connected to. When inspecting a RELEASE or DECLINE message received on an untrusted port, the switch ensures that the IP address of the message and the port it was received on match the entry in the binding table.\n\n**NOTE** The DHCP Snooping binding table isn’t only used for verifying DHCP messages. It also plays a key role in Dynamic ARP Inspection (DAI), the topic of chapter 14.\n\n## 13.2.2 DHCP option 82\n\nIf you’re following along in a lab as you read this chapter and have correctly enabled DHCP Snooping, activated it on the necessary VLANs, and trusted the appropriate ports, you might be confused as to why hosts are unable to lease IP addresses via DHCP and why your switches have empty DHCP Snooping binding tables. The following output of show ip dhcp snooping shows why:\n\n```txt\nInsertion of option 82 is enabled ❶\ncircuit-id default format: vlan-mod-port\nremote-id: 5254.000c.8b85 (MAC)\nOption 82 on untrusted port is not allowed ❷\n```\n\n❶ Switches insert option 82 into DHCP requests by default.\n\n❷ Switches do not accept messages with option 82 on untrusted ports.\n\nDHCP defines various optional fields, called options, that can be included in its messages. One of those is the DHCP relay agent information option, usually called by its number, option 82. A DHCP relay agent can insert this option when forwarding DHCP client messages to a remote DHCP server, providing additional information to the server that can inform the IP allocation decision. The details of option 82 are beyond the scope of the CCNA exam, but option 82 is relevant to DHCP Snooping because of some default settings on Cisco routers and switches related to option 82.\n\nFigure 13.6 demonstrates what happens when PC1 sends a DHCP DISCOVER message. SW2 adds option 82 to the message and forwards it to SW1. SW1, receiving a message with option 82 on an untrusted port, discards the message. If you check the CLI of SW1, it will display a Syslog message like the following:\n\n```txt\n%DHCP_SNOOPING-5-DHCP_SNOOPING_NONZERO_GIADDR: DHCP_SNOOPING drop message\nwith non-zero giaddr or option82 value on untrusted port, message type:\nDHCPDISCOVER, MAC sa: 5254.0008.d3e0\n```\n\n![](/extracted/vol2/images/page_205_image_body_6.jpg)\n\nFigure 13.6 SW2 adds option 82 to PC1’s DISCOVER. SW2 then discards the DISCOVER after receiving it on an untrusted port.\n\nThe previous output of show ip dhcp snooping stated Insertion of option 82 is enabled . This means that when DHCP Snooping is enabled, the switch will automatically insert option 82 into DHCP client messages received on untrusted ports. This behavior of inserting option 82 is useful if the switch is a multilayer switch acting as a DHCP relay agent, forwarding client messages to a remote DHCP server. The default settings are configured with this common scenario in mind.\n\nHowever, if the switch is functioning as a regular Layer 2 switch (not a DHCP relay agent), this default setting can cause headaches; this is the case for SW1 and SW2 in this example. This is because of another default setting shown in the same output: Option 82 on untrusted port is not allowed . These two default settings mean that\n\nThe switch adds option 82 to DHCP messages received on untrusted ports.\n\nThe switch doesn’t accept DHCP messages that already have option 82 on untrusted ports.\n\nThis might seem contradictory, but there’s a reason: a DHCP client has no valid reason to add option 82 to its own messages. If the switch receives a DHCP message that already contains option 82 on an untrusted port, it’s likely that a rogue DHCP server or a misconfigured client is at play. For this reason, the switch doesn’t accept such messages.\n\nTo disable option 82 insertion, use the no ip dhcp snooping information option command in global config mode, as in the following example. With this command configured, SW2 will no longer insert option 82 into clients’ DHCP messages:\n\n```txt\nSW2(config)# no ip dhcp snooping information option ❶\nSW2(config)# do show ip dhcp snooping\nInsertion of option 82 is disabled ❷\n```\n\n## ❶ Disables option 82 insertion\n\n❷ SW2 will no longer insert option 82.\n\nHowever, in our example network, it’s not enough to disable option 82 insertion on SW2 alone. SW1, having received a DHCP client message on an untrusted port, will add option 82 itself before forwarding the message to R1. A Cisco router acting as a DHCP server or relay agent will drop such messages too. So make sure to disable option 82 insertion on SW1 too:\n\n```txt\nSW1(config)# no ip dhcp snooping information option\n```\n\nWith option 82 insertion disabled on both switches, the client’s DISCOVER message will reach R1 as is, and the client will be able to lease an IP address. In figure 13.6’s example, R1 is functioning as a DHCP server. But if it were a DHCP relay agent, it could then insert option 82 before forwarding the DISCOVER to the remote DHCP server, providing the server with additional context about the request. This extra context can help the server make an informed IP allocation decision.\n\n**EXAM TIP** As far as the CCNA exam is concerned, just know that you should disable option 82 insertion, unless the switch itself is a multilayer switch acting as a DHCP relay agent. This is an often-forgotten step in configuring DHCP Snooping that can lead to frustration. Don’t forget!\n\n## DHCP options\n\nDHCP options enable the client, server, and sometimes relay agents to exchange additional information that can support the DHCP process and extend its functionality. There are about 100 standard DHCP options defined in various RFCs, although not all are widely used. In addition to option 82, here are a few examples:\n\nOption 3 (Router)—This is a very common option. It is used by the server to tell the client which router to use as its default gateway.\n\nOption 6 (DNS Server)—Another very common option. This tells the client which DNS server(s) to use for name resolution.\n\nOption 50 (Requested IP Address)—A client can include this option if it wants to request a specific IP address from the server (although the server is not obligated to fulfill this request). For example, a Windows PC will typically include this option to request the same IP address it had previously (i.e., before it was last shut down).\n\nWe already covered the fact that a DHCP server can inform a client about its default gateway and DNS servers in chapter 4, without mentioning the relevant DHCP options that enable this functionality; that’s because DHCP\n\noptions are generally not something you need to know for the CCNA exam. Option 82 is relevant only due to its effect when DHCP Snooping is enabled.\n\n## 13.2.3 Rate-limiting DHCP messages\n\nThe configurations we have covered so far are the minimum essentials for enabling DHCP Snooping without interfering with legitimate DHCP traffic:\n\n```txt\n1. Enable DHCP Snooping: ip dhcp snooping\n2. 3. Activate DHCP Snooping on each VLAN: ip dhcp snooping vlan vlans\nTrust the appropriate ports: ip dhcp snooping trust\n4. Disable option 82 insertion: no ip dhcp snooping information option\n```\n\nOne more optional (but valuable) aspect of DHCP Snooping you can configure is rate limiting—limiting the rate at which a DHCP Snooping-enabled switch accepts DHCP messages. The combination of Port Security and DHCP Snooping is able to thwart most DHCP-related attacks like DHCP starvation.\n\nHowever, inspecting DHCP messages with DHCP Snooping can be demanding of the switch’s CPU. This leads to another possible attack: overwhelming the switch’s CPU with countless DHCP messages, potentially leading to a denial of service. DHCP Snooping rate limiting can mitigate against such an attack.\n\nYou can enable DHCP Snooping rate limiting on a per-port basis with ip dhcp snooping limit rate rate ; the rate argument is configured in packets per second (pps). Cisco recommends a rate limit of no more than 100 pps on untrusted ports, but the appropriate rate varies greatly, depending on the port. For example, a port connected to a single PC should receive much less DHCP traffic than a port connected to another switch with 40 of its own connected end hosts.\n\nIn figure 13.7, I configure DHCP Snooping rate limiting on SW1’s and SW2’s untrusted ports at rates of 100 pps and 25 pps, respectively. These numbers are quite generous, given that only two hosts are shown in the network— a single PC, for example, should only generate two messages in the typical DORA exchange. In a real network, it’s best to find a balance between protecting against attacks and not blocking legitimate traffic.\n\n![](/extracted/vol2/images/page_207_image_body_8.jpg)\n\nFigure 13.7 Configuring DHCP Snooping rate limiting on untrusted ports\n\nYou may be wondering, what happens if a port receives DHCP messages at a faster rate than its configured limit? In the following example, I configure a rate limit of 1 pps on SW2 G0/2 to demonstrate:\n\n```c\nSW2(config)# interface g0/2 ❶\nSW2(config-if)# ip dhcp snooping limit rate 1 ❶\n%DHCP_SNOOPING-4-DHCP_SNOOPING_ERRDISABLE_WARNING: DHCP Snooping received 1\n```\n\n```txt\nDHCP packets on interface Gi0/2\n%DHCP_SNOOPING-4-DHCP_SNOOPING_RATE_LIMIT_EXCEEDED: ❷\n➥The interface Gi0/2 is receiving more than ❷\n➥the threshold set\n%PM-4-ERR_DISABLE: dhcp-rate-limit error detected on ❸\n➥Gi0/2, putting Gi0/2 in err-disable state ❸\n```\n\n❶ Configures IP DHCP Snooping rate limiting with a rate limit of 1 pps\n\n❷ The rate limit is exceeded.\n\n❸ SW2 error-disables the port.\n\n**NOTE** DHCP Snooping doesn’t filter DHCP messages on trusted ports, but rate limiting is one aspect that can be configured on trusted ports (although it’s rare).\n\nIf the rate limit is exceeded, the switch will error-disable the port to prevent any further messages. As with the previous examples of error-disabled ports that we have covered (BPDU Guard, power policing, and port security), there are two ways to reenable a port that was disabled by DHCP Snooping rate limiting:\n\nManual—Issue shutdown and no shutdown on the error-disabled port.\n\nAutomatic—Configure errdisable recovery cause dhcp-rate-limit to enable ErrDisable Recovery for ports disabled by DHCP Snooping rate limiting.\n\nAlthough rate limiting is optional and disabled by default, it’s a good idea to configure reasonable rate limits on untrusted ports as an extra layer of protection against threats. Make sure to test rate limits in a controlled environment (a lab) before rolling them out in a live network!\n\n## Summary\n\nDHCP Snooping is a security feature on switches that protects against DHCP-based attacks by inspecting DHCP messages as they are received.\n\nIn a DHCP poisoning attack, the attacker configures a rogue DHCP server (sometimes called a spurious DHCP server) to lease IP addresses to clients.\n\nThe rogue server tells clients to use itself as their default gateway, resulting in a man-in-the-middle attack in which the attacker intercepts the clients’ communications.\n\nPort Security doesn’t mitigate against DHCP poisoning because the rogue server sends DHCP messages from a single MAC address; DHCP Snooping is needed.\n\nDHCP Snooping only filters DHCP messages—non-DHCP messages are unaffected.\n\nEnable DHCP Snooping with ip dhcp snooping in global config mode. It also needs to be activated on each VLAN with ip dhcp snooping vlan vlans .\n\nUse show ip dhcp snooping to verify DHCP Snooping settings.\n\nDHCP Snooping only filters DHCP messages received on untrusted ports. All ports are untrusted by default. It doesn’t filter messages received on trusted ports.\n\nDHCP Snooping differentiates between messages sent by DHCP clients and those sent by DHCP servers.\n\nMessages sent by clients include DISCOVER, REQUEST, DECLINE, and RELEASE.\n\nMessages sent by servers include OFFER, ACK, and NAK.\n\nPorts that lead toward the DHCP server should be trusted. Ports that lead away from the DHCP server (toward end hosts) should remain in the default untrusted state.\n\nUse ip dhcp snooping trust in interface config mode to configure a trusted port.\n\nWhen a DHCP message is received on an untrusted port, the switch will inspect it and act as follows: O If it is a DHCP server message, discard it.\n\nIf it is a DHCP client message, inspect it further depending on the type.\n\nIf a client successfully leases an IP address, create a new entry in the DHCP Snooping binding table.\n\nIf the message is a DISCOVER or REQUEST message, the switch will check that the Ethernet source MAC Address and DHCP chaddr (client hardware address) match. If they match, it accepts the message. If not, it discards the message.\n\nThe source MAC address/chaddr check protects against DHCP exhaustion attacks in which the attacker sends spoofed DHCP DISCOVER messages from a single source MAC address, each with a unique address in the chaddr field.\n\nIf the message is a RELEASE or DECLINE message, the switch will check the DHCP Snooping binding table to verify the message.\n\nAs a DHCP Snooping-enabled switch observes exchanges between client and servers, it builds a table of the clients that have successfully leased an IP address: the DHCP Snooping binding table.\n\nView the DHCP Snooping binding table with show ip dhcp snooping binding .\n\nWhen a RELEASE or DECLINE message is received on an untrusted port, the switch ensures that the IP address of the message and the port it was received on match the entry in the binding table.\n\nDHCP defines various optional fields, called options. DHCP options are beyond the scope of the CCNA exam, except for option 82, which can impede the DHCP process when DHCP Snooping is enabled.\n\nOption 82 is the DHCP relay information option.\n\nA DHCP relay agent can insert option 82 when forwarding DHCP client messages to a remote DHCP server, providing additional information to the server.\n\nBy default, a DHCP Snooping-enabled switch will automatically insert option 82 into DHCP client messages received on untrusted ports.\n\nBy default, a DHCP Snooping-enabled switch will discard DHCP messages with option 82 that are received on an untrusted port. A Cisco router acting as a DHCP server or relay agent will drop such messages too.\n\nTo prevent a DHCP Snooping-enabled switch from adding option 82 to client messages, use no ip dhcp snooping information option in global config mode.\n\nYou can optionally configure rate limiting on a per-port basis to limit the rate at which the port can receive DHCP messages.\n\nUse ip dhcp snooping limit rate rate to configure rate limiting. The rate argument is configured in packets per second (pps).\n\nRate limiting can be configured on both untrusted and trusted ports, although it is rarely enabled on trusted ports.\n\nIf a port receives DHCP messages at a faster rate than its configured limit, the switch will error-disable the port.\n\nUse shutdown and no shutdown to manually reenable an error-disabled port or errdisable recovery cause dhcp-rate-limit to enable ErrDisable Recovery for ports disabled by DHCP Snooping rate limiting."
+}
