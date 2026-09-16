@@ -56,7 +56,7 @@ export default function ModuleQuizPage() {
           <BookOpen className="w-12 h-12 text-cyan-400 mx-auto" />
           <h2 className="text-xl font-bold text-white">Study Strategy &amp; Overview</h2>
           <p className="text-xs text-slate-300 leading-relaxed">
-            Chapter 1 introduces the CCNA certification structure and Jeremy McDowell&apos;s 5-pillar active learning methodology. Official technical review quizzes begin in Chapter 2.
+            Chapter 1 introduces the CCNA certification structure and the 5-pillar active learning methodology. Official technical review quizzes begin in Chapter 2.
           </p>
           <div className="pt-4 flex items-center justify-center gap-3">
             <Link

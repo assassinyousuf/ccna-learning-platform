@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Network, Github, HardDrive, FileSpreadsheet } from "lucide-react";
+import { Network, Github, HardDrive, FileSpreadsheet, Globe, Linkedin, ExternalLink } from "lucide-react";
 
 export function Footer() {
   return (
@@ -15,7 +15,17 @@ export function Footer() {
               </span>
             </div>
             <p className="text-xs text-slate-400 max-w-md leading-relaxed">
-              A cohort-based mastery platform for Cisco Certified Network Associate (CCNA 200-301), powered by Jeremy McDowell’s <em>Acing the CCNA Exam</em>. Study modules, pass rigorous quizzes, and prove hands-on mastery with video lab demos.
+              An interactive mastery platform for Cisco Certified Network Associate (CCNA 200-301), engineered & architected by{" "}
+              <a
+                href="https://yousuf.surf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cyan-400 font-medium hover:underline inline-flex items-center gap-0.5"
+              >
+                Md. Yousuf Hossain
+                <ExternalLink className="w-2.5 h-2.5 ml-0.5" />
+              </a>
+              . Study 49 chapters, simulate 367 Cisco IOS CLI commands, pass 414 rigorous quizzes, and prove hands-on mastery with video lab demos.
             </p>
             <div className="flex items-center gap-2 pt-2">
               <span className="text-[11px] font-mono px-2 py-1 rounded bg-slate-900 border border-slate-800 text-cyan-400 flex items-center gap-1">
@@ -33,23 +43,23 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/modules/module-1-network-fundamentals" className="hover:text-cyan-400 transition-colors">
-                  1. Network Fundamentals
+                <Link href="/modules/v1-ch1-intro-ccna" className="hover:text-cyan-400 transition-colors">
+                  Vol 1: Intro to CCNA
                 </Link>
               </li>
               <li>
-                <Link href="/modules/module-2-network-access" className="hover:text-cyan-400 transition-colors">
-                  2. Network Access & Switching
+                <Link href="/modules/v1-ch6-ethernet-lan-switching" className="hover:text-cyan-400 transition-colors">
+                  Vol 1: Ethernet LAN Switching
                 </Link>
               </li>
               <li>
-                <Link href="/modules/module-3-ip-connectivity" className="hover:text-cyan-400 transition-colors">
-                  3. IP Connectivity & OSPF
+                <Link href="/modules/v1-ch18-ospf" className="hover:text-cyan-400 transition-colors">
+                  Vol 1: Open Shortest Path First
                 </Link>
               </li>
               <li>
-                <Link href="/modules/module-4-ip-services" className="hover:text-cyan-400 transition-colors">
-                  4. IP Services & NAT
+                <Link href="/modules/v2-ch1-wireless-fundamentals" className="hover:text-cyan-400 transition-colors">
+                  Vol 2: Wireless & Security
                 </Link>
               </li>
             </ul>
@@ -57,9 +67,20 @@ export function Footer() {
 
           <div>
             <h4 className="text-xs font-semibold uppercase text-slate-200 tracking-wider mb-3">
-              Platform & Source
+              Developer & Source
             </h4>
             <ul className="space-y-2 text-xs">
+              <li>
+                <a
+                  href="https://yousuf.surf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 transition-colors"
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>yousuf.surf (Portfolio)</span>
+                </a>
+              </li>
               <li>
                 <a
                   href="https://github.com/assassinyousuf/ccna-learning-platform"
@@ -72,19 +93,33 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <span className="text-slate-500">Deploy: Vercel Edge</span>
+                <a
+                  href="https://www.linkedin.com/in/mdyousufhossainmehrab/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 hover:text-white transition-colors"
+                >
+                  <Linkedin className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>LinkedIn Profile</span>
+                </a>
               </li>
               <li>
-                <span className="text-slate-500">Auth: Google OAuth 2.0</span>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+                {" • "}
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-slate-900 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-          <p>© 2026 CCNA Learning Platform. Content based on Manning Publications.</p>
+          <p>© 2026 CCNA Learning Platform. Engineered with ❤️ by <a href="https://yousuf.surf" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">Md. Yousuf Hossain</a>.</p>
           <p className="font-mono text-[11px] text-slate-400">
-            Learn → Quiz → Video Proof → Unlock
+            Learn → Simulate → Quiz → Video Proof → Unlock
           </p>
         </div>
       </div>

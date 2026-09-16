@@ -84,7 +84,7 @@ export default function DashboardPage() {
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1 font-mono">
-                {session?.user?.email || "student@ccna.academy"} • Following Jeremy McDowell&apos;s Learning Protocol
+                {session?.user?.email || "student@ccna.academy"} • Following 5-Pillar Active Learning Protocol
               </p>
             </div>
           </div>

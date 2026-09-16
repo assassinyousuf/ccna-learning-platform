@@ -1,9 +1,9 @@
 {
-  "title": "Acing the CCNA Exam: Interactive Digital Edition",
-  "author": "Jeremy McDowell (CCIE #59049)",
+  "title": "CCNA 200-301 Mastery: Interactive Digital Edition",
+  "author": "Md. Yousuf Hossain (yousuf.surf)",
   "pedagogicalMethod": {
-    "name": "Jeremy McDowell's 5-Pillar CCNA Learning Framework",
-    "summary": "As detailed in Section 1.4 of the textbook, optimal CCNA preparation combines active reading with note-taking, mastering CLI commands from Appendix B, testing recall via Appendix C review questions with Appendix D explanations, extensive hands-on Cisco Packet Tracer labbing, and demonstrating mastery through active teaching and video proof.",
+    "name": "5-Pillar CCNA Active Learning Framework",
+    "summary": "Optimal CCNA preparation combines active reading with note-taking, mastering CLI commands from Appendix B, testing recall via Appendix C review questions with Appendix D explanations, extensive hands-on Cisco Packet Tracer labbing, and demonstrating mastery through active teaching and video proof.",
     "pillars": [
       {
         "pillar": 1,
