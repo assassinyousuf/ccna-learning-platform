@@ -38,4 +38,5 @@ Thumbs.db
 # Temporary / Zip files
 *.zip
 **/zip_temp/
+*.tsbuildinfo
 scratch/
