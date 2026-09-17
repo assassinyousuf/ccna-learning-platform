@@ -271,3 +271,194 @@
   border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM
+   Clean, high-contrast, crisp Cisco Academy aesthetic
+   ========================================================================== */
+html.light {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --primary: #0284c7;
+  --primary-foreground: #ffffff;
+  --secondary: #059669;
+  --secondary-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0284c7;
+  --accent-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  color-scheme: light;
+}
+
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Background overrides in light mode */
+html.light .bg-slate-950,
+html.light .bg-\[\#050811\],
+html.light .bg-\[\#070b14\],
+html.light .bg-\[\#060a14\],
+html.light .bg-\[\#070c18\],
+html.light .bg-\[\#080c18\] {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-slate-900,
+html.light .bg-slate-900\/90,
+html.light .bg-slate-900\/80,
+html.light .bg-slate-900\/70,
+html.light .bg-slate-900\/60,
+html.light .bg-slate-900\/40,
+html.light .bg-slate-900\/30,
+html.light .bg-\[\#090e1c\],
+html.light .bg-\[\#080d1a\],
+html.light .bg-\[\#091124\],
+html.light .bg-\[\#070d1e\],
+html.light .bg-\[\#040711\] {
+  background-color: #f1f5f9 !important;
+}
+
+/* Text overrides in light mode */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light .text-slate-300 {
+  color: #1e293b !important;
+}
+
+html.light .text-slate-400 {
+  color: #475569 !important;
+}
+
+html.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Border overrides in light mode */
+html.light .border-slate-800,
+html.light .border-slate-800\/80,
+html.light .border-slate-800\/60,
+html.light .border-slate-700,
+html.light .border-slate-700\/80 {
+  border-color: #cbd5e1 !important;
+}
+
+/* Glass panel in light mode */
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .glass-panel-hover:hover {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 15px 35px -5px rgba(2, 132, 199, 0.12) !important;
+}
+
+/* NOC Operations Cockpit in Light Mode */
+html.light .noc-cockpit {
+  background: radial-gradient(circle at 50% -20%, rgba(2, 132, 199, 0.08), transparent 70%), #f8fafc !important;
+}
+
+html.light .noc-tile {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Pearson VUE Testing Terminal in Light Mode */
+html.light .vue-workstation {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .vue-header-bar {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+}
+html.light .vue-header-bar .text-white {
+  color: #ffffff !important;
+}
+html.light .vue-header-bar .text-slate-400,
+html.light .vue-header-bar .text-slate-300 {
+  color: #94a3b8 !important;
+}
+
+html.light .vue-ticket-card {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .vue-option-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .vue-option-card:hover {
+  background: #f8fafc !important;
+  border-color: #0284c7 !important;
+}
+
+html.light .vue-option-selected {
+  background: rgba(2, 132, 199, 0.08) !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 15px -3px rgba(2, 132, 199, 0.2) !important;
+}
+
+/* Engineering Codex in Light Mode */
+html.light .codex-workbench {
+  background: #f8fafc !important;
+}
+
+html.light .codex-callout-tip {
+  background: rgba(245, 158, 11, 0.08) !important;
+  border-left: 4px solid #d97706 !important;
+}
+
+html.light .codex-callout-blueprint {
+  background: rgba(2, 132, 199, 0.08) !important;
+  border-left: 4px solid #0284c7 !important;
+}
+
+html.light .codex-callout-cli {
+  background: rgba(5, 150, 105, 0.08) !important;
+  border-left: 4px solid #059669 !important;
+}
+
+/* 5-Pillar Architectural Slabs in Light Mode */
+html.light .pillar-slab-1,
+html.light .pillar-slab-2,
+html.light .pillar-slab-3,
+html.light .pillar-slab-4,
+html.light .pillar-slab-5 {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Cisco CLI Terminal & Simlet screens MUST remain authentic dark high-contrast consoles in light mode */
+html.light .simlet-crt-frame,
+html.light .cli-box {
+  background: #020617 !important;
+  color: #38bdf8 !important;
+  border-color: #1e293b !important;
+}
+html.light .simlet-crt-frame .text-slate-300,
+html.light .simlet-crt-frame .text-slate-400,
+html.light .simlet-crt-frame .text-slate-500 {
+  color: #94a3b8 !important;
+}
+html.light .simlet-crt-frame .text-white {
+  color: #f8fafc !important;
+}
+
+

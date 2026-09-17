@@ -33,6 +33,7 @@ import {
   Cpu
 } from "lucide-react";
 import { CiscoTerminal } from "@/components/CiscoTerminal";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { CiscoCommand, QuizQuestion } from "@/lib/curriculum";
 import { sounds } from "@/lib/sound-effects";
 import confetti from "canvas-confetti";
@@ -352,6 +353,9 @@ export function ChapterReader({
               A+
             </button>
           </div>
+
+          {/* Reader Theme Switcher */}
+          <ThemeToggle compact />
         </div>
       </div>
 
