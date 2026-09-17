@@ -156,7 +156,7 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* HERO FLAGSHIP DEMO: LIVE CISCO IOS WORKSTATION & TOPOLOGY ENGINE         */}
         {/* ========================================================================= */}
-        <div className="mt-16 max-w-5xl mx-auto rounded-3xl bg-[#060a14] border border-cyan-500/30 shadow-2xl shadow-cyan-950/40 overflow-hidden text-left relative group">
+        <div className="mt-16 max-w-5xl mx-auto rounded-3xl bg-[#060a14] border border-cyan-500/30 shadow-2xl shadow-cyan-950/40 overflow-hidden text-left relative group cli-box">
           {/* Top Bezel / Header */}
           <div className="px-6 py-3.5 bg-[#091124] border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
