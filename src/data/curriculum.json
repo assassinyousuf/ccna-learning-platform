@@ -273,7 +273,68 @@
         }
       ],
       "ciscoCommands": [],
-      "quiz": [],
+      "quiz": [
+        {
+          "id": "q1-1",
+          "number": 1,
+          "question": "Which Cisco exam code currently designates the comprehensive single-exam CCNA certification?",
+          "options": [
+            "A. 200-125",
+            "B. 200-301",
+            "C. 100-105",
+            "D. 350-401"
+          ],
+          "correctAnswer": 1,
+          "answerLetter": "B",
+          "officialAnswer": "B: 200-301",
+          "explanation": "Cisco exam 200-301 is the single consolidated exam required to earn the Cisco Certified Network Associate (CCNA) certification, replacing older composite and two-exam paths."
+        },
+        {
+          "id": "q1-2",
+          "number": 2,
+          "question": "What is the official duration of the CCNA 200-301 certification exam?",
+          "options": [
+            "A. 90 minutes",
+            "B. 105 minutes",
+            "C. 120 minutes",
+            "D. 150 minutes"
+          ],
+          "correctAnswer": 2,
+          "answerLetter": "C",
+          "officialAnswer": "C: 120 minutes",
+          "explanation": "The CCNA 200-301 exam is a 120-minute timed exam administered through Pearson VUE at test centers or online proctored."
+        },
+        {
+          "id": "q1-3",
+          "number": 3,
+          "question": "Which of the six CCNA 200-301 exam blueprint domains carries the highest weight at 25%?",
+          "options": [
+            "A. Network Fundamentals",
+            "B. Network Access",
+            "C. IP Connectivity",
+            "D. Security Fundamentals"
+          ],
+          "correctAnswer": 2,
+          "answerLetter": "C",
+          "officialAnswer": "C: IP Connectivity",
+          "explanation": "Domain 3.0 (IP Connectivity) represents 25% of the CCNA exam blueprint, making it the highest-weighted single domain, followed by Network Fundamentals (20%) and Network Access (20%)."
+        },
+        {
+          "id": "q1-4",
+          "number": 4,
+          "question": "On the actual CCNA exam, what happens when you skip or answer a question?",
+          "options": [
+            "A. You can mark it for review and return at the end",
+            "B. You cannot go back once you proceed to the next question",
+            "C. You can revisit unanswered questions only",
+            "D. You have 3 opportunities to change answers"
+          ],
+          "correctAnswer": 1,
+          "answerLetter": "B",
+          "officialAnswer": "B: You cannot go back once you proceed to the next question",
+          "explanation": "In Cisco certification exams, questions are linear; once you confirm an answer or click Next, you cannot return to previous questions."
+        }
+      ],
       "labMission": {
         "scenario": "Deploy, configure, and verify Introduction to the CCNA inside Cisco Packet Tracer according to Jeremy McDowell's lab specifications.",
         "objectives": [
