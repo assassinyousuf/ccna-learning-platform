@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 import {
@@ -19,6 +19,7 @@ import {
   FileSpreadsheet,
   HardDrive,
   ShieldCheck,
+  ShieldAlert,
   Cpu,
   Layers,
   Sparkles,
@@ -45,6 +46,17 @@ export default function HomePage() {
   const allModules = getAllModules();
   const [selectedVolume, setSelectedVolume] = useState<1 | 2>(1);
   const [selectedPart, setSelectedPart] = useState<number | "all">("all");
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const err = params.get("error");
+      if (err) {
+        setAuthError(err);
+      }
+    }
+  }, []);
 
   const currentVolumeData = curriculum.volumes.find((v) => v.volumeNumber === selectedVolume);
   const displayedModules = allModules.filter((m) => {
@@ -75,6 +87,37 @@ export default function HomePage() {
         <p className="mt-6 text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
           The all-in-one interactive platform engineered by <span className="text-white font-semibold">Md. Yousuf Hossain</span> for complete CCNA 200-301 certification mastery. Study 49 full chapters, practice with 367 live Cisco IOS CLI commands, pass 414 rigorous technical review questions, build Packet Tracer topologies, and verify mastery with video lab demos.
         </p>
+
+        {/* Auth Error Banner */}
+        {authError && (
+          <div className="mt-8 max-w-xl mx-auto p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm flex flex-col items-center gap-3 backdrop-blur-md">
+            <div className="flex items-center gap-2 font-semibold text-amber-400">
+              <ShieldAlert className="w-5 h-5" />
+              <span>OAuth Notice: {authError === "OAuthCallback" ? "Google Callback Verification Failed" : authError}</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed text-center">
+              Google sign-in was interrupted. You can retry with Google below, or click Instant Student Access to immediately explore all modules and the exam simulator.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-1">
+              <button
+                onClick={() => signIn("demo-student", { callbackUrl: "/dashboard" })}
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-bold text-xs hover:opacity-95 transition-opacity shadow"
+              >
+                Continue with Instant Demo Student
+              </button>
+              <button
+                onClick={() => {
+                  setAuthError(null);
+                  window.history.replaceState({}, "", "/");
+                  signIn("google", { callbackUrl: "/dashboard" });
+                }}
+                className="px-4 py-2 rounded-xl bg-slate-800 text-slate-200 font-medium text-xs border border-slate-700 hover:bg-slate-750 transition-colors"
+              >
+                Retry Google Sign-In
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* CTA Buttons */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
