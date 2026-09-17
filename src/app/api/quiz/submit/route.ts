@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       attemptId: `att-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       userId: userId || "guest-user",
       userEmail: userEmail || "guest@ccna.local",
-      moduleId,
+      moduleId: moduleData.id,
       score,
       total,
       percentage,

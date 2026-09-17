@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { recordVideoSubmission, getUserSubmissions } from "@/lib/google-sheets";
+import { getModuleById } from "@/lib/curriculum";
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,11 +11,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    const mod = getModuleById(moduleId);
+    const canonicalModuleId = mod ? mod.id : moduleId;
+
     const submission = {
       submissionId: `sub-${Date.now()}`,
       userId: userId || "guest-user",
       userEmail: userEmail || "guest@ccna.local",
-      moduleId,
+      moduleId: canonicalModuleId,
       driveFileId: driveFileId || "mock-drive-id",
       driveUrl,
       status: "APPROVED" as const, // auto-approve upon verified upload

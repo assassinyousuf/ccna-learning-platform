@@ -169,7 +169,7 @@ export async function recordVideoSubmission(sub: VideoSubmissionRecord): Promise
 
 export async function getUserProgress(userId: string): Promise<Record<string, string>> {
   return inMemoryStore.progress.get(userId) || {
-    "module-1-network-fundamentals": "IN_PROGRESS",
+    "v1-ch1-introduction-to-the-ccna": "IN_PROGRESS",
   };
 }
 

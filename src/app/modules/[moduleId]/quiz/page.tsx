@@ -36,13 +36,46 @@ export default function ModuleQuizPage() {
     passed: boolean;
   } | null>(null);
 
+  // Normalize URL in browser if alias was used
+  React.useEffect(() => {
+    if (moduleData && moduleId !== moduleData.id && typeof window !== "undefined") {
+      const search = window.location.search;
+      window.history.replaceState(null, "", `/modules/${moduleData.id}/quiz${search}`);
+    }
+  }, [moduleData, moduleId]);
+
   if (!moduleData) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-white">Module Not Found</h1>
-        <Link href="/" className="mt-4 inline-block text-cyan-400 font-mono text-xs">
-          Return to Syllabus
-        </Link>
+      <div className="max-w-2xl mx-auto px-4 py-24 text-center">
+        <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-2xl space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+            <HelpCircle className="w-8 h-8" />
+          </div>
+          <div>
+            <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+              CCNA 200-301 Quizzes
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-3">Chapter Not Found</h1>
+            <p className="text-xs text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
+              We couldn&apos;t find an assessment matching &quot;{moduleId}&quot;. Choose an active quiz from our 49 chapters:
+            </p>
+          </div>
+
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/modules/v1-ch2-network-devices/quiz"
+              className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
+            >
+              Start Chapter 2 Quiz
+            </Link>
+            <Link
+              href="/"
+              className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 border border-slate-700 text-white hover:bg-slate-700 transition-colors"
+            >
+              &larr; Return to Curriculum
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -95,7 +128,7 @@ export default function ModuleQuizPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          moduleId,
+          moduleId: moduleData.id,
           answers: selectedAnswers,
           userId: session?.user?.email || "guest-user",
           userEmail: session?.user?.email || "guest@ccna.academy",
@@ -280,7 +313,7 @@ export default function ModuleQuizPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               {results?.passed ? (
                 <Link
-                  href={`/modules/${moduleId}/submit-video`}
+                  href={`/modules/${moduleData.id}/submit-video`}
                   className="flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-500 to-indigo-500 text-white hover:opacity-90 shadow-lg"
                 >
                   <Video className="w-4 h-4" />
@@ -298,7 +331,7 @@ export default function ModuleQuizPage() {
               )}
 
               <Link
-                href={`/modules/${moduleId}`}
+                href={`/modules/${moduleData.id}`}
                 className="flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
               >
                 <BookOpen className="w-4 h-4" />
