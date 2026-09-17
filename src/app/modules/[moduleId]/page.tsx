@@ -441,8 +441,8 @@ export default function ModuleReaderPage() {
                 fullText={chapterFullData.fullText}
                 tableOfContents={chapterFullData.tableOfContents || []}
                 keyPoints={chapterFullData.keyPoints || []}
-                ciscoCommands={moduleData.ciscoCommands}
-                quizQuestions={moduleData.quiz}
+                ciscoCommands={chapterFullData.ciscoCommands?.length ? chapterFullData.ciscoCommands : moduleData.ciscoCommands}
+                quizQuestions={(chapterFullData.quiz && chapterFullData.quiz.length > 0) ? chapterFullData.quiz : (moduleData.quiz || [])}
                 moduleId={moduleData.id}
               />
             ) : (
