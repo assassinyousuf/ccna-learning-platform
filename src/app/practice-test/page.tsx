@@ -40,7 +40,8 @@ import {
   Printer,
   HelpCircle,
   Calculator,
-  Shuffle
+  Shuffle,
+  CheckSquare
 } from "lucide-react";
 import {
   AuthenticExamQuestion,
@@ -627,82 +628,142 @@ export default function PracticeTestPage() {
             </div>
           </div>
 
-          {/* Test Modes Grid with Generous Spacing */}
+          {/* Test Modes Grid with Distinct Pearson VUE Appointment Tickets */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Mode 1: Full 100-Question Authentic CCNA Exam */}
-            <div className="p-8 sm:p-9 rounded-3xl glass-panel glass-panel-hover border border-cyan-500/40 shadow-2xl flex flex-col justify-between relative overflow-hidden group">
-              <div className="absolute top-5 right-5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs font-mono uppercase font-bold tracking-wider">
-                Most Authentic
-              </div>
+            {/* Mode 1: Full 100-Question Authentic CCNA Exam (Pearson VUE Appointment Ticket) */}
+            <div className="vue-ticket-card p-8 sm:p-9 flex flex-col justify-between group">
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mb-6 shadow-md">
+                <div className="flex items-center justify-between gap-2 mb-6">
+                  <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
+                    VUE-200-301-OFFICIAL
+                  </span>
+                  <span className="text-[11px] font-mono text-emerald-400 font-bold flex items-center gap-1.5 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    STATUS: AUTHORIZED
+                  </span>
+                </div>
+
+                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center mb-5 shadow-md">
                   <Award className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Full CCNA Exam (100 Qs)</h3>
-                <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
-                  The definitive CCNA 200-301 simulation. 100 questions weighted strictly by the Cisco blueprint, featuring Simlets, Drag &amp; Drop, and Multi-Select questions with a 120-minute countdown.
+                <h3 className="text-xl font-bold text-white mb-2">200-301 CCNA Full Exam</h3>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  Definitive Pearson VUE certification session. 100 questions covering all 6 blueprint domains, interactive Simlets, Packet Tracer DNDs, and scaled 300–1000 grading.
                 </p>
-                <div className="flex items-center gap-3 mt-6 text-xs sm:text-sm font-mono text-slate-300">
-                  <span className="flex items-center gap-1.5 text-cyan-400 font-semibold"><Clock className="w-4 h-4" /> 120 Mins</span>
-                  <span>•</span>
-                  <span>100 Questions</span>
+
+                <div className="mt-6 p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2 text-xs font-mono">
+                  <div className="flex justify-between text-slate-400">
+                    <span>Items Count:</span>
+                    <span className="text-white font-bold">100 Questions</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>Testing Time:</span>
+                    <span className="text-cyan-400 font-bold">120 Minutes</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>Passing Score:</span>
+                    <span className="text-emerald-400 font-bold">825 / 1000</span>
+                  </div>
                 </div>
               </div>
+
               <button
                 onClick={() => startExam("AUTHENTIC_100", isStrictCiscoMode)}
-                className="mt-8 w-full py-4 rounded-2xl font-bold text-xs sm:text-sm bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:brightness-110 shadow-lg shadow-cyan-500/20 transition-all flex items-center justify-center gap-2 glow-cyan"
+                className="mt-8 w-full py-4 rounded-2xl font-bold text-xs sm:text-sm bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-500 text-white hover:brightness-110 shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2"
               >
-                <span>Launch Full 100-Q Exam</span>
+                <span>Commence 100-Q Exam Session</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
 
             {/* Mode 2: Standard 60-Question Mock */}
-            <div className="p-8 sm:p-9 rounded-3xl glass-panel glass-panel-hover border border-slate-800 shadow-2xl flex flex-col justify-between">
+            <div className="vue-ticket-card p-8 sm:p-9 flex flex-col justify-between group">
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-6 shadow-md">
+                <div className="flex items-center justify-between gap-2 mb-6">
+                  <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
+                    VUE-BENCHMARK-60
+                  </span>
+                  <span className="text-[11px] font-mono text-cyan-400 font-bold flex items-center gap-1.5 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    DIAGNOSTIC BENCHMARK
+                  </span>
+                </div>
+
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mb-5 shadow-md">
                   <Layers className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Standard CCNA Mock (60 Qs)</h3>
-                <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
-                  Balanced 90-minute fast-track exam covering all 6 domains and key interactive question types. Perfect for mid-week benchmark assessments.
+                <h3 className="text-xl font-bold text-white mb-2">Standard Diagnostic Mock</h3>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  Fast-track 60-question assessment calibrated across all 6 Cisco domains. Includes 2 Simlets &amp; 2 Drag-and-Drops for high-yield evaluation.
                 </p>
-                <div className="flex items-center gap-3 mt-6 text-xs sm:text-sm font-mono text-slate-300">
-                  <span className="flex items-center gap-1.5 text-emerald-400 font-semibold"><Clock className="w-4 h-4" /> 90 Mins</span>
-                  <span>•</span>
-                  <span>60 Questions</span>
+
+                <div className="mt-6 p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2 text-xs font-mono">
+                  <div className="flex justify-between text-slate-400">
+                    <span>Items Count:</span>
+                    <span className="text-white font-bold">60 Questions</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>Testing Time:</span>
+                    <span className="text-emerald-400 font-bold">90 Minutes</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>Passing Score:</span>
+                    <span className="text-emerald-400 font-bold">825 / 1000</span>
+                  </div>
                 </div>
               </div>
+
               <button
                 onClick={() => startExam("STANDARD_60", isStrictCiscoMode)}
-                className="mt-8 w-full py-4 rounded-2xl font-bold text-xs sm:text-sm bg-slate-800/90 hover:bg-slate-750 text-white transition-all flex items-center justify-center gap-2 border border-slate-700 shadow-md"
+                className="mt-8 w-full py-4 rounded-2xl font-bold text-xs sm:text-sm bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:brightness-110 shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2"
               >
-                <span>Launch 60-Q Mock</span>
+                <span>Commence 60-Q Mock</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
 
             {/* Mode 3: Performance-Based Simlets & Drag-and-Drop Drill */}
-            <div className="p-8 sm:p-9 rounded-3xl glass-panel glass-panel-hover border border-purple-500/30 shadow-2xl flex flex-col justify-between">
+            <div className="vue-ticket-card p-8 sm:p-9 flex flex-col justify-between group">
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-6 shadow-md">
+                <div className="flex items-center justify-between gap-2 mb-6">
+                  <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
+                    VUE-PBQ-SIMLET
+                  </span>
+                  <span className="text-[11px] font-mono text-purple-400 font-bold flex items-center gap-1.5 bg-purple-500/10 px-2.5 py-1 rounded-lg border border-purple-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                    HANDS-ON LABS
+                  </span>
+                </div>
+
+                <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center mb-5 shadow-md">
                   <Terminal className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Simlet &amp; DND Lab Drill</h3>
-                <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
-                  Drill the highest-stakes interactive questions on the CCNA: live CLI router/switch terminal troubleshooting, drag-and-drop matching, and multi-selects.
+                <h3 className="text-xl font-bold text-white mb-2">Simlet &amp; PBQ Lab Drill</h3>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  Focus purely on high-stakes interactive questions: live router/switch CLI simlets, 802.1Q trunks, OSPF neighbor diagnostics, and DND matching.
                 </p>
-                <div className="flex items-center gap-3 mt-6 text-xs sm:text-sm font-mono text-slate-300">
-                  <span className="flex items-center gap-1.5 text-purple-400 font-semibold"><Clock className="w-4 h-4" /> 45 Mins</span>
-                  <span>•</span>
-                  <span>Interactive Labs</span>
+
+                <div className="mt-6 p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2 text-xs font-mono">
+                  <div className="flex justify-between text-slate-400">
+                    <span>Items Type:</span>
+                    <span className="text-white font-bold">Simlets + DNDs</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>Testing Time:</span>
+                    <span className="text-purple-400 font-bold">45 Minutes</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>CLI Console:</span>
+                    <span className="text-emerald-400 font-bold">Simulated IOS</span>
+                  </div>
                 </div>
               </div>
+
               <button
                 onClick={() => startExam("SIMLET_DRILL", false)}
-                className="mt-8 w-full py-4 rounded-2xl font-bold text-xs sm:text-sm bg-gradient-to-r from-purple-500 to-indigo-600 text-white hover:brightness-110 shadow-lg shadow-purple-500/20 transition-all flex items-center justify-center gap-2"
+                className="mt-8 w-full py-4 rounded-2xl font-bold text-xs sm:text-sm bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:brightness-110 shadow-lg shadow-purple-500/20 transition-all flex items-center justify-center gap-2"
               >
-                <span>Launch Simlet Drill</span>
+                <span>Commence PBQ Drill</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -761,9 +822,9 @@ export default function PracticeTestPage() {
       {/* SCREEN 2: ACTIVE PEARSON VUE CISCO EXAM ENVIRONMENT                      */}
       {/* ========================================================================= */}
       {testState === "TESTING" && currentQ && (
-        <div className="flex flex-col min-h-screen bg-[#0b1120] select-none">
+        <div className="flex flex-col min-h-screen bg-[#050811] select-none">
           {/* Pearson VUE Authentic Navy Header */}
-          <header className="sticky top-0 z-40 bg-[#091124] border-b border-slate-700/80 shadow-md">
+          <header className="sticky top-0 z-40 vue-header-bar shadow-xl">
             <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
               {/* Exam & Candidate Metadata */}
               <div className="flex items-center gap-4">
@@ -874,7 +935,7 @@ export default function PracticeTestPage() {
           {/* Main Question Display Area */}
           <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-8 space-y-6">
             {/* Question Stem Card */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
+            <div className="vue-workstation p-6 sm:p-8 space-y-4">
               {/* Question Type Badge */}
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
@@ -934,9 +995,9 @@ export default function PracticeTestPage() {
                   const logs = simletCliLogs[logKey] || [];
 
                   return (
-                    <div className="rounded-2xl border border-slate-800 bg-[#050811] overflow-hidden shadow-2xl font-mono">
+                    <div className="simlet-crt-frame overflow-hidden shadow-2xl font-mono">
                       {/* Terminal Chrome */}
-                      <div className="px-4 py-2 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                      <div className="px-4 py-2 bg-[#060a14] border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
                         <span className="flex items-center gap-2">
                           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                           <span>Console Session: {currentDev.hostname} (IOS Software, 15.X)</span>
@@ -1141,12 +1202,13 @@ export default function PracticeTestPage() {
             {/* ============================================================= */}
             {currentQ.type === "multi_choice" && currentQ.options && (
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs font-mono text-slate-400">
-                  <span className="text-amber-400 font-bold">
+                <div className="flex items-center justify-between text-xs font-mono text-slate-400 px-1">
+                  <span className="text-amber-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <CheckSquare className="w-4 h-4" />
                     Select exactly {currentQ.selectCount || 2} options:
                   </span>
-                  <span>
-                    Selected: {(userAnswers[currentQ.id] || []).length} / {currentQ.selectCount || 2}
+                  <span className="bg-[#050811] px-2.5 py-1 rounded-lg border border-slate-800 font-bold text-cyan-300">
+                    Selected: {(userAnswers[currentQ.id] || []).length} of {currentQ.selectCount || 2}
                   </span>
                 </div>
 
@@ -1159,20 +1221,22 @@ export default function PracticeTestPage() {
                     <div
                       key={oIdx}
                       onClick={() => handleToggleMultiOption(currentQ.id, oIdx, currentQ.selectCount || 2)}
-                      className={`p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-3 ${
-                        isSelected
-                          ? "bg-cyan-500/10 border-cyan-500 text-white shadow-md shadow-cyan-500/10"
-                          : "bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700 hover:bg-slate-900"
+                      className={`vue-option-card p-4 sm:p-5 flex items-start gap-3.5 cursor-pointer ${
+                        isSelected ? "vue-option-selected" : ""
                       }`}
                     >
                       <div
-                        className={`w-6 h-6 rounded-md font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 ${
-                          isSelected ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-slate-400"
+                        className={`w-7 h-7 rounded-lg font-mono text-xs font-black flex items-center justify-center shrink-0 border transition-all ${
+                          isSelected
+                            ? "bg-cyan-400 text-slate-950 border-cyan-300 shadow-md shadow-cyan-400/40"
+                            : "bg-[#050811] text-slate-400 border-slate-700"
                         }`}
                       >
                         {isSelected ? "✓" : letter}
                       </div>
-                      <span className="text-xs sm:text-sm leading-relaxed">{opt}</span>
+                      <span className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-0.5">
+                        {opt}
+                      </span>
                     </div>
                   );
                 })}
@@ -1184,6 +1248,13 @@ export default function PracticeTestPage() {
             {/* ============================================================= */}
             {currentQ.type === "single_choice" && currentQ.options && (
               <div className="space-y-3">
+                <div className="text-xs font-mono text-slate-400 px-1 flex items-center justify-between">
+                  <span className="text-cyan-400 font-semibold uppercase tracking-wider">
+                    Select the single best answer:
+                  </span>
+                  <span className="text-[11px] text-slate-500">Click option to select</span>
+                </div>
+
                 {currentQ.options.map((opt, oIdx) => {
                   const letter = ["A", "B", "C", "D", "E", "F"][oIdx];
                   const isSelected = userAnswers[currentQ.id] === letter;
@@ -1192,20 +1263,22 @@ export default function PracticeTestPage() {
                     <div
                       key={oIdx}
                       onClick={() => handleSelectSingleOption(currentQ.id, oIdx)}
-                      className={`p-4 rounded-xl border cursor-pointer transition-all flex items-start gap-3 ${
-                        isSelected
-                          ? "bg-cyan-500/10 border-cyan-500 text-white shadow-md shadow-cyan-500/10"
-                          : "bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700 hover:bg-slate-900"
+                      className={`vue-option-card p-4 sm:p-5 flex items-start gap-3.5 cursor-pointer ${
+                        isSelected ? "vue-option-selected" : ""
                       }`}
                     >
                       <div
-                        className={`w-6 h-6 rounded-full font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 ${
-                          isSelected ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-slate-400"
+                        className={`w-7 h-7 rounded-full font-mono text-xs font-black flex items-center justify-center shrink-0 border transition-all ${
+                          isSelected
+                            ? "bg-cyan-400 text-slate-950 border-cyan-300 shadow-md shadow-cyan-400/40 ring-2 ring-cyan-500/20"
+                            : "bg-[#050811] text-slate-400 border-slate-700"
                         }`}
                       >
                         {letter}
                       </div>
-                      <span className="text-xs sm:text-sm leading-relaxed">{opt}</span>
+                      <span className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-0.5">
+                        {opt}
+                      </span>
                     </div>
                   );
                 })}

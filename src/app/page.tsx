@@ -38,7 +38,8 @@ import {
   Linkedin,
   Mail,
   Code2,
-  GraduationCap
+  GraduationCap,
+  Calculator
 } from "lucide-react";
 
 export default function HomePage() {
@@ -47,6 +48,10 @@ export default function HomePage() {
   const [selectedVolume, setSelectedVolume] = useState<1 | 2>(1);
   const [selectedPart, setSelectedPart] = useState<number | "all">("all");
   const [authError, setAuthError] = useState<string | null>(null);
+
+  // Hero interactive Cisco demonstration state
+  const [heroTab, setHeroTab] = useState<"terminal" | "topology" | "ospf">("terminal");
+  const [activeCmd, setActiveCmd] = useState<"mac" | "brief" | "route">("mac");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -148,6 +153,236 @@ export default function HomePage() {
           </Link>
         </div>
 
+        {/* ========================================================================= */}
+        {/* HERO FLAGSHIP DEMO: LIVE CISCO IOS WORKSTATION & TOPOLOGY ENGINE         */}
+        {/* ========================================================================= */}
+        <div className="mt-16 max-w-5xl mx-auto rounded-3xl bg-[#060a14] border border-cyan-500/30 shadow-2xl shadow-cyan-950/40 overflow-hidden text-left relative group">
+          {/* Top Bezel / Header */}
+          <div className="px-6 py-3.5 bg-[#091124] border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
+              </div>
+              <span className="text-xs font-mono text-slate-400 pl-2 border-l border-slate-800">
+                cisco-catalyst-2960-console (tty0) • 9600 8-N-1
+              </span>
+            </div>
+
+            {/* Interactive View Switcher Tabs */}
+            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono">
+              <button
+                onClick={() => setHeroTab("terminal")}
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+                  heroTab === "terminal"
+                    ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+                <span>IOS Terminal</span>
+              </button>
+              <button
+                onClick={() => setHeroTab("topology")}
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+                  heroTab === "topology"
+                    ? "bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                <Network className="w-3.5 h-3.5 text-purple-400" />
+                <span>Live Topology</span>
+              </button>
+              <button
+                onClick={() => setHeroTab("ospf")}
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+                  heroTab === "ospf"
+                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                <Cpu className="w-3.5 h-3.5 text-emerald-400" />
+                <span>OSPF Convergence</span>
+              </button>
+            </div>
+          </div>
+
+          {/* TAB 1: Live Interactive Cisco CLI */}
+          {heroTab === "terminal" && (
+            <div className="p-6 sm:p-8 font-mono text-xs sm:text-sm bg-[#040711]">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-800/80 text-xs">
+                <span className="text-slate-400 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
+                  <span>Click a command below to execute simulated IOS syntax:</span>
+                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() => setActiveCmd("mac")}
+                    className={`px-3 py-1.5 rounded-lg border text-xs transition-all ${
+                      activeCmd === "mac"
+                        ? "bg-cyan-500 text-slate-950 font-bold border-cyan-400 shadow-md shadow-cyan-500/20"
+                        : "bg-slate-900 border-slate-700 text-slate-300 hover:text-white hover:border-slate-600"
+                    }`}
+                  >
+                    show mac address-table
+                  </button>
+                  <button
+                    onClick={() => setActiveCmd("brief")}
+                    className={`px-3 py-1.5 rounded-lg border text-xs transition-all ${
+                      activeCmd === "brief"
+                        ? "bg-cyan-500 text-slate-950 font-bold border-cyan-400 shadow-md shadow-cyan-500/20"
+                        : "bg-slate-900 border-slate-700 text-slate-300 hover:text-white hover:border-slate-600"
+                    }`}
+                  >
+                    show ip interface brief
+                  </button>
+                  <button
+                    onClick={() => setActiveCmd("route")}
+                    className={`px-3 py-1.5 rounded-lg border text-xs transition-all ${
+                      activeCmd === "route"
+                        ? "bg-cyan-500 text-slate-950 font-bold border-cyan-400 shadow-md shadow-cyan-500/20"
+                        : "bg-slate-900 border-slate-700 text-slate-300 hover:text-white hover:border-slate-600"
+                    }`}
+                  >
+                    show ip route
+                  </button>
+                </div>
+              </div>
+
+              {/* Terminal Screen Output */}
+              <div className="space-y-3 min-h-[220px] text-slate-300 leading-relaxed overflow-x-auto">
+                {activeCmd === "mac" && (
+                  <div className="space-y-1 text-slate-300">
+                    <p className="text-cyan-400 font-bold">SW1# show mac address-table</p>
+                    <p className="text-slate-500">          Mac Address Table</p>
+                    <p className="text-slate-500">-------------------------------------------</p>
+                    <p className="text-slate-400 font-semibold">Vlan    Mac Address       Type        Ports</p>
+                    <p className="text-slate-400 font-semibold">----    -----------       --------    -----</p>
+                    <p><span className="text-amber-400">  10</span>    0014.a82b.4711    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/1</span></p>
+                    <p><span className="text-amber-400">  10</span>    0014.a82b.4712    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/2</span></p>
+                    <p><span className="text-purple-400">  20</span>    0050.56a1.c001    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/3</span></p>
+                    <p><span className="text-slate-400">   1</span>    0019.06ea.3980    <span className="text-cyan-400">STATIC</span>      <span className="text-white">CPU</span></p>
+                    <p><span className="text-slate-400"> All</span>    0100.0ccc.cccc    <span className="text-cyan-400">STATIC</span>      <span className="text-white">CPU (CDP)</span></p>
+                    <p className="pt-2 text-cyan-400 font-bold">SW1# <span className="animate-pulse inline-block w-2 h-4 bg-cyan-400 align-middle ml-1" /></p>
+                  </div>
+                )}
+
+                {activeCmd === "brief" && (
+                  <div className="space-y-1 text-slate-300">
+                    <p className="text-cyan-400 font-bold">R1# show ip interface brief</p>
+                    <p className="text-slate-400 font-semibold">Interface              IP-Address      OK? Method Status                Protocol</p>
+                    <p><span className="text-cyan-300 font-bold">GigabitEthernet0/0/0</span>   <span className="text-amber-300">192.168.1.1</span>     YES NVRAM  <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
+                    <p><span className="text-cyan-300 font-bold">GigabitEthernet0/0/1</span>   <span className="text-amber-300">10.0.12.1</span>       YES manual <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
+                    <p><span className="text-slate-400">GigabitEthernet0/0/2</span>   unassigned      YES unset  <span className="text-red-400 font-semibold">administratively down</span> <span className="text-red-400 font-semibold">down</span></p>
+                    <p><span className="text-purple-300 font-bold">Loopback0</span>              <span className="text-amber-300">1.1.1.1</span>         YES manual <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
+                    <p className="pt-2 text-cyan-400 font-bold">R1# <span className="animate-pulse inline-block w-2 h-4 bg-cyan-400 align-middle ml-1" /></p>
+                  </div>
+                )}
+
+                {activeCmd === "route" && (
+                  <div className="space-y-1 text-slate-300">
+                    <p className="text-cyan-400 font-bold">R1# show ip route</p>
+                    <p className="text-slate-500">Codes: C - connected, S - static, O - OSPF, IA - OSPF inter area, * - candidate default</p>
+                    <p className="text-slate-300 font-semibold pt-1">Gateway of last resort is 10.0.12.2 to network 0.0.0.0</p>
+                    <p><span className="text-emerald-400 font-bold">C</span>     192.168.1.0/24 is directly connected, <span className="text-cyan-300">GigabitEthernet0/0/0</span></p>
+                    <p><span className="text-emerald-400 font-bold">C</span>     10.0.12.0/30 is directly connected, <span className="text-cyan-300">GigabitEthernet0/0/1</span></p>
+                    <p><span className="text-purple-400 font-bold">O</span>     <span className="text-amber-300">172.16.0.0/16</span> [110/2] via 10.0.12.2, 00:14:22, <span className="text-cyan-300">GigabitEthernet0/0/1</span></p>
+                    <p><span className="text-amber-400 font-bold">S*</span>    0.0.0.0/0 [1/0] via 10.0.12.2</p>
+                    <p className="pt-2 text-cyan-400 font-bold">R1# <span className="animate-pulse inline-block w-2 h-4 bg-cyan-400 align-middle ml-1" /></p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: Live Topology Preview */}
+          {heroTab === "topology" && (
+            <div className="p-8 bg-[#040711] font-mono">
+              <div className="flex items-center justify-between mb-6 text-xs text-slate-400">
+                <span className="text-purple-400 font-bold flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
+                  Active 802.1Q Trunk Topology • Catalyst 2960 &amp; ISR 4331
+                </span>
+                <span className="text-emerald-400 font-semibold">Links: UP / UP (1000BASE-T)</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-center text-center">
+                {/* Host A */}
+                <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mx-auto flex items-center justify-center mb-3">
+                    <Laptop className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-white text-xs sm:text-sm">PC-A (Host)</h4>
+                  <p className="text-[11px] text-cyan-300 font-mono mt-1">192.168.10.50/24</p>
+                  <p className="text-[10px] text-slate-500 mt-1">MAC: 0014.a82b.4711</p>
+                  <span className="inline-block mt-3 px-2 py-0.5 rounded-full text-[10px] bg-amber-500/10 border border-amber-500/30 text-amber-300 font-bold">
+                    VLAN 10 Access
+                  </span>
+                </div>
+
+                {/* Switch 1 */}
+                <div className="p-5 rounded-2xl bg-slate-900/90 border border-purple-500/40 shadow-md relative">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-500/40 text-[10px] text-purple-300 font-bold">
+                    802.1Q TRUNK
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 mx-auto flex items-center justify-center mb-3">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-white text-xs sm:text-sm">SW1 (Catalyst 2960)</h4>
+                  <p className="text-[11px] text-purple-300 font-mono mt-1">VLAN 10, 20, 99</p>
+                  <p className="text-[10px] text-slate-500 mt-1">Port Gi0/1 (Trunk Native 99)</p>
+                  <span className="inline-block mt-3 px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-bold">
+                    STP Root Bridge
+                  </span>
+                </div>
+
+                {/* Router 1 */}
+                <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center mb-3">
+                    <Network className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-white text-xs sm:text-sm">R1 (Cisco ISR 4331)</h4>
+                  <p className="text-[11px] text-emerald-300 font-mono mt-1">Router-on-a-Stick</p>
+                  <p className="text-[10px] text-slate-500 mt-1">Sub-ifs: Gi0/0.10, Gi0/0.20</p>
+                  <span className="inline-block mt-3 px-2 py-0.5 rounded-full text-[10px] bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold">
+                    Default Gateway
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: OSPF Convergence */}
+          {heroTab === "ospf" && (
+            <div className="p-8 bg-[#040711] font-mono text-xs text-slate-300 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <span className="text-emerald-400 font-bold flex items-center gap-2">
+                  <Cpu className="w-4 h-4" />
+                  <span>OSPFv2 Process ID 1 • Router ID: 1.1.1.1 • Area 0 (Backbone)</span>
+                </span>
+                <span className="text-cyan-400 font-semibold">State: CONVERGED</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
+                  <h5 className="text-slate-400 font-semibold mb-2">Neighbor Adjacency Table:</h5>
+                  <p className="text-slate-300">Neighbor ID: <span className="text-cyan-300">2.2.2.2</span></p>
+                  <p className="text-slate-300">Priority: 1, State: <span className="text-emerald-400 font-bold">FULL/DR</span></p>
+                  <p className="text-slate-300">Dead Time: <span className="text-amber-300">00:00:36</span></p>
+                  <p className="text-slate-300">Address: <span className="text-slate-400">10.0.12.2 (Gi0/0/1)</span></p>
+                </div>
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
+                  <h5 className="text-slate-400 font-semibold mb-2">Shortest Path First (Dijkstra) Metric:</h5>
+                  <p className="text-slate-300">Reference Bandwidth: <span className="text-cyan-300">1000 Mbps</span></p>
+                  <p className="text-slate-300">Gigabit Link Cost: <span className="text-emerald-400">1</span></p>
+                  <p className="text-slate-300">FastEthernet Link Cost: <span className="text-amber-300">10</span></p>
+                  <p className="text-slate-300">Serial T1 (1.544M) Cost: <span className="text-red-400">64</span></p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Spacious Infrastructure Highlights */}
         <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto text-left">
           <div className="p-6 rounded-2xl glass-panel glass-panel-hover flex flex-col justify-between">
@@ -208,56 +443,125 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Row 1: First 3 Pillars */}
+          {/* Row 1: First 3 Pillars (Distinct Colored Slabs) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {curriculum.pedagogicalMethod.pillars.slice(0, 3).map((pillar) => (
-              <div
-                key={pillar.pillar}
-                className="relative p-8 sm:p-10 rounded-3xl glass-panel glass-panel-hover flex flex-col justify-between group shadow-xl"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/15 to-emerald-500/15 border border-cyan-500/30 text-cyan-400 font-mono font-bold text-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md">
-                    0{pillar.pillar}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3 leading-snug">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">
-                    {pillar.description}
-                  </p>
+            {/* Pillar 1 */}
+            <div className="relative p-8 sm:p-10 rounded-3xl pillar-slab-1 flex flex-col justify-between group shadow-xl hover:-translate-y-1 transition-all">
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 font-mono font-black text-xl flex items-center justify-center mb-6 shadow-md">
+                  01
                 </div>
-                <div className="mt-8 pt-5 border-t border-slate-800/60 flex items-center justify-between text-xs font-mono text-cyan-400 font-semibold">
-                  <span>Pillar 0{pillar.pillar}</span>
-                  <span className="text-slate-600">Active Mastery</span>
+                <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold mb-2">
+                  <BookOpen className="w-4 h-4" />
+                  <span>Pillar 01 • Active Ingestion</span>
                 </div>
+                <h3 className="text-xl font-bold text-white mb-3 leading-snug">
+                  Complete Study Reading
+                </h3>
+                <p className="text-sm text-slate-300/80 leading-relaxed">
+                  Engage deeply with all 49 chapters from Wendell Odom&apos;s CCNA Official Cert Guides (Vols 1 &amp; 2). Don&apos;t just skim—annotate and summarize.
+                </p>
               </div>
-            ))}
+              <div className="mt-8 pt-5 border-t border-cyan-500/20 flex items-center justify-between text-xs font-mono text-cyan-400 font-semibold">
+                <span>Volume 1 &amp; 2 Theory</span>
+                <span className="text-slate-500">Foundation</span>
+              </div>
+            </div>
+
+            {/* Pillar 2 */}
+            <div className="relative p-8 sm:p-10 rounded-3xl pillar-slab-2 flex flex-col justify-between group shadow-xl hover:-translate-y-1 transition-all">
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-sky-500/15 border border-sky-500/30 text-sky-300 font-mono font-black text-xl flex items-center justify-center mb-6 shadow-md">
+                  02
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-sky-400 font-bold mb-2">
+                  <Calculator className="w-4 h-4" />
+                  <span>Pillar 02 • Mental Math</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 leading-snug">
+                  Subnetting Muscle Memory
+                </h3>
+                <p className="text-sm text-slate-300/80 leading-relaxed">
+                  Calculate subnets in under 30 seconds using magic numbers and binary powers. Master VLSM and CIDR prefixes without pen and paper.
+                </p>
+              </div>
+              <div className="mt-8 pt-5 border-t border-sky-500/20 flex items-center justify-between text-xs font-mono text-sky-400 font-semibold">
+                <span>Subnet Speed Drills</span>
+                <span className="text-slate-500">&lt;30s Target</span>
+              </div>
+            </div>
+
+            {/* Pillar 3 */}
+            <div className="relative p-8 sm:p-10 rounded-3xl pillar-slab-3 flex flex-col justify-between group shadow-xl hover:-translate-y-1 transition-all">
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-300 font-mono font-black text-xl flex items-center justify-center mb-6 shadow-md">
+                  03
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-purple-400 font-bold mb-2">
+                  <Layers className="w-4 h-4" />
+                  <span>Pillar 03 • Spaced Recall</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 leading-snug">
+                  Active Recall Flashcards
+                </h3>
+                <p className="text-sm text-slate-300/80 leading-relaxed">
+                  Daily spaced-repetition testing across port numbers, protocol defaults, encapsulation types, and Cisco timers to defeat the forgetting curve.
+                </p>
+              </div>
+              <div className="mt-8 pt-5 border-t border-purple-500/20 flex items-center justify-between text-xs font-mono text-purple-400 font-semibold">
+                <span>Spaced Repetition</span>
+                <span className="text-slate-500">Daily Drills</span>
+              </div>
+            </div>
           </div>
 
-          {/* Row 2: Final 2 Pillars (Centered and Spacious) */}
+          {/* Row 2: Final 2 Pillars (Amber & Emerald Slabs) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {curriculum.pedagogicalMethod.pillars.slice(3, 5).map((pillar) => (
-              <div
-                key={pillar.pillar}
-                className="relative p-8 sm:p-10 rounded-3xl glass-panel glass-panel-hover flex flex-col justify-between group shadow-xl"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/15 to-emerald-500/15 border border-cyan-500/30 text-cyan-400 font-mono font-bold text-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md">
-                    0{pillar.pillar}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3 leading-snug">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">
-                    {pillar.description}
-                  </p>
+            {/* Pillar 4 */}
+            <div className="relative p-8 sm:p-10 rounded-3xl pillar-slab-4 flex flex-col justify-between group shadow-xl hover:-translate-y-1 transition-all">
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono font-black text-xl flex items-center justify-center mb-6 shadow-md">
+                  04
                 </div>
-                <div className="mt-8 pt-5 border-t border-slate-800/60 flex items-center justify-between text-xs font-mono text-cyan-400 font-semibold">
-                  <span>Pillar 0{pillar.pillar}</span>
-                  <span className="text-slate-600">Active Mastery</span>
+                <div className="flex items-center gap-2 text-xs font-mono text-amber-400 font-bold mb-2">
+                  <Terminal className="w-4 h-4" />
+                  <span>Pillar 04 • CLI Mastery</span>
                 </div>
+                <h3 className="text-xl font-bold text-white mb-3 leading-snug">
+                  Appendix B Cisco IOS Labbing
+                </h3>
+                <p className="text-sm text-slate-300/80 leading-relaxed">
+                  Type every command from Appendix B inside Packet Tracer until fingers execute Cisco IOS configuration and troubleshooting commands automatically.
+                </p>
               </div>
-            ))}
+              <div className="mt-8 pt-5 border-t border-amber-500/20 flex items-center justify-between text-xs font-mono text-amber-400 font-semibold">
+                <span>367 Cisco IOS Commands</span>
+                <span className="text-slate-500">Packet Tracer</span>
+              </div>
+            </div>
+
+            {/* Pillar 5 */}
+            <div className="relative p-8 sm:p-10 rounded-3xl pillar-slab-5 flex flex-col justify-between group shadow-xl hover:-translate-y-1 transition-all">
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono font-black text-xl flex items-center justify-center mb-6 shadow-md">
+                  05
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold mb-2">
+                  <Video className="w-4 h-4" />
+                  <span>Pillar 05 • Proof-of-Skill</span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 leading-snug">
+                  Video Proof &amp; Peer Accountability
+                </h3>
+                <p className="text-sm text-slate-300/80 leading-relaxed">
+                  Record 2–5 minute screen captures explaining your running topology and show outputs. Teaching concepts and verifying lab results locks in mastery.
+                </p>
+              </div>
+              <div className="mt-8 pt-5 border-t border-emerald-500/20 flex items-center justify-between text-xs font-mono text-emerald-400 font-semibold">
+                <span>Google Drive Storage</span>
+                <span className="text-slate-500">Feynman Technique</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

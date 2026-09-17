@@ -318,17 +318,18 @@ export default function DashboardPage() {
   }, [examHistory]);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-10 space-y-10">
+    <div className="noc-cockpit min-h-screen py-10 px-4 sm:px-6 lg:px-10 space-y-10">
       {/* 1. STUDENT IDENTITY & COMMAND CENTER PROFILE BANNER */}
-      <div className="p-8 sm:p-10 rounded-3xl glass-panel shadow-2xl relative overflow-hidden border border-slate-800">
+      <div className="p-8 sm:p-10 rounded-3xl bg-[#090e1c] border border-cyan-500/20 shadow-2xl relative overflow-hidden">
         <div className="absolute right-0 top-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute left-1/3 bottom-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute left-1/4 bottom-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
 
         <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-          {/* User Bio & Avatar */}
+          {/* User Bio & Cadet Insignia */}
           <div className="flex items-center gap-5">
             <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 via-emerald-400 to-indigo-500 p-0.5 glow-cyan shrink-0 shadow-xl">
-              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center overflow-hidden">
+              <div className="w-full h-full bg-[#050811] rounded-[14px] flex items-center justify-center overflow-hidden">
                 {session?.user?.image ? (
                   <img src={session.user.image} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
@@ -345,53 +346,74 @@ export default function DashboardPage() {
                 <span className={`text-xs font-mono px-3 py-1 rounded-full border font-semibold ${cadetRank.color}`}>
                   {cadetRank.title}
                 </span>
-                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-slate-400">
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300">
                   {cadetRank.level}
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 font-mono flex items-center gap-2">
                 <span>{session?.user?.email || "cadet@ccna.academy"}</span>
                 <span className="text-slate-600">•</span>
-                <span className="text-emerald-400">CCNA 200-301 Certification Track</span>
+                <span className="text-cyan-400">NOC Operations Flight Deck</span>
               </p>
             </div>
           </div>
 
-          {/* CCNA Readiness Meter Gauge */}
-          <div className="flex items-center gap-6 bg-slate-950/80 border border-slate-800 p-5 rounded-2xl shadow-xl shrink-0">
-            <div>
-              <div className="flex items-center justify-between gap-4 text-xs font-mono text-slate-400">
-                <span className="uppercase tracking-wider flex items-center gap-1.5">
-                  <Target className="w-3.5 h-3.5 text-cyan-400" />
-                  Exam Readiness Score
-                </span>
-                <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                  Pass Mark: 825
-                </span>
+          {/* CCNA Readiness Semicircular Tachometer Gauge */}
+          <div className="flex items-center gap-6 bg-[#050811] border border-slate-800 p-5 rounded-2xl shadow-xl shrink-0 relative overflow-hidden">
+            <div className="relative flex flex-col items-center">
+              <div className="w-40 h-24 relative flex items-end justify-center">
+                <svg className="w-36 h-36 -rotate-90" viewBox="0 0 140 140">
+                  {/* Track */}
+                  <circle
+                    cx="70"
+                    cy="70"
+                    r="54"
+                    fill="none"
+                    stroke="#1e293b"
+                    strokeWidth="10"
+                    strokeDasharray="254"
+                    strokeDashoffset="85"
+                  />
+                  {/* Fill */}
+                  <circle
+                    cx="70"
+                    cy="70"
+                    r="54"
+                    fill="none"
+                    stroke="url(#readinessGrad)"
+                    strokeWidth="10"
+                    strokeDasharray="254"
+                    strokeDashoffset={Math.max(85, 254 - ((readinessScore - 300) / 700) * 169)}
+                    strokeLinecap="round"
+                    className="transition-all duration-1000 ease-out"
+                  />
+                  <defs>
+                    <linearGradient id="readinessGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#06b6d4" />
+                      <stop offset="70%" stopColor="#10b981" />
+                      <stop offset="100%" stopColor="#f59e0b" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div className="absolute bottom-1 text-center">
+                  <span className="text-2xl sm:text-3xl font-black text-white font-mono leading-none block">
+                    {readinessScore}
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">/ 1000 SCALED</span>
+                </div>
               </div>
-              
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-3xl sm:text-4xl font-black text-cyan-400 font-mono">
-                  {readinessScore}
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  TARGET: 825
                 </span>
-                <span className="text-xs text-slate-500 font-mono">/ 1000 Scaled</span>
-              </div>
-
-              <div className="w-48 sm:w-56 h-2 bg-slate-800 rounded-full mt-2 overflow-hidden relative">
-                <div
-                  className="h-full bg-gradient-to-r from-cyan-500 via-emerald-400 to-amber-400 rounded-full transition-all duration-700"
-                  style={{ width: `${Math.min(100, Math.max(5, ((readinessScore - 300) / 700) * 100))}%` }}
-                />
-                <div
-                  className="absolute top-0 bottom-0 w-1 bg-white shadow-sm"
-                  style={{ left: `${((825 - 300) / 700) * 100}%` }}
-                  title="Cisco Passing Standard: 825/1000"
-                />
+                <span className="text-[10px] font-mono text-cyan-400 font-medium">
+                  {readinessScore >= 825 ? "EXAM READY ✓" : "CALIBRATING"}
+                </span>
               </div>
             </div>
 
-            <div className="w-14 h-14 rounded-full border-4 border-slate-800 border-t-cyan-400 border-r-emerald-400 flex items-center justify-center glow-cyan shadow-sm shrink-0">
-              <Award className="w-6 h-6 text-cyan-400" />
+            <div className="w-14 h-14 rounded-full border-2 border-cyan-500/40 bg-cyan-500/10 flex items-center justify-center glow-cyan shadow-sm shrink-0">
+              <Award className="w-7 h-7 text-cyan-400" />
             </div>
           </div>
         </div>
@@ -401,7 +423,7 @@ export default function DashboardPage() {
           <div className="flex flex-wrap items-center gap-6">
             <span className="flex items-center gap-2 text-emerald-400 font-medium">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-              Live Gradebook Active
+              NOC Telemetry Synced
             </span>
             <span className="text-slate-700 hidden sm:inline">•</span>
             <span className="flex items-center gap-1.5 text-blue-400">
@@ -419,7 +441,7 @@ export default function DashboardPage() {
 
           <button
             onClick={loadProgressAndData}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition-colors text-xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/40 transition-colors text-xs"
             title="Refresh gradebook data"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -428,13 +450,15 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* 2. FOUR KEY PERFORMANCE CARDS */}
+      {/* 2. FOUR KEY PERFORMANCE CARDS (NOC HUD TILES) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* Card 1: Practice Exam Scores */}
-        <div className="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all shadow-lg space-y-3">
+        <div className="noc-tile noc-tile-amber p-6 space-y-3">
           <div className="flex items-center justify-between text-xs font-mono text-amber-400">
             <span className="uppercase tracking-wider font-semibold">Cisco Mock Exam</span>
-            <Award className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+              <Award className="w-4 h-4 text-amber-400" />
+            </div>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black text-white font-mono">
@@ -453,10 +477,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Card 2: Chapter Review Quizzes */}
-        <div className="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all shadow-lg space-y-3">
+        <div className="noc-tile noc-tile-cyan p-6 space-y-3">
           <div className="flex items-center justify-between text-xs font-mono text-cyan-400">
             <span className="uppercase tracking-wider font-semibold">Review Quizzes</span>
-            <HelpCircle className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+              <HelpCircle className="w-4 h-4 text-cyan-400" />
+            </div>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black text-white font-mono">
@@ -473,10 +499,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Card 3: Completed Chapters */}
-        <div className="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 transition-all shadow-lg space-y-3">
+        <div className="noc-tile noc-tile-emerald p-6 space-y-3">
           <div className="flex items-center justify-between text-xs font-mono text-emerald-400">
             <span className="uppercase tracking-wider font-semibold">Chapters Completed</span>
-            <BookOpen className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+              <BookOpen className="w-4 h-4 text-emerald-400" />
+            </div>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black text-white font-mono">
@@ -491,10 +519,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Card 4: Active Video Proofs */}
-        <div className="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-purple-500/40 transition-all shadow-lg space-y-3">
+        <div className="noc-tile noc-tile-violet p-6 space-y-3">
           <div className="flex items-center justify-between text-xs font-mono text-purple-400">
             <span className="uppercase tracking-wider font-semibold">Lab Video Proofs</span>
-            <Video className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+              <Video className="w-4 h-4 text-purple-400" />
+            </div>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-black text-white font-mono">
@@ -510,7 +540,7 @@ export default function DashboardPage() {
       </div>
 
       {/* 3. CISCO 6-DOMAIN BLUEPRINT MASTERY MATRIX */}
-      <div className="p-8 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-6">
+      <div className="p-8 rounded-3xl bg-[#090e1c] border border-slate-800/90 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
@@ -537,7 +567,7 @@ export default function DashboardPage() {
             return (
               <div
                 key={domain.id}
-                className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/90 space-y-3"
+                className="p-5 rounded-2xl bg-[#050811] border border-slate-800/90 space-y-3"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
@@ -593,27 +623,27 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* 4. MAIN INTERACTIVE TABS */}
+      {/* 4. MAIN INTERACTIVE TABS (FLIGHT DECK CONSOLE SWITCHER) */}
       <div className="space-y-6">
         {/* Navigation Tab Buttons */}
-        <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900 border border-slate-800 overflow-x-auto">
+        <div className="flex items-center gap-2 p-2 rounded-2xl bg-[#090e1c] border border-slate-800 overflow-x-auto shadow-inner">
           <button
             onClick={() => setActiveTab("overview")}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeTab === "overview"
-                ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
+                ? "bg-cyan-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/20"
                 : "text-slate-400 hover:text-white"
             }`}
           >
             <LayoutDashboard className="w-4 h-4" />
-            <span>Curriculum &amp; Chapters ({completedChaptersCount}/49)</span>
+            <span>Mission Checklist ({completedChaptersCount}/49)</span>
           </button>
 
           <button
             onClick={() => setActiveTab("exams")}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeTab === "exams"
-                ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold shadow-md"
+                ? "bg-amber-500 text-slate-950 font-bold shadow-lg shadow-amber-500/20"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -625,7 +655,7 @@ export default function DashboardPage() {
             onClick={() => setActiveTab("quizzes")}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeTab === "quizzes"
-                ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold shadow-md"
+                ? "bg-emerald-400 text-slate-950 font-bold shadow-lg shadow-emerald-500/20"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -637,22 +667,22 @@ export default function DashboardPage() {
             onClick={() => setActiveTab("timeline")}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeTab === "timeline"
-                ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md"
+                ? "bg-purple-500 text-white font-bold shadow-lg shadow-purple-500/20"
                 : "text-slate-400 hover:text-white"
             }`}
           >
             <Activity className="w-4 h-4" />
-            <span>Activity History</span>
+            <span>Milestone History</span>
           </button>
         </div>
 
-        {/* TAB 1: CURRICULUM & COMPLETED CHAPTERS */}
+        {/* TAB 1: CURRICULUM & MISSION CHECKLIST TABLE */}
         {activeTab === "overview" && (
           <div className="space-y-8">
             {/* Volume & Filter Controls */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-[#090e1c] border border-slate-800">
               {/* Volume 1 & 2 Selector */}
-              <div className="flex items-center p-1 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="flex items-center p-1 rounded-xl bg-[#050811] border border-slate-800">
                 <button
                   onClick={() => setSelectedVolume(1)}
                   className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
@@ -682,7 +712,7 @@ export default function DashboardPage() {
                 <select
                   value={chapterFilter}
                   onChange={(e) => setChapterFilter(e.target.value as any)}
-                  className="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="px-3 py-1.5 rounded-xl bg-[#050811] border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
                 >
                   <option value="ALL">All Chapters ({volumeModules.length})</option>
                   <option value="COMPLETED">Completed Only</option>
@@ -691,9 +721,9 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Part Breakdown & Chapter Cards */}
+            {/* Part Breakdown & High-Density Mission Rows */}
             {currentVolumeData && (
-              <div className="space-y-10">
+              <div className="space-y-8">
                 {currentVolumeData.parts.map((part) => {
                   let partChapters = volumeModules.filter((m) => m.partNumber === part.partNumber);
                   if (chapterFilter === "COMPLETED") {
@@ -705,129 +735,115 @@ export default function DashboardPage() {
                   if (partChapters.length === 0) return null;
 
                   return (
-                    <div key={part.partNumber} className="space-y-4">
-                      {/* Part Header */}
-                      <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div key={part.partNumber} className="space-y-3">
+                      {/* Part Header Bar */}
+                      <div className="px-5 py-3 rounded-xl bg-[#090e1c] border-l-4 border-l-cyan-400 border border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div>
-                          <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
-                            <span>Volume {selectedVolume}</span>
-                            <span>•</span>
-                            <span>Part 0{part.partNumber}</span>
-                          </div>
-                          <h3 className="text-lg font-bold text-white">{part.partTitle}</h3>
-                          <p className="text-xs text-slate-400 mt-0.5">{part.description}</p>
+                          <span className="text-[11px] font-mono text-cyan-400 font-semibold block">
+                            Volume {selectedVolume} • Part 0{part.partNumber}
+                          </span>
+                          <h3 className="text-base font-bold text-white">{part.partTitle}</h3>
                         </div>
-                        <span className="text-xs font-mono px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 shrink-0">
+                        <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-[#050811] text-slate-300 border border-slate-800 shrink-0">
                           {partChapters.length} Chapters
                         </span>
                       </div>
 
-                      {/* Chapter Cards Grid */}
-                      <div className="space-y-3">
+                      {/* Mission Checklist Rows */}
+                      <div className="rounded-2xl border border-slate-800/90 bg-[#090e1c] overflow-hidden shadow-xl divide-y divide-slate-800/80">
                         {partChapters.map((m) => {
                           const isCompleted = progress[m.id] === "COMPLETED" || progress[m.id] === "READ";
                           const isQuizPassed = progress[`${m.id}_quiz`] === "PASSED";
                           const isVideoSubmitted = progress[`${m.id}_video`] === "SUBMITTED";
-
-                          // Check if user took quiz and has a score
                           const moduleQuizAttempt = quizHistory.find((q) => q.moduleId === m.id);
 
                           return (
                             <div
                               key={m.id}
-                              className={`p-5 rounded-2xl border transition-all ${
-                                isCompleted
-                                  ? "bg-slate-900/40 border-emerald-500/30"
-                                  : "bg-slate-900/70 border-slate-800/80 hover:border-cyan-500/40"
+                              className={`p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4 transition-colors ${
+                                isCompleted ? "bg-emerald-500/[0.03] hover:bg-emerald-500/[0.06]" : "hover:bg-slate-800/40"
                               }`}
                             >
-                              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                                {/* Chapter Title & Status Info */}
-                                <div className="flex-1 min-w-0">
-                                  <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                                    <span className="text-xs font-mono text-cyan-400 font-semibold">
-                                      Chapter {m.chapterNumber}
+                              {/* Left: Completion Toggle & Title */}
+                              <div className="flex items-start sm:items-center gap-4 flex-1 min-w-0">
+                                {/* Interactive Checkbox */}
+                                <button
+                                  onClick={() => handleToggleChapterComplete(m.id)}
+                                  className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all border ${
+                                    isCompleted
+                                      ? "bg-emerald-500 text-slate-950 border-emerald-400 glow-emerald"
+                                      : "bg-[#050811] border-slate-700 text-slate-600 hover:border-cyan-500 hover:text-cyan-400"
+                                  }`}
+                                  title={isCompleted ? "Mark uncompleted" : "Mark completed"}
+                                >
+                                  {isCompleted ? <Check className="w-4 h-4 stroke-[3]" /> : <span className="w-2 h-2 rounded-full bg-slate-700" />}
+                                </button>
+
+                                <div className="min-w-0">
+                                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                                    <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#050811] border border-cyan-500/30 text-cyan-400 font-bold">
+                                      CH {m.chapterNumber < 10 ? `0${m.chapterNumber}` : m.chapterNumber}
                                     </span>
                                     <span className="text-slate-600">•</span>
-                                    <span className="text-xs font-mono text-slate-500">
-                                      {m.readTime}
-                                    </span>
+                                    <span className="text-xs text-slate-400 font-mono">{m.readTime}</span>
                                     {m.ciscoCommands.length > 0 && (
-                                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">
+                                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#050811] text-cyan-300 border border-slate-800">
                                         {m.ciscoCommands.length} CLI cmds
                                       </span>
                                     )}
-                                    {moduleQuizAttempt && (
-                                      <span
-                                        className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
-                                          moduleQuizAttempt.passed
-                                            ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                            : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                                        }`}
-                                      >
-                                        Quiz: {moduleQuizAttempt.percentage}% ({moduleQuizAttempt.score}/{moduleQuizAttempt.total})
-                                      </span>
-                                    )}
                                   </div>
-                                  <h4 className="text-base font-bold text-white truncate">
+                                  <h4 className="text-sm sm:text-base font-bold text-white truncate">
                                     {m.rawTitle}
                                   </h4>
-                                  <p className="text-xs text-slate-400 mt-1 line-clamp-1">
-                                    {m.description}
-                                  </p>
                                 </div>
+                              </div>
 
-                                {/* Milestone Action Buttons */}
-                                <div className="flex flex-wrap items-center gap-2 shrink-0">
-                                  {/* Mark Studied Button */}
-                                  <button
-                                    onClick={() => handleToggleChapterComplete(m.id)}
-                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-all border ${
-                                      isCompleted
-                                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 font-semibold"
-                                        : "bg-slate-800/80 text-slate-400 border-slate-700/80 hover:text-white"
-                                    }`}
-                                    title={isCompleted ? "Mark as uncompleted" : "Mark chapter completed"}
-                                  >
-                                    <CheckCircle2 className={`w-3.5 h-3.5 ${isCompleted ? "text-emerald-400" : "text-slate-500"}`} />
-                                    <span>{isCompleted ? "Completed ✓" : "Mark Done"}</span>
-                                  </button>
+                              {/* Right: Milestone Pills & Launch Action */}
+                              <div className="flex flex-wrap items-center gap-2.5 shrink-0 pl-12 sm:pl-0">
+                                {/* Quiz Status Pill */}
+                                <Link
+                                  href={`/modules/${m.id}/quiz`}
+                                  className={`px-3 py-1.5 rounded-xl text-xs font-mono flex items-center gap-1.5 transition-colors border ${
+                                    moduleQuizAttempt
+                                      ? moduleQuizAttempt.passed
+                                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 font-bold"
+                                        : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                                      : isQuizPassed
+                                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                                      : "bg-[#050811] text-slate-400 border-slate-800 hover:text-white"
+                                  }`}
+                                >
+                                  <HelpCircle className="w-3.5 h-3.5" />
+                                  <span>
+                                    {moduleQuizAttempt
+                                      ? `Quiz: ${moduleQuizAttempt.percentage}%`
+                                      : isQuizPassed
+                                      ? "Quiz Passed"
+                                      : "Quiz Available"}
+                                  </span>
+                                </Link>
 
-                                  {/* Quiz status */}
-                                  <Link
-                                    href={`/modules/${m.id}/quiz`}
-                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-colors ${
-                                      isQuizPassed
-                                        ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
-                                        : "bg-slate-800/80 text-slate-400 hover:text-emerald-300 hover:bg-slate-800"
-                                    }`}
-                                  >
-                                    <HelpCircle className="w-3.5 h-3.5" />
-                                    <span>{isQuizPassed ? "Quiz Passed" : "Quiz (App C)"}</span>
-                                  </Link>
+                                {/* Video status */}
+                                <Link
+                                  href={`/modules/${m.id}/submit-video`}
+                                  className={`px-3 py-1.5 rounded-xl text-xs font-mono flex items-center gap-1.5 transition-colors border ${
+                                    isVideoSubmitted
+                                      ? "bg-purple-500/10 text-purple-400 border-purple-500/30"
+                                      : "bg-[#050811] text-slate-400 border-slate-800 hover:text-purple-300"
+                                  }`}
+                                >
+                                  <Video className="w-3.5 h-3.5" />
+                                  <span>{isVideoSubmitted ? "On Drive" : "Lab Video"}</span>
+                                </Link>
 
-                                  {/* Video submission status */}
-                                  <Link
-                                    href={`/modules/${m.id}/submit-video`}
-                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-colors ${
-                                      isVideoSubmitted
-                                        ? "bg-purple-500/10 text-purple-400 border border-purple-500/30"
-                                        : "bg-slate-800/80 text-slate-400 hover:text-purple-300 hover:bg-slate-800"
-                                    }`}
-                                  >
-                                    <Video className="w-3.5 h-3.5" />
-                                    <span>{isVideoSubmitted ? "Video Ready" : "Submit Lab"}</span>
-                                  </Link>
-
-                                  {/* Study Reader Link */}
-                                  <Link
-                                    href={`/modules/${m.id}`}
-                                    className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition-colors"
-                                  >
-                                    <span>Study</span>
-                                    <ChevronRight className="w-3.5 h-3.5" />
-                                  </Link>
-                                </div>
+                                {/* Open Codex Action */}
+                                <Link
+                                  href={`/modules/${m.id}`}
+                                  className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition-all"
+                                >
+                                  <span>Study Codex</span>
+                                  <ChevronRight className="w-3.5 h-3.5" />
+                                </Link>
                               </div>
                             </div>
                           );
