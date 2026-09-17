@@ -8,6 +8,7 @@ interface CiscoTerminalProps {
   initialHostname?: string;
   defaultCommands?: string[];
   title?: string;
+  injectedCommand?: string;
 }
 
 type Mode = "user" | "priv" | "config" | "config-if" | "config-router" | "config-line";
@@ -22,6 +23,7 @@ export function CiscoTerminal({
   initialHostname = "Switch",
   defaultCommands = [],
   title = "Cisco IOS CLI Simulator",
+  injectedCommand,
 }: CiscoTerminalProps) {
   const [hostname, setHostname] = useState(initialHostname);
   const [mode, setMode] = useState<Mode>("user");
@@ -386,6 +388,12 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms`;
     setInputVal(cmd);
     inputRef.current?.focus();
   };
+
+  useEffect(() => {
+    if (injectedCommand && injectedCommand.trim()) {
+      executeCommand(injectedCommand.trim());
+    }
+  }, [injectedCommand]);
 
   return (
     <div

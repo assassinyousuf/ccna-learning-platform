@@ -441,6 +441,9 @@ export default function ModuleReaderPage() {
                 fullText={chapterFullData.fullText}
                 tableOfContents={chapterFullData.tableOfContents || []}
                 keyPoints={chapterFullData.keyPoints || []}
+                ciscoCommands={moduleData.ciscoCommands}
+                quizQuestions={moduleData.quiz}
+                moduleId={moduleData.id}
               />
             ) : (
               <div className="p-8 text-center text-slate-400 text-xs">
