@@ -101,7 +101,7 @@ def parse_appendix_c_and_d(text):
     d_text = text[app_d_start:app_end]
 
     def parse_sections(raw_text):
-        pattern = r'\n##\s+(?:Chapter\s+)?(\d+)[:\.\s]+([A-Za-z][^\n]+)'
+        pattern = r'\n#{1,3}\s+(?:Chapter\s+)?(\d+)[:\.\s]+([A-Za-z][^\n]+)'
         matches = list(re.finditer(pattern, raw_text))
         chaps = {}
         for idx, m in enumerate(matches):

@@ -19,7 +19,8 @@ import {
   Calculator,
   Volume2,
   VolumeX,
-  Github
+  Github,
+  Award
 } from "lucide-react";
 import { CommandPalette } from "./CommandPalette";
 import { SubnetCalculatorModal } from "./SubnetCalculatorModal";
@@ -123,6 +124,14 @@ export function Navbar() {
               >
                 <LayoutDashboard className="w-4 h-4 text-emerald-400" />
                 <span>Dashboard</span>
+              </Link>
+              <Link
+                href="/practice-test"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-amber-300 hover:text-white hover:bg-amber-500/10 border border-amber-500/20 rounded-lg transition-all"
+                title="CCNA 200-301 Practice Exam Simulator & Test Center"
+              >
+                <Award className="w-4 h-4 text-amber-400" />
+                <span>Exam Simulator</span>
               </Link>
 
               {/* GitHub Repo Link */}
@@ -231,6 +240,14 @@ export function Navbar() {
           >
             <LayoutDashboard className="w-4 h-4 text-emerald-400" />
             <span>Dashboard</span>
+          </Link>
+          <Link
+            href="/practice-test"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-amber-300 hover:bg-slate-900"
+          >
+            <Award className="w-4 h-4 text-amber-400" />
+            <span>Exam Simulator &amp; Test Center</span>
           </Link>
           <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
             {session?.user ? (
