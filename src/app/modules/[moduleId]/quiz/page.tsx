@@ -145,6 +145,24 @@ export default function ModuleQuizPage() {
         });
         setIsSubmitted(true);
 
+        try {
+          const existingHistoryStr = localStorage.getItem("ccna_quiz_history");
+          const existingHistory = existingHistoryStr ? JSON.parse(existingHistoryStr) : [];
+          existingHistory.unshift({
+            attemptId: `att-${Date.now()}`,
+            moduleId: moduleData.id,
+            moduleTitle: moduleData.title || moduleData.rawTitle,
+            score: data.score,
+            total: data.total,
+            percentage: data.percentage,
+            passed: data.passed,
+            timestamp: new Date().toISOString(),
+          });
+          localStorage.setItem("ccna_quiz_history", JSON.stringify(existingHistory.slice(0, 50)));
+        } catch (e) {
+          console.warn("Failed to cache quiz attempt:", e);
+        }
+
         if (data.passed) {
           confetti({
             particleCount: 120,

@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import confetti from "canvas-confetti";
 import { getModuleById, getNextModule, getPreviousModule } from "@/lib/curriculum";
 import { ChapterReader } from "@/components/ChapterReader";
 import { CiscoTerminal } from "@/components/CiscoTerminal";
@@ -44,8 +46,11 @@ export default function ModuleReaderPage() {
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
 
   // Full chapter textbook content state
+  const { data: session } = useSession();
   const [chapterFullData, setChapterFullData] = useState<any>(null);
   const [loadingTextbook, setLoadingTextbook] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [togglingCompletion, setTogglingCompletion] = useState(false);
 
   // Normalize URL in browser if alias was used
   useEffect(() => {
@@ -83,7 +88,80 @@ export default function ModuleReaderPage() {
       }
     }
     fetchFullChapter();
-  }, [moduleId, moduleData]);
+
+    // Check completion status from localStorage & backend
+    const canonicalId = moduleData ? moduleData.id : moduleId;
+    try {
+      const stored = localStorage.getItem("ccna_completed_chapters");
+      if (stored) {
+        const completedMap = JSON.parse(stored);
+        if (completedMap[canonicalId]) {
+          setIsCompleted(true);
+        }
+      }
+    } catch (e) {}
+
+    async function checkBackendProgress() {
+      try {
+        const userId = session?.user?.email || "guest-user";
+        const res = await fetch(`/api/progress?userId=${encodeURIComponent(userId)}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.progress && (data.progress[canonicalId] === "COMPLETED" || data.progress[canonicalId] === "READ")) {
+            setIsCompleted(true);
+          }
+        }
+      } catch (e) {}
+    }
+    checkBackendProgress();
+  }, [moduleId, moduleData, session]);
+
+  const handleToggleComplete = async () => {
+    sounds.playKeyClick();
+    const canonicalId = moduleData ? moduleData.id : moduleId;
+    const nextState = !isCompleted;
+    setIsCompleted(nextState);
+    setTogglingCompletion(true);
+
+    if (nextState) {
+      sounds.playCommandSuccess();
+      confetti({
+        particleCount: 100,
+        spread: 60,
+        origin: { y: 0.5 },
+      });
+    }
+
+    // Save to localStorage
+    try {
+      const stored = localStorage.getItem("ccna_completed_chapters");
+      const completedMap = stored ? JSON.parse(stored) : {};
+      if (nextState) {
+        completedMap[canonicalId] = true;
+      } else {
+        delete completedMap[canonicalId];
+      }
+      localStorage.setItem("ccna_completed_chapters", JSON.stringify(completedMap));
+    } catch (e) {}
+
+    // Sync to backend
+    try {
+      const userId = session?.user?.email || "guest-user";
+      await fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
+          moduleId: canonicalId,
+          status: nextState ? "COMPLETED" : "UNMARKED",
+        }),
+      });
+    } catch (e) {
+      console.error("Failed to sync chapter completion:", e);
+    } finally {
+      setTogglingCompletion(false);
+    }
+  };
 
   if (!moduleData) {
     return (
@@ -187,6 +265,20 @@ export default function ModuleReaderPage() {
               <ChevronLeft className="w-4 h-4" />
             </Link>
           )}
+
+          <button
+            onClick={handleToggleComplete}
+            disabled={togglingCompletion}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all ${
+              isCompleted
+                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 glow-emerald"
+                : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700"
+            }`}
+            title={isCompleted ? "Mark as unread" : "Mark chapter as studied & completed"}
+          >
+            <CheckCircle2 className={`w-3.5 h-3.5 ${isCompleted ? "text-emerald-400" : "text-slate-500"}`} />
+            <span>{isCompleted ? "Studied ✓" : "Mark Studied"}</span>
+          </button>
 
           <Link
             href={`/modules/${moduleData.id}/quiz`}
