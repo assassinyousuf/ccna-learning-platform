@@ -1,0 +1,749 @@
+import json
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+SRC_DATA_DIR = BASE_DIR / "src" / "data"
+SRC_DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+CURRICULUM = {
+    "title": "CCNA 200-301 Mastery: Acing the CCNA",
+    "subtitle": "Complete Cohort-Based Learning, Assessment & Video Proof-of-Skill Platform",
+    "author": "Based on Jeremy McDowell (Acing the CCNA Exam)",
+    "totalModules": 6,
+    "modules": [
+        {
+            "id": "module-1-network-fundamentals",
+            "number": 1,
+            "title": "Network Fundamentals & IP Architecture",
+            "volume": 1,
+            "description": "Understand core networking infrastructure: routers, switches, next-generation firewalls, cabling, TCP/IP vs. OSI, and master IPv4 subnetting and IPv6.",
+            "estimatedHours": 18,
+            "badge": "NetFoundations Certified",
+            "color": "from-blue-600 to-cyan-500",
+            "lessons": [
+                {
+                    "id": "lesson-1-1-network-components",
+                    "number": 1,
+                    "title": "Network Components: Routers, Switches, and Endpoints",
+                    "readTime": "25 min",
+                    "summary": "Explore the role and function of network components including Layer 2/3 switches, routers, next-generation firewalls, wireless LAN controllers, and endpoints.",
+                    "keyPoints": [
+                        "Routers make forwarding decisions based on destination IP address (Layer 3).",
+                        "Switches forward frames based on destination MAC addresses (Layer 2) using MAC address tables (CAM tables).",
+                        "Next-Generation Firewalls (NGFW) perform deep packet inspection up to Layer 7 and enforce stateful security policies.",
+                        "WLCs (Wireless LAN Controllers) centrally manage Lightweight Access Points (LWAPs) using CAPWAP tunnels."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "show version", "desc": "Displays switch/router uptime, software version, and hardware specifications."},
+                        {"cmd": "show ip interface brief", "desc": "Provides a summary of IP addresses and operational status of all interfaces."},
+                        {"cmd": "show mac address-table", "desc": "Displays the switch's learned MAC address-to-port mapping table."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol1/images/page_0_image_body_3.jpg", "caption": "CCNA Fundamentals Core Architecture Overview"}
+                    ],
+                    "content": """### Network Components: The Building Blocks of Enterprise Networks
+
+In enterprise networking, data flows between endpoints across structured tiers of switching and routing devices:
+
+#### 1. Routers (Layer 3 Devices)
+Routers connect different broadcast domains and networks. When a router receives an IP packet:
+1. It strips the Layer 2 header and trailer.
+2. It examines the destination IPv4 or IPv6 address.
+3. It checks its routing table for the longest prefix match.
+4. It encapsulates the packet in a new Layer 2 frame and transmits it out the egress interface.
+
+#### 2. Switches (Layer 2 Devices)
+Switches connect devices within the same Local Area Network (LAN). Unlike hubs which replicate packets to all ports, switches:
+- Inspect the source MAC address of ingress frames to populate the **MAC Address Table**.
+- Check the destination MAC address. If found, forward out that specific port. If unknown, flood the frame to all ports except the source port (Unknown Unicast Flooding).
+
+```cisco
+Switch# show mac address-table
+          Mac Address Table
+-------------------------------------------
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    0050.7966.6800    DYNAMIC     Fa0/1
+   1    0050.7966.6801    DYNAMIC     Fa0/2
+Total Mac Addresses for this module: 2
+```
+"""
+                },
+                {
+                    "id": "lesson-1-2-osi-and-tcpip-models",
+                    "number": 2,
+                    "title": "TCP/IP vs. OSI Reference Model & Encapsulation",
+                    "readTime": "30 min",
+                    "summary": "Master the 7 layers of the OSI model, compare them with the 4-layer TCP/IP suite, and understand packet encapsulation and de-encapsulation.",
+                    "keyPoints": [
+                        "OSI 7 Layers: Physical, Data Link, Network, Transport, Session, Presentation, Application (Please Do Not Throw Sausage Pizza Away).",
+                        "TCP/IP Suite: Network Access, Internet, Transport, Application.",
+                        "Protocol Data Units (PDUs): Data -> Segment (L4) -> Packet (L3) -> Frame (L2) -> Bits (L1).",
+                        "TCP provides reliable, ordered, connection-oriented delivery (SYN, SYN-ACK, ACK); UDP provides low-overhead, connectionless transmission."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "ping 192.168.1.1", "desc": "Sends ICMP echo requests to verify network connectivity at Layer 3."},
+                        {"cmd": "traceroute 8.8.8.8", "desc": "Identifies the path and hops taken across the network to a remote destination."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol1/images/page_1_image_body_4.jpg", "caption": "Encapsulation Stack: From Application Payload to Physical Signal"}
+                    ],
+                    "content": """### The Architecture of Protocol Stacks
+
+Every network communication relies on protocol layering. Layering allows modular engineering: a web developer writing HTTP does not need to know whether the physical medium is fiber optic or Wi-Fi.
+
+#### Protocol Data Units (PDUs) Across Layers
+- **Layer 7-5**: Data (HTTP, DNS, SSH, Telnet)
+- **Layer 4**: Segment (TCP header with source/dest ports, sequence numbers)
+- **Layer 3**: Packet (IP header with source/dest IP addresses, TTL)
+- **Layer 2**: Frame (Ethernet header with source/dest MAC addresses, FCS trailer)
+- **Layer 1**: Bits (Electrical voltages, light pulses, or RF frequencies)
+"""
+                },
+                {
+                    "id": "lesson-1-3-ipv4-subnetting",
+                    "number": 3,
+                    "title": "IPv4 Addressing & Variable Length Subnet Masking (VLSM)",
+                    "readTime": "40 min",
+                    "summary": "Definitive guide to binary math, IPv4 address classes, CIDR notation, and fast subnetting calculations required for the CCNA exam.",
+                    "keyPoints": [
+                        "IPv4 addresses are 32-bit numbers structured as 4 octets separated by dots.",
+                        "Subnet mask determines the boundary between the Network portion and the Host portion.",
+                        "Number of usable hosts formula: 2^(host bits) - 2 (subtracting Network ID and Broadcast ID).",
+                        "CIDR prefix /24 = 254 hosts, /25 = 126 hosts, /26 = 62 hosts, /28 = 14 hosts, /30 = 2 hosts (ideal for point-to-point links)."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "interface GigabitEthernet0/0/0", "desc": "Enters interface configuration mode."},
+                        {"cmd": "ip address 192.168.10.1 255.255.255.0", "desc": "Assigns IPv4 address and subnet mask to the interface."},
+                        {"cmd": "no shutdown", "desc": "Administratively enables the interface."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol1/images/page_4_image_body_2.jpg", "caption": "Subnet Mask Boundaries and Binary Division"}
+                    ],
+                    "content": """### Mastering IPv4 Subnetting in Binary and Decimal
+
+Subnetting divides a larger network into smaller, manageable subnets to reduce broadcast traffic and preserve address space.
+
+#### The Magic Number Technique
+The 'Magic Number' is the value of the least significant bit in the interesting octet:
+`Magic Number = 256 - Subnet Mask Octet`
+
+For a mask of `255.255.255.224` (/27):
+- Interesting octet is the 4th octet (`224`).
+- Magic Number = `256 - 224 = 32`.
+- Subnet intervals: `0, 32, 64, 96, 128, 160, 192, 224`.
+- For subnet `192.168.1.32/27`:
+  - Network ID: `192.168.1.32`
+  - First Usable: `192.168.1.33`
+  - Last Usable: `192.168.1.62`
+  - Broadcast ID: `192.168.1.63`
+"""
+                }
+            ],
+            "quiz": [
+                {
+                    "id": "q1-1",
+                    "question": "Which layer of the OSI model is responsible for logical addressing and path determination across networks?",
+                    "options": [
+                        "Layer 2 - Data Link Layer",
+                        "Layer 3 - Network Layer",
+                        "Layer 4 - Transport Layer",
+                        "Layer 5 - Session Layer"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "The Network Layer (Layer 3) handles logical addressing (IPv4/IPv6) and routing path determination between distinct networks."
+                },
+                {
+                    "id": "q1-2",
+                    "question": "How many usable host IP addresses are available in an IPv4 network with a subnet mask of /28 (255.255.255.240)?",
+                    "options": [
+                        "14",
+                        "16",
+                        "30",
+                        "32"
+                    ],
+                    "correctAnswer": 0,
+                    "explanation": "A /28 subnet leaves 32 - 28 = 4 host bits. 2^4 = 16 total addresses. Subtracting the network address and broadcast address yields 16 - 2 = 14 usable host addresses."
+                },
+                {
+                    "id": "q1-3",
+                    "question": "What does a switch do when it receives a unicast frame with a destination MAC address that is NOT present in its MAC address table?",
+                    "options": [
+                        "Drops the frame immediately and sends an ICMP error",
+                        "Floods the frame out of all ports except the ingress port",
+                        "Sends the frame to the default gateway router",
+                        "Broadcasts an ARP request to locate the host"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "When a switch encounters an unknown unicast frame, it performs unknown unicast flooding: transmitting the frame out of all active ports within that VLAN except the port it arrived on."
+                },
+                {
+                    "id": "q1-4",
+                    "question": "Which of the following transport layer protocols establishes a three-way handshake before transmitting application payload?",
+                    "options": [
+                        "UDP",
+                        "ICMP",
+                        "TCP",
+                        "ARP"
+                    ],
+                    "correctAnswer": 2,
+                    "explanation": "TCP is a connection-oriented protocol that establishes a reliable session via the SYN -> SYN-ACK -> ACK three-way handshake."
+                },
+                {
+                    "id": "q1-5",
+                    "question": "Which command on a Cisco IOS device enables an interface from its default shutdown state?",
+                    "options": [
+                        "enable interface",
+                        "no shutdown",
+                        "interface up",
+                        "start interface"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "On Cisco routers and switches, interfaces default to administratively down. The 'no shutdown' command brings the interface up."
+                }
+            ],
+            "labAssignment": {
+                "title": "Packet Tracer Lab: Basic Router & Switch Initial Configuration",
+                "duration": "45 min",
+                "deliverable": "Record a 3–5 minute video explaining your topology, showing CLI configuration of hostnames, IP addresses, default gateway, and performing successful end-to-end ping tests.",
+                "rubric": [
+                    "Hostnames and banner motd configured on Router1 and Switch1.",
+                    "Correct IP addresses and subnet masks configured on Gig0/0/0 and PC1.",
+                    "Successful bidirectional ping test shown in CLI.",
+                    "Clear voice narration explaining Layer 2 vs. Layer 3 forwarding during the test."
+                ]
+            }
+        },
+        {
+            "id": "module-2-network-access",
+            "number": 2,
+            "title": "Network Access, Switching & VLANs",
+            "volume": 1,
+            "description": "Master Layer 2 switching operations, 802.1Q VLAN trunking, Spanning Tree Protocol (STP), EtherChannel link aggregation, and wireless access fundamentals.",
+            "estimatedHours": 22,
+            "badge": "Switching Architect",
+            "color": "from-emerald-600 to-teal-500",
+            "lessons": [
+                {
+                    "id": "lesson-2-1-vlans-and-trunks",
+                    "number": 1,
+                    "title": "Virtual LANs (VLANs) & IEEE 802.1Q Trunking",
+                    "readTime": "35 min",
+                    "summary": "Configure access and trunk ports, understand 802.1Q VLAN tag encapsulation, native VLAN security, and inter-switch communication.",
+                    "keyPoints": [
+                        "VLANs segment a single physical switch into multiple isolated broadcast domains.",
+                        "Trunk ports carry traffic for multiple VLANs using IEEE 802.1Q encapsulation with a 4-byte VLAN tag.",
+                        "The Native VLAN transmits untagged frames over an 802.1Q trunk. For security, both sides must match.",
+                        "Inter-VLAN routing requires a Router-on-a-Stick (subinterfaces) or a Layer 3 Switch (SVIs)."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "vlan 10\nname Engineering", "desc": "Creates VLAN 10 and names it Engineering."},
+                        {"cmd": "switchport mode access\nswitchport access vlan 10", "desc": "Assigns a port to access mode in VLAN 10."},
+                        {"cmd": "switchport mode trunk\nswitchport trunk allowed vlan 10,20", "desc": "Configures port as trunk and restricts allowed VLANs."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol1/images/page_37_image_body_2.jpg", "caption": "802.1Q VLAN Tag Structure: TPID, Priority, DEI, and 12-Bit VLAN ID"}
+                    ],
+                    "content": """### VLANs and 802.1Q Trunking in Detail
+
+Without VLANs, every port on a switch belongs to a single broadcast domain. A broadcast sent by one host is processed by every other device on the switch.
+
+#### 802.1Q Frame Format
+When a frame traverses an access port, it has a standard Ethernet header. When forwarded onto a trunk port, the switch inserts a **4-byte 802.1Q Tag**:
+- **TPID (Tag Protocol Identifier)**: `0x8100` (indicates an 802.1Q tagged frame).
+- **TCI (Tag Control Information)**:
+  - **PCP (Priority Code Point)**: 3 bits for Class of Service (QoS).
+  - **DEI (Drop Eligible Indicator)**: 1 bit.
+  - **VLAN ID**: 12 bits (supporting VLANs 1 to 4094).
+"""
+                },
+                {
+                    "id": "lesson-2-2-spanning-tree-protocol",
+                    "number": 2,
+                    "title": "Spanning Tree Protocol (STP & Rapid PVST+)",
+                    "readTime": "40 min",
+                    "summary": "Prevent Layer 2 switching loops, broadcast storms, and MAC table instability using 802.1D STP and 802.1w Rapid Spanning Tree Protocol (RSTP).",
+                    "keyPoints": [
+                        "Switching loops cause broadcast storms, multiple frame copies, and MAC address table thrashing.",
+                        "STP elects one Root Bridge per broadcast domain based on the lowest Bridge ID (Priority + MAC address).",
+                        "Port Roles: Root Port (lowest cost to Root Bridge), Designated Port (best port on segment), Blocking/Alternate Port (loop prevention).",
+                        "RSTP (802.1w) achieves sub-second convergence using Proposal/Agreement handshakes and Edge Ports (PortFast)."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "show spanning-tree", "desc": "Displays STP status, root bridge details, and port states."},
+                        {"cmd": "spanning-tree mode rapid-pvst", "desc": "Enables Cisco Rapid Per-VLAN Spanning Tree Plus."},
+                        {"cmd": "spanning-tree vlan 10 root primary", "desc": "Configures the switch priority to guarantee Root Bridge status."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol1/images/page_54_image_body_4.jpg", "caption": "Root Bridge Election and Spanning Tree Topology Convergence"}
+                    ],
+                    "content": """### Spanning Tree Protocol Mechanics
+
+In redundant Layer 2 networks, loops are inevitable unless blocked. Ethernet frames lack a TTL (Time-To-Live) field; an unblocked broadcast loop will circulate indefinitely, consuming 100% of bandwidth within seconds.
+
+#### Bridge ID (BID) Structure
+The Bridge ID consists of:
+- **Bridge Priority**: 4 bits (increments in steps of 4096, default 32768).
+- **Extended System ID**: 12 bits (carries the VLAN ID in PVST+).
+- **MAC Address**: 48 bits (unique base MAC of the switch).
+"""
+                },
+                {
+                    "id": "lesson-2-3-etherchannel-aggregation",
+                    "number": 3,
+                    "title": "EtherChannel Link Aggregation (LACP & PAgP)",
+                    "readTime": "30 min",
+                    "summary": "Bundle multiple physical Ethernet links into a single logical high-bandwidth channel using LACP (802.3ad) and Cisco PAgP.",
+                    "keyPoints": [
+                        "EtherChannel combines up to 8 active physical links into one logical Port-Channel interface.",
+                        "Prevents STP from blocking redundant parallel uplinks between switches.",
+                        "LACP (Industry Standard 802.3ad) Modes: Active (initiates negotiation) and Passive (responds).",
+                        "PAgP (Cisco Proprietary) Modes: Desirable (initiates negotiation) and Auto (responds)."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "interface range GigabitEthernet0/1 - 2\nchannel-group 1 mode active", "desc": "Bundles ports into EtherChannel 1 using LACP."},
+                        {"cmd": "show etherchannel summary", "desc": "Verifies operational state of the Port-Channel and grouped member ports."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol1/images/page_79_image_body_3.jpg", "caption": "EtherChannel Port-Channel Aggregation and Load Balancing"}
+                    ],
+                    "content": """### EtherChannel: Multiplying Uplink Capacity
+
+EtherChannel solves the fundamental dilemma of STP: having two parallel 1 Gbps cables normally causes STP to block one cable, leaving 50% bandwidth unused.
+
+With EtherChannel, both cables act as a single logical 2 Gbps link:
+```cisco
+Switch(config)# interface range GigabitEthernet 0/1 - 2
+Switch(config-if-range)# channel-group 1 mode active
+Switch(config-if-range)# exit
+Switch(config)# interface port-channel 1
+Switch(config-if)# switchport mode trunk
+```
+"""
+                }
+            ],
+            "quiz": [
+                {
+                    "id": "q2-1",
+                    "question": "What is the size of the IEEE 802.1Q VLAN tag inserted into an Ethernet frame header?",
+                    "options": [
+                        "2 bytes",
+                        "4 bytes",
+                        "8 bytes",
+                        "12 bits"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "The 802.1Q tag is 4 bytes (32 bits) in length, containing the 16-bit TPID (0x8100) and the 16-bit TCI."
+                },
+                {
+                    "id": "q2-2",
+                    "question": "In Rapid Spanning Tree Protocol (802.1w), what is the function of an Edge Port configured with PortFast?",
+                    "options": [
+                        "It transmits BPDUs to negotiate root bridge status",
+                        "It immediately transitions to Forwarding state, bypassing Listening and Learning",
+                        "It shuts down if another switch connects to it",
+                        "It acts as a backup root port"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "Edge ports (configured with PortFast) connect to end devices and immediately transition to Forwarding state, preventing temporary connectivity delays for workstations and DHCP requests."
+                },
+                {
+                    "id": "q2-3",
+                    "question": "Which combination of LACP modes will successfully negotiate an EtherChannel between two switches?",
+                    "options": [
+                        "Passive on Switch A, Passive on Switch B",
+                        "Active on Switch A, Passive on Switch B",
+                        "Auto on Switch A, Desirable on Switch B",
+                        "On on Switch A, Active on Switch B"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "For LACP to negotiate an EtherChannel, at least one side must be Active. Active + Passive or Active + Active will form a channel."
+                }
+            ],
+            "labAssignment": {
+                "title": "Packet Tracer Lab: Multi-VLAN Trunking & Rapid-PVST+ Tuning",
+                "duration": "60 min",
+                "deliverable": "Record a 4–5 minute video demonstrating configuration of VLANs 10, 20, 30 across 3 switches, establishing an 802.1Q trunk with LACP, and proving the elected Root Bridge using 'show spanning-tree vlan 10'.",
+                "rubric": [
+                    "VLANs 10, 20, 30 configured and named on all switches.",
+                    "LACP Port-Channel 1 configured between Switch1 and Switch2.",
+                    "Primary Root Bridge configured and verified in CLI.",
+                    "Verification using show interfaces trunk and show spanning-tree."
+                ]
+            }
+        },
+        {
+            "id": "module-3-ip-connectivity",
+            "number": 3,
+            "title": "IP Connectivity & OSPF Routing",
+            "volume": 2,
+            "description": "Understand routing tables, longest prefix matching, static routing, default routes, floating statics, and master Open Shortest Path First (OSPFv2).",
+            "estimatedHours": 24,
+            "badge": "Routing Specialist",
+            "color": "from-amber-500 to-orange-600",
+            "lessons": [
+                {
+                    "id": "lesson-3-1-routing-fundamentals",
+                    "number": 1,
+                    "title": "The IP Routing Table & Longest Prefix Match",
+                    "readTime": "30 min",
+                    "summary": "Deep dive into how routers populate routing tables, compare Administrative Distances (AD), and evaluate routing decisions based on prefix length.",
+                    "keyPoints": [
+                        "Routing decisions are strictly governed by Longest Prefix Match (e.g. /26 beats /24 regardless of protocol or AD).",
+                        "Administrative Distance (AD) breaks ties when identical routes are learned from multiple protocols.",
+                        "Common AD values: Connected (0), Static (1), eBGP (20), EIGRP internal (90), OSPF (110), RIP (120), iBGP (200).",
+                        "Default Route (`0.0.0.0/0`) serves as the Gateway of Last Resort."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "show ip route", "desc": "Displays the complete IPv4 routing table and gateway of last resort."},
+                        {"cmd": "ip route 0.0.0.0 0.0.0.0 192.168.1.1", "desc": "Configures a static default route via next-hop IP 192.168.1.1."},
+                        {"cmd": "ip route 10.0.0.0 255.0.0.0 10.1.1.2 120", "desc": "Configures a floating static route with administrative distance 120."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol2/images/page_0_image_body_3.jpg", "caption": "CCNA Volume 2: Advanced Routing & Enterprise Topology"}
+                    ],
+                    "content": """### How Routers Make Packet Forwarding Decisions
+
+When an IP packet enters a router, the router strips the Layer 2 header and inspects the 32-bit destination IP address.
+
+#### Decision Hierarchy
+1. **Longest Prefix Match (Most Specific Route)**:
+   If the routing table has `10.1.1.0/24` and `10.1.1.0/26`, a destination of `10.1.1.5` matches the `/26` route because 26 bits match (more specific than 24).
+2. **Administrative Distance (AD)**:
+   If two different routing protocols advertise the exact same prefix with the exact same subnet mask, the router chooses the protocol with the lowest AD.
+3. **Metric**:
+   If the same protocol learns multiple paths to the same prefix, it picks the lowest metric (cost, hop count, etc.).
+"""
+                },
+                {
+                    "id": "lesson-3-2-ospfv2-deep-dive",
+                    "number": 2,
+                    "title": "OSPFv2 Architecture, Adjacency & Link-State Routing",
+                    "readTime": "45 min",
+                    "summary": "Master link-state routing: OSPF Hello packets, router ID election, neighbor states (Init, 2-Way, ExStart, Exchange, Loading, Full), and DR/BDR election.",
+                    "keyPoints": [
+                        "OSPF is an open standard link-state IGP using Dijkstra's Shortest Path First (SPF) algorithm.",
+                        "Uses cost metric based on interface bandwidth: `Cost = Reference Bandwidth (100 Mbps default) / Interface Bandwidth`.",
+                        "Neighbors exchange Hellos to form adjacencies: Area ID, Hello/Dead timers, subnet mask, and authentication must match.",
+                        "On multiaccess broadcast networks (Ethernet), OSPF elects a DR (Designated Router) and BDR to reduce adjacency mesh."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "router ospf 1\nrouter-id 1.1.1.1\nnetwork 192.168.10.0 0.0.0.255 area 0", "desc": "Enables OSPF process 1, sets router ID, and enables OSPF in Area 0."},
+                        {"cmd": "show ip ospf neighbor", "desc": "Verifies OSPF neighbor states (FULL/DR, FULL/BDR, 2-WAY)."},
+                        {"cmd": "show ip ospf interface brief", "desc": "Displays OSPF enabled interfaces, cost, and area allocation."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol2/images/page_1_image_body_6.jpg", "caption": "OSPF Area 0 Backbone and Multi-Area Hierarchy"}
+                    ],
+                    "content": """### OSPFv2 Neighbor Adjacency States
+
+OSPF routers progress through specific states before exchanging routing tables:
+1. **Down**: No Hellos received.
+2. **Init**: Received Hello from neighbor, but our own Router ID is not listed.
+3. **2-Way**: Bidirectional communication established. DR/BDR election occurs.
+4. **ExStart**: Master/slave relationship established for database exchange.
+5. **Exchange**: Routers exchange Database Description (DBD) packets.
+6. **Loading**: Routers request missing Link State Advertisements (LSAs) via Link State Requests (LSRs).
+7. **Full**: Databases are fully synchronized. SPF calculates routing table.
+"""
+                }
+            ],
+            "quiz": [
+                {
+                    "id": "q3-1",
+                    "question": "What is the administrative distance of OSPF in Cisco IOS?",
+                    "options": [
+                        "90",
+                        "100",
+                        "110",
+                        "120"
+                    ],
+                    "correctAnswer": 2,
+                    "explanation": "OSPF has a default administrative distance of 110. (Connected=0, Static=1, EIGRP=90, RIP=120)."
+                },
+                {
+                    "id": "q3-2",
+                    "question": "Which criteria must match between two OSPF routers for an adjacency to successfully form?",
+                    "options": [
+                        "Router ID and Hostname",
+                        "Area ID, Hello/Dead Timers, and Subnet Mask",
+                        "Process ID and Autonomous System Number",
+                        "Interface Cost and Priority"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "OSPF neighbors must agree on Area ID, Hello timer, Dead timer, Subnet mask (on broadcast networks), and Authentication."
+                },
+                {
+                    "id": "q3-3",
+                    "question": "Which route will a router select to forward a packet destined for 172.16.1.15?",
+                    "options": [
+                        "172.16.1.0/24 with Administrative Distance 90",
+                        "172.16.1.0/28 with Administrative Distance 110",
+                        "172.16.0.0/16 with Administrative Distance 1",
+                        "0.0.0.0/0 with Administrative Distance 1"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "Routing decisions prioritize the Longest Prefix Match. /28 (28 bits) is more specific than /24 or /16, so the /28 route is chosen regardless of the higher administrative distance."
+                }
+            ],
+            "labAssignment": {
+                "title": "Packet Tracer Lab: Multi-Area OSPFv2 & Default Route Redistribution",
+                "duration": "60 min",
+                "deliverable": "Record a 3–5 minute video explaining OSPF neighbor establishment between 3 routers, demonstrating 'show ip ospf neighbor' in FULL state, and propagating a default route via 'default-information originate'.",
+                "rubric": [
+                    "OSPF Router-IDs manually set on all routers.",
+                    "Area 0 backbone configured and synchronized.",
+                    "Full adjacency state demonstrated in CLI.",
+                    "End-to-end trace route across multiple hops shown."
+                ]
+            }
+        },
+        {
+            "id": "module-4-ip-services",
+            "number": 4,
+            "title": "IP Services: DHCP, NAT, NTP & QoS",
+            "volume": 2,
+            "description": "Configure critical network services including DHCP servers/relay agents, DNS, Network Address Translation (Static, Dynamic, and PAT), NTP, and QoS traffic classification.",
+            "estimatedHours": 20,
+            "badge": "Services Operator",
+            "color": "from-purple-600 to-indigo-500",
+            "lessons": [
+                {
+                    "id": "lesson-4-1-dhcp-and-nat",
+                    "number": 1,
+                    "title": "DHCP Server, Relay & Port Address Translation (NAT/PAT)",
+                    "readTime": "35 min",
+                    "summary": "Implement DHCP pools and relay agents (ip helper-address), configure static NAT, dynamic NAT, and overloaded NAT (PAT) to connect private subnets to the public Internet.",
+                    "keyPoints": [
+                        "DHCP uses the DORA process: Discover (Broadcast), Offer (Unicast), Request (Broadcast), Acknowledge (Unicast).",
+                        "Routers drop broadcasts by default; the `ip helper-address` converts DHCP broadcast discovers into unicasts to the central DHCP server.",
+                        "RFC 1918 Private IPv4 Addresses: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.",
+                        "PAT (Port Address Translation / NAT Overload) maps thousands of internal private IP addresses to a single public IP address using distinct L4 port numbers."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "ip dhcp pool LAN_POOL\nnetwork 192.168.1.0 255.255.255.0\ndefault-router 192.168.1.1\ndns-server 8.8.8.8", "desc": "Configures local DHCP server scope."},
+                        {"cmd": "interface GigabitEthernet0/0/0\nip helper-address 10.10.10.5", "desc": "Forwards client DHCP broadcasts as unicast to the DHCP server."},
+                        {"cmd": "ip nat inside source list 1 interface GigabitEthernet0/1 overload", "desc": "Enables PAT (overload) on the WAN interface."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol2/images/page_2_image_body_13.jpg", "caption": "Port Address Translation (PAT) Inside/Outside Translation Mapping"}
+                    ],
+                    "content": """### Network Address Translation & DHCP in Production
+
+Private IPv4 addresses cannot be routed across the public Internet. NAT acts as the translation boundary between private internal enterprise addresses and registered public IP addresses.
+
+#### Types of NAT
+1. **Static NAT**: One-to-one mapping between private and public IP (typically used for internal servers accessible from outside).
+2. **Dynamic NAT**: Many-to-many mapping from a pool of public IP addresses on a first-come, first-served basis.
+3. **PAT (NAT Overload)**: Many-to-one mapping using unique source port numbers (used by virtually all home routers and enterprise branch offices).
+"""
+                }
+            ],
+            "quiz": [
+                {
+                    "id": "q4-1",
+                    "question": "What four-step process does a DHCP client use to obtain an IPv4 address?",
+                    "options": [
+                        "SYN, SYN-ACK, ACK, FIN",
+                        "Discover, Offer, Request, Acknowledge (DORA)",
+                        "Solicit, Advertise, Request, Confirm",
+                        "Hello, DBD, LSR, LSU"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "DHCP for IPv4 uses the DORA sequence: Discover -> Offer -> Request -> Acknowledge."
+                },
+                {
+                    "id": "q4-2",
+                    "question": "What command is required on a router interface to forward client DHCP discover broadcasts to a DHCP server on a different subnet?",
+                    "options": [
+                        "ip forward-protocol dhcp",
+                        "ip helper-address <server-ip>",
+                        "ip dhcp-relay enable",
+                        "dhcp destination <server-ip>"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "The 'ip helper-address' interface configuration command converts incoming client broadcasts (UDP port 67) into unicast packets directed to the specified DHCP server."
+                }
+            ],
+            "labAssignment": {
+                "title": "Packet Tracer Lab: PAT & DHCP Relay Agent Configuration",
+                "duration": "45 min",
+                "deliverable": "Record a 3–5 minute video demonstrating PC1 obtaining an IP via DHCP from a remote server via 'ip helper-address', and displaying the active NAT translations using 'show ip nat translations' during an active ping to 8.8.8.8.",
+                "rubric": [
+                    "DHCP pool or relay agent configured correctly.",
+                    "NAT inside and outside interfaces assigned.",
+                    "PAT overload rule active with access-list.",
+                    "Successful 'show ip nat translations' output demonstrated on camera."
+                ]
+            }
+        },
+        {
+            "id": "module-5-security-fundamentals",
+            "number": 5,
+            "title": "Security Fundamentals: ACLs, Port Security & AAA",
+            "volume": 2,
+            "description": "Secure enterprise network infrastructure: configure standard and extended Access Control Lists (ACLs), Layer 2 defenses (Port Security, DHCP Snooping, Dynamic ARP Inspection), and AAA architectures.",
+            "estimatedHours": 22,
+            "badge": "Security Defender",
+            "color": "from-red-600 to-rose-500",
+            "lessons": [
+                {
+                    "id": "lesson-5-1-access-control-lists",
+                    "number": 1,
+                    "title": "Access Control Lists: Standard, Extended & Named ACLs",
+                    "readTime": "40 min",
+                    "summary": "Master traffic filtering: understand wildcard masks, evaluate top-to-bottom rule matching, implicit deny any, and place standard vs. extended ACLs appropriately.",
+                    "keyPoints": [
+                        "Standard ACLs (1-99, 1300-1999) filter traffic based ONLY on source IPv4 address. Place as close to destination as possible.",
+                        "Extended ACLs (100-199, 2000-2699) filter based on source/destination IP, protocol (TCP, UDP, ICMP), and port numbers. Place as close to source as possible.",
+                        "Every ACL ends with an invisible implicit deny: `deny ip any any`.",
+                        "Wildcard mask is the inverse of a subnet mask (0 = must match, 1 = ignore)."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "access-list 10 permit 192.168.10.0 0.0.0.255", "desc": "Creates a standard ACL permitting subnet 192.168.10.0/24."},
+                        {"cmd": "access-list 101 permit tcp 192.168.1.0 0.0.0.255 any eq 443", "desc": "Permits HTTPS outbound traffic from the local subnet."},
+                        {"cmd": "interface GigabitEthernet0/0/0\nip access-group 101 in", "desc": "Applies ACL 101 to filter inbound packets on the interface."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol2/images/page_37_image_body_2.jpg", "caption": "Access Control List Filtering and Placement Strategy"}
+                    ],
+                    "content": """### Access Control List Fundamentals
+
+ACLs are ordered lists of permit and deny statements used for packet filtering, NAT traffic selection, and VPN encryption domain definitions.
+
+#### Golden Rules of ACL Processing
+1. **Top-to-Bottom Sequential Evaluation**: As soon as a packet matches a statement, the action is taken and no further statements are checked.
+2. **Implicit Deny Any**: If a packet reaches the end of the ACL without matching any statement, it is silently dropped.
+3. **Placement Rule**:
+   - **Extended ACLs**: Place as close to the **source** as possible (avoids wasting bandwidth carrying packets that will ultimately be dropped).
+   - **Standard ACLs**: Place as close to the **destination** as possible (since standard ACLs cannot specify destination, placing near source would block all traffic everywhere).
+"""
+                }
+            ],
+            "quiz": [
+                {
+                    "id": "q5-1",
+                    "question": "Where is the recommended placement for an extended Access Control List (ACL)?",
+                    "options": [
+                        "As close to the destination as possible",
+                        "As close to the source of traffic as possible",
+                        "On the core switch",
+                        "Only on outgoing WAN interfaces"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": "Extended ACLs should be placed as close to the source as possible so that unauthorized traffic is dropped before consuming network bandwidth."
+                },
+                {
+                    "id": "q5-2",
+                    "question": "What is the wildcard mask for an IPv4 subnet of 255.255.255.224 (/27)?",
+                    "options": [
+                        "0.0.0.31",
+                        "0.0.0.15",
+                        "0.0.0.63",
+                        "0.0.0.255"
+                    ],
+                    "correctAnswer": 0,
+                    "explanation": "Subtract the subnet mask from 255.255.255.255: 255.255.255.255 - 255.255.255.224 = 0.0.0.31."
+                }
+            ],
+            "labAssignment": {
+                "title": "Packet Tracer Lab: Extended Named ACL & Port Security Implementation",
+                "duration": "50 min",
+                "deliverable": "Record a 3–5 minute video demonstrating configuration of an Extended Named ACL that permits web traffic (HTTP/HTTPS) but blocks ICMP pings from Subnet A to Subnet B, and testing violation mode on a switch port with Port Security.",
+                "rubric": [
+                    "Named extended ACL configured with correct port restrictions.",
+                    "Successful web access verified alongside blocked ICMP ping.",
+                    "Port security violation shutdown demonstrated upon unauthorized MAC connection.",
+                    "Clear narrative explaining the implicit deny behavior."
+                ]
+            }
+        },
+        {
+            "id": "module-6-automation-programmability",
+            "number": 6,
+            "title": "Network Automation & Programmability",
+            "volume": 2,
+            "description": "Step into modern NetDevOps: compare traditional CLI vs. controller-based networking (SDN), understand REST APIs, JSON/YAML data structures, Ansible, and Cisco DNA Center.",
+            "estimatedHours": 16,
+            "badge": "NetDevOps Certified",
+            "color": "from-cyan-500 to-blue-600",
+            "lessons": [
+                {
+                    "id": "lesson-6-1-sdn-and-rest-apis",
+                    "number": 1,
+                    "title": "Software-Defined Networking (SDN) & REST APIs",
+                    "readTime": "35 min",
+                    "summary": "Understand separation of control plane and data plane, Southbound APIs (OpenFlow, NETCONF) vs. Northbound APIs (REST), and parse JSON data payloads.",
+                    "keyPoints": [
+                        "Control Plane makes routing and forwarding decisions; Data Plane (Data Path) forwards packets at line rate in hardware (ASICs).",
+                        "SDN centralizes the control plane into a controller (e.g. Cisco DNA Center, Cisco ACI APIC).",
+                        "Northbound APIs allow business applications to program the controller; Southbound APIs allow the controller to provision network devices.",
+                        "REST APIs use standard HTTP verbs: GET (read), POST (create), PUT (update/replace), PATCH (partial update), DELETE (remove)."
+                    ],
+                    "ciscoCommands": [
+                        {"cmd": "curl -k -X GET https://sandboxdnac.cisco.com/dna/intent/api/v1/network-device", "desc": "Requests device inventory from Cisco DNA Center REST API."}
+                    ],
+                    "diagrams": [
+                        {"src": "/extracted/vol2/images/page_54_image_body_7.jpg", "caption": "SDN Plane Architecture: Data Plane, Control Plane, and Management Plane"}
+                    ],
+                    "content": """### Traditional vs. Controller-Based Networking
+
+In traditional networking, each switch and router operates independently, running its own control plane protocols (OSPF, STP) and managing its own data plane forwarding tables.
+
+#### The SDN Revolution
+SDN separates the Control Plane from physical devices:
+- **Centralized Controller**: Builds a holistic view of the entire network fabric.
+- **Southbound APIs**: OpenFlow, NETCONF (YANG data models), RESTCONF.
+- **Northbound APIs**: RESTful JSON APIs enabling automated CI/CD network deployment scripts.
+"""
+                }
+            ],
+            "quiz": [
+                {
+                    "id": "q6-1",
+                    "question": "Which HTTP method is used in a REST API to retrieve an existing resource without modifying server state?",
+                    "options": [
+                        "POST",
+                        "PUT",
+                        "GET",
+                        "PATCH"
+                    ],
+                    "correctAnswer": 2,
+                    "explanation": "HTTP GET is the safe, idempotent method used to read or retrieve representation of a resource."
+                },
+                {
+                    "id": "q6-2",
+                    "question": "In an SDN architecture, which plane of operation is responsible for forwarding packets at line rate based on hardware ASICs?",
+                    "options": [
+                        "Management Plane",
+                        "Control Plane",
+                        "Data Plane",
+                        "Application Plane"
+                    ],
+                    "correctAnswer": 2,
+                    "explanation": "The Data Plane (also called the Forwarding Plane) handles moving packets from ingress to egress interfaces at line rate using specialized hardware ASICs."
+                }
+            ],
+            "labAssignment": {
+                "title": "API Lab: Interacting with Cisco DNA Center REST API via Postman / Python",
+                "duration": "45 min",
+                "deliverable": "Record a 3–5 minute video demonstrating authentication to an SDN controller sandbox via REST API, making a GET request to retrieve network device inventory, and explaining the JSON structure returned.",
+                "rubric": [
+                    "Successful token authentication shown in Postman or Python.",
+                    "GET /network-device API call demonstrated.",
+                    "Walkthrough of JSON response (hostnames, MAC addresses, software versions).",
+                    "Clear explanation of Northbound vs Southbound API roles."
+                ]
+            }
+        }
+    ]
+}
+
+def generate():
+    out_file = SRC_DATA_DIR / "curriculum.json"
+    with open(out_file, "w", encoding="utf-8") as f:
+        json.dump(CURRICULUM, f, indent=2, ensure_ascii=False)
+    print(f"Generated curriculum data: {out_file} ({len(CURRICULUM['modules'])} modules)")
+
+if __name__ == "__main__":
+    generate()
