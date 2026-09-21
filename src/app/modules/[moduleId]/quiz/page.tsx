@@ -48,7 +48,37 @@ export default function ModuleQuizPage() {
   }
 
   const quiz = moduleData.quiz;
+
+  if (quiz.length === 0) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
+        <div className="p-8 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-4 max-w-lg mx-auto">
+          <BookOpen className="w-12 h-12 text-cyan-400 mx-auto" />
+          <h2 className="text-xl font-bold text-white">Study Strategy &amp; Overview</h2>
+          <p className="text-xs text-slate-300 leading-relaxed">
+            Chapter 1 introduces the CCNA certification structure and Jeremy McDowell&apos;s 5-pillar active learning methodology. Official technical review quizzes begin in Chapter 2.
+          </p>
+          <div className="pt-4 flex items-center justify-center gap-3">
+            <Link
+              href={`/modules/${moduleId}`}
+              className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white transition-colors"
+            >
+              Back to Chapter 1
+            </Link>
+            <Link
+              href="/modules/v1-ch2-network-devices/quiz"
+              className="px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 hover:opacity-90 transition-opacity"
+            >
+              Go to Chapter 2 Quiz &rarr;
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const currentQ = quiz[currentIdx];
+
 
   const handleSelect = (optionIdx: number) => {
     if (isSubmitted) return;

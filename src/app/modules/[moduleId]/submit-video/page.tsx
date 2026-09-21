@@ -65,7 +65,8 @@ export default function SubmitVideoPage() {
     );
   }
 
-  const lab = moduleData.labAssignment;
+  const lab = moduleData.labMission;
+
 
   // Start in-browser screen and audio recording
   const startRecording = async () => {
@@ -145,7 +146,8 @@ export default function SubmitVideoPage() {
 
   // Direct Resumable Upload to Google Drive
   const handleUploadToDrive = async () => {
-    const fileToUpload = selectedFile || (mediaBlob ? new File([mediaBlob], `module-${moduleData.number}-lab-demo.webm`, { type: mediaBlob.type }) : null);
+    const fileToUpload = selectedFile || (mediaBlob ? new File([mediaBlob], `module-${moduleData.chapterNumber}-lab-demo.webm`, { type: mediaBlob.type }) : null);
+
 
     if (!fileToUpload) {
       setErrorMessage("Please record a video or choose a video file first.");
@@ -255,26 +257,38 @@ export default function SubmitVideoPage() {
           <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 shadow-xl backdrop-blur-md">
             <h3 className="text-sm font-bold text-white flex items-center gap-2 mb-2">
               <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span>Lab Task: {lab.title}</span>
+              <span>Packet Tracer Mission: {moduleData.rawTitle}</span>
             </h3>
             <p className="text-xs text-slate-300 leading-relaxed mb-4">
-              {lab.deliverable}
+              {lab.scenario}
             </p>
 
-            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
-              <h4 className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-semibold mb-2">
-                Grading Rubric (Recorded Demonstration Checklist):
-              </h4>
-              <ul className="space-y-1.5">
-                {lab.rubric.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 mt-0.5 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
+              <div>
+                <h4 className="text-[11px] font-mono uppercase tracking-wider text-cyan-400 font-semibold mb-2">
+                  Active Learning Prompt:
+                </h4>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  {lab.videoSubmissionPrompt}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-semibold mb-2">
+                  Recorded Demonstration Checklist:
+                </h4>
+                <ul className="space-y-1.5">
+                  {lab.objectives.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 mt-0.5 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
+
 
           {/* Option A: In-Browser Screen Recorder */}
           <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl">
@@ -425,7 +439,8 @@ export default function SubmitVideoPage() {
                 href={`/modules/${nextModule.id}`}
                 className="flex items-center gap-2 px-6 py-3.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 hover:opacity-90 glow-cyan shadow-xl"
               >
-                <span>Unlock Module 0{nextModule.number}: {nextModule.title}</span>
+                <span>Unlock Chapter {nextModule.chapterNumber}: {nextModule.rawTitle}</span>
+
                 <ArrowRight className="w-4 h-4" />
               </Link>
             ) : (
