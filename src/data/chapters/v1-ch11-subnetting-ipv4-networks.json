@@ -1,0 +1,334 @@
+{
+  "id": "v1-ch11-subnetting-ipv4-networks",
+  "volume": 1,
+  "volumeTitle": "Volume 1: Fundamentals and Protocols",
+  "partNumber": 2,
+  "partTitle": "Routing fundamentals and subnetting",
+  "chapterNumber": 11,
+  "title": "Chapter 11: Subnetting IPv4 networks",
+  "rawTitle": "Subnetting IPv4 networks",
+  "description": "Master FLSM and VLSM subnetting, calculate subnets, usable host ranges, broadcast addresses, and the magic number technique for /8 through /30 prefixes.",
+  "readTime": "57 min",
+  "keyPoints": [
+    "What subnetting is and why it’s necessary"
+  ],
+  "tableOfContents": [
+    {
+      "title": "11.1 What is subnetting?",
+      "anchor": "11-1-what-is-subnetting",
+      "level": 2
+    },
+    {
+      "title": "11.2 FLSM subnetting",
+      "anchor": "11-2-flsm-subnetting",
+      "level": 2
+    },
+    {
+      "title": "11.2.1 Subnetting /24 address blocks",
+      "anchor": "11-2-1-subnetting-24-address-blocks",
+      "level": 2
+    },
+    {
+      "title": "Calcu lati ng th e f ive attri b utes of a /24+ s u b n et",
+      "anchor": "calcu-lati-ng-th-e-f-ive-attri-b-utes-of-a-24-s-u-b-n-et",
+      "level": 2
+    },
+    {
+      "title": "/24+ s u b n et mas ks",
+      "anchor": "24-s-u-b-n-et-mas-ks",
+      "level": 2
+    },
+    {
+      "title": "Table 11.1 /24+ prefix lengths and subnet masks",
+      "anchor": "table-11-1-24-prefix-lengths-and-subnet-masks",
+      "level": 2
+    },
+    {
+      "title": "11.2.2 Subnetting /16 address blocks",
+      "anchor": "11-2-2-subnetting-16-address-blocks",
+      "level": 2
+    },
+    {
+      "title": "11.2.3 Subnetting /8 address blocks",
+      "anchor": "11-2-3-subnetting-8-address-blocks",
+      "level": 2
+    },
+    {
+      "title": "11.2.4 FLSM scenarios",
+      "anchor": "11-2-4-flsm-scenarios",
+      "level": 2
+    },
+    {
+      "title": "11.3 VLSM subnetting",
+      "anchor": "11-3-vlsm-subnetting",
+      "level": 2
+    },
+    {
+      "title": "11.3.1 Assigning Toronto LAN A’s subnet",
+      "anchor": "11-3-1-assigning-toronto-lan-a-s-subnet",
+      "level": 2
+    },
+    {
+      "title": "11.3.2 Assigning Tokyo LAN A’s subnet",
+      "anchor": "11-3-2-assigning-tokyo-lan-a-s-subnet",
+      "level": 2
+    },
+    {
+      "title": "11.3.3 Assigning Toronto LAN B’s subnet",
+      "anchor": "11-3-3-assigning-toronto-lan-b-s-subnet",
+      "level": 2
+    },
+    {
+      "title": "11.3.4 Assigning Tokyo LAN B’s subnet",
+      "anchor": "11-3-4-assigning-tokyo-lan-b-s-subnet",
+      "level": 2
+    },
+    {
+      "title": "11.3.5 Assigning the WAN connection’s subnet",
+      "anchor": "11-3-5-assigning-the-wan-connection-s-subnet",
+      "level": 2
+    },
+    {
+      "title": "Exam scenarios",
+      "anchor": "exam-scenarios",
+      "level": 2
+    },
+    {
+      "title": "11.4 Additional subnetting practice",
+      "anchor": "11-4-additional-subnetting-practice",
+      "level": 2
+    },
+    {
+      "title": "The “magic number” method",
+      "anchor": "the-magic-number-method",
+      "level": 2
+    },
+    {
+      "title": "Summary",
+      "anchor": "summary",
+      "level": 2
+    }
+  ],
+  "diagrams": [
+    {
+      "src": "/extracted/vol1/images/page_325_chart_body_0.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_327_chart_body_0.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_328_image_body_1.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_330_image_body_0.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_333_image_body_1.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_335_image_body_1.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_336_image_body_0.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_338_image_body_0.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_339_image_body_2.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_340_image_body_0.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_341_image_body_9.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_342_image_body_4.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    },
+    {
+      "src": "/extracted/vol1/images/page_345_image_body_1.jpg",
+      "caption": "Figure: Subnetting IPv4 networks"
+    }
+  ],
+  "ciscoCommands": [],
+  "quiz": [
+    {
+      "id": "q11-1",
+      "number": 1,
+      "question": "Given a /25 address block, what prefix length is appropriate to create 16 subnets of equal size?",
+      "options": [
+        "A. /27",
+        "B. /28",
+        "C. /29",
+        "D. /30"
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: /29",
+      "explanation": "To create 16 subnets, you need to borrow 4 bits from the host portion (since 2<sup>4</sup>  = 16). This results in a /29 prefix length, adding 4 to the original /25 prefix length."
+    },
+    {
+      "id": "q11-2",
+      "number": 2,
+      "question": "Given a /23 address block, how many subnets can you create that support at least 16 usable host addresses in each subnet?",
+      "options": [
+        "A. 8 subnets",
+        "B. 16 subnets",
+        "C. 32 subnets",
+        "D. 64 subnets"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: 16 subnets",
+      "explanation": "A /23 address block has 9 host bits (32 − 23 = 9). To support at least 16 usable host addresses, 5 host bits are needed, which supports 2<sup>5</sup> − 2 = 30 host addresses. 9 host bits minus the 5 needed for host addresses leaves 4 bits that you can borrow to make subnets, allowing for 2<sup>4</sup> = 16 subnets."
+    },
+    {
+      "id": "q11-3",
+      "number": 3,
+      "question": "A server’s IP address is 172.19.209.178/29.  What is the network address of its subnet?",
+      "options": [
+        "A. 172.19.209.168",
+        "B. 172.19.209.176",
+        "C. 172.19.209.180",
+        "D. 172.19.209.192"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: 172.19.209.176",
+      "explanation": "To calculate this, write the final octet in binary: 0d178 = 0b10110010. Then, change the bits of the host portion (the last 3 bits) all to 0: 10110000. Then convert back to decimal: 0b10110000 = 0d176. Therefore, the network address is 172.19.209.176."
+    },
+    {
+      "id": "q11-4",
+      "number": 4,
+      "question": "PC1’s IP address is 192.168.222.101/26.  What is the broadcast address of its subnet?",
+      "options": [
+        "A. 192.168.222.127",
+        "B. 192.168.222.128",
+        "C. 192.168.222.255",
+        "D. 192.168.222.254"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: 192.168.222.127",
+      "explanation": "To calculate this, write the final octet in binary: 0d101 = 0b01100101. Then, change the bits of the host portion (the last 6 bits) all to 1: 01111111. Then convert back to decimal: 0b01111111 = 0d127. Therefore, the broadcast address is 192.168.222.127."
+    },
+    {
+      "id": "q11-5",
+      "number": 5,
+      "question": "Given a /12 address block, how many subnets can you create that support at least 200 usable host addresses in each subnet?",
+      "options": [
+        "A. 512 subnets",
+        "B. 1024 subnets",
+        "C. 2048 subnets",
+        "D. 4096 subnets"
+      ],
+      "correctAnswer": 3,
+      "answerLetter": "D",
+      "officialAnswer": "D: 4096 subnets",
+      "explanation": "A /12 address block has 20 host bits (32 − 12 = 20). To create subnets that support at least 200 usable host addresses, 8 host bits are needed (2<sup>8</sup> − 2 = 254). That leaves 12 bits that you can borrow to make subnets (20 − 8 = 12), allowing for $2 ^ { 1 2 } = 4 0 9 6$ subnets."
+    },
+    {
+      "id": "q11-6",
+      "number": 6,
+      "question": "Given a /15 address block, what prefix length is appropriate to create 1024 subnets of equal size?",
+      "options": [
+        "A. /25",
+        "B. /24",
+        "C. /23",
+        "D. /22"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: /25",
+      "explanation": "Making 1024 subnets requires 10 borrowed bits (since $2 ^ { 1 0 } = 1 0 2 4 )$ . Therefore, the answer is /25, adding 10 to the original /15 prefix length."
+    },
+    {
+      "id": "q11-7",
+      "number": 7,
+      "question": "A printer’s IP address is 10.109.211.107/28.  What is the network address of its subnet?",
+      "options": [
+        "A. 10.109.211.106",
+        "B. 10.109.211.96",
+        "C. 10.109.211.112",
+        "D. 10.109.211.104"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: 10.109.211.96",
+      "explanation": "To calculate the network address, write the final octet in binary: 0d107 = 0b01101011. Then, change the hosts bits (the final 4 bits) to 0: 01100000. Finally, convert back to decimal: 0b01100000 = 0d96. Therefore, the network address is 10.109.211.96."
+    },
+    {
+      "id": "q11-8",
+      "number": 8,
+      "question": "R1’s IP address is 203.0.113.237/27.  What is the broadcast address of its subnet?",
+      "options": [
+        "A. 203.0.113.238",
+        "B. 203.0.113.239",
+        "C. 203.0.113.247",
+        "D. 203.0.113.255"
+      ],
+      "correctAnswer": 3,
+      "answerLetter": "D",
+      "officialAnswer": "D: 203.0.113.255",
+      "explanation": "To determine the broadcast address, write the final octet in binary: 0d237 = 0b11101101. Then, change the host bits (the last 5 bits) to 1: 11111111. Then, convert back to decimal: 0b11111111 = 0d255. Therefore, the broadcast address is 203.0.113.255."
+    },
+    {
+      "id": "q11-9",
+      "number": 9,
+      "question": "You have been given the 192.168.27.0/24 address block to create subnets of appropriate sizes for your organization.  You have already assigned the first subnet to support 109 hosts. The second subnet must support 60 hosts.  What is the usable host address range of the second subnet?",
+      "options": [
+        "A. 192.168.27.129 to 192.168.27.190",
+        "B. 192.168.27.65 to 192.168.27.126",
+        "C. 192.168.27.128 to 192.168.27.191",
+        "D. 192.168.27.129 to 192.168.27.254"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: 192.168.27.129 to 192.168.27.190",
+      "explanation": "The first subnet, which must support 109 hosts, is 192.168.27.0/25 (a /25 prefix length leaves 7 host bits and supports 2<sup>7</sup> − 2 = 126 hosts). The second subnet, which must support 60 hosts, should use a /26 prefix length (leaving 6 hosts bits and supporting 2<sup>6</sup> − 2 = 62 hosts). Therefore, the second subnet is 192.168.27.128/26, with a usable address range of 192.168.27.129–192.168.27.190."
+    },
+    {
+      "id": "q11-10",
+      "number": 10,
+      "question": "You have been given the 10.0.2.0/23 address block to create subnets of appropriate sizes for your organization.  You have already assigned the first subnet to support 40 hosts. The second subnet must support 29 hosts.  What is the broadcast address of the second subnet?",
+      "options": [
+        "A. 10.0.2.111",
+        "B. 10.0.2.79",
+        "C. 10.0.2.95",
+        "D. 10.0.2.127"
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: 10.0.2.95",
+      "explanation": "The first subnet must use a /26 prefix length, which leaves 6 host bits, to support 40 hosts $( 2 ^ { 6 }$ $- 2 = 6 2 )$ ; it is 10.0.2.0/26. The second subnet should use a /27 prefix length, leaving 5 hosts bits and supporting $2 ^ { 5 } - 2 = 3 0$ hosts. Therefore, the second subnet is 10.0.2.64/27, and its broadcast address is 10.0.2.95 (host bits all set to 1)."
+    }
+  ],
+  "labMission": {
+    "scenario": "Deploy, configure, and verify Subnetting IPv4 networks inside Cisco Packet Tracer according to Jeremy McDowell's lab specifications.",
+    "objectives": [
+      "Download and open Cisco Packet Tracer (free at http://mng.bz/2Kra).",
+      "Construct the topology for Chapter 11: Subnetting IPv4 networks.",
+      "Implement core CLI commands: show ip interface brief, show running-config.",
+      "Verify operational state and capture verification output."
+    ],
+    "verificationCommands": [
+      "show version",
+      "show interfaces status"
+    ],
+    "videoSubmissionPrompt": "Record a 2 to 5-minute screen and microphone walkthrough of your Packet Tracer lab for Chapter 11: Subnetting IPv4 networks. Explain the core concepts in your own words, show your CLI configurations, and run verification commands to demonstrate mastery."
+  },
+  "fullText": "## This chapter covers\n\nWhat subnetting is and why it’s necessary\n\nHow to borrow bits from the host portion of a network to expand the network portion and create subnets\n\nHow to identify the five attributes of a subnet\n\nHow to divide a network into subnets of equal and variable sizes\n\nIn chapter 7, we covered IPv4 address classes, focusing on classes A, B, and C—the three classes of addresses which can be assigned to hosts. Each class is defined by the first bit(s) of the address, and the prefix length of addresses in each range is also defined:\n\nClass A addresses begin with 0b0 and use a /8 prefix length.\n\nClass B addresses begin with 0b10 and use a /16 prefix length.\n\nClass C addresses begin with 0b110 and use a /24 prefix length.\n\nThis addressing architecture, called **classful addressing**, was defined in the original **Internal Protocol** standard in 1981 (RFC 791). However, with the rapid growth of the internet, classful addressing soon proved to be too rigid, resulting in inefficient use of addresses; the pool of available IPv4 addresses was drying up. Subnetting, which involves dividing a larger network up into smaller networks, is one answer to this problem and is a fundamental skill for network engineers. Subnetting is the second half of CCNA exam topic 1.6: Configure and verify IPv4 addressing and subnetting.\n\nBefore we get started, I want to emphasize that subnetting is a skill, and it requires practice to become proficient. Just reading this chapter alone won’t make you good at subnetting; you need to spend some time actually doing it. However, if you read through this chapter carefully and do the recommended practice, you’ll be a confident “subnetter” in no time.\n\n## 11.1 What is subnetting?\n\nThe problem with classful addressing is that it doesn’t allow us to create networks of appropriate sizes. The smallest network size—a class C network—contains 254 usable addresses (2<sup>8</sup>  –2 for the network and broadcast addresses). That is far more addresses than necessary for a home network or many small offices. Assigning a class C network to a small office with only a few dozen devices would result in over 200 IP addresses left unused.\n\nHowever, a class C network is too small for most enterprise networks, meaning that a class B network would be required. A class B network contains 65,534 (2<sup>16</sup>– 2) usable addresses, far more than even a very large network requires, resulting in thousands of wasted addresses. And a class A network contains 16,777,214 usable addresses, a ludicrous number of addresses for a single network. These classful rules were designed for simplicity, not efficiency, but with the internet’s exploding popularity, a better solution was needed.\n\nTo support the fast-growing internet and use the available IPv4 address space more efficiently, a new system was introduced in 1993: **Classless Inter-Domain Routing** (**CIDR**, pronounced like “cider”). CIDR throws out the rules of classful addressing and replaces them with a more flexible system. With CIDR, prefix lengths don’t have to be /8, /16, or /24. Instead, the boundary between the network portion and host portion of an IP address can be in the middle of an octet, resulting in prefix lengths like /23, /26, /28, etc.\n\n**NOTE** The method of notating an address’s prefix length with **/X** is also known as **CIDR notation** because it was introduced with CIDR. Before CIDR notation, the prefix length was always indicated with a netmask, such as 255.255.255.0. Another term for netmask is **subnet mask**; I will use the latter term in this chapter because we are focusing on subnetting, but the terms are interchangeable.\n\nWith CIDR, an enterprise can be assigned an address block that can be divided into networks of appropriate size, called **subnets** (**subdivided networks**). The process of dividing an address block into subnets is called **subnetting**.\n\n**NOTE** An **address block** is a range of IP addresses. It can be used to refer to a network before it has been subnetted. For example, 192.168.1.0/24 is an address block (including IP addresses 192.168.1.0 through 192.168.1.255), which can be divided into multiple smaller networks (subnets).\n\nFigure 11.1 demonstrates how a /24 address block can be divided into subnets. The 192.168.1.0/24 address range allows for a single subnet with a /24 prefix length, including all addresses from 192.168.1.0 through 192.168.1.255. Dividing the /24 address block in half gives two /25 subnets, each containing 128 addresses. Or it can be divided into four /26 subnets, each containing 64 addresses. For each bit by which you extend the prefix length, the number of possible subnets doubles, but the number of addresses in each subnet halves.\n\n![](/extracted/vol1/images/page_325_chart_body_0.jpg)\n\n**Figure 11.1 The 192.168.1.0/24 address block (network) divided into smaller subnets. With a /24 prefix length, it is one subnet of 256 addresses. Using a /25 prefix length allows the block to be divided into two subnets of 128 addresses each. /26 allows for 4 subnets of 64 addresses each. /27 allows for 8 subnets of 32 addresses each. /28 allows for 16 subnets of 16 addresses each.**\n\n**NOTE** Figure 11.1 only shows prefix lengths of up to /28, but longer prefix lengths follow the same pattern: increasing the length of the prefix length by 1 bit doubles the number of possible subnets, but halves the number of addresses contained in each subnet.\n\n## 11.2 FLSM subnetting\n\nSubnetting is the process of dividing an address block into smaller subnets. That process can be done in a couple of different ways: **Fixed-Length Subnet Masking** (FLSM) divides the block into subnets of equal sizes. On the other hand, **Variable-Length Subnet Masking** (VLSM)\n\ndivides the block into subnets of varying sizes depending on how many addresses are actually needed in the subnet.\n\nIn the real world, VLSM is what you’ll be using; it allows you to more efficiently use a block of addresses since you can make each subnet only as large as it needs to be—this wastes fewer addresses. However, FLSM serves as a useful stepping stone when learning how to subnet, and you should know it for the CCNA exam, so in this section, we will focus on FLSM.\n\n## 11.2.1 Subnetting /24 address blocks\n\nFirst, we will look at how to subnet address blocks with a prefix length of /24 or greater. The reason for this is that it allows us to focus only on the final octet of the address, simplifying the process a bit.\n\nThe network portion of an address block cannot be changed; if you are given the 192.168.1.0/24 address block, you can’t assign 192.168.2.1 (or any other IP address not included in the 192.168.1.0/24 range) to a host. However, the host portion is fair game—you can use the last 8 bits to make various IP addresses to assign to hosts. This is the key to subnetting; to make subnets, you “borrow” bits from the host portion and add them to the network portion. You are then free to change the binary value of those borrowed bits between 0 and 1 to make different subnets. Figure 11.2 demonstrates how 1 bit can be borrowed from the host portion of 192.168.1.0/24 to make two different subnets: 192.168.1.0/25 and 192.168.1.128/25.\n\n![](/extracted/vol1/images/page_327_chart_body_0.jpg)\n\nFigure 11.2 Borrowing 1 bit from the host portion of 192.168.1.0/24 allows us to create two subnets: 192.168.1.0/25 and 192.168.1.128/25. The borrowed bit was part of the host portion of the original address block, but it is part of the network portion of each subnet (as indicated by the /25 prefix length).\n\n**NOTE** In previous examples, the network address always ended in .0. However, when subnetting, because the boundary between the network portion and host portion can lie in the middle of an octet, the network address does not necessarily end in .0. 192.168.1.0 is the network address of the 192.168.1.0/25 subnet, and 192.168.1.128 is the network address of the 192.168.1.128/25 subnet.\n\nWith the borrowed bit set to 0, we get the first subnet: 192.168.1.0/25. If we change the borrowed bit to 1, we get the second subnet: 192.168.1.128/25. That’s how subnets are made: by changing the binary value of the borrowed bit(s).\n\nBorrowing a single bit from the host portion allows us to make two subnets, so how many subnets can we make if we borrow 2 bits? We covered this in section 11.1: each bit added to the prefix length (each bit borrowed from the host portion) doubles the number of subnets. The formula is 2<sup>x</sup> , where x is the number of borrowed bits, and therefore borrowing 2 bits allows us to make 4 (2<sup>2</sup>) subnets. Figure 11.3 shows the four subnets that can be made by borrowing 2 bits from the host portion of the 192.168.1.0/24 block.\n\n![](/extracted/vol1/images/page_328_image_body_1.jpg)\n\nFigure 11.3 Borrowing 2 bits from 192.168.1.0/24 allows for four subnets: 192.168.1.0/26, 192.168.1.64/26, 192.168.1.128/26, and 192.168.1.192/26.\n\n**NOTE** In the first subnet, the borrowed bits are 00. How can you know what the next subnet is? Just count up in binary: the number after 00 is 01, then 10, and then 11. As we covered in chapter 7, counting in binary is the same process as counting in decimal, except there are only two digits to work with: 0 and 1.\n\n## Calcu lati ng th e f ive attri b utes of a /24+ s u b n et\n\nIn chapter 7, we covered five attributes of an IPv4 network: network address, broadcast address, first usable address, last usable address, and maximum number of hosts. Those same attributes apply when dividing networks into subnets. Here’s a quick review of each attribute:\n\n**Network address**—The first address of a subnet, with a host portion of all 0s.\n\n**Broadcast address**—The last address of a subnet, with a host portion of all 1s.\n\n**First usable address**—The first address in the subnet that can be assigned to a host. It can be calculated by adding 1 to the network address (changing the last bit to 1).\n\n**Last usable address**—The last address in the subnet that can be assigned to a host. It can be calculated by subtracting 1 from the broadcast address (changing the last bit to 0).\n\n**Maximum number of hosts**—The number of IP addresses available to assign to hosts. The formula is 2<sup>y</sup>  – 2, where y is the number of bits in the host portion. 2 is subtracted because the network and broadcast addresses cannot be assigned to hosts.\n\nFigure 11.4 shows the five attributes of one of the subnets from figure 11.3: the 192.168.1.64/26 subnet. The calculations are the same as we covered in chapter 7—just keep in mind that the borrowed bits are now part of the network portion. Because the prefix length in this example is /26, only the last 6 bits are the host portion.\n\n![](/extracted/vol1/images/page_330_image_body_0.jpg)\n\n**Figure 11.4 The five attributes of the 192.168.1.64/26 subnet. The first 26 bits are the network portion, and the final 6 bits are the host portion. The network address is 192.168.1.64 (host portion all 0s). The broadcast address is 192.168.1.127 (host portion all 1s). The first usable address is 192.168.1.65 (network address + 1). The last usable address is 192.168.1.126 (broadcast address – 1). The maximum number of hosts in the subnet is 62 (26 – 2).**\n\nA common subnetting problem is something like this: “PC1 has IP address 172.16.20.27/28. What is the network address of the subnet it belongs to?” To solve a question like this, you can follow these three steps:\n\n1. Write the address in binary: 10101100.00010000.00010100.00011011\n\n2. Change the host portion to all 0s: 10101100.00010000.00010100.00010000\n\n3. Convert back to dotted decimal: 172.16.20.16. That’s the answer!\n\n**EXAM TIP** You should be able to identify any of the five attributes of a particular subnet, not just the network address. Such problems could appear on the CCNA exam as standalone questions or as part of more complex questions.\n\n## /24+ s u b n et mas ks\n\nIdeally, we would be able to just write prefix lengths in CIDR notation, without having to worry about subnet masks. However, because you have to use subnet masks when configuring IP addresses and static routes in Cisco IOS, they are necessary to learn.\n\nTo review, a subnet mask is a series of 32 bits that indicates which bits in an IP address are part of the network portion and which are part of the host portion. A bit set to 1 in the subnet mask means that the bit in the same position of the IP address is part of the network portion, and a bit set to 0 in the subnet mask means that the bit in the same position of the IP address is part of the host portion. And because an IP address consists of the network portion followed by the host portion, a subnet mask is a series of 1s followed by a series of 0s (unless it is all 0s, as in /0, or all 1s, as in /32).\n\nWhen only dealing with /8, /16, and /24 prefix lengths, subnet masks are simple: 255.0.0.0, 255.255.0.0, or 255.255.255.0, respectively. When using CIDR, however, the boundary between network and host portion can lie in the middle of an octet, which results in other possible subnet masks. Table 11.1 lists prefix lengths from /24 to /32 and their equivalent subnet masks written in binary and dotted decimal. You should familiarize yourself with these subnet masks; you’ll need to know them when configuring Cisco routers. For reference, table 11.1 also lists the maximum number of hosts in a subnet of each size.\n\n## Table 11.1 /24+ prefix lengths and subnet masks\n\n| Prefix length | Subnet mask (binary) | Subnet mask (decimal) | Maximum number of hosts (2<sup>y</sup>-2) |\n| --- | --- | --- | --- |\n| /24 | 11111111.11111111.11111111.00000000 | 255.255.255.0 | 254 |\n| /25 | 11111111.11111111.11111111.10000000 | 255.255.255.128 | 126 |\n| /26 | 11111111.11111111.11111111.11000000 | 255.255.255.192 | 62 |\n| /27 | 11111111.11111111.11111111.11100000 | 255.255.255.224 | 30 |\n| /28 | 11111111.11111111.11111111.11110000 | 255.255.255.240 | 14 |\n| /29 | 11111111.11111111.11111111.11111000 | 255.255.255.248 | 6 |\n| /30 | 11111111.11111111.11111111.11111100 | 255.255.255.252 | 2 |\n| /31 | 11111111.11111111.11111111.11111110 | 255.255.255.254 | 2 (see the following) |\n| /32 | 11111111.11111111.11111111.11111111 | 255.255.255.255 | 1 (see the following) |\n\nPrefix lengths of /31 and /32 are special cases when it comes to calculating the maximum number of hosts in a subnet. A /31 prefix length, for example, leaves a single host bit. If we use the formula 2<sup>y</sup>  – 2 to calculate the maximum number of hosts in the subnet, the result is 0; a single host bit only allows for two addresses, and those are taken by the network and broadcast addresses, resulting in no usable addresses. For this reason, /31 prefix lengths were unused for a long time.\n\nHowever, for the purpose of further preserving the IPv4 address space, an exception to the normal rules was made for /31 prefix lengths: they can be used for **point-to-point** links—connections between two routers, which only require two IP addresses. In this case, the subnet does not have a network address or broadcast address. Before this exception was made, point-to-point links used /30 prefix lengths, leaving two host bits and therefore two usable addresses (2<sup>2</sup>  – 2 = 2). This works fine, and /30 prefix lengths are still commonly used for point-to-point links today, but /31 prefix lengths are more efficient; they only consume two IP addresses, rather than four.\n\n**NOTE** Although /31 subnets are more efficient, /30 subnets are still the more common choice since /31 technically breaks the network/broadcast address rule.\n\nFigure 11.5 demonstrates a point-to-point link between two routers, providing two options for the subnet used for the connection: 203.0.113.0/30 can be used, which consumes a total of four addresses. Or 203.0.113.0/31 can be used, which consumes only two addresses.\n\n![](/extracted/vol1/images/page_333_image_body_1.jpg)\n\n**Figure 11.5 A point-to-point link connecting R1 to R2. Traditionally, a /30 subnet would be used for a connection like this, as in option 1. In modern networks, a /31 subnet, as in option 2, is also valid (and more efficient).**\n\nIn the following example, I configure R1 G0/0’s IP address using a /31 prefix length (subnet mask 255.255.255.254). The router then displays a message warning that /31 prefix lengths should be used cautiously:\n\nR1(config-if)# **ip address 203.0.113.0 255.255.255.254** ❶% Warning: use /31 mask on non point-to-point interface cautiously ❷\n\n❶ Configures a /31 prefix length\n\n❷ A warning message is displayed.\n\n**NOTE** A /32 subnet mask can be used to specify a single IP address in a route, as covered in chapter 9. However, a /32 subnet mask is rarely configured on an interface (although we will cover an exception in chapter 18, on OSPF).\n\n## 11.2.2 Subnetting /16 address blocks\n\nSubnetting an address block with a prefix length shorter than /24 can seem intimidating at first; you can no longer focus only on the final octet of the address. However, let me assure you that the process of subnetting does not change at all:\n\nThe number of subnets you can make is still 2<sup>x</sup> , where x is the number of borrowed bits.\n\nThe maximum number of hosts per subnet is still 2<sup>y</sup>  – 2, where y is the number of host bits.\n\nThe subnet’s network address is still the address with a host portion of all 0s.\n\nI think you get the idea! The only difference is that converting between decimal and binary takes a little more care. Because there’s no need to introduce any new concepts, in this section, I’ll demonstrate how the previous concepts apply to address blocks with a /16+ prefix length. Table 11.2 summarizes some ways a /16 address block can be subnetted. As before, each borrowed bit doubles the amount of subnets that can be made but halves the total number of addresses per subnet (table 11.2 displays the maximum number of hosts per subnet, rather than the total number of addresses).\n\nTable 11.2 Subnetting a /16 address block\n\n| Prefix length | Subnet mask (decimal) | Borrowed bits | Number of subnets | Maximum number of hosts per subnet (2<sup>y</sup>-2) |\n| --- | --- | --- | --- | --- |\n| /16 | 255.255.0.0 | 0 | 1 | 65,534 |\n| /17 | 255.255.128.0 | 1 | 2 | 32,766 |\n| /18 | 255.255.192.0 | 2 | 4 | 16,382 |\n| /19 | 255.255.224.0 | 3 | 8 | 8190 |\n| /20 | 255.255.240.0 | 4 | 16 | 4094 |\n| /21 | 255.255.248.0 | 5 | 32 | 2046 |\n| /22 | 255.255.252.0 | 6 | 64 | 1022 |\n| /23 | 255.255.254.0 | 7 | 128 | 510 |\n| /24 | 255.255.255.0 | 8 | 256 | 254 |\n| /25 | 255.255.255.128 | 9 | 512 | 126 |\n\nNOTE Table 11.2 only shows prefix lengths up to /25, but /16 address blocks can be subnetted up to /32 as well.\n\nIn figure 11.3, we saw how borrowing two bits from the 192.168.1.0/24 address block allows for four subnets to be made. Figure 11.6\n\ndemonstrates the same, but this time using the 192.168.0.0/16 address block.\n\n![](/extracted/vol1/images/page_335_image_body_1.jpg)\n\n**Figure 11.6 Borrowing two bits from 192.168.0.0/16 allows for four subnets: 192.168.0.0/18, 192.168.64.0/18, 192.168.128.0/18, and 192.168.192.0/18.**\n\nCalculating the five attributes is the same process as before. Figure 11.7 takes one of the subnets from figure 11.6 (192.168.128.0/18) and shows the five attributes of that subnet.\n\n![](/extracted/vol1/images/page_336_image_body_0.jpg)\n\n**Figure 11.7 The five attributes of the 192.168.128.0/18 subnet. The first 18 bits are the network portion, and the final 14 bits are the host portion. The network address is 192.168.128.0 (host portion all 0s). The broadcast address is 192.168.191.255 (host portion all 1s). The first usable address is 192.168.128.1 (network address + 1). The last usable address is 192.168.191.254 (broadcast address – 1). The maximum number of hosts in the subnet is 16,382 (214 – 2).**\n\n**NOTE** /18 is a very large subnet size, containing 16,382 host addresses per subnet. You will probably never configure a /18 subnet on an interface, but for the CCNA exam, you should be able to create subnets of any size.\n\n## 11.2.3 Subnetting /8 address blocks\n\nSubnetting a /8 address block is, once again, the same process we have seen up to this point. However, a /8 address block means there are 24 host bits—lots of bits to either borrow and make lots of subnets, or use to make a few very large subnets. Table 11.3 summarizes some ways that a /8 address block can be subnetted.\n\nTable 11.3 Subnetting a /8 address block\n\n| Prefix length | Subnet mask (decimal) | Borrowed bits | Number of subnets | Maximum number of hosts per subnet (2<sup>y</sup>-2) |\n| --- | --- | --- | --- | --- |\n| /8 | 255.0.0.0 | 0 | 1 | 16,777,214 |\n| /9 | 255.128.0.0.0 | 1 | 2 | 8,388,606 |\n| /10 | 255.192.0.0 | 2 | 4 | 4,194,302 |\n| /11 | 255.224.0.0 | 3 | 8 | 2,097,150 |\n| /12 | 255.240.0.0 | 4 | 16 | 1,048,574 |\n| /13 | 255.248.0.0 | 5 | 32 | 524,286 |\n| /14 | 255.252.0.0 | 6 | 64 | 262,142 |\n| /15 | 255.254.0.0 | 7 | 128 | 131,070 |\n| /16 | 255.255.0.0 | 8 | 256 | 65,534 |\n| /17 | 255.255.128.0 | 9 | 512 | 32,766 |\n\n**NOTE** Because of the number of host bits in a /8 address block, the number of hosts per subnet for each prefix length listed in table 11.3 is extremely large. When actually subnetting a /8 block, you will probably borrow many bits to make smaller subnets; a subnet with millions of addresses is never necessary.\n\nIn figure 11.8, I borrow 12 bits from the 10.0.0.0/8 address block, which allows for 4,096 separate subnets to be made. Of course, I’m not going to write out all 4,096 subnets, so figure 11.8 shows only the first subnet and the final two subnets.\n\n![](/extracted/vol1/images/page_338_image_body_0.jpg)\n\nFigure 11.8 Borrowing 12 bits from 10.0.0.0/8 allows for 4,096 subnets. 10.0.0.0/20 is the first subnet, and 10.255.224.0/20 and 10.255.240.0/20 are the final two.\n\n**NOTE** Figure 11.8 differs from the previous examples in that the borrowed bits cross between octets (all of the second octet and the first four bits of the third octet). This doesn’t change anything about how subnetting works! Keep in mind that the octet divisions only exist to make addresses more human-readable; to a computer, an IP address is just a series of 32 bits—no octet divisions.\n\nCalculating the five attributes of a subnet doesn’t change, regardless of the size of the original address block or how many bits you borrow, so we won’t go through a third example here. For some additional practice, I recommend taking one of the subnets shown in figure 11.8 and calculating the five attributes: network address, broadcast address, first usable address, last usable address, and maximum number of hosts.\n\n## 11.2.4 FLSM scenarios\n\nAs mentioned at the beginning of this chapter, subnetting is a skill that takes practice to become proficient. At the end of this chapter, I will give some recommendations for free websites where you can find subnetting practice questions. Before that, let’s go through a couple of scenarios that resemble what you might find on those websites (and on the CCNA exam itself).\n\n1. Subnet the 172.25.190.0/23 address block into four subnets, and identify each subnet. 2. How many host addresses are available in each subnet?\n\nFigure 11.9 provides a practice scenario in which we will use FLSM to divide the 172.25.190.0/23 address block into four subnets of equal size, calculate the maximum number of hosts in each subnet, and configure the first usable address of each subnet on R1’s interfaces.\n\n![](/extracted/vol1/images/page_339_image_body_2.jpg)\n\n3. Configure the first usable address of each subnet on R1's interfaces.\n\n**Figure 11.9 An FSLM scenario in which you must subnet the 172.25.190.0/23 address block into four subnets of equal size, identify the number of host addresses per subnet, and configure the first usable address of each subnet on R1’s interfaces**\n\n**NOTE** The example in figure 11.9 is the first time we are beginning with an address block that is not /8, /16, or /24, but the subnetting process remains the same.\n\nTo begin, let’s identify the four subnets. How many bits do we need to borrow to divide an address block into four subnets? As we’ve seen in a couple of previous examples, we need to borrow 2 bits to make four subnets because $2 ^ { 2 } = 4$ . Then, we can just count up with those 2 borrowed bits to create four subnets. Figure 11.10 shows the four subnets that can be created by borrowing 2 bits from the 172.25.190.0/23 address block. Because we borrow 2 bits from the host portion, each subnet’s prefix length is /25 (/23 + 2).\n\n![](/extracted/vol1/images/page_340_image_body_0.jpg)\n\n**Figure 11.10 The subnets that can be created by subnetting 172.25.190.0/23 into four equal parts: 172.25.190.0/25, 172.25.190.128/25, 172.25.191.0/25, and 172.25.191.128/25. Borrowing 2 bits from the host portion of the /23 address block results in four /25 subnets.**\n\nWe have now solved the first part of the scenario: identifying the four subnets. The second part asks how many host addresses are available in each subnet. To solve this, just use the same formula as always: 2<sup>y</sup>  – 2 (y being the number of host bits). The original address block was /23, meaning there were 9 host bits. However, after borrowing 2 host bits to make subnets, 7 host bits remain. Therefore, there are 126 (2<sup>7</sup>  – 2) host addresses available in each subnet.\n\nThe final part of the scenario says to configure the first usable address of each subnet on R1’s interfaces. The first usable address can be calculated with the usual method: add 1 to the network address of each subnet. In the following example, I configure R1’s interfaces with the first usable address of each subnet:\n\nR1(config)# **interface g0/0** R1(config-if)# **ip address 172.25.190.1 255.255.255.128** R1(config-if)# **interface g0/1** R1(config-if)# **ip address 172.25.190.129 255.255.255.128** R1(config-if)# **interface g0/2** R1(config-if)# **ip address 172.25.191.1 255.255.255.128**\n\n❶ Configure 172.25.190.1/25 on G0/0.\n\n❷ Configure 172.25.190.129/25 on G0/1.\n\n❸ Configure 172.25.191.1/25 on G0/2.\n\n❹ Configure 172.25.191.129/25 on G0/3.\n\nWe have now solved the scenario! Let’s walk through one more scenario, this time text only: you have been given the 10.224.0.0/11 address block. You must create 2,000 subnets, which will be assigned to various offices and departments within a large company. What prefix length must you use to create a sufficient number of subnets? How many host addresses are in each subnet?\n\nTo solve this scenario, we first have to determine how many bits we must borrow to create 2,000 subnets. If you have learned your powers of 2, this shouldn’t be too difficult: 1 bit gives 2 subnets, 2 bits gives 4 subnets, 3 bits gives 8 subnets, and so on, and then 11 bits gives 2,048 subnets. That’s 48 more than we need in the scenario, but borrowing 10 bits would give only 1,024 subnets (not enough), so 11 bits is our answer. Borrowing 11 bits from the host portion results in a /22 prefix length, which is the answer to the first part of the scenario. Figure 11.11 demonstrates this and shows the first subnet and the last (2,048th) subnet.\n\n![](/extracted/vol1/images/page_341_image_body_9.jpg)\n\nFigure 11.11 Borrowing 11 bits from the host portion of the 10.224.0.0/11 address block allows for 2,048 subnets. The first subnet is 10.224.0.0/22 (all borrowed bits set to 0), and the last (2048th) subnet is 10.255.252.0/22 (all borrowed bits set to 1).\n\nA /22 prefix length means that 10 host bits remain, so now we can calculate the number of host addresses in each subnet: 1022 (2<sup>10</sup>  – 2). And now we have solved the scenario!\n\n**NOTE** Because the number of subnets increases by a power of 2 for each borrowed bit, you often won’t be able to create exactly the number of subnets needed; you’ll probably end up with some extra subnets, which is not a bad thing—they can be used to accommodate network expansions in the future. Likewise, you often won’t be able to create subnets of exactly the size you need; you’ll usually have some extra addresses in each subnet.\n\n## 11.3 VLSM subnetting\n\nVariable-Length Subnet Masking (VLSM) allows us to subnet an address block even more efficiently than FLSM by creating subnets of varying sizes. Although FLSM is a helpful introduction to subnetting, when actually subnetting networks in the real world, chances are you’ll be doing VLSM. Figure 11.12 shows the scenario I will use to demonstrate VLSM.\n\n![](/extracted/vol1/images/page_342_image_body_4.jpg)\n\n**Figure 11.12 A VLSM scenario in which you must assign subnets from the 10.89.100.0/24 address block to each LAN and the WAN connection and identify the five attributes of each subnet**\n\nA /24 address block includes 254 host addresses, and the total number of host addresses required in figure 11.12’s scenario is 226, so the address space is sufficient. Using FLSM to create subnets of equal size would result in some subnets having too few addresses (Toronto LAN A requires 122 host addresses) and some subnets having too many addresses (the WAN connection only requires 2 host addresses, for R1 and R2). However, if we use VLSM, we can make some subnets smaller and some larger, allowing us to efficiently use the available address block. The high-level VLSM process is as follows:\n\n1. Assign the largest subnet at the start of the address block.\n\n2. Assign the second-largest subnet after it.\n\n3. Repeat the process until all subnets have been assigned.\n\nThe five subnets in figure 11.12, in order from largest to smallest, are Toronto LAN A (122 hosts), Tokyo LAN A (59 hosts), Toronto LAN B (30 hosts), Tokyo LAN B (11 hosts), and the WAN connection (2 hosts)—so let’s start by assigning Toronto LAN A.\n\n**NOTE** Router IP addresses are included in the “host” counts; any device with an IP address can be considered a host. The term **end host** is usually used to refer to PCs, servers, etc. to distinguish them from network infrastructure devices like routers.\n\nFigure 11.13 visually represents the five subnets that will result from this process: one /25 subnet (128 addresses), one /26 subnet (64 addresses), one /27 subnet (32 addresses), one /28 subnet (16 addresses), and one /30 subnet (4 addresses). In the following sections, we’ll walk through how to perform VLSM subnetting and create these five subnets.\n\n<table><tr><td rowspan=32>256</td><td rowspan=16>1)128</td><td rowspan=8>64</td><td rowspan=4>32</td><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=4>32</td><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=8>64</td><td rowspan=4>32</td><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=4>32</td><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=16>128</td><td rowspan=8>2) 64</td><td rowspan=4>32</td><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=4>32</td><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=8>64</td><td rowspan=4>3) 32</td><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=4>32</td><td rowspan=2>4) 16</td><td>8</td></tr><tr><td>8</td></tr><tr><td rowspan=2>16</td><td>8</td></tr><tr><td>8</td></tr></table>\n\n1. Toronto LAN A: 10.89.100.0/25 (.0 to .127)\n\n2. Tokyo LAN A: 10.89.100.128/26 (.128 to .191)\n\n3. Toronto LAN B: 10.89.100.192/27 (.192 to .223)\n\n4. Tokyo LAN B: 10.89.100.224/28 (.224 to .239)\n\n5. WAN: 10.89.100.240/30 (.240 to .243) Remaining:10.89.100.244 - 10.89.100.255\n\n**Figure 11.13 The 10.89.100.0/24 address block, divided into five subnets of varying sizes. (1) Toronto LAN A is 10.89.100.0/25, containing 128 addresses. (2) Tokyo LAN A is 10.89.100.128/26, containing 64 addresses. (3) Toronto LAN B is 10.89.100.192/27, containing 32 addresses. (4) Tokyo LAN B is 10.89.100.224/28, containing 16 addresses. (5) The WAN connection is 10.89.100.240/30, containing 4 addresses. After subnetting, 12 addresses remain unused: 10.89.100.244 through 10.89.100.255.**\n\n**NOTE** For practical reasons, figure 11.13 doesn’t show the number of addresses in /30 subnets (4 addresses each) and doesn’t include columns for /31 subnets (2 addresses each) and /32 subnets (1 address each).\n\n## 11.3.1 Assigning Toronto LAN A’s subnet\n\nToronto LAN A requires 122 host addresses, so the question is, what is the minimum number of host bits required to provide at least 122 host addresses? Referring to the formula we use to calculate the maximum number of host bits in a subnet $( 2 ^ { y } - 2 )$ , what is the minimum y value that would serve our purpose? The answer is 7 because $2 ^ { 7 } - 2 { = } 1 2 6$ , only a few more addresses than we need. Six host bits would give us only 62 host addresses $( 2 ^ { 6 } - 2 )$ —not enough for the 122 hosts in Toronto LAN A. To leave 7 host bits, we have to borrow 1 bit from the /24 address block. Figure 11.14 shows the resulting subnet when we borrow a single host bit from the 10.89.100.0/24 address block: 10.89.100.0/25—Toronto LAN A’s subnet! Figure 11.14 also lists the five attributes of the subnet.\n\n![](/extracted/vol1/images/page_345_image_body_1.jpg)\n\n• Network address: 10.89.100.0\n\n• Broadcast address: 10.89.100.127\n\n• First usable address: 10.89.100.1\n\n• Last usable address: 10.89.100.126\n\n• Maximum number of hosts: 126\n\nFigure 11.14 Toronto LAN A’s subnet. Borrowing 1 bit from the 10.89.100.0/24 address block results in the 10.89.100.0/25 subnet, supporting up to 126 host addresses—enough for the 122 hosts in the LAN.\n\nBy assigning the 10.89.100.0/25 subnet to Toronto LAN A, we have already used half of the available address space: from 10.89.100.0 through 10.89.100.127. The entire 10.89.100.0/24 address block includes 256 addresses, and a single /25 subnet takes up 128 of those addresses (keep in mind that only 126 of those 128 addresses can be assigned to hosts). We will assign the rest of the subnets from the remaining range of addresses: 10.89.100.128 through 10.89.100.255.\n\n## 11.3.2 Assigning Tokyo LAN A’s subnet\n\nAfter assigning Toronto LAN A’s subnet and identifying its five attributes, we can easily identify one more piece of information: Tokyo LAN A’s network address. The last address (not the last **usable** address) in Toronto LAN A is 10.89.100.127—the broadcast address. Without knowing any other information about Tokyo LAN A, we can identify its first IP address (the first address immediately after Toronto LAN A’s broadcast address), which is 10.89.100.128. This is Tokyo LAN A’s network address because the first IP address of a subnet is the network address.\n\nNow that we know Tokyo LAN A’s network address we just need to figure out how many host bits are needed (which determines the prefix length), and then we can calculate the other attributes. Tokyo LAN A requires enough addresses for 59 hosts, so 6 host bits are required, giving 62 (2<sup>6</sup> – 2) usable addresses—a /26 prefix length. Therefore, the subnet we should assign to Tokyo LAN A is 10.89.100.128/26. Figure 11.15 shows the subnet and its five attributes.\n\n<table><tr><td colspan=8>10</td><td colspan=8>89</td><td colspan=8>100</td><td colspan=2></td><td colspan=6>128</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></table>\n\n• Network address: 10.89.100.128\n\n• Broadcast address: 10.89.100.191\n\n• First usable address: 10.89.100.129\n\n• Last usable address: 10.89.100.190\n\n• Maximum number of hosts: 62\n\n**Figure 11.15 Tokyo LAN A’s subnet. The network address is 10.89.100.128—the first address after Toronto LAN A. A /26 prefix length is used to allow for up to 62 host addresses— enough for the 59 hosts in the LAN.**\n\nWe have now assigned three-quarters of the 10.89.100.0/24 address block: a /25 subnet (one-half) and a /26 subnet (one-quarter). The remaining range of addresses is 10.89.100.192 through 10.89.100.255, and we will assign the remaining three subnets from that range.\n\n## 11.3.3 Assigning Toronto LAN B’s subnet\n\nThe IP address immediately after Tokyo LAN A’s final address (its broadcast address) is 10.89.100.192, and that is Toronto LAN B’s network address. What about its prefix length? Toronto LAN B requires IP addresses for at least 30 hosts, meaning 5 host bits are required, which gives exactly 30 (2<sup>5</sup>  – 2) host addresses. Therefore, Toronto LAN B’s subnet should use a /27 prefix length, resulting in subnet 10.89.100.192/27. Figure 11.16 shows the subnet and its five attributes.\n\n<table><tr><td colspan=8>10</td><td colspan=8>89</td><td colspan=8>100</td><td colspan=3></td><td colspan=5>192</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></table>\n\n• Network address: 10.89.100.192\n\n• Broadcast address: 10.89.100.223\n\n• First usable address: 10.89.100.193\n\n• Last usable address: 10.89.100.222\n\n• Maximum number of hosts: 30\n\n**Figure 11.16 Toronto LAN B’s subnet. The network address is 10.89.100.192—the first address after Tokyo LAN A. A /27 prefix length is used to allow for up to 30 host addresses—exactly the amount needed.**\n\n**NOTE** In a real-world situation, you should leave a bit of room in each subnet to allow for future growth; you may need to add more hosts to the subnet at some point. However, when doing subnetting scenarios like this (and on the CCNA exam), just use the most efficient prefix length, leaving as few unused addresses in the subnet as possible.\n\nWe have now assigned seven-eighths of the 10.89.100.0/24 address block: a /25 subnet (one-half), a /26 subnet (one-quarter), and a /27 subnet (one-eighth). The remaining range of addresses is 10.89.100.224 through 10.89.100.255, and we will use that range to assign the remaining subnets: Tokyo LAN B and the WAN connection between R1 and R2.\n\n## 11.3.4 Assigning Tokyo LAN B’s subnet\n\nWe can use the same process to assign Tokyo LAN B’s subnet. Its network address is the first address after the previous LAN’s (Toronto LAN B’s) broadcast address, so Tokyo LAN B’s network address is 10.89.100.224. Tokyo LAN B is a small LAN, requiring only 11 host addresses. Therefore, only 4 host bits are required, allowing for up to 14 (2<sup>4</sup>  – 2) host addresses, so Tokyo LAN B’s subnet is 10.89.100.224/28. Figure 11.17 shows the subnet and its five attributes.\n\n<table><tr><td colspan=8>10</td><td colspan=8>89</td><td colspan=8>100</td><td colspan=8>224</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></table>\n\n• Network address: 10.89.100.224\n\n• Broadcast address: 10.89.100.239\n\n• First usable address: 10.89.100.225\n\n• Last usable address: 10.89.100.238\n\n• Maximum number of hosts: 14\n\n**Figure 11.17 Tokyo LAN B’s subnet. The network address is 10.89.100.224—the first address after Toronto LAN B. A /28 prefix length is used to allow for up to 14 host addresses— sufficient for the 11 hosts in the LAN.**\n\nOnly one-sixteenth of the 10.89.100.0/24 address block remains— addresses 10.89.100.240 through 10.89.100.255. Fortunately, that is more than enough addresses for the final subnet: the WAN connection between R1 and R2.\n\n## 11.3.5 Assigning the WAN connection’s subnet\n\nThe WAN connection between R1 and R2 is a point-to-point connection, requiring only two host addresses. The network address is 10.89.100.240 (the first address after Tokyo LAN B’s broadcast address), but what should the prefix length be? As we covered in section 11.2.1, there are two options: a /30 prefix length (two usable addresses, four addresses in total) or a /31 prefix length (two usable addresses, without network and broadcast addresses). Either prefix length is a valid choice, but for this example, I’ll use a /30 prefix length, so the WAN connection’s subnet is 10.89.100.240/30. Figure 11.18 shows the subnet and its five attributes.\n\n<table><tr><td colspan=8>10</td><td colspan=8>89</td><td colspan=8>100</td><td colspan=6>240</td><td colspan=2></td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></table>\n\n• Network address: 10.89.100.240\n\n• Broadcast address: 10.89.100.243\n\n• First usable address: 10.89.100.241\n\n• Last usable address: 10.89.100.242\n\n• Maximum number of hosts: 2\n\n**Figure 11.18 The WAN connection’s subnet. The network address is 10.89.100.240—the first address after Tokyo LAN B. A /30 prefix length is used to allow for two host addresses—one for R1, and one for R2.**\n\n**NOTE** When I visually represented these five subnets in figure 11.13, I selected a /30 prefix length for the WAN connection’s subnet. The main reason for that choice was a practical one; the boxes to represent /31 subnets in the diagram would be too small. For consistency’s sake, I used a /30 prefix length here, but keep in mind that a /31 prefix length is valid too and is actually superior in that it consumes fewer addresses.\n\nAnd now we are done! We have assigned all five subnets, with only a few IP addresses to spare (10.89.100.244 through 10.89.100.255); these addresses are free to be used as needed in the future as this hypothetical enterprise expands. With FLSM, this would not have been possible, but VLSM gives us the flexibility to create subnets of varying sizes.\n\n## Exam scenarios\n\nBeing comfortable with subnetting is a key element of CCNA exam success. Here are a couple of examples of how your knowledge of subnetting might be tested on the CCNA exam:\n\n1.  (multiple choice, multiple answers)\n\nWhich of the following prefix length to subnet mask pairs are correct? (Select two.)\n\nA.  /25 = 255.255.255.192\n\nB.  /15 = 255.252.0.0\n\nC.  /29 = 255.255.255.248\n\nD.  /27 = 255.255.255.240\n\nE.  /18 = 255.255.192.0\n\nE.  /10 = 255.224.0.0\n\nSubnet masks are necessary for configuring IP addresses and static routes in Cisco IOS, so it’s important that you are able to identify the correct subnet mask for a given prefix length. Fortunately, subnet masks are fairly simple—a series of binary 1s followed by a series of binary 0s. In this case, (C) is the first correct option; /29 is equivalent to 255.255.255.248 (29 binary 1s followed by 3 binary 0s, written in dotted decimal). (E) is the second correct option; /18 is equivalent to 255.255.192.0. As I’ve said previously, being comfortable converting between binary and dotted decimal is key!\n\n2.  (drag and drop)\n\nDrag each subnet on the left to its appropriate usable host address range on the right. There are more usable address ranges provided than subnets, so not all address ranges will be used.\n\n| (A) 10.23.24.128/25 | 10.23.24.65 - 10.23.24.79 |\n| --- | --- |\n| (B) 10.23.24.128/27 | 10.23.24.65 - 10.23.24.78 |\n| (C) 10.23.24.64/26 | 10.23.24.65 - 10.23.24.126 |\n| (D) 10.23.24.64/28 | 10.23.24.129 - 10.23.24.254 |\n|  | 10.23.24.129 - 10.23.24.190 |\n|  | 10.23.24.129 - 10.23.24.158 |\n\nIdentifying a subnet’s usable address range requires identifying the subnet’s first and last usable addresses; they identify the start and end of the usable address range. In this question, (A)’s usable address range is 10.23.24.129 to 10.23.24.254, (B)’s usable address range is 10.23.24.129 to 10.23.24.158, (C)’s usable address range is 10.23.24.65 to 10.23.24.126, and (D)’s usable address range is 10.23.24.65 to 10.23.24.78. To solve this question, just focus on the final octet of each address; the first three octets are the same in all of them.\n\n## 11.4 Additional subnetting practice\n\nTo become proficient at subnetting, you need to practice. Fortunately, there are some free websites that generate subnetting problems you can solve. One example is [https://www.subnetting.net/](https://www.subnetting.net/), but you can find\n\nothers with a quick Google search. I recommend spending a bit of time each day practicing subnetting for at least a week or two or until you feel confident solving questions on the practice sites.\n\nBefore sending you off to try out practice questions, I want to mention two points. First, some practice questions you encounter may not explicitly state the size of the address block you must subnet. Here’s an example: “What is the maximum number of valid subnets and usable hosts per subnet that you can get from the network 172.26.0.0 255.255.252.0?” In such cases, assume the original address block is a classful network. In this example, the IP address is 172.26.0.0, which is a class B address (because it starts with 0b10), so you can assume that the address block is /16 (172.26.0.0/16).\n\nThe second point is that some questions will ask about **wildcard masks**, which are similar to subnet masks, but not actually related to the topic of subnetting. We will cover wildcard masks in chapter 17 (Dynamic Routing), as well as chapters 23 and 24 (Access Control Lists). For now, you can skip any questions on a practice website that mention wildcard masks.\n\n## The “magic number” method\n\nSome instructors teach shortcuts that can help you solve subnetting scenarios without having to think about the underlying binary; one famous example is called the “magic number” method. I do not agree with these methods for CCNA candidates because I think they only serve as a crutch, helping you to solve subnetting problems without understanding how subnetting actually works. It may seem cumbersome to always be thinking about binary, but with practice, it will become effortless. And you’ll become better not just at subnetting but at all of the other necessary skills that require proficiency with binary (I listed some in chapter 7).\n\n## Summary\n\n**Classless Inter-Domain Routing** (CIDR) replaced classful addressing, allowing prefix lengths outside of the traditional /8, /16, and /24.\n\nWith CIDR, an address block can be divided into smaller networks called **subnets**. This process is called **subnetting**.\n\n**Fixed-Length Subnet Masking** (FLSM) subnetting divides an address block into subnets of equal size.\n\n**Variable-Length Subnet Masking** (VLSM) subnetting divides an address block into subnets of varying size.\n\nTo subnet an address block, you “borrow” bits from the host portion of the address block and add them to the network portion. Whereas the network portion of the original address block cannot be changed, the borrowed bits can be changed to make different subnets.\n\nEach additional borrowed bit doubles the number of subnets that can be made: 1 borrowed bit = 2 subnets, 2 borrowed bits = 4 subnets, 3 borrowed bits = 8 subnets, etc. However, each additional borrowed bit halves the number of addresses in each subnet because there are fewer bits in the host portion.\n\nThe five attributes of an IPv4 network are calculated in the same manner for subnets: the network address is the first address of a subnet (host portion of all 0s), the broadcast address is the last address of a subnet (host portion of all 1s), the first usable address is the first address after the network address, the last usable address is the last address before the broadcast address, and the maximum number of hosts is 2<sup>y</sup>  – 2, where y is the number of host bits.\n\nFor point-to-point links (connections between two routers), either a /30 or a /31 prefix length can be used. /30 consumes four addresses (network address, broadcast address, and two host addresses), whereas /31 consumes only two addresses (two host addresses, without a network or broadcast address).\n\nTo subnet an address block using VLSM, assign the largest subnet at the start of the address block, assign the second-largest subnet after it, and repeat the process until all subnets have been assigned.\n\nThe network address of the next subnet is the address immediately after the broadcast address of the current subnet.\n\nIn a real-world situation, you should leave some room in each subnet for future growth. When doing subnetting scenarios for practice (or for the CCNA exam), be as efficient as possible (leave as few unused addresses as possible).\n\n## Part 3. Layer 2 concepts\n\nIn part 3, we will build upon your foundational understanding of how switches provide connectivity within a LAN. You have already grasped the basics of MAC address learning and aging, frame forwarding and flooding, and other key operations of switches. Now, let’s delve deeper into several advanced features that optimize and secure LANs. We’ll start in chapter 12 by exploring virtual LANs (VLANs), which allow us to divide a single physical switch into multiple virtual switches, dividing the LAN into multiple separate segments and enhancing its security and efficiency.\n\nIn chapter 13, we will continue on the topic of VLANs, covering two auxiliary protocols that streamline the configuration and management of VLANs on Cisco switches: Dynamic Trunking Protocol (DTP) and VLAN Trunking Protocol (VTP). We will then shift our attention to Spanning Tree Protocol (STP) in chapter 14 and Rapid Spanning Tree Protocol (RSTP) in chapter 15. These protocols are vital for preventing broadcast storms—broadcast frames that infinitely loop around the switches in the LAN, clogging up the LAN and preventing hosts in the LAN from communicating.\n\nFinally, we will conclude part 3 by examining EtherChannel in chapter 16. EtherChannel allows multiple physical connections between two switches to form a single logical connection, increasing the available bandwidth in the LAN. By the end of part 3, you will understand these concepts both theoretically and practically and be able to implement them on Cisco switches; this is essential both for CCNA exam success and for any network professional who wants to design, implement, and troubleshoot modern LANs effectively.\n\n## 12 VLANs"
+}

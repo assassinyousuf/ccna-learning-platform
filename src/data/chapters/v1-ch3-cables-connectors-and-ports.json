@@ -1,0 +1,267 @@
+{
+  "id": "v1-ch3-cables-connectors-and-ports",
+  "volume": 1,
+  "volumeTitle": "Volume 1: Fundamentals and Protocols",
+  "partNumber": 1,
+  "partTitle": "Network fundamentals",
+  "chapterNumber": 3,
+  "title": "Chapter 3: Cables, connectors, and ports",
+  "rawTitle": "Cables, connectors, and ports",
+  "description": "Compare physical cabling: copper UTP (Cat 5e/6/6a), straight-through vs crossover, Auto MDI-X, fiber-optic (single-mode vs multimode), and speed ratings.",
+  "readTime": "30 min",
+  "keyPoints": [
+    "The specifications and standards that allow computers to communicate"
+  ],
+  "tableOfContents": [
+    {
+      "title": "3.1 Network standards",
+      "anchor": "3-1-network-standards",
+      "level": 2
+    },
+    {
+      "title": "3.2 Binary: Bits and bytes",
+      "anchor": "3-2-binary-bits-and-bytes",
+      "level": 2
+    },
+    {
+      "title": "1,000 or 1,024 bits?",
+      "anchor": "1-000-or-1-024-bits",
+      "level": 2
+    },
+    {
+      "title": "3.3 Copper UTP connections",
+      "anchor": "3-3-copper-utp-connections",
+      "level": 2
+    },
+    {
+      "title": "3.3.1 IEEE 802.3 standards (copper)",
+      "anchor": "3-3-1-ieee-802-3-standards-copper",
+      "level": 2
+    },
+    {
+      "title": "3.3.2 Straight-through and crossover cables",
+      "anchor": "3-3-2-straight-through-and-crossover-cables",
+      "level": 2
+    },
+    {
+      "title": "Straig ht-th roug h cables",
+      "anchor": "straig-ht-th-roug-h-cables",
+      "level": 2
+    },
+    {
+      "title": "Crossove r cab les",
+      "anchor": "crossove-r-cab-les",
+      "level": 2
+    },
+    {
+      "title": "Auto MDI-X",
+      "anchor": "auto-mdi-x",
+      "level": 2
+    },
+    {
+      "title": "1000BASE-T and 10GBASE-T",
+      "anchor": "1000base-t-and-10gbase-t",
+      "level": 2
+    },
+    {
+      "title": "3.4 Fiber-optic connections",
+      "anchor": "3-4-fiber-optic-connections",
+      "level": 2
+    },
+    {
+      "title": "3.4.1 The anatomy of a fiber-optic cable",
+      "anchor": "3-4-1-the-anatomy-of-a-fiber-optic-cable",
+      "level": 2
+    },
+    {
+      "title": "3.4.2 UTP vs. fiber",
+      "anchor": "3-4-2-utp-vs-fiber",
+      "level": 2
+    },
+    {
+      "title": "Summary",
+      "anchor": "summary",
+      "level": 2
+    }
+  ],
+  "diagrams": [
+    {
+      "src": "/extracted/vol1/images/page_72_image_body_2.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_74_image_body_2.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_76_image_body_1.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_79_image_body_6.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_80_chart_body_2.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_80_image_body_5.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_81_chart_body_2.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_83_image_body_0.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_84_image_body_0.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_84_chart_body_1.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_84_image_body_2.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_86_image_body_1.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_87_image_body_0.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    },
+    {
+      "src": "/extracted/vol1/images/page_88_image_body_0.jpg",
+      "caption": "Figure: Cables, connectors, and ports"
+    }
+  ],
+  "ciscoCommands": [],
+  "quiz": [
+    {
+      "id": "q3-1",
+      "number": 1,
+      "question": "What is the standard maximum cable length of a copper UTP cable?",
+      "options": [
+        "A. 1 kilometer",
+        "B. 100 meters",
+        "C. 100 feet",
+        "D. 1000 feet"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: 100 meters",
+      "explanation": "The standard maximum length for copper unshielded twisted pair (UTP) cables in an Ethernet network is 100 meters (328 feet). Attempts to use UTP cables longer than 100 meters can result in signal attenuation and decreased performance."
+    },
+    {
+      "id": "q3-2",
+      "number": 2,
+      "question": "Which technology allows a device to automatically adjust which pin pairs it uses to transmit and receive data in a copper UTP cable?",
+      "options": [
+        "A. Crossover",
+        "B. Straight-through",
+        "C. Auto MDI-X",
+        "D. Tx/Rx"
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: Auto MDI-X",
+      "explanation": "Automatic Medium-Dependent Interface Crossover (Auto MDI-X) is a technology that allows devices to automatically adjust their pin configurations without needing specific crossover or straight-through cables."
+    },
+    {
+      "id": "q3-3",
+      "number": 3,
+      "question": "Which of the following cable types supports connections over the greatest distances?",
+      "options": [
+        "A. Copper UTP",
+        "B. Multimode fiber",
+        "C. Single-mode fiber"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "## C: Single-mode fiber Single-mode fiber optic cables are designed for long-distance communication, often over many kilometers. They have a smaller core diameter than multimode fiber, allowing only one mode of light to travel along the cable. This reduces signal attenuation and allows data to travel longer distances."
+    },
+    {
+      "id": "q3-4",
+      "number": 4,
+      "question": "How many bits can a 1 Gbps interface transmit per second?",
+      "options": [
+        "A. 1000 bps",
+        "B. 1,000,000 bps",
+        "C. 1,000,000,000 bps",
+        "D. 1,000,000,000,000 bps"
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: 1,000,000,000 bps",
+      "explanation": "The prefix “giga” means “billion”, so a 1 Gbps (gigabit per second) interface can transmit 1,000,000,000 (one billion) bits per second."
+    },
+    {
+      "id": "q3-5",
+      "number": 5,
+      "question": "Which of the following is equivalent to 1 Mbps?",
+      "options": [
+        "A. 1000 kbps",
+        "B. 1024 kbps",
+        "C. 1000 bps",
+        "D. 1024 bps"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: 1000 kbps",
+      "explanation": "The term Mbps stands for megabits per second, and kbps stands for kilobits per second. The prefix “mega” means “million” and the prefix “kilo” means “thousand”, so 1 Mbps is equivalent to 1000 kbps."
+    },
+    {
+      "id": "q3-6",
+      "number": 6,
+      "question": "Which of the following is NOT an advantage of fiberoptic cables over copper UTP cables?",
+      "options": [
+        "A. Less vulnerable to EMI",
+        "B. Lower cost",
+        "B. Greater maximum distances",
+        "B. Less security risk"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: Lower cost",
+      "explanation": "The main advantages of fiber-optic cables over copper UTP cables include being less vulnerable to electromagnetic interference (EMI), supporting greater maximum transmission distances, and posing less security risk due to leaked signals. However, fiber-optic connections are generally more expensive due to both the cables and the small form-factor pluggable (SFP) transceivers."
+    },
+    {
+      "id": "q3-7",
+      "number": 7,
+      "question": "What is the minimum copper UTP cable standard that supports 1 Gbps Ethernet?",
+      "options": [
+        "A. Cat 6a",
+        "B. Cat 5e",
+        "C. Cat 5",
+        "D. Cat 3"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: Cat 5e",
+      "explanation": "While the original Cat5 standard could theoretically support gigabit speeds, Cat5e is specifically designed to support 1 Gbps and is generally considered the minimum requirement for Gigabit Ethernet."
+    }
+  ],
+  "labMission": {
+    "scenario": "Deploy, configure, and verify Cables, connectors, and ports inside Cisco Packet Tracer according to Jeremy McDowell's lab specifications.",
+    "objectives": [
+      "Download and open Cisco Packet Tracer (free at http://mng.bz/2Kra).",
+      "Construct the topology for Chapter 3: Cables, connectors, and ports.",
+      "Implement core CLI commands: show ip interface brief, show running-config.",
+      "Verify operational state and capture verification output."
+    ],
+    "verificationCommands": [
+      "show version",
+      "show interfaces status"
+    ],
+    "videoSubmissionPrompt": "Record a 2 to 5-minute screen and microphone walkthrough of your Packet Tracer lab for Chapter 3: Cables, connectors, and ports. Explain the core concepts in your own words, show your CLI configurations, and run verification commands to demonstrate mastery."
+  },
+  "fullText": "## This chapter covers\n\nThe specifications and standards that allow computers to communicate\n\nThe fundamentals of traffic over a network\n\nTypes of wired connections and cabling standards\n\nThe uses of unshielded twisted pair and fiber-optic connections in networks\n\nIn chapter 2, we looked at a few diagrams showing network nodes connected with cables. In this chapter, we will look at the specific kinds of cables, connectors, and ports used to make those connections. These topics are part of section 1.0, Network Fundamentals, of the CCNA exam. Specifically, we will cover aspects of exam topic 1.3, which is as follows:\n\n1.3 Compare physical interface and cabling types\n\n1.3.a Single-mode fiber, multimode fiber, copper\n\n1.3.b Connections (Ethernet shared media and pointto-point)\n\nIn the past, there have been many different ways to connect devices, and there still are. However, in modern networks, **Ethernet** reigns supreme and is by far the most common connection type. Perhaps you have heard of Ethernet before in reference to **Ethernet cables**. Ethernet is not one single thing but rather a collection of standards for physical wired connections as well as rules for communicating over those connections. In this chapter, we will look at two different kinds of physical connections between devices: those using copper cables and those using fiber-optic cables.\n\n## 3.1 Network standards\n\nIn modern networks, someone in an office using a Dell PC connected to a Cisco switch can communicate with another person using an Apple MacBook connected to the Wi-Fi in Starbucks. The data is sent over the internet, possibly traveling over the infrastructure of multiple Internet Service Providers (ISPs), which use entirely different hardware. How is it possible that all of these devices, made by different companies, can communicate with each other? For this modern miracle, we can thank **standards**: sets of technical requirements and specifications that define the rules of communication in networks.\n\nTo demonstrate why these rules of communication are important, let’s forget about computers for a second and think about direct communication between humans. If an English speaker uses English to speak to a person who only understands Japanese, there isn’t going to be any communication at all. Each language, English and Japanese, has a different set of rules about how information should be communicated between people. Unless both speaker and listener agree on the rules, communication doesn’t happen.\n\nEven if both parties understand English, they must agree on the medium of communication. If person A writes a message on a piece of paper, but person B closes their eyes and tries to listen to the message, the result is the same as in the previous example: communication doesn’t happen. For humans to be able to communicate with each other, we must agree on both the rules of communication and the medium of communication.\n\nThe same can be said of computers. For two computers to communicate, they must adhere to the same rules of communication—for example, how to format data when sending it over the network. There must also be rules governing the medium of communication: specifications for physical cables, connectors, and ports, as well as radio waves used in wireless communications.\n\nThere are several governing bodies that define the standards used in computer networks, and I’ll be mentioning a couple of them throughout this book’s two volumes. The main one relevant to this chapter is the **Institute of Electrical and Electronics Engineers** (IEEE, pronounced I-triple-E). In 1983, the IEEE first defined the **IEEE 802.3** standard, better known as **Ethernet**.\n\n**NOTE** The IEEE also defines the IEEE 802.11 standard, better (but not officially) known as **Wi-Fi**. IEEE 802.11 wireless LANs are a major topic of the CCNA exam and are covered in part 4 of volume 2 of this book.\n\nEthernet is not a single standard but rather a family of standards that define both physical aspects of network connections as well as how data should be formatted into messages to be sent over the network.\n\n## 3.2 Binary: Bits and bytes\n\nTerms like **bit**, **byte**, **megabit**, **megabyte**, etc. might be familiar to you, even if you’re not entirely sure what they mean (I certainly wasn’t before I started studying networking). You might even use the terms yourself, referring to a **gigabit internet connection** or a file that is X **gigabytes in size**. Depending on your age, you might even reminisce about your **56k** (kilobit) internet connection.\n\nTo understand what these terms mean, we must define the term **bit**. A bit is the most basic unit of information used by computers. The word **bit** is simply a blend of the words **binary digit**. **Binary** is a number system that expresses all values using only two digits: 0 and 1. A **byte**, on the other hand, is simply a unit of 8 bits. Eight bits are equal to 1 byte.\n\n**Binary** is the language of computers. They compute in binary, and they communicate in binary. Everything you see on a computer screen or hear from a computer speaker is a series of 0s and 1s interpreted by a computer and presented to you in a human-understandable format. That includes applications, photos, videos, songs, this book if you’re reading it in an electronic format, and everything else a computer does.\n\nThe CCNA, as a networking certification, is all about how computers communicate; that’s what networking is. When two computers connected by a cable communicate with each other, they are sending each other long (**very long**, by human standards) series of bits (0s and 1s) over that cable. In modern networks, they often send these bits at the rate of **billions** (with a “b”) per second. Exactly how these 0s and 1s are conveyed depends on the medium. For example, 0s and 1s can be communicated over copper wiring by modifying the voltage of an electric signal between the two devices. Voltage “x” represents a value of 0, and Voltage “y” represents a value of 1. Figure 3.1 illustrates this concept; as the router sends 1 byte of data to the switch via the cable connecting them, changes in the voltage of the signal are used to communicate values of 0 and 1.\n\n**EXAM TIP** Understanding the binary number system is very important for the CCNA exam. In future chapters of this volume, we will cover how to count in binary and how to convert between binary and other number systems like decimal and hexadecimal.\n\n![](/extracted/vol1/images/page_72_image_body_2.jpg)\n\nFigure 3.1 A router sends 1 byte of data to a switch. Changes in the voltage of the electric signal indicate values of 0 or 1.\n\nWe measure the speeds of network connections by how many bits can be transmitted per second over the\n\nconnection. However, due to the incredible speeds of computer networks, we express these rates using larger units like **kilobits**, **megabits**, and **gigabits**. The following are some common units of measuring bits:\n\n1 kilobit (kb) = 1,000 (thousand) bits\n\n1 megabit (Mb) = 1,000,000 (million) bits (1,000 kilobits)\n\n1 gigabit (Gb) = 1,000,000,000 (billion) bits (1,000 megabits)\n\n1 terabit (Tb) = 1,000,000,000,000 (trillion) bits (1,000 gigabits)\n\nNetwork speeds are then stated as **X bits per second** (bps)— for example, 56 kilobits per second (56 kbps), 100 megabits per second (100 Mbps), 10 gigabits per second (10 Gbps), 1 terabit per second (1 Tbps), etc.\n\n## 1,000 or 1,024 bits?\n\nThere is some confusion over whether 1 kilobit is 1,000 bits or 1,024 bits, 1 megabit is 1,000 kilobits or 1,024 kilobits, etc. The definitions listed previously are correct, and they are the terms you should know for the CCNA. The 1,024 values are a result of the binary (base-2) number system; 2<sup>10</sup>  is equal to 1,024. The correct terms for the base-2 values are\n\n1 kibibit (1,024 bits)\n\n1 mebibit (1,024 kibibits)\n\n1 gibibit (1,024 mebibits)\n\n1 tebibit (1,024 gibibits)\n\n## 3.3 Copper UTP connections\n\nThe CCNA requires you to know about two kinds of wired connections: those using copper cables and those using fiber-optic cables. First, we will look at copper cables. This is the kind of network cable most often called an **Ethernet cable**, although the Ethernet standard makes use of both copper and fiber-optic cable types. Before we examine a copper Ethernet cable itself, let’s look at the connector at the end of the cable as well as the port it connects to on a network device, both of which are pictured in figure 3.2.\n\n![](/extracted/vol1/images/page_74_image_body_2.jpg)\n\nFigure 3.2 Two 8P8C ports on a Cisco switch (left) and an 8P8C connector on a copper UTP network cable (right)\n\nFigure 3.2 shows the **8 position 8 contact** (8P8C) connector of an Ethernet cable on the right. The name refers to the fact that there are eight pins on the connector: one for each of the eight wires inside of the cable. These connectors allow the cable to connect to ports like the ones shown on the left of figure 3.2. Another name for this kind of connector is **RJ45** (RJ stands for **Registered Jack**); strictly speaking, this name is not correct, but it is commonly used when referring to Ethernet cables.\n\nThe type of cables used for these connections are called **unshielded twisted pair** (UTP) cables. There are also **shielded twisted pair** (STP) cables, but they are less common, so I will refer to them as UTP throughout this book. Each UTP cable contains eight individual wires inside, twisted together to make four pairs. Let’s examine the meaning of UTP:\n\n**Unshielded**—The wires do not have a metallic shield around them. This shield can reduce **electromagnetic interference** (EMI) but is not present in UTP cables.\n\n**Twisted pair**—The eight wires in the cable are twisted together to form four pairs of two wires each. The twisting of the wires reduces EMI between the wires of each pair.\n\n## 3.3.1 IEEE 802.3 standards (copper)\n\nThe IEEE defines various standards for Ethernet connections that support different speeds, cable types (copper or fiberoptic), and distances. Each standard is referred to by a few different names:\n\nOne name is derived from the maximum supported transmission speed.\n\nThe name of the IEEE **task group** that defined the standard is also used to refer to the standard itself. These names begin with IEEE 802.3, followed by a letter.\n\nThe third name is an informal name given by the IEEE that indicates both the speed and cable type (standards for copper cabling end with T).\n\n![](/extracted/vol1/images/page_76_image_body_1.jpg)\n\nTable 3.1 lists some examples of Ethernet standards using copper cabling. Take note of the three names for each standard, as listed previously.\n\nTable 3.1 A handful of Ethernet standards\n\n| Speed | Speed-derived name | IEEE task group | Informal name | Maximum cable length |\n| --- | --- | --- | --- | --- |\n| 10 Mbps | Ethernet | IEEE802.3i | 10BASE-T | 100 m |\n| 100 Mbps | Fast Ethernet | IEEE802.3u | 100BASE-T | 100 m |\n| 1 Gbps | Gigabit Ethernet | IEEE802.3ab | 1000BASE-T | 100 m |\n| 10 Gbps | 10 Gig Ethernet | IEEE802.3an | 10GBASE-T | 100 m |\n\n**EXAM TIP** For the purpose of the CCNA exam, there is no need to memorize the IEEE task group names associated with each standard. You should be aware of the **speed-derived** and **informal** names, however.\n\nEach of these standards supports a maximum cable length of 100 meters. Attempts to use UTP cables longer than the listed maximum can result in signal attenuation and decreased performance. Maximum cable length can be a problem for copper UTP connections. As you’ll see in section 3.4, increased maximum cable length is a major advantage of fiber-optic cables over copper UTP cables.\n\n**NOTE** The cables used in the aforementioned Ethernet standards are not actually defined by the IEEE but rather by two other organizations: the **Electronic Industries Alliance** (EIA) and the **Telecommunications Industry Association** (TIA). So the name “Ethernet cable” isn’t very accurate because the cables, although used by Ethernet, are not defined by IEEE 802.3.\n\nThe standards for these cables are given names like **Category 5**, which is often shortened to **Cat 5**. Table 3.2 lists some cable standards that can be used with the aforementioned Ethernet standards.\n\nTable 3.2 Common UTP cable standards\n\n| Speed | Ethernet informal name | Cable name |\n| --- | --- | --- |\n| 10 Mbps | 10BASE-T | Cat 3 |\n| 100 Mbps | 100BASE-T | Cat 5 |\n| 1 Gbps | 1000BASE-T | Cat 5e |\n| 10 Gbps | 10GBASE-T | Cat 6a |\n\n## 3.3.2 Straight-through and crossover cables\n\nAlthough these days all UTP cables used for network communications have four pairs of wires (eight wires), not all of the Ethernet standards use all four pairs of wires:\n\n10BASE-T uses two pairs (four wires).\n\n100BASE-T uses two pairs (four wires).\n\n1000BASE-T uses four pairs (eight wires).\n\n10GBASE-T uses four pairs (eight wires).\n\nEach wire inside of the cable is connected to one of the eight pins of the 8P8C connector. For devices to communicate over these wire pairs, each wire pair forms an electrical circuit between the two connected devices. In 10BASE-T and 100BASE-T connections, it is very important to use the proper cable to ensure that the wires connect the pins on one end of the connection to the correct pins on the other end of the connection. To facilitate that, there are two kinds of cables we can use: **straight-through** and **crossover**. These cable types differ in which pins on one end of the cable connect to which pins on the other end of the cable.\n\n## Straig ht-th roug h cables\n\n10BASE-T and 100BASE-T use two wire pairs, one for each direction of communication. The two wire pairs are\n\nThe pair connected to pins 1 and 2\n\nThe pair connected to pins 3 and 6 (yes, it’s 3 and 6, not 3 and 4)\n\nThis is shown in figure 3.3, in which a PC and a switch are connected via a UTP cable. Pins 1 and 2 on the PC connect to pins 1 and 2 on the switch. Likewise, pins 3 and 6 on the PC connect to pins 3 and 6 on the switch.\n\n![](/extracted/vol1/images/page_79_image_body_6.jpg)\n\nFigure 3.3 A PC and a switch connected via a straightthrough cable\n\nWhen devices are connected with a straight-through cable, a pin pair on one connector connects to the same pin pair on\n\nthe other connector. This works well when connecting a PC to a switch. As shown in figure 3.3, PCs use the 1–2 pin pair to transmit data (this is often shortened to Tx), and switches use the 1–2 pin pair to receive data (often shortened to Rx). Likewise, switches use the 3–6 pin pair to transmit data, and PCs use the 3–6 pin pair to receive data.\n\nHowever, what would happen if two switches were connected? Or two PCs? Or two routers? In these cases, using a straight-through cable would cause problems, as shown in figure 3.4.\n\n![](/extracted/vol1/images/page_80_chart_body_2.jpg)\n\nFigure 3.4 Two routers connected via a straightthrough cable. Because both routers transmit data using the same pin pair, communication fails.\n\nWhen two devices that transmit using the same pin pair are connected with a straight-through cable, they will not be able to communicate. The Tx pins of one device are connected to the Tx pins of the other device. For devices like this to communicate, they need a cable that is wired differently: a crossover cable.\n\n![](/extracted/vol1/images/page_80_image_body_5.jpg)\n\n## Crossove r cab les\n\nA crossover cable connects opposite pin pairs; pins 1 and 2 on one end of the cable connect to pins 3 and 6 on the other end. This allows devices that transmit data on the same pin pair to communicate with each other. As figure 3.5 shows, devices that transmit using the same pin pair can communicate with each other when connected with a crossover cable.\n\n![](/extracted/vol1/images/page_81_chart_body_2.jpg)\n\nFigure 3.5 Two routers connected via a crossover cable. The Tx pin pair of one router connects to the Rx pin pair of the other router.\n\nTable 3.3 lists some common network device types and which pins they use to transmit and receive data. To put it simply, switches transmit on pins 3 and 6 and receive on pins 1 and 2. All other devices are the opposite.\n\nTable 3.3 Common device types and their Tx/Rx pin pairs\n\n| Device type | Transmit (Tx) pins | Receive (Rx) pins |\n| --- | --- | --- |\n| Router | 1 and 2 | 3 and 6 |\n| Firewall | 1 and 2 | 3 and 6 |\n| PC/Server | 1 and 2 | 3 and 6 |\n| Switch | 3 and 6 | 1 and 2 |\n\nNOTE Although 10BASE-T and 100BASE-T only use two wire pairs, there are still four wire pairs inside of the cable. The remaining two wire pairs are unused.\n\n## Auto MDI-X\n\nNow that we’ve covered straight-through and crossover cables, I would like to share some good news: on modern networking equipment, we don’t have to worry about using the correct cable type. That’s because of a feature called **Auto Medium-Dependent Interface Crossover** (Auto MDI-X). Auto MDI-X allows a device to change which pins it will use to transmit and receive data depending on the device they are connected to. You should know about straight-through and crossover cables as a potential exam question, but in the field, you probably won’t have to think about whether a cable is straight-through or crossover.\n\nFigure 3.6 demonstrates this concept. The two routers are connected via a straight-through cable. Routers typically transmit data on the 1–2 pair and receive data on the 3–6 pair, but thanks to Auto MDI-X, the router on the right reverses that; it transmits data on the 3–6 pair and receives data on the 1–2 pair.\n\n![](/extracted/vol1/images/page_83_image_body_0.jpg)\n\nFigure 3.6 Two routers connected via a straightthrough cable. The router on the right uses Auto MDI-X to adjust which pins it uses to transmit and receive data.\n\n## 1000BASE-T and 10GBASE-T\n\n1000BASE-T and 10GBASE-T take advantage of all eight wires in a cable, so a total of four wire pairs are used. The same 1–2 and 3–6 pin/wire pairs are used as in 10BASE-T and 100BASE-T. The remaining two pairs are the pair in positions 4 and 5 and the pair in positions 7 and 8. This is shown in figure 3.7.\n\n![](/extracted/vol1/images/page_84_image_body_0.jpg)\n\n![](/extracted/vol1/images/page_84_chart_body_1.jpg)\n\n![](/extracted/vol1/images/page_84_image_body_2.jpg)\n\n## Figure 3.7 Pin and wire pairs used on 1000BASE-T and 10GBASE-T connections. All eight wires of the cable are used.\n\nAdditionally, instead of a device using each pair of wires exclusively for transmitting or receiving data, each wire pair can be used for both purposes simultaneously.\n\nIf a crossover cable is used, the 1–2 and 3–6 pairs are crossed over as in 10BASE-T and 100BASE-T, and the new 4–5 and 7–8 are crossed over as well. However, thanks to Auto MDI-X, we no longer have to worry about selecting the proper cable type.\n\n## 3.4 Fiber-optic connections\n\nCopper UTP connections are still the most common type of connection within a LAN. Both the cables and the switch ports themselves are fairly inexpensive, and they are supported by nearly all modern devices that connect to a network. However, there is a major limitation that can make copper connections unfeasible in some cases: the maximum cable length of 100 meters. For connections between devices on the same floor of a building, 100 meters is usually more than enough, but for some connections between devices on separate floors, it might not suffice. And certainly, for connections between buildings and WAN connections, the next type of cabling is preferred: fiber-optic cabling.\n\nFiber-optic cables, instead of transmitting electrical signals along a copper wire, transmit light signals along a glass fiber. The glass fiber used is more flexible than you might think of when you imagine glass, but still, fiber-optic cables must be handled with care; a sharp bend in the cable can damage the glass fiber, rendering the cable unusable. Even if the glass fiber doesn’t snap, bending the cable can cause light to leak out of the cable, resulting in a weakening of the signal.\n\n## 3.4.1 The anatomy of a fiber-optic cable\n\nA typical fiber-optic connection does not use a single cable but rather two: one for transmitting data and one for receiving data. These cables connect to a **Small Form-Factor Pluggable** (SFP) transceiver that is inserted into an SFP port on the device. SFP transceivers are modular and must be purchased separately from the device itself (and you’d probably be surprised at how much those little things cost).\n\nFigure 3.8 shows a Cisco switch with a couple of SFP transceivers: one inserted into an SFP port and one on top of the switch. Notice that two cables connect to the SFP\n\ntransceiver, not one. When connecting two devices with fiber-optic cables, it’s important to connect the cables correctly: one device’s transmitter must connect to the other device’s receiver; otherwise, communication is not going to happen (similar to correctly selecting straightthrough/crossover cables when connecting devices that don’t support Auto MDI-X).\n\n![](/extracted/vol1/images/page_86_image_body_1.jpg)\n\nFigure 3.8 A Cisco switch with an SFP transceiver inserted into one of its SFP ports. An additional SFP is placed on top of the switch.\n\nAs shown in figure 3.9, there are a few layers to a fiber-optic cable. An outer jacket (4) and buffer (3) serve to protect and contain the inner components. A layer of reflective cladding (2) helps carry the light signal along the glass core (1). The core is a very thin glass fiber, although the thickness of the core depends on the type of cable.\n\n![](/extracted/vol1/images/page_87_image_body_0.jpg)\n\nFigure 3.9 The typical structure of a fiber-optic cable. An outer jacket (4) and buffer (3) serve to protect and contain the inner components. A layer of reflective cladding (2) helps carry the light signal along the glass core (1).\n\nAll types of fiber-optic cabling can carry a signal farther than copper cabling, but even within the category of fiber-optic cabling, the maximum supported length can vary greatly. There are two main types of fiber-optic cabling: **multimode fiber** (MMF) and **single-mode fiber** (SMF). Figure 3.10 shows how light travels along MMF and SMF cables.\n\n![](/extracted/vol1/images/page_88_image_body_0.jpg)\n\nFigure 3.10 Light travels down an MMF cable at multiple angles (modes), whereas light travels down SMF cables at a single angle.\n\nMMF cables have a wider core than single-mode fiber cables. They are used in combination with LED transmitters that send light down the cable at multiple angles (**modes**), reflecting off of the cladding. MMF cables typically support maximum distances of several hundreds of meters.\n\nSMF cables use a very narrow core in combination with laser transmitters that send light down the cable at a single angle. These laser transmitters are typically more expensive than the LED transmitters used by MMF cables. However, SMF cables also support much greater maximum distances: up to tens of kilometers.\n\n## 3.4.2 UTP vs. fiber\n\nFiber-optic connections support much greater distances than copper UTP cables but at increased cost (largely due to expensive SFP transceivers). Both connection types are in\n\ncommon use in modern networks. UTP connections are most common for connections from switches to end hosts. In an office setting, there are generally switches on each floor, and the 100-meter maximum cable length is usually sufficient for end hosts to reach a switch on their floor. On the other hand, fiber-optic connections are more common for connections between network infrastructure—for example, connecting switches and routers that are located on separate floors or in separate buildings.\n\nHowever, fiber cabling has a couple more advantages over copper UTP: one is that copper UTP cables are vulnerable to EMI. This is generally not a concern, but in environments with lots of electrical equipment, EMI can negatively affect the signals traveling along a UTP cable. A second disadvantage is that copper UTP cables can emit (**leak**) their signal outside of the cable. This leaked signal is quite weak, but it’s possible that it can be detected and read, posing a security risk.\n\nThe most common considerations for whether to use copper UTP or fiber cabling are maximum distance, cost, and which connection type is supported by the devices to be connected. Most client devices (such as PCs) do not have SFP ports that can be used for fiber-optic connections, so a UTP connection is the only choice.\n\n## Summary\n\nStandards provide agreed-upon sets of rules for communication over networks.\n\nEthernet is a family of standards defined by the Institute of Electrical and Electronics Engineers (IEEE) 802.3 working group. It defines standards for communication over physical wired connections.\n\nComputers compute and communicate using binary: 0s and 1s. Each binary digit is called a **bit**, and a group of 8 bits is called a **byte**.\n\nNetwork speeds are measured in bits per second using units like kilobit (1,000 bits), megabit (1,000 kilobits), gigabit (1,000 megabits), and terabit (1,000 gigabits).\n\nThe most common connection type in Ethernet LANs uses copper unshielded twisted pair (UTP) cables. Unshielded means the wires in the cable do not have a metallic shield around them to protect against electromagnetic interference (EMI). Twisted pair means the eight wires in the cable are twisted together to form four pairs of two wires. The twisting of the wires reduces EMI between the wires of each pair.\n\nUTP cables use 8 position 8 contact (8P8C) connectors, also known as **Registered Jack-45** (RJ45).\n\n10BASE-T and 100BASE-T connections use two of the four wire/pin pairs in a UTP cable, and 1000BASE-T and 10GBASE-T connections use all four pairs. All connection types support a maximum cable length of 100 meters.\n\nIn 10BASE-T and 100BASE-T connections, different device types send and receive data using different pins of the connector; however, Auto MDI-X allows devices to automatically adjust which pins to use for which purpose.\n\nFiber-optic cables send light signals down a glass fiber core and support much greater maximum distances than UTP cables.\n\nSingle-mode fiber (SMF) cables support greater maximum distances (tens of kilometers) than multimode fiber (MMF) cables (hundreds of meters), but the laserbased small form factor pluggable (SFP) transceivers used by SMF connections are more expensive than the LED-based transceivers used by MMF connections.\n\nFiber-optic connections are more expensive than copper UTP connections, largely due to the cost of the SFP transceivers.\n\nUTP connections are more common between end hosts and switches because of their lower cost and because the 100-meter maximum cable length is usually sufficient. Additionally, most client devices (such as PCs) only support UTP connections.\n\nFiber-optic connections are more common between network infrastructure devices because of the increased maximum cable length. Network devices often connect to other network devices on different floors and in different buildings.\n\n## 4 The TCP/IP networking model"
+}

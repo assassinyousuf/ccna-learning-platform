@@ -1,0 +1,330 @@
+{
+  "id": "v2-ch5-secure-shell",
+  "volume": 2,
+  "volumeTitle": "Volume 2: Advanced Networking and Security",
+  "partNumber": 1,
+  "partTitle": "Network services",
+  "chapterNumber": 5,
+  "title": "Chapter 5: Secure Shell",
+  "rawTitle": "Secure Shell",
+  "description": "Secure device management access by replacing unencrypted Telnet with SSH: generate RSA cryptographic keys, configure local usernames, and vty line transport.",
+  "readTime": "39 min",
+  "keyPoints": [
+    "Securing access to a device’s console port"
+  ],
+  "tableOfContents": [
+    {
+      "title": "5 Secure Shell",
+      "anchor": "5-secure-shell",
+      "level": 2
+    },
+    {
+      "title": "5.1 Console port security",
+      "anchor": "5-1-console-port-security",
+      "level": 2
+    },
+    {
+      "title": "5.1.1 Line password authentication",
+      "anchor": "5-1-1-line-password-authentication",
+      "level": 2
+    },
+    {
+      "title": "5.1.2 User account authentication",
+      "anchor": "5-1-2-user-account-authentication",
+      "level": 2
+    },
+    {
+      "title": "Cisco IOS privilege levels",
+      "anchor": "cisco-ios-privilege-levels",
+      "level": 2
+    },
+    {
+      "title": "5.2 Remote management",
+      "anchor": "5-2-remote-management",
+      "level": 2
+    },
+    {
+      "title": "5.2.1 Management IP addresses",
+      "anchor": "5-2-1-management-ip-addresses",
+      "level": 2
+    },
+    {
+      "title": "Sending, receiving, and forwarding",
+      "anchor": "sending-receiving-and-forwarding",
+      "level": 2
+    },
+    {
+      "title": "Management IP address best practices",
+      "anchor": "management-ip-address-best-practices",
+      "level": 2
+    },
+    {
+      "title": "5.2.2 Configuring Telnet",
+      "anchor": "5-2-2-configuring-telnet",
+      "level": 2
+    },
+    {
+      "title": "5.3 Secure Shell",
+      "anchor": "5-3-secure-shell",
+      "level": 2
+    },
+    {
+      "title": "5.3.1 Generating RSA keys",
+      "anchor": "5-3-1-generating-rsa-keys",
+      "level": 2
+    },
+    {
+      "title": "5.3.2 Configuring SSH",
+      "anchor": "5-3-2-configuring-ssh",
+      "level": 2
+    },
+    {
+      "title": "❽ Applies the ACL",
+      "anchor": "applies-the-acl",
+      "level": 2
+    },
+    {
+      "title": "Summary",
+      "anchor": "summary",
+      "level": 2
+    }
+  ],
+  "diagrams": [
+    {
+      "src": "/extracted/vol2/images/page_76_image_body_3.jpg",
+      "caption": "Figure: Secure Shell"
+    },
+    {
+      "src": "/extracted/vol2/images/page_77_image_body_6.jpg",
+      "caption": "Figure: Secure Shell"
+    },
+    {
+      "src": "/extracted/vol2/images/page_79_image_body_3.jpg",
+      "caption": "Figure: Secure Shell"
+    },
+    {
+      "src": "/extracted/vol2/images/page_79_image_body_9.jpg",
+      "caption": "Figure: Secure Shell"
+    },
+    {
+      "src": "/extracted/vol2/images/page_81_image_body_2.jpg",
+      "caption": "Figure: Secure Shell"
+    },
+    {
+      "src": "/extracted/vol2/images/page_85_image_body_4.jpg",
+      "caption": "Figure: Secure Shell"
+    }
+  ],
+  "ciscoCommands": [
+    {
+      "mode": "(config)#",
+      "cmd": "username usernamesecretpassword",
+      "desc": "Create a local useraccount."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "line console 0",
+      "desc": "Configure the consoleline."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "line vty 0 15",
+      "desc": "Configure all 16 VTYlines."
+    },
+    {
+      "mode": "(config-line)#",
+      "cmd": "passwordpassword",
+      "desc": "Configure a linepassword."
+    },
+    {
+      "mode": "(config-line)#",
+      "cmd": "login",
+      "desc": "Require a user to providethe line password to accessthe line."
+    },
+    {
+      "mode": "(config-line)#",
+      "cmd": "login local",
+      "desc": "Require a user to log inwith a local user account toaccess the line."
+    },
+    {
+      "mode": "(config-line)#",
+      "cmd": "exec-timeoutminutes",
+      "desc": "Set the inactivity logouttimer."
+    },
+    {
+      "mode": "(config-line)#",
+      "cmd": "transport input  {telnet」ssh」all    none}",
+      "desc": "Set the protocols that can beused to connect to theline."
+    },
+    {
+      "mode": "(config-line)#",
+      "cmd": "access-classaclin",
+      "desc": "Apply an ACL to limitaccess to the line."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ip default-gatewayip-address",
+      "desc": "Set the Layer 2 switch'sdefault gateway."
+    },
+    {
+      "mode": "#",
+      "cmd": "show ip default-gateway",
+      "desc": "View the Layer 2 switch'sdefault gateway."
+    },
+    {
+      "mode": "#",
+      "cmd": "show ip ssh",
+      "desc": "View SSH settings andinformation."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "crypto key generate rsa",
+      "desc": "Generate an RSA key pair(for SSH)."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ip ssh version 2",
+      "desc": "Allow only SSH version 2connections."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q5-1",
+      "number": 1,
+      "question": "Which command, when applied to a console or VTY line, requires login with a local user account to access the line?",
+      "options": [
+        "A. login local",
+        "B. login",
+        "C. local login",
+        "D. login user"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: login local",
+      "explanation": "The login local command on a console or VTY line configures the device to require users to log in with a username and password in the device’s local user database."
+    },
+    {
+      "id": "q5-2",
+      "number": 2,
+      "question": "Which command can be used to configure a Layer-2 switch’s default gateway?",
+      "options": [
+        "A. ip default-gateway 10.0.0.1",
+        "B. ip route 0.0.0.0 0.0.0.0 10.0.0.1",
+        "C. ip default-router 10.0.0.1",
+        "D. default route 10.0.0.1"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: ip default-gateway 10.0.0.1",
+      "explanation": "The ip default-gateway ip-address command is used to set the default gateway on a Layer-2 switch, which is necessary for the switch to communicate with devices outside of its local subnet (for example, when connecting to the switch remotely with SSH)."
+    },
+    {
+      "id": "q5-3",
+      "number": 3,
+      "question": "The output of show ip ssh states SSH Enabled - version 1.99 . What does this output mean?",
+      "options": [
+        "A. The device accepts SSHv1.99 connections only.",
+        "B. The device accepts SSHv1 and SSHv1.99 connections.",
+        "C. The device accepts SSHv2 connections only.",
+        "D. The device accepts SSHv1 and SSHv2 connections."
+      ],
+      "correctAnswer": 3,
+      "answerLetter": "D",
+      "officialAnswer": "D: The device accepts SSHv1 and SSHv2 connections.",
+      "explanation": "There are two versions of SSH: version 1 and version 2. “Version 1.99” isn’t a separate version of SSH; instead, it means that the device accepts both SSH version 1 and version 2 connections."
+    },
+    {
+      "id": "q5-4",
+      "number": 4,
+      "question": "Why is a domain name needed to generate an RSA key pair with the crypto key generate rsa command?",
+      "options": [
+        "A. Each RSA key pair is domain-specific.",
+        "B. The domain name is used as part of the key pair’s name.",
+        "C. The domain name determines the size of the key pair.",
+        "D. Each RSA key pair requires a unique domain name."
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: The domain name is used as part of the key pair’s name.",
+      "explanation": "A domain name is required for generating RSA key pairs because it is combined with the device hostname to name the key pair."
+    },
+    {
+      "id": "q5-5",
+      "number": 5,
+      "question": "When generating RSA keys, what is the minimum modulus size required to support SSHv2?",
+      "options": [
+        "A. 512 bits",
+        "B. 768 bits",
+        "C. 1024 bits",
+        "D. 1536 bits"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: 768 bits",
+      "explanation": "The modulus of the RSA keys must be at least 768 bits in size to support SSHv2. Otherwise, only SSHv1 can be used. However, in newer software versions, SSH can’t be used at all with modulus sizes smaller than 2048 bits."
+    },
+    {
+      "id": "q5-6",
+      "number": 6,
+      "question": "Which of the following commands can be used to allow only SSH connections?",
+      "options": [
+        "A. R1(config)# transport input ssh\n\n|",
+        "B. R1(config-vty)# | transport input ssh |\n| --- | --- |\n|",
+        "C. R1(config-if)# | transport input ssh |\n|",
+        "D. R1(config-line)# | transport input ssh |"
+      ],
+      "correctAnswer": 3,
+      "answerLetter": "D",
+      "officialAnswer": "D: R1(config-line)# transport input ssh",
+      "explanation": "The transport input ssh command, when applied to VTY lines (using line vty 0 15 ), specifies that only SSH connections are allowed to the device—no Telnet."
+    },
+    {
+      "id": "q5-7",
+      "number": 7,
+      "question": "Which command can be used to apply an ACL to the VTY lines?",
+      "options": [
+        "A. access-class 1 in",
+        "B. access-group 1 in",
+        "C. access-list 1 in",
+        "D. ip access-group 1 in"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: access-class 1 in",
+      "explanation": "Use access-class acl in to apply an ACL to the VTY lines to control remote access to the device. This filters incoming connections, limiting which hosts can connect to the device."
+    },
+    {
+      "id": "q5-8",
+      "number": 8,
+      "question": "In addition to a domain name, what configuration might be required to generate RSA keys with crypto key generate rsa ?",
+      "options": [
+        "A. A VTY line password",
+        "B. A management interface",
+        "C. A non-default hostname",
+        "D. A DNS server"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "## C: A non-default hostname In some devices, in addition to a domain name, a non-default hostname is also required to generate RSA keys with crypto key generate rsa ."
+    }
+  ],
+  "labMission": {
+    "scenario": "Deploy, configure, and verify Secure Shell inside Cisco Packet Tracer according to Jeremy McDowell's lab specifications.",
+    "objectives": [
+      "Download and open Cisco Packet Tracer (free at http://mng.bz/2Kra).",
+      "Construct the topology for Chapter 5: Secure Shell.",
+      "Implement core CLI commands: username usernamesecretpassword, line console 0, line vty 0 15.",
+      "Verify operational state and capture verification output."
+    ],
+    "verificationCommands": [
+      "username usernamesecretpassword",
+      "line console 0",
+      "line vty 0 15",
+      "passwordpassword",
+      "login"
+    ],
+    "videoSubmissionPrompt": "Record a 2 to 5-minute screen and microphone walkthrough of your Packet Tracer lab for Chapter 5: Secure Shell. Explain the core concepts in your own words, show your CLI configurations, and run verification commands to demonstrate mastery."
+  },
+  "fullText": "## 5 Secure Shell\n\n## This chapter covers\n\nSecuring access to a device’s console port\n\nCreating local user accounts\n\nUsing Telnet to remotely access a device’s CLI\n\nUsing Secure Shell to remotely and securely access a device’s CLI\n\nWhen we first covered the Cisco IOS CLI in volume 1, we looked at how to connect to a device’s CLI via the console port. To connect to a device’s console port, you must be physically near the device—console cables are typically only a few feet in length. But what if you need to access the CLI of a device in another city or another country? Perhaps you need to troubleshoot a connection between routers that are halfway across the globe from each other. Whatever the situation, you need a better way to access the CLI of your devices.\n\nSecure Shell (SSH), the main topic of this chapter, allows you to securely connect to devices over an IP network such as the internet. SSH is an essential protocol for managing networks, allowing you to remotely configure and verify the devices in your network, and is an important topic on the CCNA exam. In this chapter, we will cover SSH and some related topics. Specifically, we will cover the following CCNA exam topics:\n\n4.8: Configure network devices for remote access using SSH\n\n5.3: Configure and verify device access control using local passwords\n\n## 5.1 Console port security\n\nAnyone with a laptop and a console cable can access a network device’s CLI via the console port; this is not acceptable from a security standpoint. One important step in securing a device is physical access control— controlling who has physical access to the device by, for example, keeping the device in a locked cabinet.\n\nHowever, physical access control alone is not sufficient. You should also configure security settings on the console port to prevent unauthorized users from accessing the CLI even if they have physical access to the device.\n\nWhen you connect to a device’s console port and access the CLI, you are connecting to the console line—a “line” is a logical pathway on a Cisco device that allows you to connect to and manage the device via the CLI. The console line is used when connecting to the CLI via the console port. To secure the device’s console port, you should configure the console line by using the line con 0 command in global config mode, as in the following example:\n\nSwitch(config)# line con 0 ❶\n\nSwitch(config-line)#\n\n❶ Configures the first (and only) console line\n\n❷ The prompt changes to (config-line)#.\n\nThe 0 at the end of the command indicates that this is the first console line. Actually, devices only have a single console line, meaning that there is only line con 0 —no line con 1 , line con 2 , etc. The significance of having a single console line is that only one user can connect to the console port at once. In this section, we’ll cover two methods of securing the console line: line password authentication and user account authentication.\n\n**NOTE** The VTY lines used for remote management (i.e., via SSH) are more numerous—typically, there are 16 VTY lines. We’ll cover them in sections 5.2 and 5.3.\n\n## 5.1.1 Line password authentication\n\nThe simplest way to secure the console line is to configure a password on it. After a user connects their PC to the device’s console port and attempts to access the CLI, they will be required to enter the password. Figure 5.1 outlines the concept.\n\n![](/extracted/vol2/images/page_76_image_body_3.jpg)\n\nFigure 5.1 SW1’s console line is secured with a password. 1) PC1 connects to the console line. 2) The user enters a password to access user EXEC mode. 3) The user issues enable to reach privileged EXEC mode.\n\nThe following example shows the commands I configured on SW1. Let’s walk through each:\n\n```txt\nSW1(config)# line con 0 ❶\nSW1(config-line)# password cisco ❷\nSW1(config-line)# login ❸\n```\n\n❶ Configures console line 0\n\n❷ Configures the line password\n\n❸ Requires the line password to access the console line\n\nAfter using line con 0 to access line config mode, I used the password password command to configure the line password. However, configuring the password alone is not enough; you also need to use the login command. This command specifies that users must enter the line password to access the console line; without this, the password doesn’t take effect. The following example shows the process of logging in after these configurations:\n\n```txt\nSW1 con0 is now available ❶\nPress RETURN to get started. ❶\nUser Access Verification\nPassword: ❷\nSW1> ❸\n```\n\n❶ This prompt is shown when you connect via the console port.\n\n❷ Enters the console line password (not displayed as you type it)\n\n❸ You are brought to user EXEC mode.\n\nAfter entering the password, you are brought to user EXEC mode. From user EXEC mode, you can then use the enable command to access privileged EXEC mode. Although I omitted it from the example, you should also configure an enable secret to password-protect privileged EXEC mode—we covered the enable secret command in chapter 5 of volume 1.\n\n**NOTE** By default, users will be logged out of the CLI after 10 minutes of inactivity. You can change this with the exec-timeout minutes command in line config mode.\n\n## 5.1.2 User account authentication\n\nInstead of configuring a password directly on the console line, you can configure user accounts and require users to log in using one of those accounts. Figure 5.2 shows how to configure this and also demonstrates the login process.\n\n![](/extracted/vol2/images/page_77_image_body_6.jpg)\n\nFigure 5.2 SW1’s console line is secured with a user account. 1) PC1 connects to the console line. 2) The user enters a username and password to access user EXEC mode. 3) The user issues enable to reach privileged EXEC mode.\n\nThe command to create an account is username username secret password (the password will be saved as a secure hash thanks to the secret keyword). However, like the line password in the previous section, creating an account isn’t enough on its own. You must use the login local command in line config mode to tell the device to require users to log in using one of the accounts on the local device.\n\n**NOTE** You can use the username username password password command to configure a password that will be saved in cleartext. However, you should always use secret —cleartext passwords are not secure. This is the same as the distinction between the enable password and enable secret that we covered in chapter 5 of volume 1.\n\nThe following example shows the login process after creating a user account and then configuring the login local command on the console line:\n\n```txt\nSW1 con0 is now available\nPress RETURN to get started.\nUser Access Verification\nUsername: jeremy ❶\nPassword: ❷\nSW1> ❸\n```\n\n❶ Enters the username of the account\n\n❷ Enters the account password (not displayed as you type it)\n\n❸ You are brought to user EXEC mode.\n\n**EXAM TIP** login and login local cannot be configured at the same time; if you configure one, it will overwrite the other. If login is set, users must authenticate with the line password, regardless of any configured user accounts. If login local is set, users must authenticate with a user account, even if a line password is set.\n\nIn a small network or a low-sensitivity environment such as a lab, a simple line password with the login command might be acceptable, but in general, you should opt for user account authentication with the login local command. User accounts are more secure than simple passwords, allow for more granular access control, and allow you to track each user’s activity on the device. An even better option is to use an Authentication, Authorization, and Accounting (AAA) server that provides centralized control; we will cover AAA concepts in chapter 11, but AAA configuration is beyond the scope of the CCNA exam.\n\n## Cisco IOS privilege levels\n\nCisco IOS uses privilege levels to control a user’s access to CLI commands. There are 16 privilege levels: 0 to 15. By default, users connecting to the device via the console or VTY lines have a privilege level of 1; this is also known as user EXEC mode and allows limited read-only access to the device. After using the enable command, the user is given privilege level 15; this is also known as privileged EXEC mode and gives full control of the device.\n\nYou can specify a user’s default privilege level when creating an account: username username privilege level secret password . For example, username jeremy privilege 15 secret ccna would grant user jeremy privilege level 15 (privileged EXEC mode) immediately upon logging in; there would be no need to issue the enable command.\n\nThe remaining privilege levels are not used by default but provide a means of precisely controlling which users can use which commands. You can assign different privilege levels (privilege level 5, 10, etc.) to user accounts and assign different privilege levels to each command. This allows for a high degree of customization, although such detailed configurations are beyond the scope of the CCNA exam.\n\nFor example, first-level support staff may only need access to basic commands for information gathering and making simple configuration changes (i.e., enabling/disabling interfaces). If a problem requires more drastic interventions, it can be escalated to a more senior engineer with a higher privilege level. However, there are tradeoffs to overly granular access control, as such setups can become complex and pose problems if a higherprivilege user is needed but not available.\n\n## 5.2 Remote management\n\nThe console port is useful for initially configuring a device. However, once the device is set up and connected to the network, remote management is much more convenient; there is no need to be physically near a device to access the CLI to configure the device or check its status. There are two main options for remotely accessing the CLI of a Cisco router or switch: Telnet and SSH. In this section, we’ll take a look at the concept of management IP addresses and then cover Telnet as an introduction to remote device management.\n\n## 5.2.1 Management IP addresses\n\nTelnet and SSH both use a client-server model; the user’s computer is the client, and the device (i.e., router or switch) that accepts the connection from the client is the server. To be able to communicate, the client and server both need IP addresses. To connect to a router with SSH, for example, you can connect to the IP address of any of its interfaces.\n\nWhat about switches? When covering VLANs in chapter 12 of volume 1, we looked at Layer 3 switches— switches that, in addition to switching frames, have an internal virtual router that can route packets. To remotely manage a Layer 3 switch, you can use Telnet or SSH to connect to the IP address of one of its switch virtual interfaces (SVIs) or routed ports. But Layer 2 switches operate only at Layer 2, forwarding frames without even considering the IP addresses of the packets they encapsulate. Layer 2 switches can’t have IP addresses—right?\n\nWrong! Although Layer 2 switches can’t route packets (can’t forward packets between different networks), they can send and receive packets like any other network host. To enable a Layer 2 switch to do so, you can configure one or more SVIs. Figure 5.3 demonstrates the internal logic of Layer 2 and Layer 3 switches.\n\n![](/extracted/vol2/images/page_79_image_body_3.jpg)\n\nFigure 5.3 The internal logic of Layer 2 and Layer 3 switches. The Layer 2 switch (left) can send and receive packets using its SVIs but can’t route packets between them. The Layer 3 switch (right) can send, receive, and also route packets.\n\n## Sending, receiving, and forwarding\n\nFor a quick refresher, let’s review these key terms. Sending is the act of originating data and transmitting it over a network. If you ping 8.8.8.8 from your PC, your PC sends the ping to 8.8.8.8. Receiving is the act of accepting incoming data from the network. If you ping 8.8.8.8 from your PC, 8.8.8.8 will receive the ping from your PC.\n\nForwarding is the act of moving data closer to its destination. If you ping 8.8.8.8 from your PC, all of the network infrastructure devices between your PC and the 8.8.8.8 server will forward the ping from your PC to 8.8.8.8. More specifically, routing is the act of forwarding packets, and switching is the act of forwarding frames.\n\nLayer 2 switches, just like Layer 3 switches, can be configured with SVIs—Layer 3 virtual interfaces that can send and receive packets. SVIs provide the Layer 3 interface (and IP address) necessary to remotely connect to and manage a Layer 2 switch. Figure 5.4 shows how to configure an SVI and default gateway on a Layer 2 switch.\n\n![](/extracted/vol2/images/page_79_image_body_9.jpg)\n\n(configured from PC1 via console) SW1(config)# interface vlan 1 SW1(config-if)# ip address 10.0.0.2 255.255.255.0 SW1(config-if)# exit SW1(config)# ip default-gateway 10.0.0.1\n\nConfiguring an SVI is the same as we covered when studying VLANs; use the interface vlan vlan-id command to create the SVI. Then use ip address ip-address netmask to configure the IP address (like on any other Layer 3 interface).\n\nThe next command is new: from global config mode, use ip default-gateway ip-address to specify the switch’s default gateway. A Layer 2 switch doesn’t route packets and therefore doesn’t need a routing table. However, it does need to know the IP address of the router it should send packets destined for remote hosts to— its default gateway. In the following example, I configure SW1’s VLAN 1 SVI and default gateway and then confirm:\n\n```txt\nSW1(config)# interface vlan 1 ❶\nSW1(config-if)# ip address 10.0.0.2 255.255.255.0 ❶\nSW1(config-if)# exit\nSW1(config)# ip default-gateway 10.0.0.1 ❷\nSW1(config)# do show ip interface brief\nInterface IP-Address OK? Method Status Protocol\nVlan1 10.0.0.2 YES manual up up ❸\nGigabitEthernet0/1 unassigned YES unset up up\n. .\nSW1(config)# do show ip default-gateway\n10.0.0.1 ❹\n```\n\n❶ Configures SW1’s VLAN 1 SVI\n\n❷ Configures R1 as SW1’s default gateway\n\n❸ The VLAN 1 SVI has an IP address.\n\n❹ R1 is SW1’s default gateway.\n\nAfter these configurations, SW1 is now ready to send and receive packets using its VLAN 1 SVI. To send packets to other hosts in its local network (10.0.0.0/24), SW1 will send them in frames destined directly for the destination host. To send packets to hosts in remote networks, SW1 will send them in frames destined for the default gateway (R1).\n\n## Management IP address best practices\n\nAny Layer 3 interface’s IP address can be used to connect to and manage a device, unless there is a specific reason it cannot be used (such as an ACL blocking certain traffic on that interface). However, it’s common to configure a management IP address—an IP address configured for the specific purpose of remote management. Let’s cover a couple of best practices regarding management IP addresses.\n\nA router’s management IP address is usually configured on a loopback interface, providing a stable IP address that isn’t dependent on the status of any particular physical port. A switch’s management IP address is usually configured on the SVI of a specific VLAN known as the management VLAN—a VLAN that doesn’t carry regular traffic from network users but is dedicated to the remote management of devices. This is for security purposes; management traffic should be kept isolated from other traffic on the network.\n\n## 5.2.2 Configuring Telnet\n\nTelnet, which is short for “teletype network,” was developed in 1969—quite a long time ago as far as computer networks are concerned. For several reasons, Telnet has largely been replaced by SSH. The main reason is security—Telnet sends data in cleartext, not encrypted text. For example, if you enter a password to log in to a device, that password is sent across the network as is, and any attacker who gets a copy of that packet will now know the device’s password.\n\nAlthough Telnet’s use cases are limited, it is still supported on most network devices. And despite not being explicitly mentioned in the CCNA exam topics list, it serves as a useful stepping stone to learn the basics of remote management before learning SSH itself (and I wouldn’t be surprised to find a question or two that mention Telnet on the exam). Figure 5.5 shows how to configure Telnet on a Cisco IOS device.\n\n![](/extracted/vol2/images/page_81_image_body_2.jpg)\n\nFigure 5.5 Enabling Telnet on SW1. Users must log in with a local user account and will be logged out after 20 minutes of inactivity. Only Telnet can be used to connect to the VTY lines, and only hosts in 192.168.1.0/24 are permitted.\n\nFirst, I configured an enable secret to password-protect privileged EXEC mode. This is a good idea in any case, but it’s essential when configuring Telnet. If there is no enable secret (or enable password), the enable command won’t work when connected to the device with Telnet (or SSH). Instead, you’ll get a message like in the following example:\n\n```txt\nSW1> enable\n% No password set\nSW1>\n```\n\nI then configured a user account: username jeremy secret ccna . When using Telnet, you can configure either password-only authentication ( login ) or local user account authentication ( login local ) on the VTY lines; the latter is more secure, so I configured a user account.\n\nIn the next command, I configured an ACL, permitting only packets sourced from hosts in 192.168.1.0/24, such as PC2: access-list 1 permit 192.168.1.0 0.0.0.255 . Although optional, it’s generally a good practice to limit which hosts can access the VTY lines of your devices. In a later command, I will apply this ACL to the VTY lines (not to an interface, as we covered in chapters 23 and 24 of volume 1).\n\nNow it’s time to configure the VTY lines. Connecting to the CLI via a device’s console port uses the console line, but connecting to the CLI via either Telnet or SSH uses the Virtual Teletype (VTY) lines. Whereas there is only a single console line (accessed with line con 0 ), there are typically 16 VTY lines; you can access a range of them with line vty first-line last-line . In most cases, you should configure all VTY lines identically by using line vty 0 15 .\n\n**NOTE** The significance of there being 16 VTY lines is that up to 16 users can be connected to the device’s CLI at once via Telnet or SSH—one per VTY line.\n\n```txt\ntransport input telnet — Allows only Telnet connections\ntransport input ssh Allows only SSH connections\ntransport input telnet ssh (or ssh telnet )—Allows both Telnet and SSH\ntransport input all Allows connections with all supported protocols\ntransport input none Allows no connections to the VTY lines\n```\n\nFrom line config mode, I first used login local to make SW1 require authentication with one of the accounts on the local device—for example, the account that I configured earlier in this example. I then used the exectimeout 20 command to modify the default inactivity timeout—this command is optional. In this case, instead of users being logged out after the default 10 minutes of inactivity, they will be logged out after 20.\n\nThe next command I used was transport input protocol . The effect of this command is to allow users to connect to the VTY lines only with the specified protocol(s). In addition to Telnet and SSH, devices may support VTY line connections from a variety of protocols (such as rlogin—remote login). Best practice is to use this command to allow only the necessary protocol(s). In this example, I used transport input telnet to allow only Telnet, but in practice, you should most likely use transport input ssh —we’ll do that in the next section. The following are some different options for this command:\n\nThe final command I used was the access-class acl in command, applying the ACL I previously configured to the VTY lines. By applying an ACL to the VTY lines, you can control connections to the VTY lines without affecting other traffic.\n\n**EXAM TIP** Take a minute to review ACL-related commands: access-list and ip access-list create ACLs, ip access-group applies ACLs to interfaces, and access-class applies ACLs to the VTY lines.\n\nAfter completing all of these configurations, let’s see how SW1’s VTY lines look in the running-config. In the following example, notice that even though I configured all 16 VTY lines at once with line vty 0 15 , they are split into two separate groups in the configuration file. Older Cisco devices only supported five VTY lines (0–4), so this division maintains backward compatibility with older devices:\n\n```txt\nSW1# show running-config\nline vty 0 4 ❶\naccess-class 1 in\nexec-timeout 20 0\nlogin local\ntransport input telnet\nline vty 5 15 ❶\naccess-class 1 in\nexec-timeout 20 0\nlogin local\ntransport input telnet\n```\n\n❶ The VTY lines are split into two groups: 0–4 and 5–15.\n\nSW1 is now ready to accept Telnet connections. TCP servers (i.e., routers and switches you connect to and configure via Telnet) listen on TCP port 23—memorize that port! In the following example, I use the telnet command from PC2 (a Linux host) to connect to the CLI of SW1:\n\n```txt\njeremy@PC2:~$ telnet 10.0.0.2 ❶\nUser Access Verification\nUsername: jeremy ❷\nPassword: ❷\nSW1> ❸\n```\n\n❶ Connects to SW1 via Telnet\n\n❷ Logs in with the configured user account\n\n❸ The prompt changes—we are now in SW1.\n\n## 5.3 Secure Shell\n\nLet’s move on to the main topic of this chapter: Secure Shell (SSH). SSH serves a similar purpose to Telnet; it allows you to remotely connect to the CLI of network devices over a network. However, the major difference is that SSH is secure, as the name implies—it encrypts communications between the client (your PC) and the server (the network device you are connecting to). Even if an attacker gains access to your communications, the messages are encrypted—they will appear as an unintelligible mess to anyone but the intended destination host. SSH configuration consists of two main steps:\n\n1. Generating cryptographic RSA keys\n\n2. Enabling SSH connections on the VTY lines\n\nHowever, we’ll cover some other optional (but recommended) configurations as well. As you’ll see, the configurations are very similar to those we have covered previously in this chapter, with just one extra step: generating cryptographic keys. In this section, we’ll look at how to generate the cryptographic keys necessary for SSH and how to configure SSH in Cisco IOS.\n\n## 5.3.1 Generating RSA keys\n\nSSH requires a pair of cryptographic keys to encrypt and decrypt messages. A cryptographic key is a piece of information—basically, a string of characters—that is used as input for cryptographic algorithms. Specifically, we need to generate RSA keys—cryptographic keys that use the RSA algorithm (RSA stands for Rivest-Shamir-Adleman, the creators of RSA). Using the show ip ssh command on a Cisco IOS device without RSA keys gives the following output:\n\n```txt\nSW1# show ip ssh\nSSH Disabled - version 1.99\n%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2). ❷\n.\n```\n\n❶ SSH is disabled.\n\n❷ RSA keys are required to enable SSH (at least 768 bits for SSHv2).\n\nSo let’s generate some RSA keys on the device. The command to do so is crypto key generate rsa in global config mode. In the following example, I attempt to use that command but receive an error message:\n\n```txt\nSW1(config)# crypto key generate rsa ❶\n% Please define a domain-name first. ❷\n```\n\n❶ Generates an RSA key pair\n\n❷ A domain name is needed to generate the keys.\n\nThe command is rejected because SW1 does not have a domain name. A domain name is needed because the key pair needs a name, and IOS uses the device’s FQDN to name the keys. Depending on the device, you may be\n\nrequired to configure a non-default hostname as well; in this case, I have already configured SW1’s hostname, but some devices may show an error message like this:\n\n```txt\nRouter(config)# crypto key generate rsa\n% Please define a hostname other than Router. ❶\n```\n\n❶ The default hostname is rejected.\n\nIn the following example, I configure SW1’s domain name and then successfully generate the RSA key pair:\n\n```txt\nSW1(config)# ip domain name jeremysitlab.com ❶\nSW1(config)# crypto key generate rsa ❷\nThe name for the keys will be: SW1.jeremysitlab.com ❸\nChoose the size of the key modulus in the range of 360 to 4096 for your\nGeneral Purpose Keys. Choosing a key modulus greater than 512 may take\na few minutes.\nHow many bits in the modulus [512]: 4096 ❹\n% Generating 4096 bit RSA keys, keys will be non-exportable...\n[OK] (elapsed time was 7 seconds)\n*Sep 10 04:05:47.397: %SSH-5-ENABLED: SSH 1.99 has been enabled ❺\n```\n\n❶ Configures a domain name\n\n❷ Generates an RSA key pair\n\n❸ The keys are named using the FQDN.\n\n❹ Larger modulus sizes are more secure.\n\n❺ A log message indicates that SSH version 1.99 is enabled.\n\n**NOTE** You can manually specify a name for the key pair with crypto key generate rsa label name . In that case, an FQDN isn’t needed to generate the keys. This also allows you to generate multiple key pairs by giving each pair a unique name, which may be necessary in networks with strict security policies requiring different key pairs for different purposes.\n\nWhen generating RSA keys, you are asked to specify the size of the key modulus (a value that determines the strength of the encryption—larger is more secure). The modulus size is usually referred to as the key size or key length, although those terms aren’t entirely accurate; the keys have other components as well. Cisco recommends modulus sizes of at least 2,048 bits. In fact, in newer software versions, SSH can’t even be used with modulus sizes smaller than 2,048 bits.\n\n**NOTE** You can also specify the modulus size in the original command: crypto key generate rsa modulus bits .\n\nOne more thing to point out about the previous output is SSH 1.99 has been enabled . You can also confirm this with show ip ssh :\n\n```txt\nSW1# show ip ssh\nSSH Enabled - version 1.99 ❶\n```\n\n❶ After configuring RSA keys, SSH is enabled.\n\nThere are two major versions of SSH: SSH version 1 (SSHv1) and SSH version 2 (SSHv2). So what’s SSH version 1.99? It’s not actually a separate version of SSH—it just means that the server accepts both SSHv1 and SSHv2 connections from clients. SSHv2 offers security and performance advantages over SSHv1, so in most cases, you should allow only SSHv2; we’ll cover how to do that in the next section.\n\n## 5.3.2 Configuring SSH\n\nNow that SW1 has an RSA key pair, we can configure it to accept SSH connections on its VTY lines. Figure 5.6 shows how to configure SSH on a Cisco IOS device.\n\n```txt\n(configured from PC1 via console)\nSW1(config)# enable secret cisco\nSW1(config)# username jeremy secret ccna\nSW1(config)# access-list 1 permit 192.168.1.0 0.0.0.255\nSW1(config)# ip ssh version 2\nSW1(config)# line vty 0 15\nSW1(config-line)# login local\nSW1(config-line)# exec-timeout 20\nSW1(config-line)# transport input ssh\nSW1(config-line)# access-class 1 in\n```\n\n![](/extracted/vol2/images/page_85_image_body_4.jpg)\n\nFigure 5.6 Enabling SSHv2 on SW1. Users must log in with a local user account and will be logged out after 20 minutes of inactivity. Only SSH can be used to connect to the VTY lines, and only hosts in 192.168.1.0/24 are permitted.\n\nThe following example shows SW1’s configurations:\n\n```txt\nSW1(config)# enable secret cisco ❶\nSW1(config)# username jeremy secret ccna ❶\nSW1(config)# access-list 1 permit 192.168.1.0 0.0.0.255 ❷\nSW1(config)# ip ssh version 2 ❸\nSW1(config)# line vty 0 15 ❹\nSW1(config-line)# login local ❺\nSW1(config-line)# exec-timeout 20 ❻\nSW1(config-line)# transport input ssh ❼\nSW1(config-line)# access-class 1 in ❽\n```\n\n❶ Configures an enable secret and user account\n\n❷ Creates an ACL to limit access to the VTY lines\n\n❸ Limits connections to SSH version 2 only\n\n❹ Configures all 16 VTY lines\n\n❺ Requires users to log in with a user account\n\n❻ Logs out users after 20 minutes of inactivity\n\n❼ Allows only SSH connections\n\n## ❽ Applies the ACL\n\nThe configurations are nearly identical to the Telnet configurations we covered previously. First, I configured an enable secret, which is necessary to be able to access privileged EXEC mode when connected to the VTY lines. I also configured a user account since I will later configure login local on the VTY lines. I configured an ACL this time too; it’s considered a best practice to limit which hosts can connect to the VTY lines.\n\nI then issued the ip ssh version 2 command to allow only SSHv2. SSHv1.99 is enabled by default, meaning SW1 accepts both SSHv1 and SSHv2 connections. However, SSHv2 is more secure than SSHv1, so best practice is to limit connections to SSHv2 only.\n\n**NOTE** The device’s RSA key pair’s modulus size must be at least 768 bits to support SSHv2; otherwise, only SSHv1 can be used.\n\nI then moved on to configure the VTY lines, configuring all 16 at once with the line vty 0 15 command. The VTY line configurations should look familiar to those in the Telnet section: login local , exec-timeout transport input , and access-class . The only difference is that I configured transport input ssh to allow only SSH connections to the VTY lines—not Telnet. This is a best practice in real networks; you should be using SSH instead of Telnet.\n\nSW1 is now ready to accept SSH connections on TCP port 22—another port number to memorize! To connect to a device with SSH, use the ssh -l username ip-address command, as in the following example:\n\n```txt\njeremy@PC2:~$ ssh -l jeremy 10.0.0.2 ❶\nPassword: ❷\nSW1> ❸\n```\n\n❶ Connects to 10.0.0.2 with username jeremy\n\n❷ Enters the account’s password\n\n❸ We are now in the CLI of SW1.\n\nCisco IOS devices can use SSH to connect too. In the following example, I use SSH on a Cisco router (R1) to connect to the CLI of SW1:\n\n```markdown\nR1# ssh -l jeremy 10.0.0.2\nPassword:\nSW1>\n```\n\n**NOTE** The -l means “login name”—the username you want to log in with. Most systems will support the ssh -l command: Windows, macOS, Linux, Cisco IOS, etc. Another option is ssh username@ip-address for example, ssh jeremy@10.0.0.2 . However, only the former option works in Cisco IOS.\n\n## Summary\n\nTo secure a network device’s console port, physical access control—such as locking the device in a cabinet—is essential. However, security settings should also be configured to prevent unauthorized users from accessing the CLI via the console port.\n\nA line is a logical pathway that allows you to connect to and manage the device via the CLI. Console port connections use the console line.\n\nUse line con 0 to access line config mode for the console line. There is only one console line, so only one user can connect via the console port at once.\n\nUse password password in line config mode to configure a line password and login to require users to enter that password to access that line (i.e., the console line).\n\nBy default, users will be logged out of the CLI after 10 minutes of inactivity. Use exec-timeout\n\nUse username username secret password to configure user accounts.\n\nUse login local in line config mode to require users to log in with one of the user accounts on the device when connecting via the line.\n\nThere are two main options for remotely accessing the CLI of a Cisco router or switch: Telnet and SSH.\n\nTelnet and SSH both use a client-server model; the user’s computer is the client, and the device that accepts the connection from the client is the server.\n\nThe client and server both need IP addresses to communicate.\n\nRouters and Layer 3 switches, by their nature, have multiple Layer 3 interfaces with IP addresses; you can connect to any of those IP addresses with Telnet or SSH.\n\nAlthough Layer 2 switches cannot route packets, they can send and receive packets using switch virtual interfaces (SVIs). To remotely manage a Layer 2 switch, configure an SVI with an IP address.\n\nTo configure a Layer 2 switch’s SVI, use interface vlan vlan-id and assign an IP address with ip address ip-address netmask . Then configure the default gateway with ip defaultgateway ip-address .\n\nTelnet (teletype network) is a protocol that allows you to remotely connect to the CLI of devices, like routers and switches. However, Telnet is not secure because it sends data in cleartext—no encryption.\n\nIf the device does not have an enable secret (or enable password), users will not be able to use the enable command when connected via Telnet or SSH.\n\nTelnet and SSH connections use the Virtual Teletype (VTY) lines. There are usually 16 VTY lines in total (0–15), meaning that up to 16 users can be connected at once.\n\nThe login , login local , and exec-timeout commands work on the VTY lines the same as they do on the console line.\n\nUse the transport input protocol command to control which protocol(s) can be used to connect to the VTY lines. transport input telnet allows only Telnet.\n\nOptionally, you can configure an ACL and apply it to the VTY lines with access-class acl in . This controls which hosts can connect to the VTY lines but doesn’t affect other traffic entering/exiting the device’s interfaces.\n\nThe 16 VTY lines are divided into two groups in the configuration files: line vty 0 4 and line vty 5 15 . This is for backward compatibility.\n\nTelnet servers (i.e., Telnet-enabled routers and switches) listen on TCP port 23.\n\nSecure Shell (SSH) serves a similar function to Telnet, allowing SSH clients (i.e., PCs) to remotely connect to the CLI of SSH servers (i.e., routers and switches). However, SSH is much more secure because it encrypts communications.\n\nSSH requires a pair of cryptographic keys, specifically RSA keys. Use crypto key generate rsa in global config mode to generate them.\n\nBy default, the device will name the key pair using the device’s FQDN, so a hostname and domain name must be configured first. Or you can use crypto key generate rsa label name to manually specify the name.\n\nWhen generating the RSA keys, you must specify the size of the key modulus—a value that determines the strength of the encryption (a larger modulus is stronger).\n\nAlthough the modulus is one component of the keys, the modulus size is often called the key size.\n\nWhen you use crypto key generate rsa , it will ask you the modulus size. Or you can specify it in the original command: crypto key generate rsa modulus size .\n\nAfter creating RSA keys, show ip ssh should show that SSH is enabled.\n\nThere are two major versions of SSH: SSHv1 and SSHv2. Version 1.99 is enabled on Cisco devices by default; this means the device accepts both SSHv1 and SSHv2 connections.\n\nAfter creating the RSA keys, SSH configuration is nearly identical to Telnet configuration. In global config mode, use ip ssh version 2 to limit SSH connections to SSHv2 only (optional but recommended).\n\nThe device’s RSA key pair’s modulus size must be at least 768 bits to support SSHv2.\n\nBest practice is to use transport input ssh to allow only SSH connections to the VTY lines; Telnet is not secure.\n\nUse ssh -l username ip-address to connect to a device with SSH. This command works in most operating systems: Cisco IOS, Windows, macOS, Linux, etc.\n\nssh username@ip-address also works in most OSs (but not Cisco IOS).\n\nSSH servers listen on TCP port 22."
+}

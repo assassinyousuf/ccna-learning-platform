@@ -1,0 +1,358 @@
+{
+  "id": "v1-ch13-dynamic-trunking-protocol-and-vlan-trunking-protocol",
+  "volume": 1,
+  "volumeTitle": "Volume 1: Fundamentals and Protocols",
+  "partNumber": 3,
+  "partTitle": "Layer 2 concepts",
+  "chapterNumber": 13,
+  "title": "Chapter 13: Dynamic Trunking Protocol and VLAN Trunking Protocol",
+  "rawTitle": "Dynamic Trunking Protocol and VLAN Trunking Protocol",
+  "description": "Manage DTP dynamic trunk negotiation (auto, desirable, nonnegotiate) and VTP domain synchronization, modes (server, client, transparent, off), and version differences.",
+  "readTime": "39 min",
+  "keyPoints": [
+    "Switch port administrative and operational modes"
+  ],
+  "tableOfContents": [
+    {
+      "title": "13.1 Dynamic Trunking Protocol",
+      "anchor": "13-1-dynamic-trunking-protocol",
+      "level": 2
+    },
+    {
+      "title": "13.1.1 DTP negotiation",
+      "anchor": "13-1-1-dtp-negotiation",
+      "level": 2
+    },
+    {
+      "title": "Trunk encapsulation negotiation",
+      "anchor": "trunk-encapsulation-negotiation",
+      "level": 2
+    },
+    {
+      "title": "13.1.2 Disabling DTP",
+      "anchor": "13-1-2-disabling-dtp",
+      "level": 2
+    },
+    {
+      "title": "13.2 VLAN Trunking Protocol",
+      "anchor": "13-2-vlan-trunking-protocol",
+      "level": 2
+    },
+    {
+      "title": "13.2.1 VTP synchronization",
+      "anchor": "13-2-1-vtp-synchronization",
+      "level": 2
+    },
+    {
+      "title": "13.2.2 VTP modes",
+      "anchor": "13-2-2-vtp-modes",
+      "level": 2
+    },
+    {
+      "title": "Table 13.3 VTP modes",
+      "anchor": "table-13-3-vtp-modes",
+      "level": 2
+    },
+    {
+      "title": "13.2.3 VTP versions",
+      "anchor": "13-2-3-vtp-versions",
+      "level": 2
+    },
+    {
+      "title": "Th e pri mary s e rve r",
+      "anchor": "th-e-pri-mary-s-e-rve-r",
+      "level": 2
+    },
+    {
+      "title": "Exten ded-range VLANs",
+      "anchor": "exten-ded-range-vlans",
+      "level": 2
+    },
+    {
+      "title": "13.2.4 Is VTP dangerous?",
+      "anchor": "13-2-4-is-vtp-dangerous",
+      "level": 2
+    },
+    {
+      "title": "Summary",
+      "anchor": "summary",
+      "level": 2
+    }
+  ],
+  "diagrams": [
+    {
+      "src": "/extracted/vol1/images/page_419_image_body_1.jpg",
+      "caption": "Figure: Dynamic Trunking Protocol and VLAN Trunking Protocol"
+    },
+    {
+      "src": "/extracted/vol1/images/page_420_image_body_5.jpg",
+      "caption": "Figure: Dynamic Trunking Protocol and VLAN Trunking Protocol"
+    },
+    {
+      "src": "/extracted/vol1/images/page_424_image_body_1.jpg",
+      "caption": "Figure: Dynamic Trunking Protocol and VLAN Trunking Protocol"
+    },
+    {
+      "src": "/extracted/vol1/images/page_427_image_body_3.jpg",
+      "caption": "Figure: Dynamic Trunking Protocol and VLAN Trunking Protocol"
+    },
+    {
+      "src": "/extracted/vol1/images/page_429_image_body_0.jpg",
+      "caption": "Figure: Dynamic Trunking Protocol and VLAN Trunking Protocol"
+    },
+    {
+      "src": "/extracted/vol1/images/page_435_image_body_0.jpg",
+      "caption": "Figure: Dynamic Trunking Protocol and VLAN Trunking Protocol"
+    },
+    {
+      "src": "/extracted/vol1/images/page_440_image_body_0.jpg",
+      "caption": "Figure: Dynamic Trunking Protocol and VLAN Trunking Protocol"
+    }
+  ],
+  "ciscoCommands": [
+    {
+      "mode": "#",
+      "cmd": "show interfacesswitchport",
+      "desc": "Show port operationaland administrativemodes."
+    },
+    {
+      "mode": "(config-if)#",
+      "cmd": "switchport modedynamic {auto |",
+      "desc": "Use DTP to determine theport's operational mode."
+    },
+    {
+      "mode": "",
+      "cmd": "desirable}",
+      "desc": ""
+    },
+    {
+      "mode": "(config-if)#",
+      "cmd": "switchportnonegotiate",
+      "desc": "Disable DTP on the port."
+    },
+    {
+      "mode": "#",
+      "cmd": "show vtp status",
+      "desc": "View VTP information."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "vtp domain name",
+      "desc": "Set the VTP domainname."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "vtp mode {server |client |transparentoff}",
+      "desc": "Set the VTP mode."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "vtp version {1 | 2 |3}",
+      "desc": "Set the VTP version."
+    },
+    {
+      "mode": "#",
+      "cmd": "vtp primary",
+      "desc": "Make this switch the VTPprimary server (VTPversion 3 only)."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q13-1",
+      "number": 1,
+      "question": "The output of **show spanning–tree** on a Cisco switch states Spanning tree enabled protocol ieee.  Which version of STP is the switch running?",
+      "options": [
+        "A. IEEE-standard Rapid STP",
+        "B. Rapid PVST+",
+        "C. IEEE-standard STP",
+        "D. PVST+"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-2",
+      "number": 2,
+      "question": "You configure **spanning-tree pathcost method long** on a Cisco switch.  Which of the following accurately represent the default port costs after issuing that command? (select two)",
+      "options": [
+        "A. 1 Tbps: 2",
+        "B. 10 Gbps: 2,000",
+        "C. 10 Mbps: 20,000,000",
+        "D. 100 Mbps: 200,000"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-3",
+      "number": 3,
+      "question": "If the RSTP sync mechanism succeeds, how long does it take for a port to transition from the discarding state to the forwarding state?",
+      "options": [
+        "A. 6 seconds",
+        "B. 15 seconds",
+        "C. 30 seconds",
+        "D. It transitions immediately."
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-4",
+      "number": 4,
+      "question": "SW1 G0/1 is not a root port or a designated port, and SW1 is not the designated bridge for the segment G0/1 is connected to.  What is SW1’s G0/1’s RSTP port role?",
+      "options": [
+        "A. Alternate",
+        "B. Backup",
+        "C. Non-designated"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-5",
+      "number": 5,
+      "question": "Which RSTP port type will not trigger a topology change notification if the port’s status changes?",
+      "options": [
+        "A. Point-to-point",
+        "B. Shared",
+        "C. Edge",
+        "D. Backup"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-6",
+      "number": 6,
+      "question": "If the RSTP root bridge has two ports connected to the same segment via a hub, what will the role be of the port that is not designated?",
+      "options": [
+        "A. Root",
+        "B. Alternate",
+        "C. Blocking",
+        "D. Backup"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-7",
+      "number": 7,
+      "question": "Which command configures the RSTP edge link type on a port?",
+      "options": [
+        "A. **spanning-tree link-type edge**",
+        "B. **spanning-tree portfast**",
+        "C. **spanning-tree link-type portfast**",
+        "D. **spanning-tree edge**"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-8",
+      "number": 8,
+      "question": "SW1’s G0/1 port is in the up/up state but has stopped receiving BPDUs from its RSTP neighbor. How long will SW1 wait before reacting and initiating a topology change?",
+      "options": [
+        "A. 6 seconds",
+        "B. 15 seconds",
+        "C. 20 seconds",
+        "D. 30 seconds"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-9",
+      "number": 9,
+      "question": "Which RSTP link type is default on full-duplex ports?",
+      "options": [
+        "A. Full",
+        "B. Shared",
+        "C. Point-to-point",
+        "D. Independent"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-10",
+      "number": 10,
+      "question": "Four switches are interconnected, with a total of six links between them. How many of each RSTP port role are there?",
+      "options": [
+        "A. 4 root, 4 designated, 4 alternate",
+        "B. 3 root, 6 designated, 3 alternate",
+        "C. 3 root, 3 designated",
+        "D. 3 root, 3 designated, 6 alternate"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-11",
+      "number": 11,
+      "question": "Which optional STP feature disables a port if it stops receiving BPDUs?",
+      "options": [
+        "A. BPDU Guard",
+        "B. BPDU Filter",
+        "C. Root Guard",
+        "D. Loop Guard"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    },
+    {
+      "id": "q13-12",
+      "number": 12,
+      "question": "BPDU Filter has been enabled globally for all PortFast-enabled ports.  What happens when one of the BPDU Filter-enabled ports receives a BPDU?",
+      "options": [
+        "A. PortFast and BPDU Filter are disabled on the port.",
+        "B. The port is error-disabled.",
+        "C. The port ignores the BPDU.",
+        "D. The port enters the discarding state."
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "Official answer: . Review the chapter concepts to master this exam topic."
+    }
+  ],
+  "labMission": {
+    "scenario": "Deploy, configure, and verify Dynamic Trunking Protocol and VLAN Trunking Protocol inside Cisco Packet Tracer according to Jeremy McDowell's lab specifications.",
+    "objectives": [
+      "Download and open Cisco Packet Tracer (free at http://mng.bz/2Kra).",
+      "Construct the topology for Chapter 13: Dynamic Trunking Protocol and VLAN Trunking Protocol.",
+      "Implement core CLI commands: show interfacesswitchport, switchport modedynamic {auto |, desirable}.",
+      "Verify operational state and capture verification output."
+    ],
+    "verificationCommands": [
+      "show interfacesswitchport",
+      "switchport modedynamic {auto |",
+      "desirable}",
+      "switchportnonegotiate",
+      "show vtp status"
+    ],
+    "videoSubmissionPrompt": "Record a 2 to 5-minute screen and microphone walkthrough of your Packet Tracer lab for Chapter 13: Dynamic Trunking Protocol and VLAN Trunking Protocol. Explain the core concepts in your own words, show your CLI configurations, and run verification commands to demonstrate mastery."
+  },
+  "fullText": "## This chapter covers\n\nSwitch port administrative and operational modes\n\nHow switches use Dynamic Trunking Protocol to determine a port’s operational mode\n\nHow to use VLAN Trunking Protocol to automate VLAN administration\n\nIn this chapter, we will look at two protocols related to VLANs, the topic of the previous chapter. Dynamic Trunking Protocol (DTP) and VLAN Trunking Protocol (VTP) are both auxiliary protocols designed to streamline VLAN configuration and management on Cisco switches. As in chapter 12, in this chapter, we will cover the following two exam topics:\n\n2.1 Configure and verify VLANs (normal range) spanning multiple switches\n\n2.2 Configure and verify interswitch connectivity\n\nBefore Cisco’s major overhaul of the CCNA exam topics in 2020, both DTP and VTP were listed as exam topics. Their removal in 2020 led some to believe that DTP and VTP would not be covered on the CCNA exam, but this is a misunderstanding; although the exam topics list no longer explicitly names DTP and VTP, they both play important roles in the configuration of VLANs and interswitch connectivity on Cisco switches, and you are expected to know them for the CCNA exam.\n\n## 13.1 Dynamic Trunking Protocol\n\n**Dynamic Trunking Protocol** (DTP) is a Cisco-proprietary protocol that allows Cisco switches to automatically determine the operational mode of their ports. A port’s **operational mode** is the mode the port operates in (access or trunk), as opposed to the **administrative mode**, which is the port’s configured mode (using the **switchport mode** command). If a switchport is manually configured as an access port or trunk port, the port’s administrative and operational modes will be identical:\n\nA port configured with **switchport mode access** (administrative mode) will always operate as an access port (operational mode).\n\nA port configured with **switchport mode trunk** (administrative mode) will always operate as a trunk port (operational mode).\n\nWhen using DTP, neighboring switches send each other DTP messages, informing each other of their port’s administrative mode. Depending on the combination of administrative modes of the connected ports, the switches decide the appropriate operational mode for their ports.\n\n**NOTE** Only switches use DTP; to make a switch port connected to a router operate as a trunk port (when using router on a stick), you must manually\n\nconfigure trunk mode on the port.\n\nDTP was developed to streamline the deployment of switches by requiring less manual configuration of port modes, but it was found to be a security vulnerability (more on that later in this chapter), so today it is generally considered best practice to disable DTP on switch ports. However, DTP is active on Cisco switches by default, so it’s important to understand how it works, even if only to know how to disable it.\n\n**NOTE** As a Cisco-proprietary protocol, DTP only works on Cisco switches. If you want your Cisco switch to have a trunk connection with a switch from another vendor, you must manually configure trunk mode with **switchport mode trunk**.\n\n## 13.1.1 DTP negotiation\n\nIn chapter 12, we manually configured access and trunk ports. However, there are two other options for the **switchport mode** command: **switchport mode dynamic auto** and **switchport mode dynamic desirable**. Rather than explicitly specifying which mode the port should operate in, these administrative modes tell the switch to use DTP to determine the port’s operational mode. By default, a port in one of these modes will operate as an access port, but if the connected switches both agree, a trunk link will be formed.\n\nFigure 13.1 shows two Cisco switches connected by their G0/0 ports, each with an administrative mode of **dynamic auto**. The result is an access link; the switches agree that they will not form a trunk. This process of exchanging DTP messages and agreeing upon an operational mode is called **DTP negotiation**.\n\n![](/extracted/vol1/images/page_419_image_body_1.jpg)\n\nFigure 13.1 Two connected switches negotiate their ports’ operational mode by sending DTP messages. Both ports use the default administrative mode of dynamic auto, resulting in an access link; SW1 G0/0 and SW2 G0/0 operate as access ports.\n\n**NOTE dynamic auto** is the default administrative mode for all Cisco switch ports, so by default, two Cisco switches that are connected will not form a trunk; the connection will remain in access mode.\n\nTo view a port’s administrative and operational modes, use the **show interfaces** interface-name **switchport** command, as in the following example. Note that the operational mode is static access; this means it is an access port that is assigned to a specific VLAN (the VLAN specified in the **switchport access vlan** command, or the default of VLAN 1). There are also **dynamic access** ports, in which the switch decides the port’s VLAN based on the connected device, but dynamic access ports are beyond the scope of the CCNA:\n\n```txt\nSW1# show interfaces g0/0 switchport\nName: Gig0/0\nSwitchport: Enabled\nAdministrative Mode: dynamic auto ❶\nOperational Mode: static access ❷\n```\n\n❶ G0/0’s configured mode is dynamic auto (default).\n\n❷ G0/0 functions as an access port.\n\nAlthough a port with administrative mode **dynamic auto** uses DTP to negotiate its operational mode, it does not actively try to form a trunk link with its neighbor; that’s why two connected ports in **dynamic auto** mode do not form a trunk, as we saw in figure 13.1.\n\nIf we change the administrative mode of SW1 G0/0 to **dynamic desirable**, the result is different; a port in **dynamic desirable** mode actively attempts to form a trunk. Figure 13.2 shows the result: a trunk link between SW1 and SW2.\n\n![](/extracted/vol1/images/page_420_image_body_5.jpg)\n\nFigure 13.2 SW1 and SW2 negotiate to form a trunk link. SW1 G0/0’s administrative mode is dynamic desirable, and SW2 G0/0’s is dynamic auto. The result is an operational mode of trunk.\n\nAs shown in the following example, SW1 G0/0’s operational mode is now trunk:\n\n```txt\nSW1# show interfaces g0/0 switchport\nName: Gig0/0\nSwitchport: Enabled\nAdministrative Mode: dynamic desirable ❶\nOperational Mode: trunk ❷\n```\n\n❶ G0/0’s configured mode is dynamic desirable.\n\n❷ G0/0 functions as a trunk port.\n\nTable 13.1 lists the four administrative modes that can be configured with the **switchport mode** command and gives a brief description of each.\n\nTable 13.1 Switch port administrative modes\n\n| Mode | Description | Port sends DTP messages? |\n| --- | --- | --- |\n| access | Manually configures an access port. Operational mode will always be access. | No |\n| trunk | Manually configures a trunk port. Operational mode will always be trunk. | Yes |\n| dynamic auto | The port uses DTP to negotiate its operational mode but does not actively try to form a trunk with its neighbor. Will form a trunk if connected to a port in trunk or dynamic desirable mode. | Yes |\n| dynamic desirable | The port uses DTP to negotiate its operational mode and actively tries to form a trunk with its neighbor. Will form a trunk if connected to a port in trunk, dynamic auto, or dynamic desirable mode. | Yes |\n\n**NOTE** Although administrative mode **trunk** manually configures a trunk port, the port will still send DTP messages; the purpose is to ensure that the neighboring port also operates in trunk mode (if the neighbor is in **dynamic auto** or **dynamic desirable** mode).\n\nFor the CCNA exam, it’s important to understand the resulting operational mode of each combination of administrative modes; table 13.2 shows the results of each combination. Note that **access** + **trunk** is not a valid combination; either the switches will detect the mismatch and block the link, or the traffic that passes through the link will be limited to only the trunk port’s native VLAN and the access port’s VLAN (because both are untagged). Either way, don’t use this combination!\n\nTable 13.2 Switch port administrative modes\n\n| Administrative modes | access | trunk | dynamic desirable | dynamic auto |\n| --- | --- | --- | --- | --- |\n| Access | access | invalid | access | access |\n| Trunk | invalid | trunk | trunk | trunk |\n| Dynamic desirable | access | trunk | trunk | trunk |\n| Dynamic auto | access | trunk | trunk | access |\n\n**EXAM TIP** Make sure that you can identify the operational mode that results from each combination of administrative modes; it’s a potential exam question.\n\n## Trunk encapsulation negotiation\n\nIn addition to negotiating a port’s operational mode, DTP can also negotiate which protocol a port uses to tag frames if it becomes a trunk: 802.1Q or ISL.\n\nOf course, this only applies to switches that support both 802.1Q and ISL. As I mentioned in chapter 12, modern Cisco switches only support 802.1Q, so I wouldn’t expect any questions related to ISL on the CCNA exam.\n\nIf a switch supports both protocols, its default setting is **switchport trunk encapsulation negotiate**. If both switches are using **negotiate**, the result will be ISL. If one side specifies a protocol (**dot1q** or **isl**), the side using **negotiate** will agree to use the same encapsulation. An encapsulation mismatch (**dot1q** on one side, **isl** on the other) is a misconfiguration. If you encounter a switch that supports both 802.1Q and ISL, you should manually configure 802.1Q with **switchport trunk encapsulation dot1q**, as we covered in chapter 12.\n\n## 13.1.2 Disabling DTP\n\nAs I mentioned previously, DTP was developed to streamline the deployment of switches by allowing them to automatically determine the operational status of the ports. However, it is also a security vulnerability; an attacker can take advantage of DTP to form a trunk link with a switch, gaining access to all VLANs in the LAN.\n\nIn the default administrative mode of **dynamic auto**, a switch port connected to an end host will operate in access mode; end hosts don’t use DTP, so they can’t negotiate a trunk. This means that the end host will have access only to a single VLAN, and communication between that VLAN and other VLANs can be controlled by configuring security policies on the router.\n\nHowever, if a malicious user uses something like **Yersinia** (a hacking tool) to send DTP messages out of their PC, they can negotiate to form a trunk link with the switch port, giving\n\nthem access to all VLANs in the LAN, presenting a security threat. Figure 13.3 depicts an attacker who has used DTP to negotiate a trunk with a switch.\n\n![](/extracted/vol1/images/page_424_image_body_1.jpg)\n\nFigure 13.3 An attacker sends malicious DTP messages to SW1 to form a trunk. This gives the attacker access to all VLANs in the LAN, presenting a security threat.\n\nBecause of the security implications and to reduce the amount of unnecessary traffic (DTP messages) being sent in the LAN, it is recommended that you disable DTP. There are two ways to do this:\n\nManually configure the port as an access port with **switchport mode access**.\n\nExplicitly disable DTP with **switchport nonegotiate**.\n\nIn the following example, I use **show interfaces g0/0 switchport**. The output states Negotiation of Trunking: On; this means the port is sending DTP messages. I then\n\nconfigure G0/0 as an access port and check again; notice that trunk negotiation is now Off:\n\n```txt\nSW1# show interfaces g0/0 switchport\nName: Gi0/0\nSwitchport: Enabled\nAdministrative Mode: dynamic auto ❶\nOperational Mode: static access\nNegotiation of Trunking: On ❷\nSW1# configure terminal\nSW1(config)# interface g0/0 ❸\nSW1(config-if)# switchport mode access ❸\nSW1(config-if)# do show interfaces g0/0 switchport\nName: Gi0/0\nSwitchport: Enabled\nAdministrative Mode: static access\nOperational Mode: static access\nNegotiation of Trunking: Off ❹\n```\n\n❶ G0/0’s administrative modeis dynamic auto.\n\n❷ DTP is enabled.\n\n❸ Configures G0/0 as an access port\n\n❹ DTP is disabled.\n\nAs demonstrated in the previous example, manually configuring access mode disables DTP on the port; it won’t send DTP messages. However, the second method can be used to ensure that the port never sends DTP messages, regardless of its current mode (access or trunk). In the following example, I configure G0/0 as a trunk port and confirm that negotiation is On. I then use **switchport nonegotiate** to disable DTP and confirm again:\n\n```txt\nSW1(config-if)# do show interfaces g0/0 switchport\nName: Gi0/0\nSwitchport: Enabled\nAdministrative Mode: trunk\nOperational Mode: trunk\nNegotiation of Trunking: On ❷\nSW1(config-if)# switchport nonegotiate ❸\nSW1(config-if)# do show interfaces g0/0 switchport\nName: Gi0/0\nSwitchport: Enabled\nAdministrative Mode: trunk\nOperational Mode: trunk\nNegotiation of Trunking: Off ❹\n```\n\n❶ Configures G0/0 as a trunk port\n\n❷ DTP is enabled.\n\n❸ Disables DTP\n\n❹ DTP is disabled.\n\nEven if you manually configure a port in access mode, it is recommended that you also use **switchport nonegotiate** to ensure that DTP messages are never sent, even if you later configure the port in trunk mode.\n\n**EXAM TIP** Remember that as a security best practice, use **switchport nonegotiate** to disable DTP on switch ports.\n\n## 13.2 VLAN Trunking Protocol\n\n**VLAN Trunking Protocol** (VTP) is another Cisco-proprietary protocol that plays a role in VLAN configuration on Cisco switches. VTP allows switches to automatically synchronize their **VLAN database**, the file that stores information about the VLANs that exist on the switch. Using VTP, switches in a\n\nLAN send each other messages with information about the VLANs in their VLAN database, and the switches synchronize their database according to the latest version of the database.\n\n**NOTE** The VLAN database is stored in a file called **vlan.dat** in flash memory; use the **dir flash:** or **show flash:** commands to view the contents of flash memory. You can use **show vlan brief** to view the contents of the VLAN database (as we covered in chapter 12).\n\nFigure 13.4 demonstrates why it’s important for switches in a LAN to have the same VLANs in their VLAN database; PC1 sends a frame to PC2, but SW2 drops the frame because VLAN 4 isn’t in SW2’s VLAN database.\n\n![](/extracted/vol1/images/page_427_image_body_3.jpg)\n\nFigure 13.4 A missing VLAN on SW2 prevents PC1 from communicating with PC2. 1) PC1 sends a frame to PC2. 2) SW2 drops the frame because VLAN 4 isn’t in its VLAN database.\n\nVTP can ensure that all VLANs exist on all switches in the LAN. In a small LAN like figure 13.4, VTP might not seem necessary; manually creating VLAN 4 on SW2 wouldn’t be such a hassle. However, in a large LAN with dozens of switches, VTP can both save time and reduce human error by propagating VLAN changes without requiring manual configuration on every single switch.\n\n**NOTE** Like DTP, VTP is a Cisco-proprietary protocol that only runs on Cisco switches; it cannot be used to synchronize VLANs with another vendor’s switches.\n\n## 13.2.1 VTP synchronization\n\nFigure 13.5 shows how VLANs created on SW1 can be propagated to SW2 and SW3 using VTP. Starting with only VLAN 1, I created VLANs 2, 3, and 4 on SW1. This causes SW1 to increment the VTP **revision number**—a number that keeps track of the latest version of the VLAN database. The revision number starts at 0 and is updated each time there is a change to the VLAN database, such as a VLAN being created, deleted, or renamed. This causes SW1 to send VTP messages to SW2 and SW3, informing them of the updates to the VLAN database. SW2 and SW3 then update their VLAN databases to match SW1.\n\n**NOTE** VLANs 1002 to 1005 also exist by default on Cisco switches and cannot be removed. I won’t mention them in this chapter because they are reserved for legacy technologies (Token Ring and FDDI) that are not used in modern networks, as mentioned in chapter 12.\n\n![](/extracted/vol1/images/page_429_image_body_0.jpg)\n\n**Figure 13.5 VLANs created on SW1 are propagated to other switches in the VTP domain “Manning.” (1) SW1 creates VLANs 2, 3, and 4, updating its revision number to 3 (incrementing by 1 each time it creates a VLAN). (2) SW1 sends VTP messages to other switches in the VTP domain. (3) SW2 and SW3 add VLANs 2, 3, and 4 to their VLAN databases, updating their revision number to match SW1’s.**\n\n**NOTE** VTP messages are only sent out of trunk ports, not access ports.\n\nFigure 13.5 also introduced the concept of the **VTP domain**— the group of switches in a LAN that all share the same VTP domain name. By default, switches do not have a VTP domain name; in this state, VTP is not active. You can\n\nconfigure VLANs on the device, but it will not send VTP messages to other switches in the LAN. The following example shows the output of **show vtp status**—a useful command to view the current state of VTP on the switch— before configuring VTP or any VLANs on SW1. We will cover the relevant fields of this output throughout the rest of this chapter.\n\n**NOTE** A switch that does not have a VTP domain name is said to be in domain **NULL**.\n\n```txt\nSW1# show vtp status\nVTP Version capable : 1 to 3 ❶\nVTP version running : 1 ❷\nVTP Domain Name : ❸\nVTP Pruning Mode : Disabled\nVTP Traps Generation : Disabled\nDevice ID : 5254.0008.8000\nConfiguration last modified by 0.0.0.0 at 4-25-23 03:25:46\nLocal updater ID is 0.0.0.0 (no valid interface found)\nFeature VLAN:\nVTP Operating Mode : Server ❹\nMaximum VLANs supported locally : 1005\nNumber of existing VLANs : 5 ❺\nConfiguration Revision : 0 ❻\nMD5 digest : 0x57 0xCD 0x40 0x65 0x63 0x59 0x47 0xBD\n0x56 0x9D 0x4A 0x3E 0xA5 0x69 0x35 0xBC\n```\n\n❶ SW1 supports VTP version 1 to 3.\n\n❷ SW1 runs VTP version 1 by default.\n\n❸ SW1 is not in a VTP domain.\n\n❹ SW1 is a VTP server by default.\n\n❺ SW1’s VLAN database has five VLANs.\n\n❻ The revision number starts at 0.\n\nIf you configure a VTP domain name on one switch, it will send VTP messages to other switches, and all switches\n\nwithout a VTP domain name will adopt the new domain name; the command to do so is **vtp domain** domain-name. In the following examples, I configure the VTP domain name “Manning” and VLANs 2, 3, and 4 on SW1. Then, I confirm that all switches in the LAN have joined the “Manning” domain and share the same Configuration Revision number —this is the revision number that I mentioned previously:\n\n| SW1(config)# vtp domain Manning ① |\n| --- |\n| Changing VTP domain name from NULL to Manning |\n| SW1(config)# vlan 2 2 |\n| ② SW1(config-vlan)# vlan 3 |\n| 2 SW1(config-vlan)# vlan 4 |\n| 2 SW1(config-vlan)# end |\n| SW1# show vtp status |\n|  |\n| : Manning ③ VTP Domain Name |\n| 4 Number of existing VLANs :8 |\n| 5 :3 Configuration Revision |\n| SW2# show vtp status |\n| 6 VTP Domain Name : Manning |\n|  |\n| :8 6 Number of existing VLANs |\n| 6 :3 Configuration Revision |\n| SW3# show vtp status |\n| 6 VTP Domain Name : Manning |\n|  |\n| 6 Number of existing VLANs :8 6 :3 Configuration Revision |\n\n❶ Changes SW1’s VTP domain\n\n❷ Creates three VLANs\n\n❸ SW1’s VTP domain has changed.\n\n❹ SW1’s VLAN database has eight VLANs.\n\n❺ SW1’s revision number has increased to 3.\n\n❻ SW2 and SW3 joined the VTP domain and synced their VLAN databases.\n\nBecause the revision number is used to keep track of the latest version of the VLAN database, switches will only synchronize their VLAN database if they receive a VTP message from a switch with a higher revision number, not a lower one; a VTP message with a lower (or equal) revision number is considered old information.\n\n## 13.2.2 VTP modes\n\nA Cisco switch can operate in one of four VTP modes: server, client, transparent, and off, each mode with its own characteristics. The VTP mode can be configured with the **vtp mode mode** command. Switches in server mode and client mode actively participate in VTP and synchronize their VLAN databases to match each other, whereas switches in transparent mode and off mode do not. Table 13.3 summarizes each mode.\n\n## Table 13.3 VTP modes\n\n| Mode | Description |\n| --- | --- |\n| Server | This is the default mode. The switch can create/modify/delete VLANs. It will advertise changes to its VLAN database and synchronize its VLAN database upon receiving an advertisement with a higher revision number. |\n| Client | The switch cannot create/modify/delete VLANs but otherwise behaves the same as a server. |\n| Transparent | The switch can create/modify/delete VLANs, but it will not advertise changes to its own VLAN database and will not synchronize its VLAN database with others. The switch does not directly participate in the VTP domain, but it will forward VTP messages between switches in the same domain. |\n| Off | The switch can create/modify/delete VLANs, but it will not advertise changes to its own VLAN database and will not synchronize its VLAN database with others. The switch does not participate in VTP at all. |\n\nSwitches are in VTP **server** mode by default. In this mode, a switch can create, modify (ie. rename), and delete VLANs, and those changes will be advertised to other switches in the domain. A VTP server will also synchronize its own VLAN database if it receives a VTP message with a higher revision number.\n\nVTP **client** mode is similar to server mode, except for one difference: the switch cannot create/modify/delete VLANs. I demonstrate this in the following example by configuring SW3 VTP client mode and then attempting to create VLAN 5:\n\n| 1 SW3(config)# vtp mode client |\n| --- |\n|  |\n| ② SW3(config)# vlan 5 |\n| VTP VLAN configuration not allowed when device is in CLIENT mode. |\n\n❶ Makes SW3 a VTP client\n\n❷ Creates a VLAN\n\n❸ The command is rejected.\n\n**NOTE** Cisco recommends that all switches in the domain be in server mode if they have sufficient memory resources. Any modern switch should have sufficient resources to store VLAN information, so you can safely leave all switches in VTP server mode.\n\nIn a VTP domain, in most cases, all switches will be in server (or client) mode; they are the modes that take advantage of VTP’s VLAN database synchronization. **Transparent** mode prevents the switch from synchronizing its VLAN database with other switches. You can create, modify, and delete VLANs on the switch, but it will not advertise those changes to other switches. However, the switch will forward VTP messages between switches in the same domain. Transparent mode should be used in cases where a switch needs to be managed independently from other switches, without interrupting VTP’s operation on the rest of the switches in the LAN. Figure 13.6 demonstrates how VTP transparent mode works; SW2 has a VLAN database separate from SW1 and SW3 but forwards SW1’s VTP messages to SW3.\n\n![](/extracted/vol1/images/page_435_image_body_0.jpg)\n\n**Figure 13.6 SW2, in transparent mode, forwards VTP messages but does not synchronize its VLAN database. (1) SW1 creates VLAN 5 and updates its revision number. (2) SW2 forwards SW1’s VTP messages to SW3 but doesn’t synchronize its VLAN database. (3) SW3 syncs its VLAN database to match SW1 and updates its revision number.**\n\n**NOTE** A switch in VTP transparent mode will always have revision number 0.\n\nThe final VTP mode is **off**, which disables VTP on the switch. Like transparent mode, the switch won’t synchronize its\n\nVLAN database with other switches, but it also won’t forward VTP messages between switches using VTP. If VTP is not being used in the LAN, you should configure **vtp mode off** to disable VTP on all switches.\n\n## 13.2.3 VTP versions\n\nYou may have noticed the following lines when I showed the complete output of **show vtp status** in section 13.2.1:\n\n```txt\nSW1# show vtp status\nVTP Version capable : 1 to 3 ❶\nVTP version running : 1 ❷\n```\n\n❶ SW1 supports VTP versions 1 to 3.\n\n❷ SW1 runs VTP version 1 by default.\n\nThere are three different versions of VTP available, and version 1 is the default. You can configure the VTP version with the **vtp version version** command. Versions 1 and 2 are very similar; one difference is that version 2 supports **Token Ring**, which is not relevant to modern networks, so there isn’t much reason to use version 2 over version 1.\n\nVersion 3, on the other hand, brings various improvements over the previous two versions and should always be preferred if using VTP. Let’s look at a few of those improvements that are relevant to the CCNA. We already covered one of the improvements: off mode. Before version 3, VTP only had three modes: server, client, and transparent. There was no way to actually disable VTP on a switch; the\n\nclosest thing was to configure all switches in transparent mode.\n\n**NOTE** Although off mode was added in VTP version 3, switches that support version 3 can use off mode even if they are running version 1 or 2.\n\nNow let’s cover two other significant changes brought by VTP version 3: the primary server and extended-range VLAN support.\n\n## Th e pri mary s e rve r\n\nIn VTP version 3, only one switch in the VTP domain can create, modify, and delete VLANs: the **primary server**. Other VTP servers (now called **secondary servers**) are no different than VTP clients, except that you can make a secondary server become the primary server with the command **vtp primary** in privileged EXEC mode.\n\n**NOTE** Although most VTP commands are global config mode commands, the **vtp primary** command is a privileged EXEC mode command.\n\nIn the following example, I enable VTP version 3 on SW1 and attempt to create VLAN 6, which fails. I then use the **vtp primary** command to make SW1 the primary server, and I am then able to create VLAN 6:\n\n```txt\nSW1(config)# vtp version 3 ❶\nSW1(config)# vlan 6 ❷\nVTP VLAN configuration not allowed when device is not\n➥the primary server for vlan database. ❸\nSW1(config)# do vtp primary ❹\nThis system is becoming primary server for feature vlan ❹\nNo conflicting VTP3 devices found. ❹\n```\n\nDo you want to continue? [confirm]\n\nSW1(config)# **vlan 6**\n\nSW1(config-vlan)# **exit**\n\n❶ Enables VTP version 3\n\n❷ Creates a VLAN\n\n❸ The command is rejected.\n\n❹ Makes SW1 the primary server\n\n❺ SW1 can now create VLANs.\n\n**NOTE** In this example, I executed the **vtp primary** command in global config mode by adding **do** in front of the command. The **vtp primary** command on its own does not work in global config mode; it’s a privileged EXEC mode command.\n\nOnly one switch in the domain can be the primary server; if you use the **vtp primary** command on a second switch, the first one will revert to being a secondary server. The reason for allowing only one switch in the domain to create, modify, and delete VLANs is to avoid the problem of a newlyconnected switch overwriting the VLAN database for the domain—a problem we’ll cover in section 13.2.4.\n\n## Exten ded-range VLANs\n\nIn old versions of Cisco IOS, only VLANs 1 to 1005 were available for use; these are called the **normal-range VLANs**. In those versions of IOS, VLANs 1006 to 4094 were reserved for internal use by applications on the switch; a user could not create them or assign ports to those VLANs. In a later version of IOS, VLANs 1006 to 4094 were made available and called the **extended-range VLANs**; these days, all Cisco switches support both the normal- and extended-range VLANs.\n\nEven after extended-range VLANs were made available for use, VTP versions 1 and 2 only supported normal-range VLANs. The only way to create extended-range VLANs on switches before VTP version 3 was to configure the switch in transparent mode, rendering it unable to participate in the VTP domain.\n\nVTP version 3 brought the ability to create and propagate extended-range VLANs; the primary server can create extended-range VLANs and propagate them to other switches in the VTP domain.\n\n## 13.2.4 Is VTP dangerous?\n\nVTP doesn’t have a very good reputation—and for good reason: it has caused a lot of network outages over the years. First, let’s look at why VTP has a bad reputation, and then we’ll see how version 3 fixes the problems with VTP.\n\nThe danger of VTP is the potential for a newly connected switch to overwrite the VLAN database of all switches in the domain. Because switches using VTP synchronize their VLAN database to the switch with the highest revision number, if the newly connected switch has a higher revision number (and is in the same domain), all switches in the domain will synchronize to match it. Figure 13.7 illustrates how this can happen: SW4, with a revision number of 50, is connected to a VTP domain with a revision number of 5, causing the other switches to synchronize with it. As a result, hosts in VLANs 10, 20, and 30 will lose network connectivity; those VLANs no longer exist in the network!\n\n![](/extracted/vol1/images/page_440_image_body_0.jpg)\n\nFigure 13.7 SW4 is connected to the network and overwrites the VLAN databases of SW1, SW2, and SW3. (1) SW4 is connected to the LAN. (2) SW4 sends VTP messages to the other switches. (3) Because SW4 has a higher revision number (50 vs. 5), SW1, SW2, and SW3 synchronize their VLAN databases to match SW4. Hosts in VLANs 10, 20, and 30 will be unable to communicate over the network because their VLANs no longer exist.\n\n**NOTE** You may be wondering, how could a newly added switch have a high revision number in the first place? One possibility is that it was used as a **lab switch** for testing and verifying before being added to the corporate network.\n\nThis is a very careless mistake, and standardized procedures for adding new devices to the network would prevent it from happening; one recommended procedure is to reset the VTP revision number of a switch to 0 before connecting it to the network. There are three methods for doing so:\n\nChange the VTP domain name to a different one and then back to the original name.\n\nChange the VTP mode to transparent and then back to server or client (only works in versions 1 and 2).\n\nChange the VTP mode to off and then back to server or client (only works in versions 1 and 2).\n\n**EXAM TIP** Remember these three methods for resetting the revision number.\n\nResetting the revision number to 0 eliminates the risk of a newly added switch overwriting the VLAN database of switches in the network. However, it’s an unfortunate truth that many corporations have few, if any, standardized procedures for such things, and in any case, people can get careless. As a result, many people have been burned by VTP, giving it a bad reputation.\n\nHowever, the primary server mechanism in version 3 eliminates this risk; switches will only synchronize to the primary server, so even if a new switch with a higher revision number is connected to the LAN, switches in the LAN won’t synchronize to it. When using version 3, there’s no need to be afraid of VTP, and it can be a great tool for automating some of the workflows of configuring a network.\n\n## Summary\n\n**Dynamic Trunking Protocol** (DTP) allows Cisco switches to automatically determine the operational mode of their ports.\n\nA port’s **administrative mode** is how it is configured with the **switchport mode** command, and its **operational mode** is the mode it operates in (access or trunk).\n\nUse the **show interfaces interface-name switchport** command to view the administrative and operational modes of a port.\n\nA port configured with **switchport mode access** will always operate as an access port, and a port configured with **switchport mode trunk** will always operate as a trunk port.\n\n**switchport mode dynamic auto** and **switchport mode dynamic desirable** configure the port to use DTP to determine its operational mode.\n\n**dynamic auto** mode does not actively try to form a trunk with its neighbor but will form a trunk if the neighbor’s mode is **trunk** or **dynamic desirable**.\n\n**dynamic desirable** mode actively tries to form a trunk with its neighbor and will form a trunk if the neighbor’s mode is **trunk**, **dynamic auto**, or **dynamic desirable**.\n\nDTP is considered a security vulnerability and should be disabled. It is considered best practice to manually configure each port’s mode and disable DTP with **switchport nonegotiate** on each port.\n\n**VLAN Trunking Protocol** (VTP) allows Cisco switches to synchronize their VLAN database—the file that stores information about VLANs on the switch (vlan.dat).\n\nThe VTP **revision number** is used to keep track of the latest version of the VLAN database. Each time a change is made, the revision number is incremented by 1. A switch will synchronize to match a higher revision number but not a lower (or equal) one.\n\nThe **VTP domain** is the group of switches in a LAN that share the same VTP domain name; a switch will only synchronize with another switch in the same domain.\n\nBy default, a switch has no domain name; it is said to be in domain **NULL**. In this state, the switch can create/modify/delete VLANs, but it won’t send VTP messages to other switches.\n\nYou can configure a switch’s VTP domain name with the **vtp domain domain-name** command.\n\nUse the **show vtp status** command to view the current state of VTP on the switch.\n\nA switch can operate in one of four VTP modes: server, client, transparent, and off. Use the **vtp mode mode** command to configure the mode (server is the default).\n\nA switch in VTP server mode can create/modify/delete VLANs. It will advertise changes to its VLAN database and synchronize its VLAN database upon receiving an advertisement with a higher revision number.\n\nA switch in VTP client mode cannot create/modify/delete VLANs but otherwise behaves the same as a server.\n\nA switch in VTP transparent mode can create/modify/delete VLANs but operates independently from other switches in the VTP domain. It will forward VTP messages between switches in the VTP domain but will not send its own VTP messages or synchronize its VLAN database with other switches.\n\nA switch in VTP off mode can create/modify/delete VLANs but does not participate in VTP at all.\n\nThere are three versions of VTP: 1, 2, and 3. Versions 1 and 2 are very similar, but version 3 brought many improvements.\n\nVTP version 3 introduced off mode; before, VTP couldn’t be disabled. The closest thing was to configure all switches in VTP transparent mode.\n\nIn VTP version 3, only one switch in the domain can create, modify, and delete VLANs: the primary server. Switches in the domain will only synchronize with the primary server. Other servers are called **secondary servers**; they function the same as VTP clients.\n\nUse the **vtp primary** command (in privileged EXEC mode) on a VTP server to make it the primary server. There can only be one; if you configure **vtp primary** on a second server, the first one will revert to being a secondary server.\n\nVTP version 3 is the only version that supports **extendedrange** VLANs (VLANs 1006 to 4094). Versions 1 and 2 only support **normal-range** VLANs (VLANs 1 to 1005).\n\nOne risk of VTP is that a newly connected switch with a higher revision number can overwrite the VLAN database of all switches in the LAN. Version 3 solves this problem because switches will only synchronize with the primary server.\n\nTo reset a switch’s VTP revision number to 0, you can change the domain name to a different one and then back to the original. Alternatively, you can change the mode to transparent or off and then back to server or client, but this only works in versions 1 and 2.\n\n## 14 Spanning Tree Protocol"
+}

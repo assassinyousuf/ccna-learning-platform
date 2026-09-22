@@ -1,0 +1,364 @@
+{
+  "id": "v2-ch2-network-time-protocol",
+  "volume": 2,
+  "volumeTitle": "Volume 2: Advanced Networking and Security",
+  "partNumber": 1,
+  "partTitle": "Network services",
+  "chapterNumber": 2,
+  "title": "Chapter 2: Network Time Protocol",
+  "rawTitle": "Network Time Protocol",
+  "description": "Synchronize network device clocks across stratum tiers using NTP client and server modes, NTP authentication, and timezone configuration.",
+  "readTime": "38 min",
+  "keyPoints": [
+    "The importance of date and time on network devices"
+  ],
+  "tableOfContents": [
+    {
+      "title": "2 Network Time Protocol",
+      "anchor": "2-network-time-protocol",
+      "level": 2
+    },
+    {
+      "title": "2.1 Date and time on network devices",
+      "anchor": "2-1-date-and-time-on-network-devices",
+      "level": 2
+    },
+    {
+      "title": "2.1.1 The importance of date and time",
+      "anchor": "2-1-1-the-importance-of-date-and-time",
+      "level": 2
+    },
+    {
+      "title": "❶ An OSPF neighbor entered the Full state.",
+      "anchor": "an-ospf-neighbor-entered-the-full-state",
+      "level": 2
+    },
+    {
+      "title": "2.1.2 Setting the date and time",
+      "anchor": "2-1-2-setting-the-date-and-time",
+      "level": 2
+    },
+    {
+      "title": "SETTING THE CLOCK AND CALENDAR",
+      "anchor": "setting-the-clock-and-calendar",
+      "level": 2
+    },
+    {
+      "title": "CONFIGURING THE TIME ZONE",
+      "anchor": "configuring-the-time-zone",
+      "level": 2
+    },
+    {
+      "title": "2.2 How NTP works",
+      "anchor": "2-2-how-ntp-works",
+      "level": 2
+    },
+    {
+      "title": "2.3 Configuring NTP",
+      "anchor": "2-3-configuring-ntp",
+      "level": 2
+    },
+    {
+      "title": "2.3.1 NTP client mode",
+      "anchor": "2-3-1-ntp-client-mode",
+      "level": 2
+    },
+    {
+      "title": "2.3.2 NTP server mode",
+      "anchor": "2-3-2-ntp-server-mode",
+      "level": 2
+    },
+    {
+      "title": "❶ Specifies a stratum of 5",
+      "anchor": "specifies-a-stratum-of-5",
+      "level": 2
+    },
+    {
+      "title": "Symmetric active mode",
+      "anchor": "symmetric-active-mode",
+      "level": 2
+    },
+    {
+      "title": "2.3.3 NTP authentication",
+      "anchor": "2-3-3-ntp-authentication",
+      "level": 2
+    },
+    {
+      "title": "❸ Specifies the key as trusted",
+      "anchor": "specifies-the-key-as-trusted",
+      "level": 2
+    },
+    {
+      "title": "❶ Configures an NTP authentication key",
+      "anchor": "configures-an-ntp-authentication-key",
+      "level": 2
+    },
+    {
+      "title": "The ntp authenticate command",
+      "anchor": "the-ntp-authenticate-command",
+      "level": 2
+    },
+    {
+      "title": "Summary",
+      "anchor": "summary",
+      "level": 2
+    }
+  ],
+  "diagrams": [
+    {
+      "src": "/extracted/vol2/images/page_37_image_body_2.jpg",
+      "caption": "Figure: Network Time Protocol"
+    },
+    {
+      "src": "/extracted/vol2/images/page_37_image_body_10.jpg",
+      "caption": "Figure: Network Time Protocol"
+    },
+    {
+      "src": "/extracted/vol2/images/page_39_image_body_0.jpg",
+      "caption": "Figure: Network Time Protocol"
+    },
+    {
+      "src": "/extracted/vol2/images/page_40_image_body_7.jpg",
+      "caption": "Figure: Network Time Protocol"
+    },
+    {
+      "src": "/extracted/vol2/images/page_41_image_body_0.jpg",
+      "caption": "Figure: Network Time Protocol"
+    },
+    {
+      "src": "/extracted/vol2/images/page_43_image_body_8.jpg",
+      "caption": "Figure: Network Time Protocol"
+    }
+  ],
+  "ciscoCommands": [
+    {
+      "mode": "#",
+      "cmd": "show clock[ detail ]",
+      "desc": "View the time of thesoftware clock."
+    },
+    {
+      "mode": "#",
+      "cmd": "clock sethh : mm : ss month dayyear",
+      "desc": "Set the time of the softwareclock."
+    },
+    {
+      "mode": "#",
+      "cmd": "show calendar",
+      "desc": "View the time of thehardware calendar."
+    },
+    {
+      "mode": "#",
+      "cmd": "calendar sethh : mm : ssmonthday year",
+      "desc": "Set the time of the hardwarecalendar."
+    },
+    {
+      "mode": "#",
+      "cmd": "clock update-calendar",
+      "desc": "Sync the calendar to theclock's time."
+    },
+    {
+      "mode": "#",
+      "cmd": "clock read-calendar",
+      "desc": "Sync the clock to thecalendar's time."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "clock timezone name hours-offsetminutes-offset",
+      "desc": "Set the device’s timezone."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "clock summer-time name  recurringstart-date-time end-date-time",
+      "desc": "Enable summer time(daylight saving time)."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ntp server ip-address[ prefer]",
+      "desc": "Configure this device as anNTP client of the specifiedserver."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ntp update-calendar",
+      "desc": "Use NTP to regularlyupdate the calendar."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ntp source interface",
+      "desc": "Set the interface used tosend NTP messages."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ntp master  [ stratum]",
+      "desc": "Make this device a primaryNTP server with its ownclock as the referenceclock."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ntp peer ip-address",
+      "desc": "Configure a symmetricactive NTP relationship ontwo devices."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ntp authentication-keykey-numbermd5key",
+      "desc": "Configure an NTPauthentication key."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ntp trusted-keykey-number",
+      "desc": "Specify an NTP trustedauthentication key."
+    },
+    {
+      "mode": "(config)#",
+      "cmd": "ntp serverip-addresskeykey-number",
+      "desc": "Configure this device as anNTP client of the specifiedserver and authenticate itwith the specified key."
+    },
+    {
+      "mode": "#",
+      "cmd": "show ntp associations",
+      "desc": "View a list of NTPassociations (timesources)."
+    },
+    {
+      "mode": "#",
+      "cmd": "show ntp status",
+      "desc": "View the device's NTPstatus."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q2-1",
+      "number": 1,
+      "question": "The output of show clock shows an asterisk ( \\* ) before the time. What is the significance of this asterisk?",
+      "options": [
+        "A. The device’s clock was manually configured.",
+        "B. The time was learned via NTP.",
+        "C. The time is considered trustworthy.",
+        "D. The time is not authoritative."
+      ],
+      "correctAnswer": 3,
+      "answerLetter": "D",
+      "officialAnswer": "D: The time is not authoritative.",
+      "explanation": "An asterisk before the time, such as \\*08:56:18.831 UTC Mon Aug 28 2023 , means that the clock’s time is not authoritative—not considered to be accurate. This disappears after manually setting the time or syncing to an NTP server."
+    },
+    {
+      "id": "q2-2",
+      "number": 2,
+      "question": "Which command manually configures a Cisco device’s clock?",
+      "options": [
+        "A. R1# clock set 12:45:00 January 19 2024",
+        "B. R1(config)# clock set 12:45:00 January 19 2024",
+        "C. R1# clock time 12:45:00 January 19 2024",
+        "D. R1(config)# clock time 12:45:00 January 19 2024"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: R1# clock set 12:45:00 January 19 2024",
+      "explanation": "The command to set the software clock is clock set hh:mm:ss month day year . Note that the month and day arguments can be reversed: January 19 and 19 January are both valid."
+    },
+    {
+      "id": "q2-3",
+      "number": 3,
+      "question": "Which kind of NTP server operates as both an NTP client and server?",
+      "options": [
+        "A. Reference server",
+        "B. Primary server",
+        "C. Secondary server"
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: Secondary server",
+      "explanation": "A secondary NTP server operates both as an NTP client (synchronizing its time with a more authoritative server) and as a server (providing the time to clients of its own)."
+    },
+    {
+      "id": "q2-4",
+      "number": 4,
+      "question": "Which of the following commands configures a Cisco device in NTP client/server mode?",
+      "options": [
+        "A. ntp master",
+        "B. ntp server",
+        "C. ntp client",
+        "D. ntp peer"
+      ],
+      "correctAnswer": 1,
+      "answerLetter": "B",
+      "officialAnswer": "B: ntp server",
+      "explanation": "The ntp server ip-address command configures a Cisco device in NTP client/server mode. The device will become an NTP client of the server specified in the command. It will also function as an NTP server, capable of providing the time to clients of its own. This makes the device a secondary NTP server."
+    },
+    {
+      "id": "q2-5",
+      "number": 5,
+      "question": "R1 is an NTP client. The output of show ntp associations on R1 shows st: 3 . What does this output mean?",
+      "options": [
+        "A. R1 has a total of three NTP associations.",
+        "B. R1’s NTP stratum is 3.",
+        "C. R1 learns the time from a server whose NTP stratum is 3."
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: R1 learns the time from a server whose NTP stratum is 3.",
+      "explanation": "The show ntp associations command lists the device’s NTP associations—NTP servers that it learns the time from. The st column lists the association’s NTP stratum. In this case, the value of 3 means that R1 learns the time from a server whose NTP stratum is 3."
+    },
+    {
+      "id": "q2-6",
+      "number": 6,
+      "question": "Which command allows a Cisco device to function as an NTP server without being an NTP client?",
+      "options": [
+        "A. ntp master",
+        "B. ntp server",
+        "C. ntp primary-server",
+        "D. ntp primary"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "A: ntp master",
+      "explanation": "The ntp master command can be used to make the device function as an NTP server even if it isn’t an NTP client of another server. This command can be useful in isolated environments where an external NTP server isn’t available. It can also function as a backup; if the device loses connectivity to its NTP servers, it can still function as an NTP server and provide the time to its own clients."
+    },
+    {
+      "id": "q2-7",
+      "number": 7,
+      "question": "Which commands are necessary to configure a Cisco IOS device as an NTP client, authenticating the server it learns the time from? (select three)",
+      "options": [
+        "A. ntp authentication",
+        "B. ntp server 10.0.0.1 authenticate",
+        "C. ntp authentication-key 1 md5 P3sSw!rd",
+        "D. ntp trusted-key 1",
+        "E. ntp server 10.0.0.1 key 1"
+      ],
+      "correctAnswer": 2,
+      "answerLetter": "C",
+      "officialAnswer": "C: ntp authentication-key 1 md5 P3sSw!rd",
+      "explanation": "D: ntp trusted-key 1 The ntp authentication-key key-number md5 key command is necessary to create an authentication key. Then, ntp trusted-key key-number is necessary to identify the key as “trusted”. Finally, ntp server ip-address key key-number is necessary to specify that the key should be used to authenticate the specified server. The ntp authentication command is not necessary in this case, although some sources incorrectly state otherwise."
+    },
+    {
+      "id": "q2-8",
+      "number": 8,
+      "question": "What is the default NTP stratum level of a Cisco router that has been configured with ntp master ?",
+      "options": [
+        "A. 5",
+        "B. 6",
+        "C. 7",
+        "D. 8"
+      ],
+      "correctAnswer": 0,
+      "answerLetter": "A",
+      "officialAnswer": "",
+      "explanation": "## D: 8 When a Cisco router is configured with ntp master without specifying a stratum level, it defaults to stratum 8."
+    }
+  ],
+  "labMission": {
+    "scenario": "Deploy, configure, and verify Network Time Protocol inside Cisco Packet Tracer according to Jeremy McDowell's lab specifications.",
+    "objectives": [
+      "Download and open Cisco Packet Tracer (free at http://mng.bz/2Kra).",
+      "Construct the topology for Chapter 2: Network Time Protocol.",
+      "Implement core CLI commands: show clock[ detail ], clock sethh : mm : ss month dayyear, show calendar.",
+      "Verify operational state and capture verification output."
+    ],
+    "verificationCommands": [
+      "show clock[ detail ]",
+      "clock sethh : mm : ss month dayyear",
+      "show calendar",
+      "calendar sethh : mm : ssmonthday year",
+      "clock update-calendar"
+    ],
+    "videoSubmissionPrompt": "Record a 2 to 5-minute screen and microphone walkthrough of your Packet Tracer lab for Chapter 2: Network Time Protocol. Explain the core concepts in your own words, show your CLI configurations, and run verification commands to demonstrate mastery."
+  },
+  "fullText": "## 2 Network Time Protocol\n\n## This chapter covers\n\nThe importance of date and time on network devices\n\nManually setting the date and time on Cisco routers and switches\n\nHow NTP enables devices to synchronize their clocks over a network\n\nConfiguring and securing NTP on Cisco routers and switches\n\nWhen you think of the most important functions of a router or switch, keeping accurate date and time information is probably not among the first things that come to mind. However, timekeeping that is accurate and consistent across all devices is critical for a variety of functions and services in a network, from security protocols to logging. So how can we achieve accurate timekeeping on our network devices?\n\nThe answer is Network Time Protocol (NTP), the topic of this chapter. Using NTP, devices across a network can synchronize their clocks to a common time source. NTP isn’t limited to just network infrastructure devices like routers and switches; it’s used by all kinds of network-connected devices, including smartphones, PCs, and servers. In this chapter, we’ll cover CCNA exam topic 4.2: Configure and verify NTP operating in a client and server mode.\n\n## 2.1 Date and time on network devices\n\nAccurate date and time information on network devices is more important than you might expect. In this section, we’ll look at a few reasons why that is. We’ll also cover how to manually configure the date and time on Cisco IOS devices before covering NTP itself in section 2.2.\n\n## 2.1.1 The importance of date and time\n\nDevices must have accurate date and time information for several reasons. For example, many security protocols (such as Transport Layer Security—TLS) rely on time-based mechanisms to function correctly. From a CCNA perspective, however, the main reason is event logging. When events occur on a network device, the device keeps logs of what happened. Log entries can be created for countless kinds of events, but here are a few examples:\n\nAn interface going up or down\n\nAn OSPF neighbor moving to the Full state or Down state\n\nA user logging in to the CLI of the device\n\nEach log entry is given a timestamp, indicating when the event occurred. You can use show logging to view the log entries saved on the local device. The following example shows a couple of log entries on a Cisco router:\n\n```txt\nR1# show logging\nAug 28 16:34:07.860: %OSPF-5-ADJCHG: Process 1, ❶\n➥Nbr 10.0.0.2 on GigabitEthernet0/0 from LOADING to ❶\n➥FULL, Loading Done ❶\nAug 28 16:35:07.080: %OSPF-5-ADJCHG: Process 1, ❷\n➥Nbr 10.0.0.2 on GigabitEthernet0/0 from FULL to ❷\n➥DOWN, Neighbor Down: Dead timer expired ❷\n```\n\n## ❶ An OSPF neighbor entered the Full state.\n\n❷ The same OSPF neighbor entered the Down state due to an expired dead timer.\n\n**NOTE** We will cover logging in detail in chapter 7, which is about Syslog.\n\nThe first log message shows that, at about 16:34, R1’s OSPF relationship with neighbor 10.0.0.6 moved to the Full state. Then, 1 minute later, the neighbor relationship moved to the Down state due to an expired dead timer. One essential step in identifying the cause of such events is correlating log entries between devices. However, in this case, there is a problem. The following example shows the output of show clock , which displays the current date and time, on the two OSPF neighbors (R1 and R2):\n\n```txt\nR1# show clock\n*17:10:17.146 UTC Mon Aug 28 2023 ❶\nR2# show clock\n*09:49:34.199 UTC Tue Aug 8 2023 ❷\n```\n\n❶ R1 believes it is 17:10 on August 28, 2023.\n\n❷ R2 believes it is 9:49 on August 8, 2023.\n\n**NOTE** The .146 and .199 after the hours, minutes, and seconds indicate milliseconds.\n\nBecause the clocks of the two devices are not synchronized, correlating log entries between them is much more difficult. If the problem involves more than two devices, all with clocks set to different dates and times, you’ll definitely be wishing that you had configured NTP.\n\n## 2.1.2 Setting the date and time\n\nAll Cisco routers and switches have an internal software clock for keeping the time; that’s the clock that you can view with the show clock command. By adding the detail keyword to the end, you can also get information about how the device learned the current date and time, as shown in the following example:\n\n```txt\nR1# show clock detail\n*08:56:18.831 UTC Mon Aug 28 2023 ❶\nTime source is hardware calendar ❷\n```\n\n❶ The asterisk (\\*) indicates that the time is not authoritative.\n\n❷ R1 learned the date and time from its hardware calendar.\n\nSome devices, like R1 in the example, also have a battery-powered hardware clock called the calendar that keeps the time even if the device is shut off. When R1 booted up, its software clock learned the time from the hardware calendar. However, note the asterisk ( \\* ) before the time in the previous example, which means that the time is not authoritative—not considered to be accurate; this will disappear after setting the time.\n\n## SETTING THE CLOCK AND CALENDAR\n\nThe command to set the software clock is clock set hh:mm:ss month day year . Note that this command is executed from privileged EXEC mode, not global config mode. In the following example, I set R1’s software clock:\n\n```txt\nR1# clock set 18:30:00 August 28 2023\nR1# show clock detail\n```\n\n```txt\n18:30:03.553 UTC Mon Aug 28 2023 ❶\nTime source is user configuration ❷\n```\n\n❶ The asterisk has disappeared from the output.\n\n❷ The time source has changed to “user configuration.”\n\n**NOTE** The order of the month and day in the clock set command can be reversed— August 28 and 28 August are both valid.\n\nThe hardware calendar can also be viewed and set separately with the show calendar and calendar set commands. In the following example, I set R1’s calendar:\n\n```txt\nR1# calendar set 18:35:00 August 28 2023\nR1# show calendar\n18:35:02 UTC Mon Aug 28 2023\n```\n\nHowever, an easier way to ensure that the software clock and the hardware calendar have the same date and time is to use one of the following commands in privileged EXEC mode:\n\nSync the calendar to the clock’s time— clock update-calendar\n\nSync the clock to the calendar’s time— clock read-calendar .\n\nNote that both commands perform a one-time synchronization; they don’t ensure that the clock and calendar remain in sync (unless you use the command again).\n\n## CONFIGURING THE TIME ZONE\n\nThe default time zone on Cisco devices is Coordinated Universal Time (UTC)—you may have noticed the UTC output in previous examples. Actually, UTC is not strictly considered a time zone but rather a time standard—the difference doesn’t matter for our purposes.\n\nThe command to change the time zone of the device is clock timezone name hours-offset minutesoffset . Note that this command, unlike the previous commands, is configured in global config mode. The hours-offset and minutes-offset arguments refer to the offset relative to UTC. For example, my time zone (Japan Standard Time) is UTC+9—9 hours and 0 minutes ahead of UTC. I configure that in the following example:\n\n```txt\nR1(config)# clock timezone JST 9 0 ❶\nR1(config)# do show clock\n03:50:09.104 JST Tue Aug 29 2023 ❷\n```\n\n❶ The JST time zone is 9 hours and 0 minutes ahead of UTC.\n\n❷ The time zone has changed to JST.\n\n**NOTE** Changing the time zone will adjust the clock forward or backward according to the specified offsets. If you previously configured the time in UTC, you may have to reconfigure it in the new time zone.\n\nCONFIGURING DAYLIGHT SAVING TIME/SUMMER TIME\n\nSome countries adjust their clocks forward 1 hour in the spring; this is called daylight saving time (DST) or summer time, depending on the country. They then adjust their clocks back in the fall. In a country that observes DST, you should configure your network devices to adjust their clocks to match.\n\nThe command to configure DST is clock summer-time name recurring start-date-time enddate-time in global config mode. Figure 2.1 shows the specifics of the syntax, using the time zone of my hometown (Toronto) as an example (my current home of Japan doesn’t observe DST). Toronto’s time zone is called Eastern Daylight Time (EDT) while DST is in effect, and it begins at 02:00 on the second Sunday of March and ends at 02:00 on the first Sunday of November.\n\n![](/extracted/vol2/images/page_37_image_body_2.jpg)\n\nFigure 2.1 The syntax of the clock summer-time command. The example specifies that EDT begins at 02:00 on the second Sunday of March and ends at 02:00 on the first Sunday of November.\n\n## 2.2 How NTP works\n\nWhen it comes to ensuring that all devices in a network operate with synchronized, accurate date and time, manual configuration simply doesn’t cut it. Even if you configure the date and time on all devices, their clocks will drift over time, resulting in inaccurate and inconsistent time. NTP is a much more scalable solution that allows devices to automatically sync their clocks over a network.\n\nThe devices you use in your daily life, such as a PC or smartphone, are almost certainly NTP clients. Windows PCs, for example, sync their time with Microsoft’s NTP servers by default. Using NTP, NTP clients (i.e., Windows PCs) learn the time from NTP servers (i.e., Microsoft’s NTP servers) by sending NTP requests to UDP port 123—memorize that port!\n\n**NOTE** NTP allows accuracy of time within 1 millisecond if the NTP server is in the same LAN as the client or within about 10–100 milliseconds if connecting to the server over a WAN or the internet.\n\nNTP uses a hierarchical model. At the top are reference clocks—usually these are very accurate timekeeping devices such as atomic clocks or GPS clocks. The “distance” of an NTP server from a reference clock is called stratum—a server with a lower stratum value is closer to a reference clock, and NTP clients will prefer it over a higher-stratum server. “Closer” doesn’t mean physically closer in this case but closer in the NTP hierarchy.\n\nFigure 2.2 demonstrates the NTP hierarchy. Reference clocks are stratum 0 in the NTP hierarchy, and NTP servers that learn the time directly from a reference clock are stratum 1. Then NTP servers that learn the time from stratum 1 servers are stratum 2, servers that learn the time from stratum 2 servers are stratum 3, etc.\n\n![](/extracted/vol2/images/page_37_image_body_10.jpg)\n\nFigure 2.2 The NTP hierarchy. Reference clocks (stratum 0) are high-precision timekeeping devices such as atomic clocks. Stratum 1 NTP servers connect directly and sync to reference clocks. Stratum 2 NTP servers sync to stratum 1 NTP servers. Servers can peer with devices at the same stratum.\n\n**NOTE** The upper stratum limit is 15. A stratum of 16 indicates a time source that is not considered reliable; devices will not sync to a stratum 16 time source.\n\nFigure 2.2 also demonstrates a few important points about NTP. First, a device can be both an NTP server and an NTP client at the same time. For example, the stratum 2 servers are clients of the stratum 1 servers but are also capable of providing the time for their own clients (such as stratum 3 NTP servers or end devices like PCs). However, note that stratum 1 servers are not NTP clients of the reference clocks; instead, they directly connect to and sync with these highly accurate time sources via specialized hardware and protocols rather than by using NTP.\n\n**NOTE** An NTP server that gets its time directly from a reference clock is also called a primary server. An NTP server that gets its time from another NTP server is called a secondary server; a secondary server is both an NTP client and an NTP server.\n\nSecond, a device can be a client of multiple NTP servers—actually, this is recommended. In addition to the redundancy and fault tolerance benefits of having multiple time sources (if one server goes down, the client can still learn the time from another server), the clients use algorithms to analyze and consider the time reports of each server, discard outliers, and select the best time source.\n\nThird, two NTP servers can form a peer relationship that allows them to exchange time information with each other; these are represented by the bidirectional horizontal arrows. Unlike the typical client–server relationship where the client syncs its time solely based on the time provided by the server, peering allows for a bidirectional exchange between the two peers.\n\nLike a client that learns the time from multiple servers, peering provides similar benefits. Each peer can use the other’s time data as an additional reference point, improving the overall accuracy of timekeeping. Furthermore, peering provides an additional layer of redundancy and fault tolerance; if one peer loses connectivity with its servers, it can still sync to its peer.\n\n## 2.3 Configuring NTP\n\nCisco routers and switches can function as NTP clients, NTP servers, and NTP peers. In this section, we’ll examine how to configure all three of these modes in Cisco IOS, as well as how to secure NTP by configuring authentication.\n\n## 2.3.1 NTP client mode\n\nYou can configure a Cisco IOS device to become a client of an NTP server with the command ntp server ip-address [ prefer ] . In figure 2.3, I configure a Cisco router as an NTP client of two servers: Google’s and Microsoft’s.\n\n![](/extracted/vol2/images/page_39_image_body_0.jpg)\n\nFigure 2.3 Configuring R1 as an NTP client of two NTP servers: Google’s (216.239.35.0) and Microsoft’s (20.43.94.199). The optional prefer keyword tells the router to favor Google’s server when deciding which server to sync to.\n\nBy adding the optional prefer keyword to the end of the command, you can tell the device to favor the specified server when deciding which server to sync to. Note that this doesn’t guarantee that the client will select that server; other factors, like the server’s stratum, are still taken into account (a lower stratum value is typically preferred). In the following example, I configure R1 as a client of Google’s and Microsoft’s NTP servers and then confirm with show ntp associations and show clock detail :\n\n```csv\nR1(config)# ntp server 216.239.35.0 prefer ❶\nR1(config)# ntp server 20.43.94.199 ❶\nR1(config)# do show ntp associations\naddress ref clock st when poll reach delay offset disp\n*~216.239.35.0 .GOOG. 1 24 64 377 4 0.726 22.840 6.929 ❷\n+~20.43.94.199 25.66.230.3 3 25 64 377 9.032 24.786 6.720 ❸\n* sys.peer, # selected, + candidate, outlyer, x falseticker, ~ configured\nR1(config)# do show clock detail\n13:44:32.959 JST Tue Aug 29 2023\nTime source is NTP ❹\n```\n\n❶ Configures R1 as an NTP client of two servers, marking one as preferred (optional)\n\n❷ Google’s server is marked as sys.peer.\n\n❸ Microsoft’s server is marked as candidate.\n\n❹ R1’s time source is now NTP.\n\n**NOTE** NTP synchronization can be quite slow, sometimes taking up to 15–20 minutes, depending on a variety of factors. One tip to speed up the process is to manually configure the correct time before configuring NTP.\n\nAfter configuring R1’s two NTP servers, both appear in the output of show ntp associations . The \\* next to the Google server, sys.peer , indicates that this is the NTP server R1 is currently synced to. The + next to the Microsoft server, candidate , indicates that R1 considers the server as a reliable time source, but it is not currently being used; this is because R1 has selected Google’s server instead.\n\nVarious columns are shown in the output, but you only need to know the first three: address , ref clock , and st . The address column is self-explanatory; it’s the NTP server’s IP address. ref clock shows the server’s time source. The Google server lists .GOOG. —Google’s own reference clock. The Microsoft server lists 25.66.230.3 —another NTP server. So, whereas the Google NTP server in this example gets its time directly from a reference clock (and is, therefore, a primary server), the Microsoft server gets its time from another NTP server (and is, therefore, a secondary server).\n\nThe different time sources are reflected in the next column, st ; this indicates the NTP stratum of the server. Because Google’s server gets its time directly from a reference clock (stratum 0), its stratum is 1. Microsoft’s server is stratum 3, meaning that it gets its time from a stratum 2 NTP server.\n\nAnother useful NTP verification command is show ntp status . This command shows a lot of output; for the CCNA, just focus on the top line. In the following example, I use the command on R1. Notice that because R1 is synced to a stratum 1 NTP server, it is now at stratum 2 in the NTP hierarchy:\n\n```txt\nR1(config)# do show ntp status\nClock is synchronized, stratum 2, reference is 216.239.35.0 ❶\nnominal freq is 1000.0003 Hz, actual freq is 1000.0003 Hz, precision is 2**16\nntp uptime is 7500 (1/100 of seconds), resolution is 1000\nreference time is E897F742.5E14162D (13:49:06.367 JST Tue Aug 29 2023)\n```\n\n❶ R1 is synced to a stratum 1 server and is, therefore, stratum 2.\n\n**NOTE** NTP syncs only the software clock by default, not the hardware calendar. You can use ntp updatecalendar in global config mode to make NTP periodically update the calendar to ensure that it is accurate.\n\n## 2.3.2 NTP server mode\n\nA Cisco router that is an NTP client doesn’t need any additional configuration to become an NTP server. Now that R1 is a client of the Google and Microsoft NTP servers, other devices can use R1 as their NTP server. Figure 2.4 demonstrates this: R1 gets its time from two NTP servers and provides the time for clients of its own.\n\n![](/extracted/vol2/images/page_40_image_body_7.jpg)\n\nFigure 2.4 R1, a client of two NTP servers, is an NTP server for clients of its own.\n\n**EXAM TIP** Remember that although the ntp server command makes the device an NTP client, it also makes it an NTP server; this is sometimes called client/server mode. Later in this section, we’ll cover how to make the device an NTP server without it being an NTP client.\n\nOne recommended practice when using a Cisco router as an NTP server is to configure a loopback interface on the router and configure clients to use the IP address of the loopback interface as their NTP server. We covered loopback interfaces in chapter 18 of volume 1; their benefit is that they provide a stable, reliable interface that isn’t dependent on the status of any particular physical port. Figure 2.5 shows how you can configure this.\n\n![](/extracted/vol2/images/page_41_image_body_0.jpg)\n\nFigure 2.5 Using a loopback interface to provide a reliable NTP server address. The ntp source command specifies that R1 should source NTP messages from its Loopback0 interface.\n\nConfiguring the IP address of R1’s Loopback0 interface (172.16.1.1) as the NTP server of R2 and R3 causes them to send their NTP requests to that address. If one of R1’s G0/0 or G0/1 ports goes down, R2 and R3 will still be able to sync their clocks to R1 via the loopback interface. The ntp source loopback0 command then makes R1 use the IP address of the Loopback0 interface as the source of its NTP messages—this is optional but recommended. In the following example, I configure NTP on R2 and confirm its status. Note that R2, a client of a stratum 2 server (R1), is now at stratum 3 of the NTP hierarchy:\n\n```txt\nR2(config)# ntp server 172.16.1.1\nR2(config)# do show ntp associations\naddress ref clock st when poll reach delay offset disp\n*~172.16.1.1 216.239.35.0 2 15 64 1 1.494 0.695 187.55 ❶\n* sys.peer, # selected, + candidate, outlyer, x falseticker, ~ configured\nR(config)# do show ntp status\nClock is synchronized, stratum 3, reference is 172.16.1.1 ❷\n.\n```\n\n❶ R2 is synced to R1.\n\n❷ R2 is now a stratum 3 NTP server.\n\nAlthough a Cisco router is automatically able to function as an NTP server if it’s a client of another NTP server, you can also use the ntp master command to make the router a primary NTP server with its own internal clock acting as the reference clock—the source of time that the router (and its NTP clients) sync to. This allows the device to act as an NTP server even if it’s not an NTP client of another server.\n\nHowever, while the ntp master command allows the router to function as an NTP server, it’s not meant to replace the ntp server command. Instead, the two commands should be used together. The ntp server command should be the first choice for time synchronization because it links your device to external NTP servers that get their time from highly accurate reference clocks. But what happens if those external servers become unavailable?\n\nIn the example network we’ve been using in this chapter, R1 is an NTP client of two external NTP servers, and R2 and R3 are clients of R1. However, if R1 loses connectivity to both external NTP servers, R1 will no longer be able to provide time to R2 and R3. The ntp master command allows R1 to use its own clock as a backup time source in case it loses connectivity to its servers; it can then provide that time to its clients R2 and R3. Although R1’s internal clock isn’t as accurate as an atomic clock, at least the time will be consistent across the devices in the network—this is better than having no time synchronization at all. In the following example, I use the command on R1 and confirm:\n\n```csv\nR1(config)# ntp master ❶\nR1(config)# do show ntp associations\naddress ref clock st when poll reach delay offset disp\n*~216.239.35.0 .GOOG. 1 22 64 1 43.221 -1.699 437.57\n~127.127.1.1 .LOCL. 7 15 16 1 0.000 0.000 7937.5 ❷\n+~20.43.94.199 25.66.230.5 3 22 64 1 9.397 1.251 437.54\n* sys.peer, # selected, + candidate, outlyer, x falseticker, ~ configured\n```\n\n❶ Configures R1 to use its own clock as an NTP time source\n\n❷ 127.127.1.1 is added as a time source with stratum 7.\n\nLet’s examine a few important points about that output. First, notice that the address column lists 127.127.1.1 —an address in the reserved loopback address range (127.0.0.0/8) that represents the local device; R1 is listing itself as a time source. Then the ref clock column lists .LOCL. —the clock of the local device.\n\nThe final point worth covering is 127.127.1.1’s stratum of 7. This means that R1, when using 127.127.1.1 (its local clock) as a time source, will be a stratum 8 NTP server. This is the default value when using the ntp master command and reflects the fact that R1’s internal clock is not a true reference clock like an atomic clock, which would have a stratum of 0. The stratum value of the local clock is purposefully made higher by default so that R1 views it as a less desirable time source than external NTP servers (such as Google’s, which gets its time from a real reference clock). However, you can optionally specify a stratum value at the end of the command. I do that in the following example and confirm:\n\n```csv\nR1(config)# ntp master 5 ❶\nR1(config)# do show ntp associations\naddress ref clock st when poll reach delay offset disp\n*~216.239.35.0 .GOOG. 1 45 64 37 40.890 20.622 2.240\n~127.127.1.1 .LOCL. 4 3 16 1 0.000 0.000 7937.5 ❷\n+~20.43.94.199 25.66.230.5 3 169 512 7 8.585 15.092 4.220\n```\n\n## ❶ Specifies a stratum of 5\n\n❷ The stratum of the local clock is 4.\n\nThe output may be a bit different than expected; even though I specified a stratum of 5 in the ntp master command, the stratum of 127.127.1.1 in the output is 4. That’s because the stratum you specify in the command is not the stratum of 127.127.1.1 (the local clock) but rather the stratum of the device when it is synced to that clock. The command ntp master 5 means that R1, when synced to the local clock, will be at stratum 5 of the NTP hierarchy. However, in this case R1 is still synced to the Google server; it will only use its local clock as a backup.\n\n**NOTE** In addition to providing a backup time source, you can use ntp master to make a Cisco IOS device an NTP server when no external server is available, such as in an isolated network without internet access. This is called server mode, as opposed to the client/server mode we configured with the ntp server command. Just keep in mind that the device’s local clock is not a truly accurate time source—it doesn’t keep time accurately like an atomic clock.\n\n## Symmetric active mode\n\nAlthough not covered in the CCNA exam topics list, in addition to client and server, there is a third mode called symmetric active mode; this is the NTP peering I mentioned in section 2.2. To configure NTP peers in symmetric active mode, use the ntp peer ip-address command on each device, specifying the other device’s IP address. Unlike a client–server relationship, each peer acts as a time source for the other. To summarize, here are the three commands/modes we covered:\n\nntp server — client/server mode—The device becomes a client of an NTP server and a server for other clients.\n\nntp master — server mode—The device becomes a primary NTP server, using its local clock as a reference clock.\n\nntp peer — symmetric active mode—The two devices become NTP peers, each using the other as a time source.\n\n## 2.3.3 NTP authentication\n\nPublic NTP servers like Google’s and Microsoft’s are open; any client is free to sync their time to those servers, and there are no security checks on the part of either the clients or the servers. However, in more secure environments with private NTP servers, that approach may not be acceptable.\n\nFor example, a malicious server could exploit NTP to provide incorrect time data, which could disrupt the operation of time-sensitive applications and protocols. In such an environment, we should ensure that our client devices don’t sync to unauthorized NTP servers. In this section, we’ll look at how to protect our NTP clients with authentication.\n\nAuthentication is the process of verifying someone’s—or something’s—identity. In the context of NTP, that means verifying that a server really is the server that it claims to be—not an attacker using a spoofed (falsified) IP address. Figure 2.6 shows how to configure NTP authentication between an NTP server (R1) and client (R2).\n\n![](/extracted/vol2/images/page_43_image_body_8.jpg)\n\nFigure 2.6 Configuring NTP authentication between a server and client. This ensures that R2 will only sync its time to R1 and not to a malicious NTP server.\n\nLet’s walk through the configuration of both devices. In the following example, I configure the server, R1:\n\n```txt\nR1(config)# ntp master ❶\nR1(config)# ntp authentication-key 42 md5 AcingTheCCNA! ❷\nR1(config)# ntp trusted-key 42 ❸\n```\n\n❶ Makes R1 an NTP server\n\n❷ Configures an NTP authentication key\n\n## ❸ Specifies the key as trusted\n\nAfter using ntp master to make R1 an NTP server, the first step to configuring authentication is to create an authentication key (password) with the ntp authentication-key key-number md5 key command. The key-number argument is simply a numerical identifier for the key; the key argument is the key itself— the actual password.\n\n**NOTE** Newer versions of IOS support hashing protocols beyond md5 , which is no longer considered secure. You can use the IOS context-sensitive help feature (the question mark: ntp authentication-key keynumber ? ) to view the available protocols on the device you are configuring.\n\nHowever, creating an authentication key alone is not enough; you then have to use the ntp trusted-key keynumber command to specify that the key is a trusted key. Without this command, the key cannot be used.\n\nIn the following example, I configure the client, R2:\n\n```txt\nR2(config)# ntp authentication-key 42 md5 AcingTheCCNA! ❶\nR2(config)# ntp trusted-key 42 ❷\nR2(config)# ntp server 10.0.0.1 key 42 ❸\n```\n\n## ❶ Configures an NTP authentication key\n\n❷ Specifies the key as truste\n\n❸ Authenticates R1 using key 42\n\nFirst, I create the same authentication key as on R1 and also specify it as a trusted key. Here’s an important point: both the key number (42) and the key itself (AcingTheCCNA!) have to match; it’s not enough for just the key itself to match. Then, in the final command, I configure R2 as a client of R1 (10.0.0.1), specifying that R2 should authenticate R1 using key 42. The command syntax is ntp server ip-address key key-number\n\nThe result of this configuration is that R2 will include key 42 in its NTP messages to R1, and R1 will include the same key in its NTP messages to R2. Because the key number and the key itself match, R2 will accept R1’s time and sync to it; if either parameter does not match, R2 will refuse to sync to R1.\n\n**NOTE** You can use a nearly identical configuration to authenticate NTP peers: just replace ntp server ipaddress key key-number with n tp peer ip-address key key-number . Make sure to configure it on both peers!\n\n## The ntp authenticate command\n\nYou’ll often see the ntp authenticate command included on both the client and the server in NTP authentication configuration examples—this is usually a mistake. Although it’s fine to include this command (it doesn’t do any harm), it’s not necessary when you configure the ntp server ip-address key keynumber command on the client.\n\nThe ntp authenticate command is necessary to authenticate servers or peers when using the ntp passive, ntp broadcast client , or ntp multicast client commands on the client—all beyond the scope of the CCNA exam. For all of the scenarios presented in this chapter, the ntp authenticate command is not necessary to achieve authentication.\n\n## Summary\n\nKeeping an accurate date and time is very important for network infrastructure devices and networkconnected devices. For example, many security protocols rely on time-based mechanisms.\n\nCorrelating logs between devices is often an essential step in troubleshooting issues, and accurate timestamps facilitate that process.\n\nA device keeps its time using a software clock. You can view it with show clock . Adding the detail keyword shows additional information about the time source.\n\nSome devices also have a hardware clock called the calendar. You can view its time with show calendar .\n\nYou can set the software clock with clock set hh:mm:ss month day year\n\nYou can set the hardware calendar with calendar set hh:mm:ss month day year .\n\nThe clock update-calendar command syncs the calendar to the clock’s time, and the clock read-calendar syncs the clock to the calendar’s time.\n\nThe default time zone is Coordinated Universal Time (UTC). You can change that with clock timezone name hours-offset minutes-offset in global config mode.\n\nYou can configure daylight saving time (DST) with clock summer-time name recurring start-date-time end-date-time in global config mode.\n\nMaintaining accurate date and time information is not feasible with manual configuration. Network Time Protocol (NTP) is the solution, allowing devices to automatically sync their time over a network.\n\nNTP clients send NTP requests to UDP port 123 on NTP servers.\n\nNTP uses a hierarchical model. At the top are reference clocks—usually very accurate timekeeping devices such as atomic clocks or GPS clocks.\n\nThe “distance” of an NTP server from a reference clock is called its stratum.\n\nAn NTP server that learns the time directly from a reference clock is stratum 1—this type of server is called a primary server.\n\nStratum 2 servers learn the time from stratum 1 servers, stratum 3 servers learn the time from stratum 2 servers, etc. These are called secondary servers—they are NTP clients and NTP servers at the same time.\n\nA device can be a client of multiple NTP servers. This provides improved redundancy and fault tolerance and improves the accuracy of the client’s timekeeping.\n\nTwo NTP servers can form a peer relationship that allows them to exchange time information with each other. This provides similar benefits to a client learning the time from multiple servers.\n\nYou can configure a Cisco IOS device to be a client of an NTP server with ntp server ipaddress prefer ] . The prefer keyword is optional but increases the likelihood that the client will sync its time to the specified server.\n\nThe ntp server command puts the device in client/server mode. The device becomes an NTP client of the specified server but can also function as an NTP server for clients of its own.\n\nUse show ntp associations to view information about each of the device’s NTP time sources. Use show ntp status to view information about the device’s NTP status, such as its stratum in the NTP hierarchy.\n\nWhen a Cisco IOS device is functioning as an NTP server, it is recommended that you configure a loopback interface and specify that address as the client’s NTP server. This provides a stable interface that isn’t dependent on a physical port.\n\nYou can use ntp source interface to specify which interface NTP messages should be sourced from.\n\nUse the ntp master [ stratum ] command to make the device function like an NTP primary server, using its own software clock as a reference clock. This is called server mode, as opposed to client/server mode.\n\nThe ntp master command makes the device a stratum 8 NTP server by default, but you can\n\nYou can configure symmetric active mode with the ntp peer ip-address command. Configure it on both devices to make them NTP peers.\n\nYou can configure NTP authentication to ensure clients only sync to authorized servers. Authentication is the process of verifying someone’s/something’s identity.\n\nOn both the client and server, use ntp authentication-key key-number md5 key to create an authentication key. Both the key-number and key arguments must match between the client and server.\n\nOn both the client and server, use ntp trusted-key key-number to specify that the key is a trusted key; without this step, the key can’t be used.\n\nOn the client, add key key-number to the standard ntp server ip-address command to specify that the server should be authenticated with the key. The complete syntax is ntp server ip-address key key-number\n\nYou can configure authentication between NTP peers by following the same steps, replacing ntp server ip-address key key-number with ntp peer ip-address key keynumber . Make sure to configure it on both peers."
+}

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { getModuleById, getNextModule, getPreviousModule } from "@/lib/curriculum";
-import { CiscoCliBox } from "@/components/CiscoCliBox";
+import { ChapterReader } from "@/components/ChapterReader";
 import {
   BookOpen,
   HelpCircle,
@@ -22,7 +22,8 @@ import {
   Check,
   Laptop,
   Search,
-  CheckSquare
+  CheckSquare,
+  Loader2
 } from "lucide-react";
 
 export default function ModuleReaderPage() {
@@ -36,6 +37,28 @@ export default function ModuleReaderPage() {
   const [activeTab, setActiveTab] = useState<"theory" | "commands" | "lab" | "quiz" | "video">("theory");
   const [cmdSearch, setCmdSearch] = useState("");
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
+
+  // Full chapter textbook content state
+  const [chapterFullData, setChapterFullData] = useState<any>(null);
+  const [loadingTextbook, setLoadingTextbook] = useState(true);
+
+  useEffect(() => {
+    async function fetchFullChapter() {
+      setLoadingTextbook(true);
+      try {
+        const res = await fetch(`/api/chapter/${moduleId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setChapterFullData(data);
+        }
+      } catch (e) {
+        console.error("Failed to load full chapter:", e);
+      } finally {
+        setLoadingTextbook(false);
+      }
+    }
+    fetchFullChapter();
+  }, [moduleId]);
 
   if (!moduleData) {
     return (
@@ -129,7 +152,7 @@ export default function ModuleReaderPage() {
           }`}
         >
           <BookOpen className="w-3.5 h-3.5" />
-          <span>1. Theory &amp; Notes</span>
+          <span>1. Full Textbook Text</span>
         </button>
 
         <button
@@ -183,69 +206,30 @@ export default function ModuleReaderPage() {
 
       {/* Main Tab Content Display */}
       <div>
-        {/* TAB 1: THEORY & TOPOLOGIES */}
+        {/* TAB 1: FULL TEXTBOOK CHAPTER READING WITH INTERACTIVE TOC & ZOOM */}
         {activeTab === "theory" && (
-          <div className="space-y-8">
-            {/* Key Points Callout */}
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 backdrop-blur-md">
-              <h3 className="text-xs font-mono uppercase text-cyan-400 font-semibold mb-3 tracking-wider flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
-                <span>This Chapter Covers</span>
-              </h3>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {moduleData.keyPoints.map((pt, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">{pt}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Active Learning Note Box */}
-            <div className="p-5 rounded-2xl bg-cyan-950/20 border border-cyan-500/30 flex items-start gap-3">
-              <BookOpen className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
-              <div className="text-xs text-cyan-200 leading-relaxed">
-                <span className="font-bold text-cyan-300">Jeremy&apos;s Active Learning Method: </span>
-                Do not just read passively. Stop at key definitions, sketch the topology diagrams on paper, and explain the mechanism in your own words before attempting the review quiz and lab.
+          <div>
+            {loadingTextbook ? (
+              <div className="p-16 text-center bg-slate-900/40 rounded-3xl border border-slate-800 space-y-4">
+                <Loader2 className="w-8 h-8 text-cyan-400 animate-spin mx-auto" />
+                <p className="text-xs font-mono text-slate-400">
+                  Loading complete interactive chapter text from &quot;Acing the CCNA Exam&quot;...
+                </p>
               </div>
-            </div>
-
-            {/* Extracted Figures / Diagrams */}
-            {moduleData.diagrams.length > 0 && (
-              <div className="space-y-4">
-                <h3 className="text-sm font-mono uppercase text-slate-400 font-semibold tracking-wider flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-purple-400" />
-                  <span>Textbook Figures &amp; Topologies</span>
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {moduleData.diagrams.map((d, idx) => (
-                    <div key={idx} className="p-3 rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden">
-                      <div className="bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center p-2 min-h-[220px]">
-                        <img
-                          src={d.src}
-                          alt={d.caption}
-                          className="max-h-72 object-contain hover:scale-105 transition-transform"
-                          onError={(e) => {
-                            (e.target as HTMLElement).style.display = "none";
-                          }}
-                        />
-                      </div>
-                      <p className="text-[11px] text-slate-400 font-mono mt-2.5 text-center">
-                        {d.caption}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+            ) : chapterFullData ? (
+              <ChapterReader
+                title={chapterFullData.title}
+                chapterNumber={chapterFullData.chapterNumber}
+                volume={chapterFullData.volume}
+                fullText={chapterFullData.fullText}
+                tableOfContents={chapterFullData.tableOfContents || []}
+                keyPoints={chapterFullData.keyPoints || []}
+              />
+            ) : (
+              <div className="p-8 text-center text-slate-400 text-xs">
+                Could not load chapter content. Please refresh.
               </div>
             )}
-
-            {/* Markdown Chapter Body */}
-            <article className="p-8 rounded-3xl bg-slate-900/40 border border-slate-800 prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-300 prose-p:leading-relaxed prose-code:text-cyan-300 prose-code:font-mono">
-              <div className="whitespace-pre-line text-sm text-slate-300 leading-relaxed font-sans">
-                {moduleData.content}
-              </div>
-            </article>
           </div>
         )}
 
@@ -333,7 +317,7 @@ export default function ModuleReaderPage() {
                 <div>
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-2">
                     <Laptop className="w-3.5 h-3.5" />
-                    <span>Pillar 04: Hands-On Labbing</span>
+                    <span>Pillar 03: Hands-On Labbing</span>
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-white">
                     Packet Tracer Lab: {moduleData.rawTitle}

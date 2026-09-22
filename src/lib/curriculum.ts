@@ -35,6 +35,12 @@ export interface LearningMethodStep {
   desc: string;
 }
 
+export interface TocItem {
+  anchor: string;
+  title: string;
+  level: number;
+}
+
 export interface Module {
   id: string;
   volume: number;
@@ -46,13 +52,16 @@ export interface Module {
   rawTitle: string;
   description: string;
   readTime: string;
-  learningMethodSteps: LearningMethodStep[];
+  learningMethodSteps?: LearningMethodStep[];
   keyPoints: string[];
+  tableOfContents?: TocItem[];
   diagrams: Diagram[];
   ciscoCommands: CiscoCommand[];
   quiz: QuizQuestion[];
   labMission: LabMission;
-  content: string;
+  charCount?: number;
+  diagramCount?: number;
+  content?: string;
 }
 
 export interface Part {
