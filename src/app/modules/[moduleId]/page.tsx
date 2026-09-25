@@ -5,6 +5,10 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { getModuleById, getNextModule, getPreviousModule } from "@/lib/curriculum";
 import { ChapterReader } from "@/components/ChapterReader";
+import { CiscoTerminal } from "@/components/CiscoTerminal";
+import { ChapterFlashcards } from "@/components/ChapterFlashcards";
+import { ChapterNotes } from "@/components/ChapterNotes";
+import { sounds } from "@/lib/sound-effects";
 import {
   BookOpen,
   HelpCircle,
@@ -23,7 +27,8 @@ import {
   Laptop,
   Search,
   CheckSquare,
-  Loader2
+  Loader2,
+  Zap
 } from "lucide-react";
 
 export default function ModuleReaderPage() {
@@ -34,13 +39,24 @@ export default function ModuleReaderPage() {
   const nextMod = getNextModule(moduleId);
   const prevMod = getPreviousModule(moduleId);
 
-  const [activeTab, setActiveTab] = useState<"theory" | "commands" | "lab" | "quiz" | "video">("theory");
+  const [activeTab, setActiveTab] = useState<"theory" | "simulator" | "flashcards" | "commands" | "lab" | "quiz" | "video">("theory");
   const [cmdSearch, setCmdSearch] = useState("");
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
 
   // Full chapter textbook content state
   const [chapterFullData, setChapterFullData] = useState<any>(null);
   const [loadingTextbook, setLoadingTextbook] = useState(true);
+
+  // Detect tab from URL parameter if present
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get("tab") as any;
+      if (tabParam && ["theory", "simulator", "flashcards", "commands", "lab", "quiz", "video"].includes(tabParam)) {
+        setActiveTab(tabParam);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     async function fetchFullChapter() {
@@ -141,66 +157,116 @@ export default function ModuleReaderPage() {
         </div>
       </div>
 
-      {/* Jeremy McDowell 5-Step Active Learning Navigation Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 mb-8">
+      {/* In-Chapter Active Recall Notes Scratchpad */}
+      <div className="mb-6">
+        <ChapterNotes moduleId={moduleId} chapterTitle={moduleData.title} />
+      </div>
+
+      {/* Jeremy McDowell Active Learning Navigation Bar */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 mb-8">
         <button
-          onClick={() => setActiveTab("theory")}
-          className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all ${
+          onClick={() => {
+            setActiveTab("theory");
+            sounds.playKeyClick();
+          }}
+          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
             activeTab === "theory"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
               : "text-slate-400 hover:text-white"
           }`}
         >
-          <BookOpen className="w-3.5 h-3.5" />
-          <span>1. Full Textbook Text</span>
+          <BookOpen className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">1. Text</span>
         </button>
 
         <button
-          onClick={() => setActiveTab("commands")}
-          className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all ${
+          onClick={() => {
+            setActiveTab("simulator");
+            sounds.playKeyClick();
+          }}
+          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all relative ${
+            activeTab === "simulator"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
+              : "text-cyan-400 hover:text-white bg-cyan-500/5 border border-cyan-500/20"
+          }`}
+        >
+          <Zap className="w-3.5 h-3.5 shrink-0 text-cyan-400" />
+          <span className="truncate">2. CLI Sim</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveTab("flashcards");
+            sounds.playKeyClick();
+          }}
+          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
+            activeTab === "flashcards"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          <Layers className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">3. Cards</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveTab("commands");
+            sounds.playKeyClick();
+          }}
+          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
             activeTab === "commands"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
               : "text-slate-400 hover:text-white"
           }`}
         >
-          <Terminal className="w-3.5 h-3.5" />
-          <span>2. Appendix B CLI ({moduleData.ciscoCommands.length})</span>
+          <Terminal className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">4. CLI Ref ({moduleData.ciscoCommands.length})</span>
         </button>
 
         <button
-          onClick={() => setActiveTab("lab")}
-          className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all ${
+          onClick={() => {
+            setActiveTab("lab");
+            sounds.playKeyClick();
+          }}
+          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
             activeTab === "lab"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
               : "text-slate-400 hover:text-white"
           }`}
         >
-          <Laptop className="w-3.5 h-3.5" />
-          <span>3. Packet Tracer Lab</span>
+          <Laptop className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">5. Lab</span>
         </button>
 
         <button
-          onClick={() => setActiveTab("quiz")}
-          className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all ${
+          onClick={() => {
+            setActiveTab("quiz");
+            sounds.playKeyClick();
+          }}
+          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
             activeTab === "quiz"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
               : "text-slate-400 hover:text-white"
           }`}
         >
-          <HelpCircle className="w-3.5 h-3.5" />
-          <span>4. Review Quiz ({moduleData.quiz.length})</span>
+          <HelpCircle className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">6. Quiz ({moduleData.quiz.length})</span>
         </button>
 
         <button
-          onClick={() => setActiveTab("video")}
-          className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all ${
+          onClick={() => {
+            setActiveTab("video");
+            sounds.playKeyClick();
+          }}
+          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
             activeTab === "video"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md"
+              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
               : "text-slate-400 hover:text-white"
           }`}
         >
-          <Video className="w-3.5 h-3.5" />
-          <span>5. Video Proof (Drive)</span>
+          <Video className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">7. Video</span>
         </button>
       </div>
 
@@ -230,6 +296,42 @@ export default function ModuleReaderPage() {
                 Could not load chapter content. Please refresh.
               </div>
             )}
+          </div>
+        )}
+
+        {/* TAB 2: INTERACTIVE CISCO IOS CLI SIMULATOR */}
+        {activeTab === "simulator" && (
+          <div className="space-y-6">
+            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-cyan-400" />
+                  <span>Interactive Cisco IOS Terminal Simulator</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase">
+                    Live CLI
+                  </span>
+                </h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  Practice Cisco IOS commands directly in a simulated terminal environment with tab completion, history, and verification.
+                </p>
+              </div>
+            </div>
+
+            <CiscoTerminal
+              initialHostname="Switch"
+              title={`Cisco IOS Terminal • ${moduleData.title}`}
+            />
+          </div>
+        )}
+
+        {/* TAB 3: ACTIVE RECALL 3D FLASHCARDS */}
+        {activeTab === "flashcards" && (
+          <div className="space-y-6">
+            <ChapterFlashcards
+              questions={moduleData.quiz}
+              keyPoints={moduleData.keyPoints}
+              chapterTitle={moduleData.title}
+            />
           </div>
         )}
 
