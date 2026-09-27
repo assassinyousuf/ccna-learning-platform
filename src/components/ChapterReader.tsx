@@ -210,12 +210,12 @@ export function ChapterReader({
             </ul>
           </div>
 
-          {/* Active Recall Callout from Jeremy */}
+          {/* Active Recall Callout */}
           <div className="p-5 rounded-2xl bg-cyan-950/20 border border-cyan-500/30 flex items-start gap-3.5">
             <Compass className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
             <div className="text-xs text-cyan-200 leading-relaxed">
-              <span className="font-bold text-cyan-300">Jeremy&apos;s Active Learning Philosophy: </span>
-              &quot;Studying from a book differs from simply reading. Stop occasionally to think about what you&apos;ve just read. Try to explain the concepts in your own words.&quot;
+              <span className="font-bold text-cyan-300">Active Recall Philosophy: </span>
+              &quot;Studying differs from simply reading passively. Stop occasionally to think about what you&apos;ve just read. Try to explain the concepts in your own words.&quot;
             </div>
           </div>
 
@@ -326,7 +326,7 @@ export function ChapterReader({
                     {children}
                   </td>
                 ),
-                // Styled Blockquotes (Jeremy's Tips & Warnings)
+                // Styled Blockquotes (Key Study Tips & Warnings)
                 blockquote: ({ children, ...props }) => (
                   <blockquote
                     className="my-6 pl-4 border-l-4 border-cyan-500 bg-cyan-950/10 p-4 rounded-r-2xl text-xs text-cyan-200 not-italic"

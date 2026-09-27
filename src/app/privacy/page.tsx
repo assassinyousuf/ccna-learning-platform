@@ -31,7 +31,7 @@ export default function PrivacyPage() {
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-white">1. Overview</h2>
           <p>
-            The CCNA Learning Platform is an educational web application designed to help students master Cisco CCNA 200-301 networking concepts using Jeremy McDowell&apos;s textbook &quot;Acing the CCNA Exam&quot;. We respect your privacy and are committed to protecting your personal information.
+            The CCNA Learning Platform is an educational web application designed to help students master Cisco CCNA 200-301 networking concepts through active recall and lab simulations, engineered by Md. Yousuf Hossain. We respect your privacy and are committed to protecting your personal information.
           </p>
         </section>
 

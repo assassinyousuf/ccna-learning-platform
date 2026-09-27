@@ -245,7 +245,7 @@ export function ChapterFlashcards({ questions, keyPoints = [], chapterTitle }: C
               </p>
               {currentCard.explanation && (
                 <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 leading-relaxed font-mono">
-                  <span className="text-cyan-400 font-bold block mb-1">Jeremy McDowell Explanation:</span>
+                  <span className="text-cyan-400 font-bold block mb-1">Official Technical Explanation:</span>
                   {currentCard.explanation}
                 </div>
               )}

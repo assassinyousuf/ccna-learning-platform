@@ -31,7 +31,13 @@ import {
   Compass,
   FileText,
   ExternalLink,
-  Laptop
+  Laptop,
+  Github,
+  Globe,
+  Linkedin,
+  Mail,
+  Code2,
+  GraduationCap
 } from "lucide-react";
 
 export default function HomePage() {
@@ -56,18 +62,18 @@ export default function HomePage() {
       <section className="relative pt-20 pb-24 lg:pt-28 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-8 glow-cyan">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Strictly Aligned with Jeremy McDowell&apos;s &quot;Acing the CCNA Exam&quot;</span>
+          <span>Complete Interactive CCNA (200-301) Learning Platform</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.1]">
-          Master the CCNA with the{" "}
+          Master the CCNA with{" "}
           <span className="bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-300 bg-clip-text text-transparent">
-            Book&apos;s Active Learning Method
+            Active Hands-On Recall
           </span>
         </h1>
 
         <p className="mt-6 text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-          The complete cohort-based platform adhering strictly to Jeremy McDowell&apos;s two-volume textbook. Study theory, master 367 Cisco IOS CLI commands from Appendix B, pass 414 official review questions from Appendix C & D, complete Packet Tracer labs, and submit active video proof to Google Drive.
+          The all-in-one interactive platform engineered by <span className="text-white font-semibold">Md. Yousuf Hossain</span> for complete CCNA 200-301 certification mastery. Study 49 full chapters, practice with 367 live Cisco IOS CLI commands, pass 414 rigorous technical review questions, build Packet Tracer topologies, and verify mastery with video lab demos.
         </p>
 
         {/* CTA Buttons */}
@@ -135,19 +141,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Jeremy McDowell's 5-Pillar Learning Method Section */}
+      {/* The 5-Pillar Active Learning Method Section */}
       <section className="py-20 border-y border-slate-800/80 bg-slate-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono mb-4">
               <Compass className="w-3.5 h-3.5" />
-              <span>Section 1.4: How to Study for the CCNA</span>
+              <span>Section 1.4: Proven CCNA Study Methodology</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              Jeremy McDowell&apos;s 5-Pillar Learning Framework
+              The 5-Pillar Active Learning Framework
             </h2>
             <p className="mt-4 text-slate-400 text-sm sm:text-base leading-relaxed">
-              &quot;Studying from a book differs from simply reading from a book. Be an active learner rather than a passive learner... Labbing is an essential part of any CCNA study plan. You have to get your hands dirty and apply what you’ve learned.&quot;
+              &quot;Studying differs from simply reading passively. Be an active learner rather than a passive learner... Labbing is an essential part of any CCNA study plan. You have to get your hands dirty and apply what you’ve learned.&quot;
             </p>
           </div>
 
@@ -189,7 +195,7 @@ export default function HomePage() {
               The 49-Chapter CCNA Master Curriculum
             </h2>
             <p className="mt-2 text-slate-400 text-sm max-w-2xl">
-              Organized into 2 volumes and 11 distinct pedagogical parts according to Jeremy McDowell&apos;s textbook layout.
+              Organized into 2 comprehensive volumes and 11 distinct pedagogical parts covering all official Cisco CCNA exam domains.
             </p>
           </div>
 
@@ -333,13 +339,133 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Architect & Lead Developer Profile Section */}
+      <section className="py-20 border-t border-slate-800/80 bg-slate-900/40 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="p-8 sm:p-12 rounded-3xl bg-slate-900/80 border border-slate-800/80 shadow-2xl backdrop-blur-xl">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+              
+              {/* Left Column: Avatar & Bio */}
+              <div className="flex-1 space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+                  <Code2 className="w-3.5 h-3.5" />
+                  <span>Platform Architect & Developer</span>
+                </div>
+
+                <div className="flex items-center gap-4 pt-1">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 via-emerald-400 to-teal-500 p-0.5 glow-cyan shrink-0">
+                    <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-emerald-400 font-mono">
+                      YH
+                    </div>
+                  </div>
+                  <div>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                      Md. Yousuf Hossain
+                    </h2>
+                    <p className="text-sm font-mono text-cyan-400">
+                      @assassinyousuf • Cybersecurity Researcher & Developer
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-300 max-w-2xl leading-relaxed">
+                  Computer Science & Engineering undergraduate at Dhaka International University. Specializing in zero-trust network architectures, AI security systems, and interactive educational engineering. Engineered this CCNA Mastery Platform with live Cisco IOS CLI terminal simulation, 3D active recall flashcards, 32-bit IPv4 subnet visualizer, and cohort video verification.
+                </p>
+
+                {/* Badges / Highlights */}
+                <div className="flex flex-wrap items-center gap-2.5 pt-2">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700/80 text-xs text-slate-300 font-mono">
+                    <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
+                    Dhaka International University (CSE)
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700/80 text-xs text-slate-300 font-mono">
+                    <Award className="w-3.5 h-3.5 text-emerald-400" />
+                    General Secretary, DIU CPC
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800/90 border border-slate-700/80 text-xs text-slate-300 font-mono">
+                    <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
+                    Published Security Researcher (Taylor & Francis)
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Column: Interactive Profile & Repository Links */}
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto shrink-0">
+                <a
+                  href="https://yousuf.surf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:opacity-95 transition-opacity glow-cyan text-xs shadow-lg"
+                >
+                  <Globe className="w-4 h-4" />
+                  <span>Visit Portfolio (yousuf.surf)</span>
+                  <ExternalLink className="w-3.5 h-3.5 ml-0.5" />
+                </a>
+
+                <a
+                  href="https://github.com/assassinyousuf/ccna-learning-platform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 transition-colors text-xs"
+                >
+                  <Github className="w-4 h-4 text-cyan-400" />
+                  <span>GitHub Repository</span>
+                  <ExternalLink className="w-3.5 h-3.5 ml-0.5 text-slate-400" />
+                </a>
+
+                <div className="flex items-center justify-center gap-2">
+                  <a
+                    href="https://github.com/assassinyousuf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="GitHub Profile"
+                    className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-colors flex-1 flex justify-center"
+                  >
+                    <Github className="w-4 h-4" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/mdyousufhossainmehrab/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="LinkedIn Profile"
+                    className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-colors flex-1 flex justify-center"
+                  >
+                    <Linkedin className="w-4 h-4 text-cyan-400" />
+                  </a>
+                  <a
+                    href="mailto:itsmemehrab369@gmail.com"
+                    title="Send Email"
+                    className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-colors flex-1 flex justify-center"
+                  >
+                    <Mail className="w-4 h-4 text-emerald-400" />
+                  </a>
+                  <a
+                    href="https://www.yousuf.surf/Md__Yousuf_Hossain_CV.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Download CV"
+                    className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-colors flex-1 flex justify-center"
+                  >
+                    <FileText className="w-4 h-4 text-amber-400" />
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Packet Tracer Lab Download & Active Learning Banner */}
       <section className="py-16 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-3">
               <Laptop className="w-3.5 h-3.5" />
-              <span>Recommended by Jeremy McDowell</span>
+              <span>Cisco Networking Academy Official Tool</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold text-white">
               Get Cisco Packet Tracer for Free

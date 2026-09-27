@@ -162,7 +162,7 @@ export default function ModuleReaderPage() {
         <ChapterNotes moduleId={moduleId} chapterTitle={moduleData.title} />
       </div>
 
-      {/* Jeremy McDowell Active Learning Navigation Bar */}
+      {/* Active Learning Navigation Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 mb-8">
         <button
           onClick={() => {
@@ -519,7 +519,7 @@ export default function ModuleReaderPage() {
                 Chapter {moduleData.chapterNumber} Review Assessment
               </h3>
               <p className="text-xs text-slate-400 mt-2 max-w-lg mx-auto leading-relaxed">
-                Test your mastery using Jeremy McDowell&apos;s exact review questions from Appendix C. Full answers and explanations from Appendix D will be unlocked upon submission.
+                Test your mastery using official technical review questions from Appendix C. Full answers and comprehensive explanations from Appendix D will be unlocked upon submission.
               </p>
             </div>
 

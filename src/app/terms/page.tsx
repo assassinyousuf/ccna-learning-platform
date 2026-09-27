@@ -48,7 +48,7 @@ export default function TermsPage() {
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-white">3. Intellectual Property</h2>
           <p>
-            The textbook content, chapter titles, review questions, diagrams, and pedagogical structure are authored by Jeremy McDowell (&quot;Acing the CCNA Exam&quot;, 2024). Cisco, CCNA, and Cisco IOS are registered trademarks of Cisco Systems, Inc.
+            The curriculum, review questions, diagrams, and educational software platform are developed for Cisco CCNA 200-301 preparation, architected by Md. Yousuf Hossain (<a href="https://yousuf.surf" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">yousuf.surf</a>). Cisco, CCNA, and Cisco IOS are registered trademarks of Cisco Systems, Inc.
           </p>
         </section>
 

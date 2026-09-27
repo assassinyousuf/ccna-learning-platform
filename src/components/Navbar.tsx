@@ -18,7 +18,8 @@ import {
   Search,
   Calculator,
   Volume2,
-  VolumeX
+  VolumeX,
+  Github
 } from "lucide-react";
 import { CommandPalette } from "./CommandPalette";
 import { SubnetCalculatorModal } from "./SubnetCalculatorModal";
@@ -71,7 +72,7 @@ export function Navbar() {
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-400 font-mono hidden sm:block">
-                  Acing the CCNA by Jeremy McDowell
+                  Mastery Platform • by Yousuf
                 </p>
               </div>
             </Link>
@@ -110,7 +111,7 @@ export function Navbar() {
             {/* Navigation Links */}
             <nav className="hidden md:flex items-center gap-1">
               <Link
-                href="/#modules"
+                href="/#curriculum"
                 className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
               >
                 <BookOpen className="w-4 h-4 text-cyan-400" />
@@ -123,6 +124,18 @@ export function Navbar() {
                 <LayoutDashboard className="w-4 h-4 text-emerald-400" />
                 <span>Dashboard</span>
               </Link>
+
+              {/* GitHub Repo Link */}
+              <a
+                href="https://github.com/assassinyousuf/ccna-learning-platform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
+                title="GitHub Repository by Md. Yousuf Hossain"
+              >
+                <Github className="w-4 h-4 text-cyan-400" />
+                <span>GitHub</span>
+              </a>
 
               {/* Architecture Badges */}
               <div className="flex items-center gap-1.5 pl-3 border-l border-slate-800 ml-2">
