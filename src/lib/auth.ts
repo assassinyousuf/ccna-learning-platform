@@ -10,6 +10,13 @@ export const authOptions: NextAuthOptions = {
           GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID.replace(/["']/g, "").trim(),
             clientSecret: process.env.GOOGLE_CLIENT_SECRET.replace(/["']/g, "").trim(),
+            authorization: {
+              params: {
+                prompt: "select_account",
+                access_type: "offline",
+                response_type: "code",
+              },
+            },
           }),
         ]
       : []),
@@ -40,6 +47,12 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
     async session({ session, token }) {
       if (session?.user && token.sub) {
         (session.user as { id?: string }).id = token.sub;
@@ -47,14 +60,18 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user }) {
-      if (user && user.email) {
-        // Record user to Google Sheets / database
-        await recordUser({
-          userId: user.id || user.email,
-          email: user.email,
-          name: user.name || "Student",
-          joinedAt: new Date().toISOString(),
-        });
+      try {
+        if (user && user.email) {
+          // Record user to Google Sheets / database
+          await recordUser({
+            userId: user.id || user.email,
+            email: user.email,
+            name: user.name || "Student",
+            joinedAt: new Date().toISOString(),
+          });
+        }
+      } catch (err) {
+        console.error("[signIn callback error]", err);
       }
       return true;
     },
@@ -63,4 +80,16 @@ export const authOptions: NextAuthOptions = {
     signIn: "/",
   },
   secret: process.env.NEXTAUTH_SECRET || "ccna-learning-platform-super-secret-key-2026",
+  debug: true,
+  logger: {
+    error(code, metadata) {
+      console.error("[NextAuth ERROR]", code, JSON.stringify(metadata, null, 2));
+    },
+    warn(code) {
+      console.warn("[NextAuth WARN]", code);
+    },
+    debug(code, metadata) {
+      console.log("[NextAuth DEBUG]", code, metadata);
+    },
+  },
 };
