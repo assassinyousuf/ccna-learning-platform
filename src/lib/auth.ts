@@ -59,6 +59,35 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // Determine production base URL if deployed on Vercel
+      const vercelHost = process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "https://ccna-learning-platform-noywwyj5z-yousufs-projects-50c935d3.vercel.app";
+
+      // If running on Vercel or in production, NEVER redirect to localhost
+      let resolvedBase = baseUrl;
+      if ((process.env.NODE_ENV === "production" || process.env.VERCEL) && baseUrl.includes("localhost")) {
+        resolvedBase = vercelHost;
+      }
+
+      // Handle relative paths like /dashboard
+      if (url.startsWith("/")) {
+        return `${resolvedBase}${url}`;
+      }
+
+      // Handle absolute URLs
+      try {
+        const parsedUrl = new URL(url);
+        if (parsedUrl.hostname.includes("vercel.app") || parsedUrl.hostname === new URL(resolvedBase).hostname) {
+          return url;
+        }
+      } catch {
+        // Fallback to dashboard
+      }
+
+      return `${resolvedBase}/dashboard`;
+    },
     async signIn({ user }) {
       try {
         if (user && user.email) {
