@@ -43,7 +43,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/modules/v1-ch1-intro-ccna" className="hover:text-cyan-400 transition-colors">
+                <Link href="/modules/v1-ch1-introduction-to-the-ccna" className="hover:text-cyan-400 transition-colors">
                   Vol 1: Intro to CCNA
                 </Link>
               </li>
@@ -53,13 +53,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/modules/v1-ch18-ospf" className="hover:text-cyan-400 transition-colors">
+                <Link href="/modules/v1-ch18-open-shortest-path-first" className="hover:text-cyan-400 transition-colors">
                   Vol 1: Open Shortest Path First
                 </Link>
               </li>
               <li>
-                <Link href="/modules/v2-ch1-wireless-fundamentals" className="hover:text-cyan-400 transition-colors">
-                  Vol 2: Wireless & Security
+                <Link href="/modules/v2-ch18-wireless-lan-fundamentals" className="hover:text-cyan-400 transition-colors">
+                  Vol 2: Wireless &amp; Security
                 </Link>
               </li>
             </ul>

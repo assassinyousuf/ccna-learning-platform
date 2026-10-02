@@ -47,6 +47,14 @@ export default function ModuleReaderPage() {
   const [chapterFullData, setChapterFullData] = useState<any>(null);
   const [loadingTextbook, setLoadingTextbook] = useState(true);
 
+  // Normalize URL in browser if alias was used
+  useEffect(() => {
+    if (moduleData && moduleId !== moduleData.id && typeof window !== "undefined") {
+      const search = window.location.search;
+      window.history.replaceState(null, "", `/modules/${moduleData.id}${search}`);
+    }
+  }, [moduleData, moduleId]);
+
   // Detect tab from URL parameter if present
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -62,7 +70,8 @@ export default function ModuleReaderPage() {
     async function fetchFullChapter() {
       setLoadingTextbook(true);
       try {
-        const res = await fetch(`/api/chapter/${moduleId}`);
+        const canonicalId = moduleData ? moduleData.id : moduleId;
+        const res = await fetch(`/api/chapter/${canonicalId}`);
         if (res.ok) {
           const data = await res.json();
           setChapterFullData(data);
@@ -74,16 +83,65 @@ export default function ModuleReaderPage() {
       }
     }
     fetchFullChapter();
-  }, [moduleId]);
+  }, [moduleId, moduleData]);
 
   if (!moduleData) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-white">Chapter Not Found</h1>
-        <p className="text-xs text-slate-400 mt-2">The requested CCNA chapter does not exist in the syllabus.</p>
-        <Link href="/" className="mt-6 inline-block text-cyan-400 font-mono text-sm underline">
-          &larr; Return to Curriculum
-        </Link>
+      <div className="max-w-2xl mx-auto px-4 py-24 text-center">
+        <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-2xl space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mx-auto">
+            <BookOpen className="w-8 h-8" />
+          </div>
+          <div>
+            <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+              CCNA 200-301 Curriculum
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-3">Chapter Not Found</h1>
+            <p className="text-xs text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
+              We couldn&apos;t find a chapter matching &quot;{moduleId}&quot;. Browse all 49 chapters in the curriculum or jump into one of the popular core topics below:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-left pt-2">
+            <Link
+              href="/modules/v1-ch1-introduction-to-the-ccna"
+              className="p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 text-xs transition-colors group"
+            >
+              <span className="text-cyan-400 font-mono font-semibold block text-[11px]">Vol 1 • Ch 1</span>
+              <span className="text-white group-hover:text-cyan-300 font-medium">Intro to CCNA &amp; Methods</span>
+            </Link>
+            <Link
+              href="/modules/v1-ch6-ethernet-lan-switching"
+              className="p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 text-xs transition-colors group"
+            >
+              <span className="text-cyan-400 font-mono font-semibold block text-[11px]">Vol 1 • Ch 6</span>
+              <span className="text-white group-hover:text-cyan-300 font-medium">Ethernet LAN Switching</span>
+            </Link>
+            <Link
+              href="/modules/v1-ch11-subnetting-ipv4-networks"
+              className="p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 text-xs transition-colors group"
+            >
+              <span className="text-cyan-400 font-mono font-semibold block text-[11px]">Vol 1 • Ch 11</span>
+              <span className="text-white group-hover:text-cyan-300 font-medium">Subnetting IPv4 Networks</span>
+            </Link>
+            <Link
+              href="/modules/v1-ch18-open-shortest-path-first"
+              className="p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-cyan-500/40 text-xs transition-colors group"
+            >
+              <span className="text-cyan-400 font-mono font-semibold block text-[11px]">Vol 1 • Ch 18</span>
+              <span className="text-white group-hover:text-cyan-300 font-medium">Open Shortest Path First</span>
+            </Link>
+          </div>
+
+          <div className="pt-4 flex items-center justify-center gap-4">
+            <Link
+              href="/"
+              className="px-6 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md hover:opacity-95 transition-opacity"
+            >
+              &larr; View Complete 49-Chapter Curriculum
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -131,14 +189,14 @@ export default function ModuleReaderPage() {
           )}
 
           <Link
-            href={`/modules/${moduleId}/quiz`}
+            href={`/modules/${moduleData.id}/quiz`}
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 transition-colors"
           >
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Attempt Quiz ({moduleData.quiz.length} Qs)</span>
           </Link>
           <Link
-            href={`/modules/${moduleId}/submit-video`}
+            href={`/modules/${moduleData.id}/submit-video`}
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 hover:opacity-90 transition-opacity"
           >
             <Video className="w-3.5 h-3.5" />
@@ -493,7 +551,7 @@ export default function ModuleReaderPage() {
                   </p>
                 </div>
                 <Link
-                  href={`/modules/${moduleId}/submit-video`}
+                  href={`/modules/${moduleData.id}/submit-video`}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90 transition-opacity shrink-0"
                 >
                   <Video className="w-3.5 h-3.5" />
@@ -539,7 +597,7 @@ export default function ModuleReaderPage() {
             </div>
 
             <Link
-              href={`/modules/${moduleId}/quiz`}
+              href={`/modules/${moduleData.id}/quiz`}
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 hover:opacity-95 transition-opacity glow-emerald text-sm shadow-xl"
             >
               <span>Start Chapter Quiz Now</span>
@@ -583,7 +641,7 @@ export default function ModuleReaderPage() {
             </div>
 
             <Link
-              href={`/modules/${moduleId}/submit-video`}
+              href={`/modules/${moduleData.id}/submit-video`}
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-95 transition-opacity text-sm shadow-xl"
             >
               <span>Open Screen Recorder &amp; Uploader</span>

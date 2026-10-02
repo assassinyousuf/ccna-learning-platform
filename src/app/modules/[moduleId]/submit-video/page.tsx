@@ -30,9 +30,18 @@ export default function SubmitVideoPage() {
   const moduleData = getModuleById(moduleId);
   const allModules = getAllModules();
 
-  // Next module for progression
-  const currentIdx = allModules.findIndex((m) => m.id === moduleId);
+  // Next module for progression using canonical module id
+  const resolvedId = moduleData?.id || moduleId;
+  const currentIdx = allModules.findIndex((m) => m.id === resolvedId);
   const nextModule = currentIdx >= 0 && currentIdx < allModules.length - 1 ? allModules[currentIdx + 1] : null;
+
+  // Normalize URL in browser if alias was used
+  React.useEffect(() => {
+    if (moduleData && moduleId !== moduleData.id && typeof window !== "undefined") {
+      const search = window.location.search;
+      window.history.replaceState(null, "", `/modules/${moduleData.id}/submit-video${search}`);
+    }
+  }, [moduleData, moduleId]);
 
   // Recording states
   const [isRecording, setIsRecording] = useState(false);
@@ -56,11 +65,36 @@ export default function SubmitVideoPage() {
 
   if (!moduleData) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-white">Module Not Found</h1>
-        <Link href="/" className="mt-4 inline-block text-cyan-400 font-mono text-xs">
-          Return to Syllabus
-        </Link>
+      <div className="max-w-2xl mx-auto px-4 py-24 text-center">
+        <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-2xl space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mx-auto">
+            <Video className="w-8 h-8" />
+          </div>
+          <div>
+            <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+              CCNA Video Proof of Skill
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-3">Chapter Not Found</h1>
+            <p className="text-xs text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
+              We couldn&apos;t find a lab assignment matching &quot;{moduleId}&quot;. Choose an active chapter lab from our 49 chapters:
+            </p>
+          </div>
+
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/modules/v1-ch1-introduction-to-the-ccna/submit-video"
+              className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-purple-500 text-white hover:bg-purple-400 transition-colors"
+            >
+              Chapter 1 Video Lab
+            </Link>
+            <Link
+              href="/"
+              className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 border border-slate-700 text-white hover:bg-slate-700 transition-colors"
+            >
+              &larr; Return to Curriculum
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -205,7 +239,7 @@ export default function SubmitVideoPage() {
         body: JSON.stringify({
           userId: session?.user?.email || "guest-user",
           userEmail: session?.user?.email || "guest@ccna.academy",
-          moduleId,
+          moduleId: moduleData.id,
           driveFileId: initData.fileId,
           driveUrl: finalDriveUrl,
         }),
