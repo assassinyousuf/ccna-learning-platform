@@ -25,7 +25,7 @@ export function Footer() {
                 Md. Yousuf Hossain
                 <ExternalLink className="w-2.5 h-2.5 ml-0.5" />
               </a>
-              . Study 49 chapters, simulate 367 Cisco IOS CLI commands, pass 414 rigorous quizzes, and prove hands-on mastery with video lab demos.
+              . Study 49 chapters, simulate 367 Cisco IOS CLI commands, pass 446 rigorous quizzes, and prove hands-on mastery with video lab demos.
             </p>
             <div className="flex items-center gap-2 pt-2">
               <span className="text-[11px] font-mono px-2 py-1 rounded bg-slate-900 border border-slate-800 text-cyan-400 flex items-center gap-1">
@@ -42,6 +42,11 @@ export function Footer() {
               Curriculum Tracks
             </h4>
             <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/practice-test" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors flex items-center gap-1">
+                  <span>★ CCNA Exam Simulator</span>
+                </Link>
+              </li>
               <li>
                 <Link href="/modules/v1-ch1-introduction-to-the-ccna" className="hover:text-cyan-400 transition-colors">
                   Vol 1: Intro to CCNA

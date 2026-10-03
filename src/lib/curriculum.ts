@@ -62,6 +62,8 @@ export interface Module {
   charCount?: number;
   diagramCount?: number;
   content?: string;
+  domainId?: string;
+  domainName?: string;
 }
 
 export interface Part {

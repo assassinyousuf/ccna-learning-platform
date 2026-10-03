@@ -174,7 +174,7 @@ def parse_appendix_c_and_d(text, chapter_titles_map):
     # In D and C, match headers: ## Chapter X: Title or ## X: Title or ## X Title
     def parse_sections(raw_text):
         # find all chapter boundaries
-        pattern = r'\n##\s+(?:Chapter\s+)?(\d+)[:\.\s]+([A-Za-z][^\n]+)'
+        pattern = r'\n#{1,3}\s+(?:Chapter\s+)?(\d+)[:\.\s]+([A-Za-z][^\n]+)'
         matches = list(re.finditer(pattern, raw_text))
         chaps = {}
         for idx, m in enumerate(matches):
