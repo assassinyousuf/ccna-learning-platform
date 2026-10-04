@@ -258,12 +258,26 @@ export function ChapterReader({
                     </h3>
                   );
                 },
+                p: ({ node, children, ...props }) => {
+                  // If paragraph contains an image or block elements, render as div to avoid invalid HTML nesting: <p> cannot contain <div> or <figure>
+                  const hasBlockOrImage = Boolean(
+                    node?.children?.some((child: any) => {
+                      const tag = child.tagName || (child.type === "element" && child.tagName);
+                      return tag === "img" || tag === "div" || tag === "figure" || tag === "pre" || tag === "table";
+                    })
+                  );
+
+                  if (hasBlockOrImage) {
+                    return <div className="my-4 text-slate-300 leading-relaxed" {...props}>{children}</div>;
+                  }
+                  return <p className="my-4 text-slate-300 leading-relaxed" {...props}>{children}</p>;
+                },
                 // Interactive Click-to-Zoom Images
                 img: ({ node, src, alt, ...props }) => {
                   if (!src) return null;
                   const imgSrc = typeof src === "string" ? src : "";
                   return (
-                    <div className="my-8 p-3 rounded-2xl bg-slate-950 border border-slate-800/90 group">
+                    <figure className="my-8 p-3 rounded-2xl bg-slate-950 border border-slate-800/90 group not-prose block">
                       <div
                         onClick={() => setLightboxImage({ src: imgSrc, alt: alt || "Textbook Figure" })}
                         className="relative cursor-zoom-in overflow-hidden rounded-xl bg-slate-950/60 flex items-center justify-center min-h-[180px]"
@@ -280,11 +294,11 @@ export function ChapterReader({
                         </div>
                       </div>
                       {alt && (
-                        <p className="text-[11px] text-slate-400 font-mono text-center mt-2.5 px-2">
+                        <figcaption className="text-[11px] text-slate-400 font-mono text-center mt-2.5 px-2">
                           {alt}
-                        </p>
+                        </figcaption>
                       )}
-                    </div>
+                    </figure>
                   );
                 },
                 // Styled Cisco CLI Code Blocks with 1-Click Copy
