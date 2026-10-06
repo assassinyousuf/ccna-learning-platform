@@ -1,4 +1,19 @@
 import { google } from "googleapis";
+import {
+  saveUserToFirestore,
+  fetchAllUsersFromFirestore,
+  updateUserStatusInFirestore,
+  updateUserRoleInFirestore,
+  deleteUserFromFirestore,
+  saveQuizAttemptToFirestore,
+  saveExamAttemptToFirestore,
+  saveVideoSubmissionToFirestore,
+  saveProgressToFirestore,
+  fetchProgressFromFirestore,
+  fetchUserQuizAttemptsFromFirestore,
+  fetchUserExamAttemptsFromFirestore,
+  fetchUserVideoSubmissionsFromFirestore,
+} from "./firestore-db";
 
 export type UserRole = "ADMIN" | "STUDENT";
 export type UserStatus = "PENDING" | "APPROVED" | "REJECTED";
@@ -162,6 +177,14 @@ export async function recordUser(user: UserRecord): Promise<void> {
 
   inMemoryStore.users.set(user.userId, user);
 
+  // 1. Cloud Firestore Persistence
+  try {
+    await saveUserToFirestore(user);
+  } catch (err) {
+    console.error("Firestore recordUser error:", err);
+  }
+
+  // 2. Google Sheets Backup
   if (!sheets || !spreadsheetId) {
     return;
   }
@@ -187,7 +210,7 @@ export async function getOrCreateUser(userData: {
 }): Promise<UserRecord> {
   const normEmail = userData.email.toLowerCase().trim();
 
-  // Search existing user
+  // Search existing user in cache
   let existingUser = Array.from(inMemoryStore.users.values()).find(
     (u) => u.email.toLowerCase() === normEmail || u.userId === userData.userId
   );
@@ -211,6 +234,19 @@ export async function getOrCreateUser(userData: {
 }
 
 export async function getAllUsers(): Promise<UserRecord[]> {
+  // 1. Load from Cloud Firestore
+  try {
+    const firestoreUsers = await fetchAllUsersFromFirestore();
+    if (firestoreUsers.length > 0) {
+      firestoreUsers.forEach((u) => {
+        inMemoryStore.users.set(u.userId, u);
+      });
+    }
+  } catch (err) {
+    console.warn("Could not read users from Firestore:", err);
+  }
+
+  // 2. Load from Google Sheets if configured
   const sheets = getSheetsClient();
   const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
@@ -264,6 +300,10 @@ export async function updateUserStatus(
     user.approvedBy = approvedBy || "Admin";
   }
   inMemoryStore.users.set(user.userId, user);
+
+  // Update in Cloud Firestore
+  await updateUserStatusInFirestore(user.userId, status, approvedBy);
+
   return user;
 }
 
@@ -280,6 +320,10 @@ export async function updateUserRole(
   if (!user) return null;
   user.role = role;
   inMemoryStore.users.set(user.userId, user);
+
+  // Update in Cloud Firestore
+  await updateUserRoleInFirestore(user.userId, role);
+
   return user;
 }
 
@@ -292,6 +336,8 @@ export async function deleteUserRecord(userId: string): Promise<boolean> {
 
   if (user) {
     inMemoryStore.users.delete(user.userId);
+    // Delete in Cloud Firestore
+    await deleteUserFromFirestore(user.userId);
     return true;
   }
   return false;
@@ -310,6 +356,16 @@ export async function recordQuizAttempt(attempt: QuizAttemptRecord): Promise<voi
   const userProgress = inMemoryStore.progress.get(attempt.userId)!;
   if (attempt.passed) {
     userProgress[`${attempt.moduleId}_quiz`] = "PASSED";
+  }
+
+  // 1. Cloud Firestore
+  try {
+    await saveQuizAttemptToFirestore(attempt);
+    if (attempt.passed) {
+      await saveProgressToFirestore(attempt.userId, `${attempt.moduleId}_quiz`, "PASSED");
+    }
+  } catch (err) {
+    console.error("Firestore recordQuizAttempt error:", err);
   }
 
   if (!sheets || !spreadsheetId) {
@@ -356,6 +412,15 @@ export async function recordVideoSubmission(sub: VideoSubmissionRecord): Promise
   userProgress[`${sub.moduleId}_video`] = "SUBMITTED";
   userProgress[sub.moduleId] = "COMPLETED"; // Module fully unlocked and completed
 
+  // 1. Cloud Firestore
+  try {
+    await saveVideoSubmissionToFirestore(sub);
+    await saveProgressToFirestore(sub.userId, `${sub.moduleId}_video`, "SUBMITTED");
+    await saveProgressToFirestore(sub.userId, sub.moduleId, "COMPLETED");
+  } catch (err) {
+    console.error("Firestore recordVideoSubmission error:", err);
+  }
+
   if (!sheets || !spreadsheetId) {
     return;
   }
@@ -386,6 +451,16 @@ export async function recordVideoSubmission(sub: VideoSubmissionRecord): Promise
 }
 
 export async function getUserProgress(userId: string): Promise<Record<string, string>> {
+  try {
+    const cloudProgress = await fetchProgressFromFirestore(userId);
+    if (cloudProgress && Object.keys(cloudProgress).length > 0) {
+      const existing = inMemoryStore.progress.get(userId) || {};
+      inMemoryStore.progress.set(userId, { ...existing, ...cloudProgress });
+    }
+  } catch (err) {
+    console.warn("Could not load progress from Firestore:", err);
+  }
+
   return inMemoryStore.progress.get(userId) || {
     "v1-ch1-introduction-to-the-ccna": "IN_PROGRESS",
   };
@@ -405,14 +480,37 @@ export async function recordChapterProgress(
   } else {
     userProgress[moduleId] = status;
   }
+
+  try {
+    await saveProgressToFirestore(userId, moduleId, status);
+  } catch (err) {
+    console.error("Firestore recordChapterProgress error:", err);
+  }
+
   return userProgress;
 }
 
 export async function getUserSubmissions(userId: string): Promise<VideoSubmissionRecord[]> {
+  try {
+    const cloudSubs = await fetchUserVideoSubmissionsFromFirestore(userId);
+    if (cloudSubs.length > 0) {
+      return cloudSubs;
+    }
+  } catch (err) {
+    console.warn("Could not load video submissions from Firestore:", err);
+  }
   return inMemoryStore.videoSubmissions.filter((s) => s.userId === userId);
 }
 
 export async function getUserQuizAttempts(userId: string): Promise<QuizAttemptRecord[]> {
+  try {
+    const cloudAttempts = await fetchUserQuizAttemptsFromFirestore(userId);
+    if (cloudAttempts.length > 0) {
+      return cloudAttempts;
+    }
+  } catch (err) {
+    console.warn("Could not load quiz attempts from Firestore:", err);
+  }
   return inMemoryStore.quizAttempts.filter((a) => a.userId === userId);
 }
 
@@ -427,7 +525,17 @@ export async function recordExamAttempt(attempt: ExamAttemptRecord): Promise<voi
     inMemoryStore.progress.set(attempt.userId, {});
   }
   const userProgress = inMemoryStore.progress.get(attempt.userId)!;
-  userProgress[`exam_${attempt.examMode.toLowerCase()}`] = attempt.passed ? "PASSED" : "ATTEMPTED";
+  // 1. Cloud Firestore
+  try {
+    await saveExamAttemptToFirestore(attempt);
+    await saveProgressToFirestore(
+      attempt.userId,
+      `exam_${attempt.examMode.toLowerCase()}`,
+      attempt.passed ? "PASSED" : "ATTEMPTED"
+    );
+  } catch (err) {
+    console.error("Firestore recordExamAttempt error:", err);
+  }
 
   if (!sheets || !spreadsheetId) {
     return;
@@ -462,6 +570,14 @@ export async function recordExamAttempt(attempt: ExamAttemptRecord): Promise<voi
 }
 
 export async function getUserExamAttempts(userId: string): Promise<ExamAttemptRecord[]> {
+  try {
+    const cloudExams = await fetchUserExamAttemptsFromFirestore(userId);
+    if (cloudExams.length > 0) {
+      return cloudExams;
+    }
+  } catch (err) {
+    console.warn("Could not load exam attempts from Firestore:", err);
+  }
   return inMemoryStore.examAttempts.filter((a) => a.userId === userId);
 }
 

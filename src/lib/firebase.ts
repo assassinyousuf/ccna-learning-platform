@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
 import { getAnalytics, isSupported, Analytics } from "firebase/analytics";
+import { getFirestore, Firestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 export const firebaseConfig = {
@@ -16,6 +17,8 @@ export const firebaseConfig = {
 export const app: FirebaseApp = !getApps().length
   ? initializeApp(firebaseConfig)
   : getApp();
+
+export const db: Firestore = getFirestore(app);
 
 // Client-side Analytics (guarded for Next.js SSR / Window availability)
 let analyticsInstance: Analytics | null = null;
