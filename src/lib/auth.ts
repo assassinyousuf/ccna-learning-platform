@@ -91,21 +91,23 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       id: "demo-admin",
       name: "NOC Administrator (Officer)",
-      credentials: {},
-      async authorize() {
-        const email = "admin@ccna.academy";
+      credentials: {
+        email: { label: "Admin Email", type: "email", placeholder: "mahbubhossain369@gmail.com" },
+      },
+      async authorize(credentials) {
+        const email = credentials?.email || "mahbubhossain369@gmail.com";
         const userRec = await getOrCreateUser({
-          userId: "admin-demo",
+          userId: `admin-${Buffer.from(email).toString("hex").slice(0, 8)}`,
           email,
-          name: "Commander Network Admin",
+          name: "Lead Network Administrator",
         });
         return {
           id: userRec.userId,
           name: userRec.name,
           email: userRec.email,
           image: `https://api.dicebear.com/7.x/bottts/svg?seed=${email}`,
-          role: userRec.role,
-          status: userRec.status,
+          role: "ADMIN",
+          status: "APPROVED",
         };
       },
     }),

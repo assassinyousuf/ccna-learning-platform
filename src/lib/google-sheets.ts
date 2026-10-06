@@ -31,6 +31,8 @@ export interface UserRecord {
 
 export function getAdminEmails(): string[] {
   const defaults = [
+    "mahbubhossain369@gmail.com",
+    "assassinyousuf369@gmail.com",
     "assassinyousuf@gmail.com",
     "admin@ccna.academy",
     "admin@cisco.academy",
