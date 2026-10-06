@@ -32,6 +32,7 @@ export interface UserRecord {
 export function getAdminEmails(): string[] {
   const defaults = [
     "mahbubhossain369@gmail.com",
+    "yousufhossain369@gmail.com",
     "assassinyousuf369@gmail.com",
     "assassinyousuf@gmail.com",
     "admin@ccna.academy",
@@ -217,11 +218,21 @@ export async function getOrCreateUser(userData: {
     (u) => u.email.toLowerCase() === normEmail || u.userId === userData.userId
   );
 
+  const isAdmin = isUserAdmin(normEmail);
+
   if (existingUser) {
+    if (isAdmin && (existingUser.role !== "ADMIN" || existingUser.status !== "APPROVED")) {
+      existingUser.role = "ADMIN";
+      existingUser.status = "APPROVED";
+      try {
+        await updateUserRoleInFirestore(existingUser.userId, "ADMIN");
+        await updateUserStatusInFirestore(existingUser.userId, "APPROVED", "Auto-Promoted Administrator");
+      } catch (err) {
+        console.warn("Could not sync admin role to Firestore:", err);
+      }
+    }
     return existingUser;
   }
-
-  const isAdmin = isUserAdmin(normEmail);
   const newUser: UserRecord = {
     userId: userData.userId,
     email: normEmail,
