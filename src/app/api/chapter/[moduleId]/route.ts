@@ -9,11 +9,28 @@ export async function GET(
 ) {
   try {
     const { moduleId } = await params;
-    const moduleData = getModuleById(moduleId);
-    const canonicalId = moduleData ? moduleData.id : moduleId;
+    
+    // Strict input validation to prevent path traversal
+    if (!moduleId || typeof moduleId !== "string") {
+      return NextResponse.json({ error: "Invalid module ID" }, { status: 400 });
+    }
 
-    // Check potential chapter file paths (for both local dev and serverless deploy)
-    const primaryPath = path.join(process.cwd(), "src", "data", "chapters", `${canonicalId}.json`);
+    // Strip any directory traversal characters or slashes
+    const sanitizedId = path.basename(moduleId).replace(/[^a-zA-Z0-9_-]/g, "");
+    if (!sanitizedId) {
+      return NextResponse.json({ error: "Invalid module identifier" }, { status: 400 });
+    }
+
+    const moduleData = getModuleById(sanitizedId);
+    const canonicalId = moduleData ? moduleData.id : sanitizedId;
+
+    // Verify resolved path stays strictly inside src/data/chapters
+    const chaptersDir = path.resolve(process.cwd(), "src", "data", "chapters");
+    const primaryPath = path.resolve(chaptersDir, `${canonicalId}.json`);
+
+    if (!primaryPath.startsWith(chaptersDir)) {
+      return NextResponse.json({ error: "Access denied" }, { status: 403 });
+    }
     
     if (fs.existsSync(primaryPath)) {
       const fileContent = fs.readFileSync(primaryPath, "utf-8");

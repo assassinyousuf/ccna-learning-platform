@@ -1,190 +1,368 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Archivo+Black&display=swap');
 
 @layer base {
   :root {
-    --background: #070b14;
+    /* Modern Precision Engineering Console — Dark Mode (Default) */
+    --background: #090d16;
+    --background-subtle: #0d1322;
     --foreground: #f8fafc;
-    --card: #0d1527;
+    --foreground-muted: #94a3b8;
+    --foreground-faint: #64748b;
+
+    /* Surfaces & Cards */
+    --card: #0e1526;
+    --card-hover: #131c33;
     --card-foreground: #f8fafc;
-    --primary: #06b6d4;
-    --primary-foreground: #020617;
-    --secondary: #10b981;
-    --secondary-foreground: #020617;
-    --muted: #1e293b;
-    --muted-foreground: #94a3b8;
-    --accent: #38bdf8;
-    --accent-foreground: #020617;
+    --panel: #0b1120;
+    --panel-border: rgba(255, 255, 255, 0.08);
+
+    /* Borders & Dividers */
     --border: rgba(255, 255, 255, 0.08);
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --border-highlight: rgba(0, 210, 255, 0.35);
+
+    /* Telemetry & Brand Accents */
+    --primary: #00d2ff;
+    --primary-hover: #38e1ff;
+    --primary-foreground: #040914;
+    --primary-muted: rgba(0, 210, 255, 0.12);
+
+    --cobalt: #3b82f6;
+    --cobalt-foreground: #ffffff;
+    --cobalt-muted: rgba(59, 130, 246, 0.14);
+
+    --secondary: #10b981;
+    --secondary-foreground: #040914;
+    --secondary-muted: rgba(16, 185, 129, 0.12);
+
+    --warning: #f59e0b;
+    --warning-foreground: #040914;
+    --warning-muted: rgba(245, 158, 11, 0.12);
+
+    --critical: #f43f5e;
+    --critical-muted: rgba(244, 63, 94, 0.12);
+
+    --purple: #a855f7;
+    --purple-muted: rgba(168, 85, 247, 0.12);
+
+    --muted: #151e34;
+    --muted-foreground: #94a3b8;
+
+    /* Console / Terminal */
+    --terminal-bg: #050811;
+    --terminal-border: rgba(0, 210, 255, 0.25);
+    --terminal-prompt: #10b981;
+    --terminal-cmd: #38bdf8;
+    --terminal-out: #cbd5e1;
+
+    color-scheme: dark;
+  }
+
+  html.light,
+  [data-theme="light"] {
+    /* Modern Precision Engineering Console — Light Mode (Cisco Clean Lab) */
+    --background: #f8fafc;
+    --background-subtle: #f1f5f9;
+    --foreground: #0f172a;
+    --foreground-muted: #475569;
+    --foreground-faint: #64748b;
+
+    /* Surfaces & Cards */
+    --card: #ffffff;
+    --card-hover: #f8fafc;
+    --card-foreground: #0f172a;
+    --panel: #ffffff;
+    --panel-border: rgba(15, 23, 42, 0.08);
+
+    /* Borders & Dividers */
+    --border: rgba(15, 23, 42, 0.1);
+    --border-subtle: rgba(15, 23, 42, 0.06);
+    --border-highlight: rgba(2, 132, 199, 0.4);
+
+    /* Telemetry & Brand Accents */
+    --primary: #0284c7;
+    --primary-hover: #0369a1;
+    --primary-foreground: #ffffff;
+    --primary-muted: rgba(2, 132, 199, 0.1);
+
+    --cobalt: #2563eb;
+    --cobalt-foreground: #ffffff;
+    --cobalt-muted: rgba(37, 99, 235, 0.1);
+
+    --secondary: #059669;
+    --secondary-foreground: #ffffff;
+    --secondary-muted: rgba(5, 150, 105, 0.1);
+
+    --warning: #d97706;
+    --warning-foreground: #ffffff;
+    --warning-muted: rgba(217, 119, 6, 0.1);
+
+    --critical: #e11d48;
+    --critical-muted: rgba(225, 29, 72, 0.1);
+
+    --purple: #7c3aed;
+    --purple-muted: rgba(124, 58, 237, 0.1);
+
+    --muted: #e2e8f0;
+    --muted-foreground: #64748b;
+
+    /* Console / Terminal */
+    --terminal-bg: #090e1c;
+    --terminal-border: rgba(15, 23, 42, 0.2);
+    --terminal-prompt: #10b981;
+    --terminal-cmd: #38bdf8;
+    --terminal-out: #e2e8f0;
+
+    color-scheme: light;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
 
-/* Custom modern scrollbar */
+/* --------------------------------------------------------------------------
+   Precision Micro-Scrollbar
+   -------------------------------------------------------------------------- */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #070b14;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--muted);
   border-radius: 9999px;
-  border: 2px solid #070b14;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: var(--foreground-faint);
 }
 
-/* Custom Cisco CLI syntax box */
+/* --------------------------------------------------------------------------
+   Engineering Console Micro-Components & Utility Classes
+   -------------------------------------------------------------------------- */
+
+/* NOC Command Bar / Glass Surface */
+.noc-surface {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.03);
+}
+
+.noc-surface-interactive {
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.noc-surface-interactive:hover {
+  background: var(--card-hover);
+  border-color: var(--border-highlight);
+  box-shadow: 0 4px 20px -2px rgba(0, 210, 255, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Authentic Cisco IOS Terminal Box */
 .cli-box {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-left: 3px solid #06b6d4;
+  background: var(--terminal-bg);
+  border: 1px solid var(--terminal-border);
   border-radius: 0.75rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  padding: 1.25rem;
   overflow-x: auto;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .cli-prompt {
-  color: #10b981;
+  color: var(--terminal-prompt);
   font-weight: 600;
 }
 
 .cli-command {
-  color: #38bdf8;
+  color: var(--terminal-cmd);
 }
 
 .cli-output {
-  color: #94a3b8;
+  color: var(--terminal-out);
 }
 
-/* Glowing neon accents */
-.glow-cyan {
-  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.35);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.35);
-}
-
-.glow-amber {
-  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.35);
-}
-
-/* Glassmorphic panels */
-.glass-panel {
-  background: rgba(13, 21, 39, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-panel-hover:hover {
-  transform: translateY(-3px);
-  background: rgba(15, 23, 42, 0.85);
-  border-color: rgba(6, 182, 212, 0.3);
-  box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.15);
-}
-
-/* ==========================================================================
-   INTERFACE IDENTITY 1: NOC OPERATIONS COMMAND CENTER (Dashboard)
-   Cybernetic HUD flight deck aesthetic with neon telemetry edge bars.
-   ========================================================================== */
-.noc-cockpit {
-  background: radial-gradient(circle at 50% -20%, rgba(6, 182, 212, 0.08), transparent 70%),
-              #070b14;
-}
-
-.noc-tile {
-  background: #090e1c;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+/* Telemetry Status Dots with Live Subtle Pulse */
+.telemetry-dot-online {
   position: relative;
-  overflow: hidden;
-  border-radius: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: #10b981;
 }
 
-.noc-tile-amber {
-  border-top: 3px solid #f59e0b;
+.telemetry-dot-online::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  background-color: rgba(16, 185, 129, 0.4);
+  animation: telemetryPulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.noc-tile-cyan {
-  border-top: 3px solid #06b6d4;
+.telemetry-dot-standby {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: #f59e0b;
 }
 
-.noc-tile-emerald {
-  border-top: 3px solid #10b981;
+@keyframes telemetryPulse {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 
-.noc-tile-violet {
-  border-top: 3px solid #8b5cf6;
+/* Engineering Subtle Grid Pattern */
+.noc-grid-bg {
+  background-image: 
+    linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-.noc-tile:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+/* Technical Monospace Matrix Badge */
+.telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: var(--background-subtle);
+  color: var(--foreground-muted);
 }
 
-/* ==========================================================================
-   INTERFACE IDENTITY 2: OFFICIAL PEARSON VUE TEST TERMINAL (Exam Simulator)
-   Official certification workstation aesthetic with crisp high-contrast controls.
-   ========================================================================== */
+.telemetry-badge-cyan {
+  border-color: rgba(0, 210, 255, 0.3);
+  background: var(--primary-muted);
+  color: var(--primary);
+}
+
+.telemetry-badge-emerald {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: var(--secondary-muted);
+  color: #10b981;
+}
+
+.telemetry-badge-amber {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: var(--warning-muted);
+  color: #f59e0b;
+}
+
+.telemetry-badge-purple {
+  border-color: rgba(168, 85, 247, 0.3);
+  background: var(--purple-muted);
+  color: #c084fc;
+}
+
+/* Precision Architectural Slabs */
+.pillar-slab {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pillar-slab:hover {
+  border-color: var(--border-highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.15);
+}
+
+/* Pearson VUE Testing Terminal Workstation */
 .vue-workstation {
-  background: #050811;
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px -5px rgba(6, 182, 212, 0.1);
-  border-radius: 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
 
 .vue-header-bar {
-  background: linear-gradient(180deg, #0b1329 0%, #080d1c 100%);
-  border-bottom: 2px solid #0284c7;
+  background: var(--panel);
+  border-bottom: 2px solid var(--primary);
 }
 
 .vue-option-card {
-  background: #090f20;
-  border: 1px solid #1e293b;
-  border-radius: 0.875rem;
-  transition: all 0.2s ease-in-out;
+  background: var(--background-subtle);
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  transition: all 0.15s ease-in-out;
 }
 
 .vue-option-card:hover {
-  background: #0e1730;
-  border-color: #38bdf8;
-  transform: translateX(3px);
+  border-color: var(--primary);
+  background: var(--card);
 }
 
 .vue-option-selected {
-  background: linear-gradient(90deg, rgba(6, 182, 212, 0.18) 0%, rgba(14, 23, 48, 0.9) 100%);
-  border-color: #06b6d4 !important;
-  box-shadow: 0 0 15px -3px rgba(6, 182, 212, 0.25);
+  border-color: var(--primary) !important;
+  background: var(--primary-muted) !important;
+}
+
+/* Engineering Codex & Study Callouts */
+.codex-callout-tip {
+  background: var(--warning-muted);
+  border-left: 3px solid var(--warning);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.codex-callout-blueprint {
+  background: var(--primary-muted);
+  border-left: 3px solid var(--primary);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.codex-callout-cli {
+  background: var(--secondary-muted);
+  border-left: 3px solid var(--secondary);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
 }
 
 /* Pearson VUE Exam Appointment Ticket */
 .vue-ticket-card {
-  background: linear-gradient(135deg, #070d1e 0%, #040813 100%);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .vue-ticket-card::before {
@@ -194,346 +372,251 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #0284c7 0%, #06b6d4 50%, #3b82f6 100%);
+  background: linear-gradient(90deg, #0284c7 0%, #00d2ff 50%, #3b82f6 100%);
 }
 
 .vue-ticket-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow: 0 15px 35px -10px rgba(6, 182, 212, 0.2);
+  transform: translateY(-2px);
+  border-color: var(--border-highlight);
+  box-shadow: 0 12px 30px -8px rgba(0, 210, 255, 0.12);
 }
 
-.vue-ticket-perforation {
-  background-image: radial-gradient(circle, transparent 4px, #070d1e 4px);
-  background-size: 12px 12px;
+/* Subtle glowing helper for critical actions without neon blur slop */
+.glow-cyan {
+  box-shadow: 0 0 16px -2px rgba(0, 210, 255, 0.25);
 }
 
-/* Simlet CRT Bezel */
-.simlet-crt-frame {
-  background: #02040a;
-  border: 2px solid #1e293b;
-  border-radius: 0.875rem;
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+.glow-emerald {
+  box-shadow: 0 0 16px -2px rgba(16, 185, 129, 0.25);
 }
 
-/* ==========================================================================
-   INTERFACE IDENTITY 3: ENGINEERING CODEX & STUDY WORKBENCH (Chapter Reader)
-   Technical documentation codex with differentiated callouts.
-   ========================================================================== */
-.codex-workbench {
-  background: #070b14;
+.glow-amber {
+  box-shadow: 0 0 16px -2px rgba(245, 158, 11, 0.25);
 }
 
-.codex-callout-tip {
-  background: rgba(245, 158, 11, 0.07);
-  border-left: 4px solid #f59e0b;
-  border-radius: 0.75rem;
+.glass-panel {
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
 }
 
-.codex-callout-blueprint {
-  background: rgba(6, 182, 212, 0.07);
-  border-left: 4px solid #06b6d4;
-  border-radius: 0.75rem;
+.glass-panel-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.codex-callout-cli {
-  background: rgba(16, 185, 129, 0.07);
-  border-left: 4px solid #10b981;
-  border-radius: 0.75rem;
+.glass-panel-hover:hover {
+  transform: translateY(-2px);
+  background: var(--card-hover);
+  border-color: var(--border-highlight);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.12);
 }
 
-/* ==========================================================================
-   INTERFACE IDENTITY 4: 5-PILLAR ARCHITECTURAL SLABS (Homepage)
-   Differentiated numbered slabs with individual color personalities.
-   ========================================================================== */
-.pillar-slab-1 {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
-  border: 1px solid rgba(6, 182, 212, 0.2);
+/* NOC Operations Cockpit & Tile Classes (Dashboard) */
+.noc-cockpit {
+  background: var(--background);
 }
 
-.pillar-slab-2 {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.2);
+.noc-tile {
+  background: var(--card);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.pillar-slab-3 {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+.noc-tile:hover {
+  border-color: var(--border-highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-.pillar-slab-4 {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+.noc-tile-amber {
+  border-top: 3px solid var(--warning);
 }
 
-.pillar-slab-5 {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+.noc-tile-cyan {
+  border-top: 3px solid var(--primary);
 }
 
-/* ==========================================================================
-   LIGHT MODE DESIGN SYSTEM
-   Clean, high-contrast, crisp Cisco Academy aesthetic
-   ========================================================================== */
-html.light {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --primary: #0284c7;
-  --primary-foreground: #ffffff;
-  --secondary: #059669;
-  --secondary-foreground: #ffffff;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #0284c7;
-  --accent-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.08);
-  color-scheme: light;
+.noc-tile-emerald {
+  border-top: 3px solid var(--secondary);
 }
 
-html.light body {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+.noc-tile-violet {
+  border-top: 3px solid var(--purple);
 }
 
-/* Background overrides in light mode */
-html.light .bg-slate-950,
-html.light .bg-\[\#050811\],
-html.light .bg-\[\#070b14\],
-html.light .bg-\[\#060a14\],
-html.light .bg-\[\#070c18\],
-html.light .bg-\[\#080c18\] {
-  background-color: #ffffff !important;
+/* --------------------------------------------------------------------------
+   Ultra-Premium Cinematic & Cybernetic Visual Effects
+   -------------------------------------------------------------------------- */
+
+/* Moving Light Shimmer on Major Headlines */
+.shimmer-headline {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    var(--primary) 35%,
+    #ffffff 50%,
+    var(--secondary) 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmerMove 6s linear infinite;
 }
 
-html.light .bg-slate-900,
-html.light .bg-slate-900\/90,
-html.light .bg-slate-900\/80,
-html.light .bg-slate-900\/70,
-html.light .bg-slate-900\/60,
-html.light .bg-slate-900\/40,
-html.light .bg-slate-900\/30,
-html.light .bg-\[\#090e1c\],
-html.light .bg-\[\#080d1a\],
-html.light .bg-\[\#091124\],
-html.light .bg-\[\#070d1e\],
-html.light .bg-\[\#040711\] {
-  background-color: #f1f5f9 !important;
+html.light .shimmer-headline {
+  background: linear-gradient(
+    90deg,
+    #0f172a 0%,
+    #0284c7 35%,
+    #0f172a 50%,
+    #059669 75%,
+    #0f172a 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmerMove 6s linear infinite;
 }
 
-/* Text overrides in light mode */
-html.light .text-white {
-  color: #0f172a !important;
+@keyframes shimmerMove {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
-html.light .text-slate-100,
-html.light .text-slate-200,
-html.light .text-slate-300 {
-  color: #1e293b !important;
+/* Specular Glass Panel with Iridescent Top Lip */
+.specular-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html.light .text-slate-400 {
-  color: #475569 !important;
+.specular-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.6), transparent);
+  opacity: 0.7;
 }
 
-html.light .text-slate-500 {
-  color: #64748b !important;
+.specular-card:hover {
+  border-color: var(--border-highlight);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -15px rgba(0, 210, 255, 0.15), 0 0 0 1px rgba(0, 210, 255, 0.2);
 }
 
-/* Border overrides in light mode */
-html.light .border-slate-800,
-html.light .border-slate-800\/80,
-html.light .border-slate-800\/60,
-html.light .border-slate-700,
-html.light .border-slate-700\/80 {
-  border-color: #cbd5e1 !important;
+/* Cisco Hardware Physical Blinker LED */
+.cisco-led-active {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: ledBlink 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Glass panel in light mode */
-html.light .glass-panel {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+.cisco-led-amber {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background-color: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
 }
 
-html.light .glass-panel-hover:hover {
-  background: #ffffff !important;
-  border-color: #0284c7 !important;
-  box-shadow: 0 15px 35px -5px rgba(2, 132, 199, 0.12) !important;
+@keyframes ledBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.85); }
 }
 
-/* NOC Operations Cockpit in Light Mode */
-html.light .noc-cockpit {
-  background: radial-gradient(circle at 50% -20%, rgba(2, 132, 199, 0.08), transparent 70%), #f8fafc !important;
+/* Animated Packet Flow Along Network Lines */
+@keyframes packetTravelX {
+  0% { transform: translateX(0); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(calc(100% - 16px)); opacity: 0; }
 }
 
-html.light .noc-tile {
-  background: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.04) !important;
+.packet-stream-indicator {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Pearson VUE Testing Terminal in Light Mode */
-html.light .vue-workstation {
-  background: #ffffff !important;
-  border: 1px solid #cbd5e1 !important;
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08) !important;
+.packet-stream-indicator::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 9999px;
+  background: #00d2ff;
+  box-shadow: 0 0 12px #00d2ff, 0 0 24px #00d2ff;
+  animation: packetTravelX 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-html.light .vue-header-bar {
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-}
-html.light .vue-header-bar .text-white {
-  color: #ffffff !important;
-}
-html.light .vue-header-bar .text-slate-400,
-html.light .vue-header-bar .text-slate-300 {
-  color: #94a3b8 !important;
+/* NOC Cockpit & Tile Suite */
+.noc-cockpit {
+  background: var(--background);
+  color: var(--foreground);
 }
 
-html.light .vue-ticket-card {
-  background: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.05) !important;
+.noc-tile {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html.light .vue-option-card {
-  background: #ffffff !important;
-  border-color: #e2e8f0 !important;
+.noc-tile:hover {
+  background: var(--card-hover);
+  border-color: var(--border-highlight);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
 }
 
-html.light .vue-option-card:hover {
-  background: #f8fafc !important;
-  border-color: #0284c7 !important;
+.noc-tile-amber {
+  border-color: rgba(245, 158, 11, 0.25);
+}
+.noc-tile-amber:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 12px 24px -8px rgba(245, 158, 11, 0.15);
 }
 
-html.light .vue-option-selected {
-  background: rgba(2, 132, 199, 0.08) !important;
-  border-color: #0284c7 !important;
-  box-shadow: 0 0 15px -3px rgba(2, 132, 199, 0.2) !important;
+.noc-tile-cyan {
+  border-color: rgba(6, 182, 212, 0.25);
+}
+.noc-tile-cyan:hover {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 12px 24px -8px rgba(6, 182, 212, 0.15);
 }
 
-/* Engineering Codex in Light Mode */
-html.light .codex-workbench {
-  background: #f8fafc !important;
+.noc-tile-emerald {
+  border-color: rgba(16, 185, 129, 0.25);
+}
+.noc-tile-emerald:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 12px 24px -8px rgba(16, 185, 129, 0.15);
 }
 
-html.light .codex-callout-tip {
-  background: rgba(245, 158, 11, 0.08) !important;
-  border-left: 4px solid #d97706 !important;
+.noc-tile-violet, .noc-tile-purple {
+  border-color: rgba(168, 85, 247, 0.25);
 }
-
-html.light .codex-callout-blueprint {
-  background: rgba(2, 132, 199, 0.08) !important;
-  border-left: 4px solid #0284c7 !important;
+.noc-tile-violet:hover, .noc-tile-purple:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 12px 24px -8px rgba(168, 85, 247, 0.15);
 }
-
-html.light .codex-callout-cli {
-  background: rgba(5, 150, 105, 0.08) !important;
-  border-left: 4px solid #059669 !important;
-}
-
-/* 5-Pillar Architectural Slabs in Light Mode */
-html.light .pillar-slab-1,
-html.light .pillar-slab-2,
-html.light .pillar-slab-3,
-html.light .pillar-slab-4,
-html.light .pillar-slab-5 {
-  background: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
-}
-
-/* Global Navbar & Header in Light Mode */
-html.light header {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  border-bottom: 1px solid #e2e8f0 !important;
-  backdrop-filter: blur(16px) !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
-}
-
-html.light header .text-white {
-  color: #0f172a !important;
-}
-
-html.light header .text-slate-300,
-html.light header .text-slate-400 {
-  color: #334155 !important;
-}
-
-html.light header .text-slate-300:hover,
-html.light header .text-slate-400:hover {
-  color: #0284c7 !important;
-}
-
-html.light header .bg-slate-900\/80,
-html.light header .bg-slate-900,
-html.light header .bg-slate-950,
-html.light header .bg-slate-950\/80 {
-  background-color: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
-  color: #1e293b !important;
-}
-
-/* Sticky Chapter Reader HUD in Light Mode */
-html.light .sticky.top-16 {
-  background-color: rgba(255, 255, 255, 0.96) !important;
-  border-bottom: 1px solid #cbd5e1 !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
-}
-
-html.light .sticky.top-16 .bg-slate-950,
-html.light .sticky.top-16 .bg-slate-900 {
-  background-color: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
-}
-
-html.light .sticky.top-16 .text-slate-300,
-html.light .sticky.top-16 .text-slate-400 {
-  color: #475569 !important;
-}
-
-/* Cisco CLI Terminal & Simlet screens MUST remain authentic dark high-contrast consoles in light mode */
-html.light .simlet-crt-frame,
-html.light .cli-box {
-  background-color: #020617 !important;
-  color: #38bdf8 !important;
-  border-color: #1e293b !important;
-  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.25) !important;
-}
-
-html.light .simlet-crt-frame *,
-html.light .cli-box * {
-  border-color: #1e293b;
-}
-
-html.light .simlet-crt-frame .bg-\[\#040711\],
-html.light .cli-box .bg-\[\#040711\],
-html.light .simlet-crt-frame .bg-\[\#060a14\],
-html.light .cli-box .bg-\[\#060a14\],
-html.light .simlet-crt-frame .bg-\[\#091124\],
-html.light .cli-box .bg-\[\#091124\],
-html.light .simlet-crt-frame .bg-slate-950,
-html.light .cli-box .bg-slate-950,
-html.light .simlet-crt-frame .bg-slate-900,
-html.light .cli-box .bg-slate-900 {
-  background-color: #040711 !important;
-}
-
-html.light .simlet-crt-frame .text-slate-300,
-html.light .cli-box .text-slate-300,
-html.light .simlet-crt-frame .text-slate-400,
-html.light .cli-box .text-slate-400,
-html.light .simlet-crt-frame .text-slate-500,
-html.light .cli-box .text-slate-500 {
-  color: #94a3b8 !important;
-}
-
-html.light .simlet-crt-frame .text-white,
-html.light .cli-box .text-white {
-  color: #f8fafc !important;
-}
-
-
 

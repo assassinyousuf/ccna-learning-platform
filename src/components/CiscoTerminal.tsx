@@ -397,22 +397,22 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms`;
 
   return (
     <div
-      className={`rounded-2xl border border-slate-800 bg-slate-950 font-mono shadow-2xl overflow-hidden transition-all flex flex-col ${
+      className={`rounded-xl border border-[var(--terminal-border)] bg-[var(--terminal-bg)] font-mono shadow-2xl overflow-hidden transition-all flex flex-col ${
         fullScreen ? "fixed inset-4 z-50 max-h-none" : "h-[560px]"
       }`}
     >
       {/* Terminal Titlebar */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 text-xs text-slate-300 select-none">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-[var(--panel)] border-b border-[var(--border)] text-xs text-[var(--foreground-muted)] select-none">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
-            <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
-            <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
           </div>
-          <div className="h-4 w-[1px] bg-slate-700 mx-1"></div>
-          <TerminalIcon className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="font-semibold text-white tracking-wide">{title}</span>
-          <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 text-[10px] border border-cyan-500/20 uppercase font-mono">
+          <div className="h-4 w-[1px] bg-[var(--border)] mx-1"></div>
+          <TerminalIcon className="w-3.5 h-3.5 text-[var(--primary)]" />
+          <span className="font-semibold text-[var(--foreground)] tracking-wide">{title}</span>
+          <span className="telemetry-badge telemetry-badge-cyan">
             {mode} mode
           </span>
         </div>
@@ -420,12 +420,12 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms`;
         <div className="flex items-center gap-2">
           {/* Quick preset suggestions */}
           <div className="hidden lg:flex items-center gap-1.5 mr-2">
-            <span className="text-[10px] text-slate-400">Quick:</span>
+            <span className="text-[10px] text-[var(--foreground-muted)]">Quick:</span>
             {["show ip int br", "show vlan br", "show mac", "conf t"].map((c) => (
               <button
                 key={c}
                 onClick={() => loadPresetCommand(c)}
-                className="px-2 py-0.5 rounded bg-slate-800 hover:bg-cyan-500/20 hover:text-cyan-300 text-[10px] text-slate-300 transition-colors border border-slate-700/60"
+                className="px-2 py-0.5 rounded bg-[var(--card)] hover:bg-[var(--primary-muted)] hover:text-[var(--primary)] text-[10px] text-[var(--foreground-muted)] transition-colors border border-[var(--border)]"
               >
                 {c}
               </button>
@@ -434,24 +434,27 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms`;
 
           <button
             onClick={toggleSound}
-            className="p-1 rounded hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+            className="p-1 rounded hover:bg-[var(--card)] text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             title={muted ? "Unmute terminal sound" : "Mute terminal sound"}
+            aria-label="Toggle terminal audio"
           >
-            {muted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-cyan-400" />}
+            {muted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-[var(--primary)]" />}
           </button>
 
           <button
             onClick={() => setLogs([])}
-            className="p-1 rounded hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+            className="p-1 rounded hover:bg-[var(--card)] text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             title="Clear output"
+            aria-label="Clear output"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
 
           <button
             onClick={() => setFullScreen(!fullScreen)}
-            className="p-1 rounded hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+            className="p-1 rounded hover:bg-[var(--card)] text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
             title={fullScreen ? "Exit full screen" : "Full screen"}
+            aria-label="Toggle fullscreen"
           >
             {fullScreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
           </button>
@@ -460,7 +463,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms`;
 
       {/* Terminal Screen & Logs */}
       <div
-        className="flex-1 p-4 overflow-y-auto space-y-1 text-[13px] leading-relaxed select-text cursor-text bg-slate-950/95 scrollbar-thin scrollbar-thumb-slate-800"
+        className="flex-1 p-4 overflow-y-auto space-y-1 text-[13px] leading-relaxed select-text cursor-text bg-[var(--terminal-bg)]"
         onClick={() => inputRef.current?.focus()}
       >
         {logs.map((log, idx) => (

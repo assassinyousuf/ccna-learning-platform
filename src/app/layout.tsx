@@ -39,7 +39,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-slate-950 text-slate-100 flex flex-col min-h-screen selection:bg-cyan-500 selection:text-slate-950 transition-colors duration-200">
+      <body className="bg-[var(--background)] text-[var(--foreground)] flex flex-col min-h-screen selection:bg-[var(--primary)] selection:text-[var(--primary-foreground)] transition-colors duration-200">
         <Providers>
           <Navbar />
           <main className="flex-1">{children}</main>

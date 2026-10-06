@@ -1,33 +1,64 @@
 import NextAuth from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions, CANONICAL_URL } from "@/lib/auth";
 import { NextRequest } from "next/server";
 
 const nextAuthHandler = NextAuth(authOptions);
 
-async function handler(req: NextRequest, ctx: any) {
-  const host = req.headers.get("x-forwarded-host") || req.headers.get("host") || "";
-  const proto = req.headers.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
-  const isLocal = host.includes("localhost") || host.includes("127.0.0.1");
+// Trusted domain validation to prevent Host Header Injection / Environmental Pollution
+function isTrustedHost(host: string): boolean {
+  if (!host) return false;
+  const cleanHost = host.split(":")[0].toLowerCase();
+  
+  // Local development
+  if (cleanHost === "localhost" || cleanHost === "127.0.0.1") return true;
+  
+  // Vercel deployment domains
+  if (cleanHost.endsWith(".vercel.app")) return true;
+  
+  // Canonical production URL
+  try {
+    const canonicalHost = new URL(CANONICAL_URL).hostname.toLowerCase();
+    if (cleanHost === canonicalHost) return true;
+  } catch {}
 
-  // On any remote / Vercel deployment: dynamically bind NEXTAUTH_URL to the incoming request's host
-  if (!isLocal && host) {
-    process.env.NEXTAUTH_URL = `${proto}://${host}`;
+  // Explicit allowed host from environment if configured
+  if (process.env.NEXTAUTH_URL) {
+    try {
+      const envHost = new URL(process.env.NEXTAUTH_URL).hostname.toLowerCase();
+      if (cleanHost === envHost) return true;
+    } catch {}
+  }
+
+  return false;
+}
+
+async function handler(req: NextRequest, ctx: any) {
+  const rawHost = req.headers.get("x-forwarded-host") || req.headers.get("host") || "";
+  const isLocal = rawHost.includes("localhost") || rawHost.includes("127.0.0.1");
+
+  // Only bind trusted hosts to prevent Host Header Injection / Cache Poisoning
+  if (!isLocal && isTrustedHost(rawHost)) {
+    const proto = req.headers.get("x-forwarded-proto") === "http" ? "http" : "https";
+    process.env.NEXTAUTH_URL = `${proto}://${rawHost}`;
     process.env.AUTH_TRUST_HOST = "true";
   }
 
   const response = await nextAuthHandler(req, ctx);
 
-  // If deployed on Vercel or remote host, STRICTLY intercept and purge any localhost redirect
+  // If deployed on Vercel or remote host, intercept and purge any localhost redirect
   if (!isLocal && response && response.headers) {
     const location = response.headers.get("location");
     if (location && (location.includes("localhost") || location.includes("127.0.0.1"))) {
-      const currentOrigin = `${proto}://${host}`;
+      const trustedTarget = isTrustedHost(rawHost) 
+        ? `https://${rawHost}` 
+        : CANONICAL_URL;
+
       const encodedLocal = encodeURIComponent("http://localhost:3000");
-      const encodedCurrent = encodeURIComponent(currentOrigin);
+      const encodedTarget = encodeURIComponent(trustedTarget);
 
       const rewrittenLocation = location
-        .replace(/https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/g, currentOrigin)
-        .replace(new RegExp(encodedLocal, "g"), encodedCurrent);
+        .replace(/https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/g, trustedTarget)
+        .replace(new RegExp(encodedLocal, "g"), encodedTarget);
 
       const newHeaders = new Headers(response.headers);
       newHeaders.set("location", rewrittenLocation);

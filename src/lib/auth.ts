@@ -26,9 +26,9 @@ export const authOptions: NextAuthOptions = {
           GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID.replace(/["']/g, "").trim(),
             clientSecret: process.env.GOOGLE_CLIENT_SECRET.replace(/["']/g, "").trim(),
-            // Disabling PKCE and state cookie checks prevents OAuthCallbackError caused by
-            // browsers dropping Lax cookies on cross-origin redirects from HTTPS Google to HTTP localhost
-            checks: ["none"],
+            // Enforce PKCE and state checks on production/HTTPS to prevent OAuth CSRF/code injection.
+            // In local HTTP dev, checks are relaxed to prevent cross-origin cookie dropping.
+            checks: isVercel ? ["pkce", "state"] : ["none"],
             authorization: {
               params: {
                 prompt: "select_account",
