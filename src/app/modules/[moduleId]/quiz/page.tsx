@@ -17,6 +17,7 @@ import {
   BookOpen,
   Sparkles
 } from "lucide-react";
+import { ClearanceGate } from "@/components/ClearanceGate";
 
 export default function ModuleQuizPage() {
   const params = useParams();
@@ -188,7 +189,8 @@ export default function ModuleQuizPage() {
   const answeredCount = Object.keys(selectedAnswers).length;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <ClearanceGate resourceTitle={moduleData ? `${moduleData.title} Quiz` : "Module Quiz"}>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
       {/* Header */}
       <div className="mb-8 pb-6 border-b border-slate-800 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs mb-3">
@@ -411,5 +413,6 @@ export default function ModuleQuizPage() {
         </div>
       )}
     </div>
+    </ClearanceGate>
   );
 }

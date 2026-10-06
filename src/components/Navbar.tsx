@@ -132,6 +132,18 @@ export function Navbar() {
                 </span>
               </Link>
 
+              {/* ADMIN PORTAL LINK (Exclusive to Administrators) */}
+              {session?.user && (session.user as any).role === "ADMIN" && (
+                <Link
+                  href="/admin"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30 hover:bg-purple-500/25 transition-all shadow-sm whitespace-nowrap"
+                  title="Central Cadet Clearance & Permissions Portal"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Admin Portal</span>
+                </Link>
+              )}
+
               {/* TOOLS DROPDOWN MENU */}
               <div className="relative" ref={toolsDropdownRef}>
                 <button
@@ -176,6 +188,27 @@ export function Navbar() {
                         </div>
                       </div>
                     </button>
+
+                    {session?.user && (session.user as any).role === "ADMIN" && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="w-full flex items-start gap-3 p-2 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 transition-colors text-left group"
+                      >
+                        <div className="p-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 group-hover:border-purple-300 shrink-0">
+                          <ShieldCheck className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-purple-300 group-hover:text-white flex items-center gap-1.5">
+                            <span>NOC Cadet Clearance Portal</span>
+                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-200 font-mono">ADMIN</span>
+                          </div>
+                          <div className="text-[11px] text-purple-400/80">
+                            Approve users &amp; configure permissions
+                          </div>
+                        </div>
+                      </Link>
+                    )}
 
                     <Link
                       href="/dashboard"
@@ -311,6 +344,19 @@ export function Navbar() {
                       <span className="font-semibold text-xs text-[var(--foreground)]">
                         {session.user.name?.split(" ")[0] || "Cadet"}
                       </span>
+                      {(session.user as any).role === "ADMIN" ? (
+                        <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                          ADMIN
+                        </span>
+                      ) : (session.user as any).status === "APPROVED" ? (
+                        <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                          CLEARED
+                        </span>
+                      ) : (
+                        <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                          PENDING
+                        </span>
+                      )}
                     </Link>
                     <button
                       onClick={() => signOut()}
@@ -418,6 +464,17 @@ export function Navbar() {
               <LayoutDashboard className="w-4 h-4 text-purple-400" />
               <span>Command Center</span>
             </Link>
+
+            {session?.user && (session.user as any).role === "ADMIN" && (
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-bold text-purple-300 bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/20 transition-colors"
+              >
+                <ShieldCheck className="w-4 h-4 text-purple-400" />
+                <span>NOC Admin Portal</span>
+              </Link>
+            )}
 
             <button
               onClick={() => {
