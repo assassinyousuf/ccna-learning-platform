@@ -137,27 +137,27 @@ export default function HomePage() {
         {/* Content Container (relative z-10) */}
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
           {/* Release / Spec Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-8 shadow-xl hover:border-cyan-400 transition-colors">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--card)]/90 backdrop-blur-md border border-cyan-500/30 text-cyan-600 dark:text-cyan-300 text-xs font-mono mb-8 shadow-sm hover:border-cyan-400 transition-colors">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400 animate-pulse" />
             <span>Experience Liftoff: Cisco CCNA 200-301 v1.1 Platform</span>
           </div>
 
           {/* Hero Title & Pitch */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-5xl mx-auto leading-[1.08] select-none">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[var(--foreground)] max-w-5xl mx-auto leading-[1.08] select-none">
             Experience Liftoff in{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500">
               Cisco Network Mastery
             </span>
           </h1>
 
-          <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
-            Architected by <span className="text-white font-semibold">Md. Yousuf Hossain</span> for complete CCNA 200-301 fluency. Master 49 chapters, execute 367 live Cisco commands, drill subnetting, and verify video proof.
+          <p className="mt-6 text-base sm:text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed font-normal">
+            Architected by <span className="text-[var(--foreground)] font-semibold">Md. Yousuf Hossain</span> for complete CCNA 200-301 fluency. Master 49 chapters, execute 367 live Cisco commands, drill subnetting, and verify video proof.
           </p>
 
           {/* Auth Error Banner */}
           {authError && (
-            <div className="mt-8 max-w-xl mx-auto p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex flex-col items-center gap-2 shadow-lg">
-              <div className="flex items-center gap-2 font-semibold text-amber-400 text-sm">
+            <div className="mt-8 max-w-xl mx-auto p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-300 text-xs flex flex-col items-center gap-2 shadow-lg">
+              <div className="flex items-center gap-2 font-semibold text-amber-600 dark:text-amber-400 text-sm">
                 <ShieldAlert className="w-4 h-4" />
                 <span>OAuth Notice: {authError === "OAuthCallback" ? "Google Callback Verification Failed" : authError}</span>
               </div>
@@ -194,17 +194,17 @@ export default function HomePage() {
 
                 <Link
                   href="/practice-test"
-                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-amber-400 bg-slate-900/80 backdrop-blur-md border border-amber-500/30 hover:border-amber-400 hover:bg-amber-950/40 transition-all shadow-lg"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-amber-600 dark:text-amber-400 bg-[var(--card)] border border-amber-500/30 hover:border-amber-400 hover:bg-amber-500/10 transition-all shadow-sm"
                 >
-                  <Award className="w-4 h-4 text-amber-400" />
+                  <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
                   <span>CCNA Exam Simulator (450 Qs)</span>
                 </Link>
 
                 <a
                   href="#packet-flight"
-                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-slate-300 bg-slate-900/80 backdrop-blur-md border border-slate-700/60 hover:text-white hover:border-slate-500 transition-all shadow-lg"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] hover:border-cyan-500 hover:bg-[var(--card-hover)] transition-all shadow-sm"
                 >
-                  <Activity className="w-4 h-4 text-cyan-400 animate-pulse" />
+                  <Activity className="w-4 h-4 text-cyan-500 dark:text-cyan-400 animate-pulse" />
                   <span>Packet Flight Simulator</span>
                 </a>
               </>
@@ -212,26 +212,26 @@ export default function HomePage() {
               <>
                 <button
                   onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-                  className="flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 bg-white hover:bg-slate-100 transition-all shadow-xl group border border-slate-200"
+                  className="flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-xs sm:text-sm text-[var(--foreground)] bg-[var(--card)] hover:bg-[var(--card-hover)] transition-all shadow-md group border border-[var(--border)]"
                 >
                   <GoogleIcon className="w-4 h-4" />
                   <span>Sign In with Google</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform text-slate-700" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform text-[var(--foreground-muted)]" />
                 </button>
 
                 <a
                   href="#curriculum"
-                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-cyan-300 bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-950/40 transition-all shadow-lg"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-cyan-600 dark:text-cyan-300 bg-[var(--card)] border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-500/10 transition-all shadow-sm"
                 >
-                  <BookOpen className="w-4 h-4 text-cyan-400" />
+                  <BookOpen className="w-4 h-4 text-cyan-500 dark:text-cyan-400" />
                   <span>Explore Syllabus Matrix</span>
                 </a>
 
                 <Link
                   href="/practice-test"
-                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-amber-400 bg-slate-900/80 backdrop-blur-md border border-amber-500/30 hover:border-amber-400 hover:bg-amber-950/40 transition-all shadow-lg"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-amber-600 dark:text-amber-400 bg-[var(--card)] border border-amber-500/30 hover:border-amber-400 hover:bg-amber-500/10 transition-all shadow-sm"
                 >
-                  <Award className="w-4 h-4 text-amber-400" />
+                  <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
                   <span>CCNA Exam Simulator</span>
                 </Link>
               </>
@@ -242,9 +242,9 @@ export default function HomePage() {
                 sounds.playCommandSuccess();
                 setIsSubnetOpen(true);
               }}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-slate-300 bg-slate-900/80 backdrop-blur-md border border-slate-700/60 hover:text-white hover:border-slate-500 transition-all shadow-lg"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] hover:border-emerald-500 hover:bg-[var(--card-hover)] transition-all shadow-sm"
             >
-              <Calculator className="w-4 h-4 text-emerald-400" />
+              <Calculator className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
               <span>32-Bit Subnet Drill</span>
             </button>
           </div>
@@ -1065,21 +1065,21 @@ export default function HomePage() {
           </div>
 
           {/* Central High-Tech Clearance Prompt Card */}
-          <div className="mb-14 rounded-3xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-cyan-500/30 p-8 sm:p-10 backdrop-blur-xl shadow-2xl relative overflow-hidden text-center max-w-4xl mx-auto">
+          <div className="mb-14 rounded-3xl bg-[var(--card)] dark:bg-gradient-to-b dark:from-slate-900/90 dark:to-slate-950/90 border border-cyan-500/30 p-8 sm:p-10 backdrop-blur-xl shadow-xl relative overflow-hidden text-center max-w-4xl mx-auto">
             {/* Ambient Cyber Grid Accent */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl -z-10 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl -z-10 pointer-events-none" />
 
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-mono mb-6">
-              <Lock className="w-3.5 h-3.5 text-amber-400" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-300 text-xs font-mono mb-6">
+              <Lock className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
               <span>RESTRICTED PROTOCOL • CADET CLEARANCE REQUIRED</span>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[var(--foreground)] mb-3">
               Cadet Sign-In Required to Unlock Full Blueprints
             </h3>
 
-            <p className="text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed mb-8">
+            <p className="text-sm text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed mb-8">
               Full chapter study notes, syntax-highlighted Cisco IOS command emulators, 450 authentic exam questions with simlets, and Google Drive video lab submission pipelines are protected under standard Cisco Academy protocols.
             </p>
 
@@ -1095,30 +1095,30 @@ export default function HomePage() {
 
               <button
                 onClick={() => setIsSubnetOpen(true)}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-all"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-[var(--background-subtle)] hover:bg-[var(--card-hover)] border border-[var(--border)] text-[var(--foreground)] text-xs font-mono transition-all"
               >
-                <Calculator className="w-4 h-4 text-emerald-400" />
+                <Calculator className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                 <span>Try 32-Bit Subnet Drill (Public Preview)</span>
               </button>
             </div>
 
             {/* Unlocked Features Badge Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800/80 text-left font-mono">
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <div className="text-[10px] text-slate-500 uppercase">Curriculum</div>
-                <div className="text-xs font-bold text-cyan-300 mt-0.5">49 Chapters</div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-[var(--border)] text-left font-mono">
+              <div className="p-3 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)]">
+                <div className="text-[10px] text-[var(--foreground-muted)] uppercase">Curriculum</div>
+                <div className="text-xs font-bold text-cyan-600 dark:text-cyan-300 mt-0.5">49 Chapters</div>
               </div>
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <div className="text-[10px] text-slate-500 uppercase">Interactive CLI</div>
-                <div className="text-xs font-bold text-emerald-300 mt-0.5">367 Commands</div>
+              <div className="p-3 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)]">
+                <div className="text-[10px] text-[var(--foreground-muted)] uppercase">Interactive CLI</div>
+                <div className="text-xs font-bold text-emerald-600 dark:text-emerald-300 mt-0.5">367 Commands</div>
               </div>
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <div className="text-[10px] text-slate-500 uppercase">Exam Simulator</div>
-                <div className="text-xs font-bold text-amber-300 mt-0.5">450 Questions</div>
+              <div className="p-3 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)]">
+                <div className="text-[10px] text-[var(--foreground-muted)] uppercase">Exam Simulator</div>
+                <div className="text-xs font-bold text-amber-600 dark:text-amber-300 mt-0.5">450 Questions</div>
               </div>
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <div className="text-[10px] text-slate-500 uppercase">Video Verification</div>
-                <div className="text-xs font-bold text-purple-300 mt-0.5">5TB Cloud Pipeline</div>
+              <div className="p-3 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)]">
+                <div className="text-[10px] text-[var(--foreground-muted)] uppercase">Video Verification</div>
+                <div className="text-xs font-bold text-purple-600 dark:text-purple-300 mt-0.5">5TB Cloud Pipeline</div>
               </div>
             </div>
           </div>

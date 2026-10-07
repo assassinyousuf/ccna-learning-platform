@@ -162,10 +162,10 @@ export function Navbar() {
 
                 {/* Dropdown Menu Panel */}
                 {toolsMenuOpen && (
-                  <div className="absolute left-0 mt-2 w-80 rounded-2xl bg-[#080d1a] border border-slate-800 shadow-2xl p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150 space-y-1">
+                  <div className="absolute left-0 mt-2 w-80 rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-2xl p-2.5 z-50 animate-in fade-in slide-from-top-2 duration-150 space-y-1">
                     
                     {/* Interactive Engineering Workbenches */}
-                    <div className="px-2.5 py-1 text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider">
+                    <div className="px-2.5 py-1 text-[10px] font-mono font-bold text-[var(--foreground-muted)] uppercase tracking-wider">
                       Interactive Workbenches
                     </div>
 
@@ -174,16 +174,16 @@ export function Navbar() {
                         setToolsMenuOpen(false);
                         setSubnetCalcOpen(true);
                       }}
-                      className="w-full flex items-start gap-3 p-2 rounded-xl hover:bg-slate-900 transition-colors text-left group"
+                      className="w-full flex items-start gap-3 p-2 rounded-xl hover:bg-[var(--card-hover)] transition-colors text-left group"
                     >
-                      <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 group-hover:border-emerald-400 shrink-0">
+                      <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 dark:text-emerald-400 group-hover:border-emerald-400 shrink-0">
                         <Calculator className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-white group-hover:text-emerald-300">
+                        <div className="text-xs font-bold text-[var(--foreground)] group-hover:text-emerald-500 dark:group-hover:text-emerald-300">
                           32-Bit Subnet Calculator
                         </div>
-                        <div className="text-[11px] text-slate-400">
+                        <div className="text-[11px] text-[var(--foreground-muted)]">
                           IPv4 &amp; IPv6 CIDR, VLSM &amp; speed drill
                         </div>
                       </div>
@@ -195,15 +195,15 @@ export function Navbar() {
                         onClick={() => setToolsMenuOpen(false)}
                         className="w-full flex items-start gap-3 p-2 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 transition-colors text-left group"
                       >
-                        <div className="p-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 group-hover:border-purple-300 shrink-0">
+                        <div className="p-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-600 dark:text-purple-400 group-hover:border-purple-300 shrink-0">
                           <ShieldCheck className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="text-xs font-bold text-purple-300 group-hover:text-white flex items-center gap-1.5">
+                          <div className="text-xs font-bold text-purple-600 dark:text-purple-300 group-hover:text-[var(--foreground)] flex items-center gap-1.5">
                             <span>NOC Cadet Clearance Portal</span>
-                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-200 font-mono">ADMIN</span>
+                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-700 dark:text-purple-200 font-mono font-bold">ADMIN</span>
                           </div>
-                          <div className="text-[11px] text-purple-400/80">
+                          <div className="text-[11px] text-purple-600/80 dark:text-purple-400/80">
                             Approve users &amp; configure permissions
                           </div>
                         </div>
@@ -213,16 +213,16 @@ export function Navbar() {
                     <Link
                       href="/dashboard"
                       onClick={() => setToolsMenuOpen(false)}
-                      className="w-full flex items-start gap-3 p-2 rounded-xl hover:bg-slate-900 transition-colors text-left group"
+                      className="w-full flex items-start gap-3 p-2 rounded-xl hover:bg-[var(--card-hover)] transition-colors text-left group"
                     >
-                      <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 group-hover:border-purple-400 shrink-0">
+                      <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400 group-hover:border-purple-400 shrink-0">
                         <LayoutDashboard className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-white group-hover:text-purple-300">
+                        <div className="text-xs font-bold text-[var(--foreground)] group-hover:text-purple-500 dark:group-hover:text-purple-300">
                           Command Center Cockpit
                         </div>
-                        <div className="text-[11px] text-slate-400">
+                        <div className="text-[11px] text-[var(--foreground-muted)]">
                           Cadet milestone tracker &amp; cohort metrics
                         </div>
                       </div>
@@ -231,37 +231,37 @@ export function Navbar() {
                     <Link
                       href="/#packet-flight"
                       onClick={() => setToolsMenuOpen(false)}
-                      className="w-full flex items-start gap-3 p-2 rounded-xl hover:bg-slate-900 transition-colors text-left group"
+                      className="w-full flex items-start gap-3 p-2 rounded-xl hover:bg-[var(--card-hover)] transition-colors text-left group"
                     >
-                      <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 group-hover:border-cyan-400 shrink-0">
+                      <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 dark:text-cyan-400 group-hover:border-cyan-400 shrink-0">
                         <Zap className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-white group-hover:text-cyan-300">
+                        <div className="text-xs font-bold text-[var(--foreground)] group-hover:text-cyan-500 dark:group-hover:text-cyan-300">
                           Packet Flight Simulator
                         </div>
-                        <div className="text-[11px] text-slate-400">
+                        <div className="text-[11px] text-[var(--foreground-muted)]">
                           Real-time ARP, IP &amp; ICMP packet flow
                         </div>
                       </div>
                     </Link>
 
                     {/* Preferences & Utilities */}
-                    <div className="pt-2 mt-1 border-t border-slate-800/80 px-2.5 py-1 text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider flex items-center justify-between">
+                    <div className="pt-2 mt-1 border-t border-[var(--border)] px-2.5 py-1 text-[10px] font-mono font-bold text-[var(--foreground-muted)] uppercase tracking-wider flex items-center justify-between">
                       <span>Console Preferences</span>
                     </div>
 
-                    <div className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-slate-900">
-                      <span className="text-xs text-slate-300 flex items-center gap-2">
-                        {isMuted ? <VolumeX className="w-3.5 h-3.5 text-slate-500" /> : <Volume2 className="w-3.5 h-3.5 text-cyan-400" />}
+                    <div className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-[var(--card-hover)]">
+                      <span className="text-xs text-[var(--foreground)] flex items-center gap-2">
+                        {isMuted ? <VolumeX className="w-3.5 h-3.5 text-[var(--foreground-muted)]" /> : <Volume2 className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />}
                         <span>Synthesized Sound FX</span>
                       </span>
                       <button
                         onClick={toggleSound}
                         className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded border transition-colors ${
                           isMuted 
-                            ? "bg-slate-800 border-slate-700 text-slate-400" 
-                            : "bg-cyan-500/20 border-cyan-500/40 text-cyan-300"
+                            ? "bg-[var(--background-subtle)] border-[var(--border)] text-[var(--foreground-muted)]" 
+                            : "bg-cyan-500/20 border-cyan-500/40 text-cyan-600 dark:text-cyan-300"
                         }`}
                       >
                         {isMuted ? "MUTED" : "ACTIVE"}
@@ -272,27 +272,27 @@ export function Navbar() {
                       href="https://github.com/assassinyousuf/ccna-learning-platform"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-slate-900 text-xs text-slate-300 group"
+                      className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-[var(--card-hover)] text-xs text-[var(--foreground)] group"
                     >
                       <span className="flex items-center gap-2">
-                        <Github className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
+                        <Github className="w-3.5 h-3.5 text-[var(--foreground-muted)] group-hover:text-[var(--foreground)]" />
                         <span>Source Code Repository</span>
                       </span>
-                      <span className="text-[10px] text-slate-500 font-mono">GitHub ↗</span>
+                      <span className="text-[10px] text-[var(--foreground-muted)] font-mono">GitHub ↗</span>
                     </a>
 
                     {/* Integrated System Telemetry Footer */}
-                    <div className="pt-2 mt-1 border-t border-slate-800/80 p-2.5 bg-slate-950/80 rounded-xl space-y-1 text-[10px] font-mono">
-                      <div className="flex items-center justify-between text-slate-400">
-                        <span className="text-emerald-400 flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                    <div className="pt-2 mt-1 border-t border-[var(--border)] p-2.5 bg-[var(--background-subtle)] rounded-xl space-y-1 text-[10px] font-mono">
+                      <div className="flex items-center justify-between text-[var(--foreground-muted)]">
+                        <span className="text-emerald-500 dark:text-emerald-400 flex items-center gap-1 font-semibold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-ping" />
                           NOC: CCNA-CORE-01
                         </span>
-                        <span className="text-cyan-400">{ping}ms ping</span>
+                        <span className="text-cyan-600 dark:text-cyan-400">{ping}ms ping</span>
                       </div>
-                      <div className="flex items-center justify-between text-slate-500 text-[9px]">
+                      <div className="flex items-center justify-between text-[var(--foreground-muted)] text-[9px]">
                         <span>49 Ch • 367 Cmds • 450 Qs</span>
-                        <span className="text-emerald-400">Nominal</span>
+                        <span className="text-emerald-500 dark:text-emerald-400 font-semibold">Nominal</span>
                       </div>
                     </div>
 
