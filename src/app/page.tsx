@@ -53,30 +53,7 @@ import {
   Radio
 } from "lucide-react";
 
-interface SwitchPortInfo {
-  id: number;
-  name: string;
-  vlan: number | string;
-  mode: string;
-  status: "Up" | "Down" | "Standby";
-  speed: string;
-  desc: string;
-}
 
-const SWITCH_PORTS: SwitchPortInfo[] = [
-  { id: 1, name: "Fa0/1", vlan: 10, mode: "Access", status: "Up", speed: "100M", desc: "Workstation Host PC-A (192.168.10.50)" },
-  { id: 2, name: "Fa0/2", vlan: 10, mode: "Access", status: "Up", speed: "100M", desc: "Workstation Host PC-B (192.168.10.51)" },
-  { id: 3, name: "Fa0/3", vlan: 20, mode: "Access", status: "Up", speed: "100M", desc: "Cisco IP Phone 8845 (Voice VLAN)" },
-  { id: 4, name: "Fa0/4", vlan: 20, mode: "Access", status: "Down", speed: "Auto", desc: "Executive Office Drop (Standby)" },
-  { id: 5, name: "Fa0/5", vlan: 30, mode: "Access", status: "Up", speed: "100M", desc: "Aironet AP 2802i (802.3at PoE+)" },
-  { id: 6, name: "Fa0/6", vlan: 30, mode: "Access", status: "Down", speed: "Auto", desc: "Conference Room Access Point" },
-  { id: 7, name: "Fa0/7", vlan: 99, mode: "Access", status: "Up", speed: "100M", desc: "NOC Out-of-Band Management Terminal" },
-  { id: 8, name: "Fa0/8", vlan: 10, mode: "Access", status: "Up", speed: "100M", desc: "Lab Wireshark Packet Tap / SPAN" },
-  { id: 9, name: "Gi0/1", vlan: 99, mode: "Trunk", status: "Up", speed: "1G", desc: "802.1Q Trunk Uplink to Core Switch 2" },
-  { id: 10, name: "Gi0/2", vlan: 99, mode: "Trunk", status: "Up", speed: "1G", desc: "Router-on-a-Stick Uplink to Cisco ISR 4331" },
-  { id: 11, name: "Te0/1", vlan: "Native", mode: "SFP+", status: "Up", speed: "10G", desc: "10G SFP+ Fiber Core Distribution Ring" },
-  { id: 12, name: "Te0/2", vlan: "Native", mode: "SFP+", status: "Standby", speed: "10G", desc: "Redundant Fiber Link (HSRP Standby)" },
-];
 
 function GoogleIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -114,7 +91,7 @@ export default function HomePage() {
   const [heroTab, setHeroTab] = useState<"terminal" | "topology" | "ospf">("terminal");
   const [activeCmd, setActiveCmd] = useState<"mac" | "brief" | "route">("mac");
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
-  const [selectedPortId, setSelectedPortId] = useState<number>(1);
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -151,625 +128,496 @@ export default function HomePage() {
     setTimeout(() => setCopiedCmd(null), 1500);
   };
 
-  const selectedPort = SWITCH_PORTS.find((p) => p.id === selectedPortId) || SWITCH_PORTS[0];
-
   return (
     <div className="relative overflow-hidden">
       {/* Precision Micro-Grid Background */}
       <div className="absolute inset-0 noc-grid-bg [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,#000_65%,transparent_100%)] pointer-events-none" />
 
-      {/* Hero Section: High-Tech Industrial NOC Cockpit */}
-      <section className="relative min-h-[640px] pt-8 pb-16 lg:pt-12 lg:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+      {/* Hero Section: Spacious Enterprise Cisco Engineering Platform */}
+      <section className="relative min-h-[640px] pt-14 pb-20 lg:pt-20 lg:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center overflow-hidden">
         {/* Antigravity Ambient Particle Canvas */}
         <AntigravityCanvas />
 
-        {/* Content Container (relative z-10) */}
-        <div className="relative z-10">
-          {/* Main Dual-Column Grid */}
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-10 items-start">
-            
-            {/* ========================================================================= */}
-            {/* LEFT COLUMN: Industrial Mission Control & Telemetry                       */}
-            {/* ========================================================================= */}
-            <div className="xl:col-span-6 flex flex-col justify-center text-left">
-              {/* Telemetry Operational Badge */}
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[var(--card)]/90 backdrop-blur-md border border-[var(--border-highlight)] text-xs font-mono mb-6 shadow-sm w-fit">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-                </span>
-                <span className="text-[var(--foreground)] font-semibold">SYS_ONLINE</span>
-                <span className="text-[var(--border)]">|</span>
-                <span className="text-[var(--primary)] font-mono">CCNA 200-301 v1.1 NOC COCKPIT</span>
-                <span className="text-[var(--border)] hidden sm:inline">|</span>
-                <span className="text-emerald-500 dark:text-emerald-400 hidden sm:inline text-[11px]">UPTIME: 99.99%</span>
+        {/* Hero Content Container */}
+        <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
+          
+          {/* Release / Spec Status Badge */}
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[var(--card)]/90 backdrop-blur-md border border-[var(--border)] text-xs font-medium text-[var(--foreground-muted)] shadow-sm hover:border-[var(--border-highlight)] transition-colors mb-8">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="text-[var(--foreground)] font-semibold">Cisco CCNA 200-301 v1.1</span>
+            <span className="text-[var(--border)]">|</span>
+            <span>Enterprise Mastery Platform</span>
+            <span className="text-cyan-600 dark:text-cyan-400 font-mono text-[11px] font-semibold hidden sm:inline">
+              49 Chapters • 367 CLI • 450 Qs
+            </span>
+          </div>
+
+          {/* Majestic Hero Headline */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[var(--foreground)] max-w-4xl mx-auto leading-[1.1] select-none">
+            Master Cisco Networks from{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-blue-400 dark:to-indigo-400">
+              Silicon to Protocol.
+            </span>
+          </h1>
+
+          {/* Subtext */}
+          <p className="mt-6 text-base sm:text-lg lg:text-xl text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed font-normal">
+            Architected by <span className="text-[var(--foreground)] font-semibold">Md. Yousuf Hossain</span> for certified network engineering. Master 49 official curriculum chapters, execute 367 live Cisco commands, drill 32-bit subnetting, and verify video proof.
+          </p>
+
+          {/* Auth Error Banner if applicable */}
+          {authError && (
+            <div className="mt-8 max-w-xl mx-auto p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-300 text-xs flex flex-col items-center gap-2 shadow-lg">
+              <div className="flex items-center gap-2 font-semibold text-amber-600 dark:text-amber-400 text-sm">
+                <ShieldAlert className="w-4 h-4 shrink-0" />
+                <span>OAuth Notice: {authError === "OAuthCallback" ? "Google Callback Verification Failed" : authError}</span>
               </div>
-
-              {/* High-Impact Industrial Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight text-[var(--foreground)] leading-[1.1] select-none">
-                Industrial Cockpit for{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-blue-400 dark:to-indigo-400">
-                  Cisco Network Mastery
-                </span>
-              </h1>
-
-              {/* Subtext */}
-              <p className="mt-5 text-sm sm:text-base text-[var(--foreground-muted)] max-w-xl leading-relaxed font-normal">
-                Architected by <span className="text-[var(--foreground)] font-semibold">Md. Yousuf Hossain</span> for mission-critical fluency. Experience interactive Cisco Catalyst chassis telemetry, drill 367 live IOS commands across 49 chapters, and verify your lab work.
+              <p className="text-[var(--foreground-muted)] text-center leading-relaxed">
+                Google authentication was interrupted. Retry below to restore clearance.
               </p>
+              <button
+                onClick={() => {
+                  setAuthError(null);
+                  window.history.replaceState({}, "", "/");
+                  signIn("google", { callbackUrl: "/dashboard" });
+                }}
+                className="mt-1 px-5 py-2.5 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs hover:bg-cyan-400 transition-colors shadow-sm"
+              >
+                Retry Google Sign-In
+              </button>
+            </div>
+          )}
 
-              {/* Auth Error Banner if applicable */}
-              {authError && (
-                <div className="mt-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-300 text-xs flex flex-col gap-2 shadow-lg">
-                  <div className="flex items-center gap-2 font-semibold text-amber-600 dark:text-amber-400 text-sm">
-                    <ShieldAlert className="w-4 h-4 shrink-0" />
-                    <span>OAuth Notice: {authError === "OAuthCallback" ? "Google Callback Verification Failed" : authError}</span>
-                  </div>
-                  <p className="text-[var(--foreground-muted)] leading-relaxed">
-                    Google authentication was interrupted. Retry below to restore clearance.
-                  </p>
+          {/* Action CTAs */}
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            {session ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm text-slate-950 bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 hover:brightness-110 transition-all shadow-lg shadow-cyan-500/20 group"
+                >
+                  <LayoutDashboard className="w-4 h-4 text-slate-950" />
+                  <span>Enter Mission Control</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/practice-test"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] hover:border-amber-500/60 hover:bg-[var(--card-hover)] transition-all shadow-sm"
+                >
+                  <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+                  <span>Exam Simulator (450 Qs)</span>
+                </Link>
+
+                <a
+                  href="#packet-flight"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] hover:border-cyan-500 hover:bg-[var(--card-hover)] transition-all shadow-sm"
+                >
+                  <Activity className="w-4 h-4 text-cyan-500 dark:text-cyan-400 animate-pulse" />
+                  <span>Packet Flight</span>
+                </a>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 transition-all shadow-md group border border-slate-700 dark:border-slate-300"
+                >
+                  <GoogleIcon className="w-4 h-4" />
+                  <span>Sign In with Google</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+
+                <a
+                  href="#curriculum"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] hover:border-cyan-500 hover:bg-[var(--card-hover)] transition-all shadow-sm"
+                >
+                  <BookOpen className="w-4 h-4 text-cyan-500 dark:text-cyan-400" />
+                  <span>Explore Syllabus Matrix</span>
+                </a>
+
+                <Link
+                  href="/practice-test"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] hover:border-amber-500 hover:bg-[var(--card-hover)] transition-all shadow-sm"
+                >
+                  <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+                  <span>Exam Simulator</span>
+                </Link>
+              </>
+            )}
+
+            <button
+              onClick={() => {
+                sounds.playCommandSuccess();
+                setIsSubnetOpen(true);
+              }}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] hover:border-emerald-500 hover:bg-[var(--card-hover)] transition-all shadow-sm"
+            >
+              <Calculator className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+              <span>32-Bit Subnet Drill</span>
+            </button>
+          </div>
+
+          {/* Clean Airy 4-Metric KPI Ribbon */}
+          <div className="mt-12 max-w-4xl w-full grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 py-4 px-6 rounded-2xl bg-[var(--card)]/80 border border-[var(--border)] backdrop-blur-md shadow-sm">
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[var(--foreground)] font-mono">49</div>
+              <div className="text-[11px] font-mono text-[var(--foreground-muted)] uppercase tracking-wider mt-1">Chapters (Vol 1 & 2)</div>
+            </div>
+            <div className="text-center sm:border-l sm:border-[var(--border)] sm:pl-6">
+              <div className="text-2xl sm:text-3xl font-extrabold text-cyan-500 dark:text-cyan-400 font-mono">367</div>
+              <div className="text-[11px] font-mono text-[var(--foreground-muted)] uppercase tracking-wider mt-1">IOS Commands</div>
+            </div>
+            <div className="text-center sm:border-l sm:border-[var(--border)] sm:pl-6">
+              <div className="text-2xl sm:text-3xl font-extrabold text-amber-500 dark:text-amber-400 font-mono">450</div>
+              <div className="text-[11px] font-mono text-[var(--foreground-muted)] uppercase tracking-wider mt-1">Review Questions</div>
+            </div>
+            <div className="text-center sm:border-l sm:border-[var(--border)] sm:pl-6">
+              <div className="text-2xl sm:text-3xl font-extrabold text-emerald-500 dark:text-emerald-400 font-mono">100%</div>
+              <div className="text-[11px] font-mono text-[var(--foreground-muted)] uppercase tracking-wider mt-1">Video Proof Lab</div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ========================================================================= */}
+        {/* CENTERPIECE: Cisco Enterprise Workstation Showcase (Spacious & Clean)     */}
+        {/* ========================================================================= */}
+        <div className="mt-14 max-w-5xl mx-auto rounded-2xl bg-[var(--terminal-bg)] border border-[var(--border)] shadow-2xl overflow-hidden text-left relative z-20 group">
+          {/* Top Window Chrome */}
+          <div className="px-5 py-3.5 bg-[var(--panel)] border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded-full bg-rose-500/90 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-amber-500/90 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-emerald-500/90 inline-block" />
+              </div>
+              <span className="text-xs font-mono text-[var(--foreground-muted)] pl-2 border-l border-[var(--border)]">
+                cisco-catalyst-sw1 (tty0) • Cisco IOS Software 15.2
+              </span>
+            </div>
+
+            {/* View Selector Tabs */}
+            <div className="flex items-center gap-1 p-1 rounded-xl bg-[var(--background)] border border-[var(--border)] text-xs font-mono">
+              <button
+                onClick={() => {
+                  setHeroTab("terminal");
+                  sounds.playKeyClick();
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  heroTab === "terminal"
+                    ? "bg-[var(--primary-muted)] text-[var(--primary)] border border-[var(--border-highlight)] shadow-sm"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                <Terminal className="w-3.5 h-3.5" />
+                <span>CLI Terminal</span>
+              </button>
+              <button
+                onClick={() => {
+                  setHeroTab("topology");
+                  sounds.playKeyClick();
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  heroTab === "topology"
+                    ? "bg-purple-500/20 text-purple-400 border border-purple-500/40 shadow-sm"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                <Network className="w-3.5 h-3.5" />
+                <span>Network Topology</span>
+              </button>
+              <button
+                onClick={() => {
+                  setHeroTab("ospf");
+                  sounds.playKeyClick();
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  heroTab === "ospf"
+                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                <Cpu className="w-3.5 h-3.5" />
+                <span>OSPF Convergence</span>
+              </button>
+            </div>
+          </div>
+
+          {/* TAB 1: Live Interactive Cisco CLI */}
+          {heroTab === "terminal" && (
+            <div className="p-6 sm:p-7 font-mono text-xs sm:text-sm bg-[var(--terminal-bg)]">
+              {/* Command Selection Buttons */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-[var(--border)]">
+                <span className="text-[var(--foreground-muted)] flex items-center gap-2 text-xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                  <span>Interactive IOS Command:</span>
+                </span>
+                <div className="flex flex-wrap items-center gap-2">
                   <button
                     onClick={() => {
-                      setAuthError(null);
-                      window.history.replaceState({}, "", "/");
-                      signIn("google", { callbackUrl: "/dashboard" });
+                      setActiveCmd("mac");
+                      sounds.playKeyClick();
                     }}
-                    className="self-start px-4 py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs hover:bg-cyan-400 transition-colors shadow-sm"
+                    className={`px-3 py-1 rounded-lg text-xs transition-all border ${
+                      activeCmd === "mac"
+                        ? "bg-[var(--primary)] text-slate-950 font-bold border-[var(--primary)] shadow-sm"
+                        : "bg-[var(--card)] border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                    }`}
                   >
-                    Retry Google Sign-In
+                    show mac address-table
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveCmd("brief");
+                      sounds.playKeyClick();
+                    }}
+                    className={`px-3 py-1 rounded-lg text-xs transition-all border ${
+                      activeCmd === "brief"
+                        ? "bg-[var(--primary)] text-slate-950 font-bold border-[var(--primary)] shadow-sm"
+                        : "bg-[var(--card)] border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                    }`}
+                  >
+                    show ip int brief
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveCmd("route");
+                      sounds.playKeyClick();
+                    }}
+                    className={`px-3 py-1 rounded-lg text-xs transition-all border ${
+                      activeCmd === "route"
+                        ? "bg-[var(--primary)] text-slate-950 font-bold border-[var(--primary)] shadow-sm"
+                        : "bg-[var(--card)] border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                    }`}
+                  >
+                    show ip route
                   </button>
                 </div>
-              )}
-
-              {/* 4-Metric Industrial Telemetry KPI Rail */}
-              <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-xl">
-                <div className="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)] text-left hover:border-[var(--border-highlight)] transition-colors">
-                  <div className="text-xl sm:text-2xl font-black text-[var(--foreground)] font-mono">49</div>
-                  <div className="text-[11px] font-mono text-[var(--foreground-muted)] uppercase tracking-wider mt-0.5">Chapters (Vol 1 & 2)</div>
-                </div>
-                <div className="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)] text-left hover:border-cyan-500/40 transition-colors">
-                  <div className="text-xl sm:text-2xl font-black text-cyan-500 dark:text-cyan-400 font-mono">367</div>
-                  <div className="text-[11px] font-mono text-[var(--foreground-muted)] uppercase tracking-wider mt-0.5">IOS Commands</div>
-                </div>
-                <div className="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)] text-left hover:border-amber-500/40 transition-colors">
-                  <div className="text-xl sm:text-2xl font-black text-amber-500 dark:text-amber-400 font-mono">450</div>
-                  <div className="text-[11px] font-mono text-[var(--foreground-muted)] uppercase tracking-wider mt-0.5">Exam Pool Qs</div>
-                </div>
-                <div className="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)] text-left hover:border-emerald-500/40 transition-colors">
-                  <div className="text-xl sm:text-2xl font-black text-emerald-500 dark:text-emerald-400 font-mono">100%</div>
-                  <div className="text-[11px] font-mono text-[var(--foreground-muted)] uppercase tracking-wider mt-0.5">Video Proof Lab</div>
-                </div>
               </div>
 
-              {/* Tactical Mission Action Buttons */}
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                {session ? (
-                  <>
-                    <Link
-                      href="/dashboard"
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm text-slate-950 bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 hover:brightness-110 transition-all shadow-lg shadow-cyan-500/20 group"
-                    >
-                      <LayoutDashboard className="w-4 h-4 text-slate-950" />
-                      <span>Enter Mission Control</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                    </Link>
-
-                    <Link
-                      href="/practice-test"
-                      className="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm text-amber-600 dark:text-amber-400 bg-[var(--card)] border border-amber-500/30 hover:border-amber-400 hover:bg-amber-500/10 transition-all shadow-sm"
-                    >
-                      <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
-                      <span>CCNA Exam Simulator</span>
-                    </Link>
-
-                    <a
-                      href="#packet-flight"
-                      className="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] hover:border-cyan-500 hover:bg-[var(--card-hover)] transition-all shadow-sm"
-                    >
-                      <Activity className="w-4 h-4 text-cyan-500 dark:text-cyan-400 animate-pulse" />
-                      <span>Packet Flight</span>
-                    </a>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-                      className="flex items-center gap-2.5 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 transition-all shadow-md group border border-slate-700 dark:border-slate-300"
-                    >
-                      <GoogleIcon className="w-4 h-4" />
-                      <span>Sign In with Google</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                    </button>
-
-                    <a
-                      href="#curriculum"
-                      className="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm text-cyan-600 dark:text-cyan-300 bg-[var(--card)] border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-500/10 transition-all shadow-sm"
-                    >
-                      <BookOpen className="w-4 h-4 text-cyan-500 dark:text-cyan-400" />
-                      <span>Explore Syllabus Matrix</span>
-                    </a>
-
-                    <Link
-                      href="/practice-test"
-                      className="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm text-amber-600 dark:text-amber-400 bg-[var(--card)] border border-amber-500/30 hover:border-amber-400 hover:bg-amber-500/10 transition-all shadow-sm"
-                    >
-                      <Award className="w-4 h-4 text-amber-500 dark:text-amber-400" />
-                      <span>Exam Simulator</span>
-                    </Link>
-                  </>
+              {/* Terminal Screen Output */}
+              <div className="space-y-1.5 min-h-[200px] text-[var(--terminal-out)] leading-relaxed overflow-x-auto text-xs sm:text-sm">
+                {activeCmd === "mac" && (
+                  <div>
+                    <div className="flex items-center justify-between pb-1">
+                      <p className="text-[var(--primary)] font-bold">SW1# show mac address-table</p>
+                      <button
+                        onClick={() => handleCopyCmd("show mac address-table")}
+                        className="text-xs text-[var(--foreground-muted)] hover:text-[var(--foreground)] flex items-center gap-1.5 px-2 py-0.5 rounded bg-[var(--panel)] border border-[var(--border)]"
+                        title="Copy command"
+                      >
+                        {copiedCmd === "show mac address-table" ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                        <span>{copiedCmd === "show mac address-table" ? "Copied" : "Copy"}</span>
+                      </button>
+                    </div>
+                    <p className="text-slate-500">          Mac Address Table</p>
+                    <p className="text-slate-500">-------------------------------------------</p>
+                    <p className="text-slate-400 font-semibold">Vlan    Mac Address       Type        Ports</p>
+                    <p className="text-slate-400 font-semibold">----    -----------       --------    -----</p>
+                    <p><span className="text-amber-400">  10</span>    0014.a82b.4711    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/1</span></p>
+                    <p><span className="text-amber-400">  10</span>    0014.a82b.4712    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/2</span></p>
+                    <p><span className="text-purple-400">  20</span>    0050.56a1.c001    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/3</span></p>
+                    <p><span className="text-slate-400">   1</span>    0019.06ea.3980    <span className="text-[var(--primary)]">STATIC</span>      <span className="text-white">CPU</span></p>
+                    <p className="pt-2 text-[var(--primary)] font-bold">SW1# <span className="animate-pulse inline-block w-2 h-3.5 bg-[var(--primary)] align-middle ml-1" /></p>
+                  </div>
                 )}
 
-                <button
-                  onClick={() => {
-                    sounds.playCommandSuccess();
-                    setIsSubnetOpen(true);
-                  }}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-xs sm:text-sm text-emerald-600 dark:text-emerald-400 bg-[var(--card)] border border-emerald-500/30 hover:border-emerald-400 hover:bg-emerald-500/10 transition-all shadow-sm"
-                >
-                  <Calculator className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
-                  <span>32-Bit Subnet Drill</span>
-                </button>
-              </div>
+                {activeCmd === "brief" && (
+                  <div>
+                    <div className="flex items-center justify-between pb-1">
+                      <p className="text-[var(--primary)] font-bold">R1# show ip interface brief</p>
+                      <button
+                        onClick={() => handleCopyCmd("show ip interface brief")}
+                        className="text-xs text-[var(--foreground-muted)] hover:text-[var(--foreground)] flex items-center gap-1.5 px-2 py-0.5 rounded bg-[var(--panel)] border border-[var(--border)]"
+                        title="Copy command"
+                      >
+                        {copiedCmd === "show ip interface brief" ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                        <span>{copiedCmd === "show ip interface brief" ? "Copied" : "Copy"}</span>
+                      </button>
+                    </div>
+                    <p className="text-slate-400 font-semibold">Interface              IP-Address      OK? Method Status                Protocol</p>
+                    <p><span className="text-cyan-300 font-bold">GigabitEthernet0/0/0</span>   <span className="text-amber-300">192.168.1.1</span>     YES NVRAM  <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
+                    <p><span className="text-cyan-300 font-bold">GigabitEthernet0/0/1</span>   <span className="text-amber-300">10.0.12.1</span>       YES manual <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
+                    <p><span className="text-slate-400">GigabitEthernet0/0/2</span>   unassigned      YES unset  <span className="text-rose-400 font-semibold">administratively down</span> <span className="text-rose-400 font-semibold">down</span></p>
+                    <p><span className="text-purple-300 font-bold">Loopback0</span>              <span className="text-amber-300">1.1.1.1</span>         YES manual <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
+                    <p className="pt-2 text-[var(--primary)] font-bold">R1# <span className="animate-pulse inline-block w-2 h-3.5 bg-[var(--primary)] align-middle ml-1" /></p>
+                  </div>
+                )}
 
-              {/* Protocol Spec Footnote Strip */}
-              <div className="mt-8 pt-4 border-t border-[var(--border)] flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-mono text-[var(--foreground-muted)]">
-                <span className="px-2 py-0.5 rounded bg-[var(--panel)] border border-[var(--border)]">IEEE 802.1Q</span>
-                <span className="px-2 py-0.5 rounded bg-[var(--panel)] border border-[var(--border)]">RFC 2328 OSPFv2</span>
-                <span className="px-2 py-0.5 rounded bg-[var(--panel)] border border-[var(--border)]">RFC 791 IPv4</span>
-                <span className="px-2 py-0.5 rounded bg-[var(--panel)] border border-[var(--border)]">Cisco IOS 15.2(SE)</span>
-                <span className="px-2 py-0.5 rounded bg-[var(--panel)] border border-[var(--border)]">1000BASE-T</span>
+                {activeCmd === "route" && (
+                  <div>
+                    <div className="flex items-center justify-between pb-1">
+                      <p className="text-[var(--primary)] font-bold">R1# show ip route</p>
+                      <button
+                        onClick={() => handleCopyCmd("show ip route")}
+                        className="text-xs text-[var(--foreground-muted)] hover:text-[var(--foreground)] flex items-center gap-1.5 px-2 py-0.5 rounded bg-[var(--panel)] border border-[var(--border)]"
+                        title="Copy command"
+                      >
+                        {copiedCmd === "show ip route" ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                        <span>{copiedCmd === "show ip route" ? "Copied" : "Copy"}</span>
+                      </button>
+                    </div>
+                    <p className="text-slate-500">Codes: C - connected, S - static, O - OSPF, IA - OSPF inter area, * - candidate default</p>
+                    <p className="text-slate-300 font-semibold pt-1">Gateway of last resort is 10.0.12.2 to network 0.0.0.0</p>
+                    <p><span className="text-emerald-400 font-bold">C</span>     192.168.1.0/24 is directly connected, <span className="text-cyan-300">GigabitEthernet0/0/0</span></p>
+                    <p><span className="text-emerald-400 font-bold">C</span>     10.0.12.0/30 is directly connected, <span className="text-cyan-300">GigabitEthernet0/0/1</span></p>
+                    <p><span className="text-purple-400 font-bold">O</span>     <span className="text-amber-300">172.16.0.0/16</span> [110/2] via 10.0.12.2, 00:14:22, <span className="text-cyan-300">GigabitEthernet0/0/1</span></p>
+                    <p><span className="text-amber-400 font-bold">S*</span>    0.0.0.0/0 [1/0] via 10.0.12.2</p>
+                    <p className="pt-2 text-[var(--primary)] font-bold">R1# <span className="animate-pulse inline-block w-2 h-3.5 bg-[var(--primary)] align-middle ml-1" /></p>
+                  </div>
+                )}
               </div>
             </div>
+          )}
 
-            {/* ========================================================================= */}
-            {/* RIGHT COLUMN: 1U Cisco Catalyst Chassis & Interactive Console             */}
-            {/* ========================================================================= */}
-            <div className="xl:col-span-6 flex flex-col gap-4 text-left">
-              
-              {/* 1U CISCO CATALYST HARDWARE SWITCH CHASSIS */}
-              <div className="rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-2xl overflow-hidden relative group">
-                
-                {/* Rackmount Top Ear Bezel */}
-                <div className="px-4 py-2.5 bg-[var(--panel)] border-b border-[var(--border)] flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    {/* Metallic Bolt Screws */}
-                    <div className="flex items-center gap-1">
-                      <span className="w-2.5 h-2.5 rounded-full border border-slate-500/60 dark:border-slate-400/60 flex items-center justify-center text-[8px] font-mono text-slate-500 leading-none">✚</span>
-                      <span className="w-2.5 h-2.5 rounded-full border border-slate-500/60 dark:border-slate-400/60 flex items-center justify-center text-[8px] font-mono text-slate-500 leading-none">✚</span>
-                    </div>
-                    {/* Cisco Logo & Model Tag */}
-                    <div className="flex items-center gap-1.5 pl-2 border-l border-[var(--border)]">
-                      <Server className="w-3.5 h-3.5 text-cyan-500" />
-                      <span className="text-xs font-black tracking-wider text-[var(--foreground)] uppercase font-mono">
-                        CISCO <span className="font-semibold text-[var(--foreground-muted)] text-[11px]">Catalyst 2960-X</span>
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Diagnostic Status LEDs */}
-                  <div className="flex items-center gap-3 text-[10px] font-mono">
-                    <div className="flex items-center gap-1" title="Power Supply 1 Active">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-sm shadow-emerald-400/50" />
-                      <span className="text-[var(--foreground-muted)]">PWR</span>
-                    </div>
-                    <div className="flex items-center gap-1" title="Switch Operating Status">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                      <span className="text-[var(--foreground-muted)]">STAT</span>
-                    </div>
-                    <div className="flex items-center gap-1" title="Redundant Power Standby">
-                      <span className="w-2 h-2 rounded-full bg-amber-400/80 inline-block" />
-                      <span className="text-[var(--foreground-muted)]">RPS</span>
-                    </div>
-                    <span className="hidden sm:inline text-[var(--border)]">|</span>
-                    <span className="hidden sm:inline text-cyan-600 dark:text-cyan-400 text-[10px]">
-                      FAN: 4800 RPM • 38.2°C
-                    </span>
-                  </div>
-                </div>
-
-                {/* 12-Port RJ-45 Gigabit Port Matrix */}
-                <div className="p-4 bg-[var(--terminal-bg)] border-b border-[var(--border)]">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--foreground-muted)] flex items-center gap-1.5">
-                      <Radio className="w-3 h-3 text-cyan-400 animate-pulse" />
-                      <span>Interactive 10/100/1000BASE-T Ports (Click Port to Inspect)</span>
-                    </span>
-                    <span className="text-[10px] font-mono text-[var(--foreground-muted)]">
-                      Port {selectedPort.id}/12 Active
-                    </span>
-                  </div>
-
-                  {/* 12-Port Grid (2 Rows of 6) */}
-                  <div className="grid grid-cols-6 gap-2">
-                    {SWITCH_PORTS.map((port) => {
-                      const isSelected = port.id === selectedPortId;
-                      const isUp = port.status === "Up";
-                      const isStandby = port.status === "Standby";
-
-                      return (
-                        <button
-                          key={port.id}
-                          onClick={() => {
-                            setSelectedPortId(port.id);
-                            sounds.playKeyClick();
-                          }}
-                          className={`p-2 rounded-lg border text-left transition-all relative flex flex-col justify-between h-[68px] ${
-                            isSelected
-                              ? "bg-cyan-500/15 border-cyan-400 ring-2 ring-cyan-400/30"
-                              : "bg-[var(--card)] border-[var(--border)] hover:border-cyan-500/50 hover:bg-[var(--card-hover)]"
-                          }`}
-                        >
-                          {/* Port Link LED */}
-                          <div className="flex items-center justify-between w-full">
-                            <span className="text-[9px] font-mono font-bold text-[var(--foreground)]">
-                              {port.name}
-                            </span>
-                            <span
-                              className={`w-1.5 h-1.5 rounded-full ${
-                                isUp
-                                  ? "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)] animate-pulse"
-                                  : isStandby
-                                  ? "bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)]"
-                                  : "bg-slate-400/40"
-                              }`}
-                            />
-                          </div>
-
-                          {/* RJ-45 Connector Visual Mockup */}
-                          <div className="w-full h-3 rounded-sm bg-slate-900/60 dark:bg-black/60 border border-slate-700/50 flex items-center justify-center gap-0.5 px-1 my-0.5">
-                            <span className="w-0.5 h-1.5 bg-amber-400/80 rounded-full inline-block" />
-                            <span className="w-0.5 h-1.5 bg-amber-400/80 rounded-full inline-block" />
-                            <span className="w-0.5 h-1.5 bg-amber-400/80 rounded-full inline-block" />
-                            <span className="w-0.5 h-1.5 bg-amber-400/80 rounded-full inline-block" />
-                          </div>
-
-                          {/* Port VLAN / Mode Label */}
-                          <div className="flex items-center justify-between w-full text-[8px] font-mono text-[var(--foreground-muted)]">
-                            <span className="truncate">{port.mode === "Trunk" ? "TRK" : `V${port.vlan}`}</span>
-                            <span className="text-cyan-500 dark:text-cyan-400">{port.speed}</span>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Active Port Diagnostics Bar */}
-                <div className="px-4 py-2.5 bg-[var(--panel)] border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30">
-                      {selectedPort.name}
-                    </span>
-                    <span className="text-[var(--foreground)] font-semibold truncate max-w-[240px] sm:max-w-xs">
-                      {selectedPort.desc}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[11px]">
-                    <span className="text-[var(--foreground-muted)]">
-                      VLAN: <strong className="text-[var(--foreground)]">{selectedPort.vlan}</strong> ({selectedPort.mode})
-                    </span>
-                    <span className="text-[var(--border)]">|</span>
-                    <span className="text-[var(--foreground-muted)]">
-                      Speed: <strong className="text-cyan-500 dark:text-cyan-400">{selectedPort.speed}</strong>
-                    </span>
-                    <span className="text-[var(--border)]">|</span>
-                    <span className={`font-bold ${selectedPort.status === "Up" ? "text-emerald-500" : selectedPort.status === "Standby" ? "text-amber-500" : "text-rose-500"}`}>
-                      {selectedPort.status.toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-
-                {/* View Switcher Tabs (Terminal, Topology, OSPF) */}
-                <div className="px-4 py-2 bg-[var(--background)] border-b border-[var(--border)] flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-rose-500/90 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500/90 inline-block" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/90 inline-block" />
-                    <span className="text-[10px] font-mono text-[var(--foreground-muted)] pl-2 border-l border-[var(--border)]">
-                      tty0 • 9600 8-N-1
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-1 p-0.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-xs font-mono">
-                    <button
-                      onClick={() => setHeroTab("terminal")}
-                      className={`px-2.5 py-1 rounded text-[11px] font-bold transition-all flex items-center gap-1 ${
-                        heroTab === "terminal"
-                          ? "bg-[var(--primary-muted)] text-[var(--primary)] border border-[var(--border-highlight)]"
-                          : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                      }`}
-                    >
-                      <Terminal className="w-3 h-3" />
-                      <span>CLI Console</span>
-                    </button>
-                    <button
-                      onClick={() => setHeroTab("topology")}
-                      className={`px-2.5 py-1 rounded text-[11px] font-bold transition-all flex items-center gap-1 ${
-                        heroTab === "topology"
-                          ? "bg-purple-500/20 text-purple-400 border border-purple-500/40"
-                          : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                      }`}
-                    >
-                      <Network className="w-3 h-3" />
-                      <span>Topology</span>
-                    </button>
-                    <button
-                      onClick={() => setHeroTab("ospf")}
-                      className={`px-2.5 py-1 rounded text-[11px] font-bold transition-all flex items-center gap-1 ${
-                        heroTab === "ospf"
-                          ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
-                          : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                      }`}
-                    >
-                      <Cpu className="w-3 h-3" />
-                      <span>OSPF Live</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* TAB 1: Live Interactive Cisco CLI */}
-                {heroTab === "terminal" && (
-                  <div className="p-4 sm:p-5 font-mono text-xs bg-[var(--terminal-bg)]">
-                    <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 mb-3 border-b border-[var(--border)] text-xs">
-                      <span className="text-[var(--foreground-muted)] flex items-center gap-1.5 text-[11px]">
-                        <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                        <span>Command:</span>
-                      </span>
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <button
-                          onClick={() => {
-                            setActiveCmd("mac");
-                            sounds.playKeyClick();
-                          }}
-                          className={`px-2 py-0.5 rounded text-[11px] transition-all border ${
-                            activeCmd === "mac"
-                              ? "bg-[var(--primary)] text-slate-950 font-bold border-[var(--primary)]"
-                              : "bg-[var(--card)] border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                          }`}
-                        >
-                          show mac address-table
-                        </button>
-                        <button
-                          onClick={() => {
-                            setActiveCmd("brief");
-                            sounds.playKeyClick();
-                          }}
-                          className={`px-2 py-0.5 rounded text-[11px] transition-all border ${
-                            activeCmd === "brief"
-                              ? "bg-[var(--primary)] text-slate-950 font-bold border-[var(--primary)]"
-                              : "bg-[var(--card)] border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                          }`}
-                        >
-                          show ip int brief
-                        </button>
-                        <button
-                          onClick={() => {
-                            setActiveCmd("route");
-                            sounds.playKeyClick();
-                          }}
-                          className={`px-2 py-0.5 rounded text-[11px] transition-all border ${
-                            activeCmd === "route"
-                              ? "bg-[var(--primary)] text-slate-950 font-bold border-[var(--primary)]"
-                              : "bg-[var(--card)] border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                          }`}
-                        >
-                          show ip route
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Terminal Output */}
-                    <div className="space-y-1.5 min-h-[160px] text-[var(--terminal-out)] leading-relaxed overflow-x-auto text-[11px] sm:text-xs">
-                      {activeCmd === "mac" && (
-                        <div>
-                          <div className="flex items-center justify-between">
-                            <p className="text-[var(--primary)] font-bold">SW1# show mac address-table</p>
-                            <button
-                              onClick={() => handleCopyCmd("show mac address-table")}
-                              className="text-[10px] text-[var(--foreground-muted)] hover:text-[var(--foreground)] flex items-center gap-1"
-                              title="Copy command"
-                            >
-                              {copiedCmd === "show mac address-table" ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                              <span>{copiedCmd === "show mac address-table" ? "Copied" : "Copy"}</span>
-                            </button>
-                          </div>
-                          <p className="text-slate-500">          Mac Address Table</p>
-                          <p className="text-slate-500">-------------------------------------------</p>
-                          <p className="text-slate-400 font-semibold">Vlan    Mac Address       Type        Ports</p>
-                          <p className="text-slate-400 font-semibold">----    -----------       --------    -----</p>
-                          <p><span className="text-amber-400">  10</span>    0014.a82b.4711    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/1</span></p>
-                          <p><span className="text-amber-400">  10</span>    0014.a82b.4712    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/2</span></p>
-                          <p><span className="text-purple-400">  20</span>    0050.56a1.c001    <span className="text-emerald-400">DYNAMIC</span>     <span className="text-cyan-300">Fa0/3</span></p>
-                          <p><span className="text-slate-400">   1</span>    0019.06ea.3980    <span className="text-[var(--primary)]">STATIC</span>      <span className="text-emerald-300">CPU</span></p>
-                          <p className="pt-1.5 text-[var(--primary)] font-bold">SW1# <span className="animate-pulse inline-block w-1.5 h-3 bg-[var(--primary)] align-middle ml-0.5" /></p>
-                        </div>
-                      )}
-
-                      {activeCmd === "brief" && (
-                        <div>
-                          <div className="flex items-center justify-between">
-                            <p className="text-[var(--primary)] font-bold">R1# show ip interface brief</p>
-                            <button
-                              onClick={() => handleCopyCmd("show ip interface brief")}
-                              className="text-[10px] text-[var(--foreground-muted)] hover:text-[var(--foreground)] flex items-center gap-1"
-                              title="Copy command"
-                            >
-                              {copiedCmd === "show ip interface brief" ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                              <span>{copiedCmd === "show ip interface brief" ? "Copied" : "Copy"}</span>
-                            </button>
-                          </div>
-                          <p className="text-slate-400 font-semibold">Interface              IP-Address      OK? Method Status                Protocol</p>
-                          <p><span className="text-cyan-300 font-bold">GigabitEthernet0/0/0</span>   <span className="text-amber-300">192.168.1.1</span>     YES NVRAM  <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
-                          <p><span className="text-cyan-300 font-bold">GigabitEthernet0/0/1</span>   <span className="text-amber-300">10.0.12.1</span>       YES manual <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
-                          <p><span className="text-slate-400">GigabitEthernet0/0/2</span>   unassigned      YES unset  <span className="text-rose-400 font-semibold">administratively down</span> <span className="text-rose-400 font-semibold">down</span></p>
-                          <p><span className="text-purple-300 font-bold">Loopback0</span>              <span className="text-amber-300">1.1.1.1</span>         YES manual <span className="text-emerald-400 font-bold">up</span>                    <span className="text-emerald-400 font-bold">up</span></p>
-                          <p className="pt-1.5 text-[var(--primary)] font-bold">R1# <span className="animate-pulse inline-block w-1.5 h-3 bg-[var(--primary)] align-middle ml-0.5" /></p>
-                        </div>
-                      )}
-
-                      {activeCmd === "route" && (
-                        <div>
-                          <div className="flex items-center justify-between">
-                            <p className="text-[var(--primary)] font-bold">R1# show ip route</p>
-                            <button
-                              onClick={() => handleCopyCmd("show ip route")}
-                              className="text-[10px] text-[var(--foreground-muted)] hover:text-[var(--foreground)] flex items-center gap-1"
-                              title="Copy command"
-                            >
-                              {copiedCmd === "show ip route" ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                              <span>{copiedCmd === "show ip route" ? "Copied" : "Copy"}</span>
-                            </button>
-                          </div>
-                          <p className="text-slate-500">Gateway of last resort is 10.0.12.2 to network 0.0.0.0</p>
-                          <p><span className="text-emerald-400 font-bold">C</span>     192.168.1.0/24 is directly connected, <span className="text-cyan-300">GigabitEthernet0/0/0</span></p>
-                          <p><span className="text-emerald-400 font-bold">C</span>     10.0.12.0/30 is directly connected, <span className="text-cyan-300">GigabitEthernet0/0/1</span></p>
-                          <p><span className="text-purple-400 font-bold">O</span>     <span className="text-amber-300">172.16.0.0/16</span> [110/2] via 10.0.12.2, 00:14:22, <span className="text-cyan-300">Gi0/0/1</span></p>
-                          <p><span className="text-amber-400 font-bold">S*</span>    0.0.0.0/0 [1/0] via 10.0.12.2</p>
-                          <p className="pt-1.5 text-[var(--primary)] font-bold">R1# <span className="animate-pulse inline-block w-1.5 h-3 bg-[var(--primary)] align-middle ml-0.5" /></p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* TAB 2: Live Topology Preview */}
-                {heroTab === "topology" && (
-                  <div className="p-4 sm:p-5 bg-[var(--terminal-bg)] font-mono">
-                    <div className="flex items-center justify-between mb-3 text-xs text-[var(--foreground-muted)]">
-                      <span className="text-purple-400 font-bold flex items-center gap-1.5 text-[11px]">
-                        <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-                        802.1Q Trunk Topology: Catalyst 2960 + ISR 4331
-                      </span>
-                      <span className="text-emerald-400 font-semibold text-[10px]">1000BASE-T UP/UP</span>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-center text-center">
-                      <div className="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)]">
-                        <div className="w-7 h-7 rounded-md bg-[var(--primary-muted)] text-[var(--primary)] mx-auto flex items-center justify-center mb-1.5">
-                          <Laptop className="w-3.5 h-3.5" />
-                        </div>
-                        <h4 className="font-bold text-[var(--foreground)] text-xs">PC-A Host</h4>
-                        <p className="text-[10px] text-[var(--primary)]">192.168.10.50/24</p>
-                        <span className="inline-block mt-1 px-1.5 py-0.2 rounded text-[9px] bg-amber-500/10 text-amber-500 dark:text-amber-400 font-semibold border border-amber-500/20">
-                          VLAN 10 Access
-                        </span>
-                      </div>
-
-                      <div className="p-3 rounded-lg bg-[var(--card)] border border-purple-500/30 relative">
-                        <div className="w-7 h-7 rounded-md bg-purple-500/10 text-purple-400 mx-auto flex items-center justify-center mb-1.5">
-                          <Layers className="w-3.5 h-3.5" />
-                        </div>
-                        <h4 className="font-bold text-[var(--foreground)] text-xs">SW1 (2960-X)</h4>
-                        <p className="text-[10px] text-purple-400">VLAN 10, 20, 99</p>
-                        <span className="inline-block mt-1 px-1.5 py-0.2 rounded text-[9px] bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 font-semibold border border-emerald-500/20">
-                          STP Root Bridge
-                        </span>
-                      </div>
-
-                      <div className="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)]">
-                        <div className="w-7 h-7 rounded-md bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center mb-1.5">
-                          <Network className="w-3.5 h-3.5" />
-                        </div>
-                        <h4 className="font-bold text-[var(--foreground)] text-xs">R1 (ISR 4331)</h4>
-                        <p className="text-[10px] text-emerald-400">Router-on-Stick</p>
-                        <span className="inline-block mt-1 px-1.5 py-0.2 rounded text-[9px] bg-cyan-500/10 text-[var(--primary)] font-semibold border border-cyan-500/20">
-                          Default Gateway
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* TAB 3: OSPF Convergence */}
-                {heroTab === "ospf" && (
-                  <div className="p-4 sm:p-5 bg-[var(--terminal-bg)] font-mono text-xs text-[var(--foreground-muted)] space-y-2.5">
-                    <div className="flex items-center justify-between pb-2 border-b border-[var(--border)]">
-                      <span className="text-emerald-400 font-bold flex items-center gap-1.5 text-[11px]">
-                        <Cpu className="w-3.5 h-3.5" />
-                        <span>OSPFv2 Proc 1 • Router ID: 1.1.1.1 • Area 0</span>
-                      </span>
-                      <span className="text-[var(--primary)] font-semibold text-[10px]">CONVERGED</span>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-                      <div className="p-2.5 rounded-lg bg-[var(--card)] border border-[var(--border)]">
-                        <h5 className="text-[var(--foreground)] font-semibold mb-1 text-[11px]">Neighbor Table:</h5>
-                        <p>Neighbor: <span className="text-cyan-400">2.2.2.2</span></p>
-                        <p>State: <span className="text-emerald-400 font-bold">FULL/DR</span></p>
-                        <p>Dead Time: <span className="text-amber-400">00:00:36</span></p>
-                      </div>
-                      <div className="p-2.5 rounded-lg bg-[var(--card)] border border-[var(--border)]">
-                        <h5 className="text-[var(--foreground)] font-semibold mb-1 text-[11px]">SPF Cost Matrix:</h5>
-                        <p>Ref BW: <span className="text-cyan-400">1000 Mbps</span></p>
-                        <p>Gigabit Cost: <span className="text-emerald-400">1</span></p>
-                        <p>FastEth Cost: <span className="text-amber-400">10</span></p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Chassis Telemetry Stream Footer */}
-                <div className="px-4 py-2 bg-[var(--panel)] border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-[var(--foreground-muted)]">
-                  <div className="flex items-center gap-2">
-                    <span className="text-emerald-500 font-semibold">RX: 148,291 pkts/s</span>
-                    <span className="text-[var(--border)]">|</span>
-                    <span className="text-cyan-500 font-semibold">TX: 142,804 pkts/s</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span>CRC ERR: 0</span>
-                    <span className="text-[var(--border)]">|</span>
-                    <span>MTU: 1500 BYTES</span>
-                  </div>
-                </div>
-
+          {/* TAB 2: Network Topology Map */}
+          {heroTab === "topology" && (
+            <div className="p-6 sm:p-8 bg-[var(--terminal-bg)] font-mono">
+              <div className="flex items-center justify-between mb-6 text-xs text-[var(--foreground-muted)]">
+                <span className="text-purple-400 font-bold flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse" />
+                  Active 802.1Q Trunk Topology: Catalyst 2960-X &amp; Cisco ISR 4331
+                </span>
+                <span className="text-emerald-400 font-semibold text-xs">Link State: UP / UP (1000BASE-T)</span>
               </div>
 
-            </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 items-center text-center">
+                {/* Host A */}
+                <div className="p-5 rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-sm">
+                  <div className="w-9 h-9 rounded-lg bg-[var(--primary-muted)] text-[var(--primary)] mx-auto flex items-center justify-center mb-2.5">
+                    <Laptop className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-[var(--foreground)] text-sm">PC-A (Workstation)</h4>
+                  <p className="text-xs text-[var(--primary)] mt-1 font-semibold">192.168.10.50/24</p>
+                  <p className="text-[11px] text-[var(--foreground-muted)] mt-0.5">MAC: 0014.a82b.4711</p>
+                  <span className="inline-block mt-3 px-2.5 py-1 rounded text-xs bg-amber-500/10 text-amber-500 dark:text-amber-400 font-semibold border border-amber-500/20">
+                    VLAN 10 Access
+                  </span>
+                </div>
 
+                {/* Switch 1 */}
+                <div className="p-5 rounded-xl bg-[var(--card)] border border-purple-500/30 relative shadow-sm">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-500/40 text-[10px] text-purple-300 font-bold">
+                    802.1Q TRUNK
+                  </div>
+                  <div className="w-9 h-9 rounded-lg bg-purple-500/10 text-purple-400 mx-auto flex items-center justify-center mb-2.5">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-[var(--foreground)] text-sm">SW1 (Catalyst 2960)</h4>
+                  <p className="text-xs text-purple-400 mt-1 font-semibold">VLAN 10, 20, 99</p>
+                  <p className="text-[11px] text-[var(--foreground-muted)] mt-0.5">Port Gi0/1 (Native 99)</p>
+                  <span className="inline-block mt-3 px-2.5 py-1 rounded text-xs bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 font-semibold border border-emerald-500/20">
+                    STP Root Bridge
+                  </span>
+                </div>
+
+                {/* Router 1 */}
+                <div className="p-5 rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-sm">
+                  <div className="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center mb-2.5">
+                    <Network className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-[var(--foreground)] text-sm">R1 (Cisco ISR 4331)</h4>
+                  <p className="text-xs text-emerald-400 mt-1 font-semibold">Router-on-a-Stick</p>
+                  <p className="text-[11px] text-[var(--foreground-muted)] mt-0.5">Gi0/0.10, Gi0/0.20</p>
+                  <span className="inline-block mt-3 px-2.5 py-1 rounded text-xs bg-cyan-500/10 text-[var(--primary)] font-semibold border border-cyan-500/20">
+                    Default Gateway
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: OSPF Convergence */}
+          {heroTab === "ospf" && (
+            <div className="p-6 sm:p-8 bg-[var(--terminal-bg)] font-mono text-xs text-[var(--foreground-muted)] space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
+                <span className="text-emerald-400 font-bold flex items-center gap-2 text-xs sm:text-sm">
+                  <Cpu className="w-4 h-4" />
+                  <span>OSPFv2 Process ID 1 • Router ID: 1.1.1.1 • Area 0 (Backbone)</span>
+                </span>
+                <span className="text-[var(--primary)] font-semibold text-xs">State: FULL / CONVERGED</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+                  <h5 className="text-[var(--foreground)] font-semibold mb-2 text-xs">Neighbor Adjacency Table:</h5>
+                  <p>Neighbor ID: <span className="text-cyan-400">2.2.2.2</span></p>
+                  <p>Priority: 1, State: <span className="text-emerald-400 font-bold">FULL/DR</span></p>
+                  <p>Dead Time: <span className="text-amber-400">00:00:36</span></p>
+                  <p>Address: <span className="text-[var(--foreground-muted)]">10.0.12.2 (Gi0/0/1)</span></p>
+                </div>
+                <div className="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+                  <h5 className="text-[var(--foreground)] font-semibold mb-2 text-xs">Dijkstra SPF Metric Table:</h5>
+                  <p>Reference Bandwidth: <span className="text-cyan-400">1000 Mbps</span></p>
+                  <p>Gigabit Link Cost: <span className="text-emerald-400">1</span></p>
+                  <p>FastEthernet Cost: <span className="text-amber-400">10</span></p>
+                  <p>Serial T1 Cost: <span className="text-rose-400">64</span></p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Bottom Telemetry Strip */}
+          <div className="px-5 py-2.5 bg-[var(--panel)] border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[var(--foreground-muted)]">
+            <div className="flex items-center gap-2">
+              <span className="text-emerald-500 font-semibold">Cisco IOS 15.2(SE)</span>
+              <span className="text-[var(--border)]">|</span>
+              <span>1000BASE-T Full-Duplex</span>
+            </div>
+            <div className="flex items-center gap-2 text-[11px]">
+              <span className="text-cyan-500 font-semibold">RFC 2328 OSPFv2</span>
+              <span className="text-[var(--border)]">|</span>
+              <span>IEEE 802.1Q</span>
+              <span className="text-[var(--border)]">|</span>
+              <span>Uptime: 99.99%</span>
+            </div>
           </div>
+        </div>
 
-          {/* 4 Infrastructure Highlights */}
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto text-left">
-            <div className="p-5 rounded-xl noc-surface noc-surface-interactive flex flex-col justify-between">
-              <div className="w-9 h-9 rounded-lg bg-[var(--primary-muted)] text-[var(--primary)] flex items-center justify-center mb-3">
-                <HardDrive className="w-4 h-4" />
-              </div>
-              <div>
-                <h3 className="font-bold text-sm text-[var(--foreground)] mb-1">5TB Cloud Storage</h3>
-                <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">Direct streaming video lab uploads bypassing serverless payload limits.</p>
-              </div>
+        {/* 4 Infrastructure Highlights */}
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto text-left">
+          <div className="p-6 rounded-2xl noc-surface noc-surface-interactive flex flex-col justify-between">
+            <div className="w-10 h-10 rounded-xl bg-[var(--primary-muted)] text-[var(--primary)] flex items-center justify-center mb-4">
+              <HardDrive className="w-5 h-5" />
             </div>
-
-            <div className="p-5 rounded-xl noc-surface noc-surface-interactive flex flex-col justify-between">
-              <div className="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3">
-                <FileSpreadsheet className="w-4 h-4" />
-              </div>
-              <div>
-                <h3 className="font-bold text-sm text-[var(--foreground)] mb-1">Google Sheets DB</h3>
-                <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">Live cohort gradebook and milestone progression synchronization.</p>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-xl noc-surface noc-surface-interactive flex flex-col justify-between">
-              <div className="w-9 h-9 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center mb-3">
-                <Terminal className="w-4 h-4" />
-              </div>
-              <div>
-                <h3 className="font-bold text-sm text-[var(--foreground)] mb-1">367 CLI Commands</h3>
-                <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">Interactive terminal emulator with exact Cisco IOS syntax from Appendix B.</p>
-              </div>
-            </div>
-
-            <div className="p-5 rounded-xl noc-surface noc-surface-interactive flex flex-col justify-between">
-              <div className="w-9 h-9 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3">
-                <ShieldCheck className="w-4 h-4" />
-              </div>
-              <div>
-                <h3 className="font-bold text-sm text-[var(--foreground)] mb-1">450 Quiz Questions</h3>
-                <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">Authentic review questions and detailed rationales from Appendix C &amp; D.</p>
-              </div>
+            <div>
+              <h3 className="font-bold text-sm text-[var(--foreground)] mb-1">5TB Cloud Storage</h3>
+              <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">Direct streaming video lab uploads bypassing serverless payload limits.</p>
             </div>
           </div>
 
+          <div className="p-6 rounded-2xl noc-surface noc-surface-interactive flex flex-col justify-between">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
+              <FileSpreadsheet className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-[var(--foreground)] mb-1">Google Sheets DB</h3>
+              <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">Live cohort gradebook and milestone progression synchronization.</p>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl noc-surface noc-surface-interactive flex flex-col justify-between">
+            <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4">
+              <Terminal className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-[var(--foreground)] mb-1">367 CLI Commands</h3>
+              <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">Interactive terminal emulator with exact Cisco IOS syntax from Appendix B.</p>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl noc-surface noc-surface-interactive flex flex-col justify-between">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-[var(--foreground)] mb-1">450 Quiz Questions</h3>
+              <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">Authentic review questions and detailed rationales from Appendix C &amp; D.</p>
+            </div>
+          </div>
         </div>
       </section>
 
