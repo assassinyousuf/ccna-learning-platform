@@ -3,6 +3,17 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { recordUser } from "./google-sheets";
 
+// If running on Vercel or in production, ensure NEXTAUTH_URL points to the real Vercel host
+if (process.env.VERCEL || process.env.VERCEL_URL || process.env.NODE_ENV === "production") {
+  const vercelHost = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "https://ccna-learning-platform-noywwyj5z-yousufs-projects-50c935d3.vercel.app";
+
+  if (!process.env.NEXTAUTH_URL || process.env.NEXTAUTH_URL.includes("localhost")) {
+    process.env.NEXTAUTH_URL = vercelHost;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
@@ -68,33 +79,34 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Determine production base URL if deployed on Vercel
-      const vercelHost = process.env.VERCEL_URL
+      const prodUrl = process.env.VERCEL_URL
         ? `https://${process.env.VERCEL_URL}`
         : "https://ccna-learning-platform-noywwyj5z-yousufs-projects-50c935d3.vercel.app";
 
-      // If running on Vercel or in production, NEVER redirect to localhost
-      let resolvedBase = baseUrl;
-      if ((process.env.NODE_ENV === "production" || process.env.VERCEL) && baseUrl.includes("localhost")) {
-        resolvedBase = vercelHost;
-      }
+      const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV || process.env.NODE_ENV === "production");
 
-      // Handle relative paths like /dashboard
-      if (url.startsWith("/")) {
-        return `${resolvedBase}${url}`;
-      }
-
-      // Handle absolute URLs
-      try {
-        const parsedUrl = new URL(url);
-        if (parsedUrl.hostname.includes("vercel.app") || parsedUrl.hostname === new URL(resolvedBase).hostname) {
-          return url;
+      // In production or on Vercel: STRICTLY forbid and purge any localhost redirect
+      if (isVercel) {
+        if (url.includes("localhost")) {
+          return url.replace(/https?:\/\/localhost(:\d+)?/, prodUrl);
         }
-      } catch {
-        // Fallback to dashboard
+        if (url.startsWith("/")) {
+          return `${prodUrl}${url}`;
+        }
+        try {
+          const parsed = new URL(url);
+          if (parsed.hostname.includes("vercel.app")) {
+            return url;
+          }
+        } catch {}
+        return `${prodUrl}/dashboard`;
       }
 
-      return `${resolvedBase}/dashboard`;
+      // Local development
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      }
+      return url;
     },
     async signIn({ user }) {
       try {
