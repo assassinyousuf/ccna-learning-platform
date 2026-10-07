@@ -1,6 +1,5 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { recordUser, getOrCreateUser } from "./google-sheets";
 
 // Canonical production URL for Vercel deployment
@@ -21,94 +20,18 @@ if (isVercel) {
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
-      ? [
-          GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID.replace(/["']/g, "").trim(),
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET.replace(/["']/g, "").trim(),
-            // Enforce PKCE and state checks on production/HTTPS to prevent OAuth CSRF/code injection.
-            // In local HTTP dev, checks are relaxed to prevent cross-origin cookie dropping.
-            checks: isVercel ? ["pkce", "state"] : ["none"],
-            authorization: {
-              params: {
-                prompt: "select_account",
-                access_type: "offline",
-                response_type: "code",
-              },
-            },
-          }),
-        ]
-      : []),
-    // 1. Cadet Access (Pending Approval demo)
-    CredentialsProvider({
-      id: "demo-student",
-      name: "Cadet (Pending Clearance)",
-      credentials: {
-        name: { label: "Name", type: "text", placeholder: "Alex Rivera" },
-        email: { label: "Email", type: "email", placeholder: "student@cisco.academy" },
-      },
-      async authorize(credentials) {
-        const email = credentials?.email || "student@cisco.academy";
-        const name = credentials?.name || "Alex Rivera";
-        const userRec = await getOrCreateUser({
-          userId: `cadet-${Buffer.from(email).toString("hex").slice(0, 8)}`,
-          email,
-          name,
-        });
-        return {
-          id: userRec.userId,
-          name: userRec.name,
-          email: userRec.email,
-          image: `https://api.dicebear.com/7.x/bottts/svg?seed=${email}`,
-          role: userRec.role,
-          status: userRec.status,
-        };
-      },
-    }),
-    // 2. Cleared Cadet Access (Approved)
-    CredentialsProvider({
-      id: "demo-approved",
-      name: "Approved Cadet (Cleared)",
-      credentials: {},
-      async authorize() {
-        const email = "sarah.connor@cyberdyne.net";
-        const userRec = await getOrCreateUser({
-          userId: "student-sarah",
-          email,
-          name: "Sarah Connor (Cleared Cadet)",
-        });
-        return {
-          id: userRec.userId,
-          name: userRec.name,
-          email: userRec.email,
-          image: `https://api.dicebear.com/7.x/bottts/svg?seed=${email}`,
-          role: userRec.role,
-          status: userRec.status,
-        };
-      },
-    }),
-    // 3. NOC Administrator Access
-    CredentialsProvider({
-      id: "demo-admin",
-      name: "NOC Administrator (Officer)",
-      credentials: {
-        email: { label: "Admin Email", type: "email", placeholder: "mahbubhossain369@gmail.com" },
-      },
-      async authorize(credentials) {
-        const email = credentials?.email || "mahbubhossain369@gmail.com";
-        const userRec = await getOrCreateUser({
-          userId: `admin-${Buffer.from(email).toString("hex").slice(0, 8)}`,
-          email,
-          name: "Lead Network Administrator",
-        });
-        return {
-          id: userRec.userId,
-          name: userRec.name,
-          email: userRec.email,
-          image: `https://api.dicebear.com/7.x/bottts/svg?seed=${email}`,
-          role: "ADMIN",
-          status: "APPROVED",
-        };
+    GoogleProvider({
+      clientId: (process.env.GOOGLE_CLIENT_ID || "").replace(/["']/g, "").trim(),
+      clientSecret: (process.env.GOOGLE_CLIENT_SECRET || "").replace(/["']/g, "").trim(),
+      // Enforce PKCE and state checks on production/HTTPS to prevent OAuth CSRF/code injection.
+      // In local HTTP dev, checks are relaxed to prevent cross-origin cookie dropping.
+      checks: isVercel ? ["pkce", "state"] : ["none"],
+      authorization: {
+        params: {
+          prompt: "select_account",
+          access_type: "offline",
+          response_type: "code",
+        },
       },
     }),
   ],

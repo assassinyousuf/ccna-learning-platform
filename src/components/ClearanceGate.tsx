@@ -43,7 +43,6 @@ export function ClearanceGate({
     email: string;
     name: string;
   } | null>(null);
-  const [selfApproving, setSelfApproving] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
   // Check live status from server on mount or when session changes
@@ -85,42 +84,6 @@ export function ClearanceGate({
       refreshStatus();
     }
   }, [session?.user?.email]);
-
-  // Quick instant self-approval for local testing / demo evaluation
-  const handleQuickDemoApproval = async () => {
-    if (!session?.user?.email) return;
-    setSelfApproving(true);
-    try {
-      // Sign in as admin first or call admin approve endpoint
-      // We can directly toggle status via an administrative action
-      const res = await fetch("/api/admin/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "APPROVE",
-          userId: (session.user as any).id || session.user.email,
-        }),
-      });
-
-      if (res.ok) {
-        sounds.playExamPass();
-        setLiveUser((prev) =>
-          prev ? { ...prev, status: "APPROVED" } : null
-        );
-        setFeedbackMsg("Clearance granted! Reloading authorized view...");
-        setTimeout(() => {
-          window.location.reload();
-        }, 800);
-      } else {
-        // If not already admin session, trigger demo-approved switch
-        signIn("demo-approved");
-      }
-    } catch {
-      signIn("demo-approved");
-    } finally {
-      setSelfApproving(false);
-    }
-  };
 
   // Determine effective status & role
   const effectiveRole =
@@ -194,51 +157,6 @@ export function ClearanceGate({
               <LogIn className="w-4 h-4" />
               <span>Sign In with Google Account</span>
             </button>
-
-            {/* Quick Demo Evaluation Access */}
-            <div className="pt-2 border-t border-slate-800">
-              <div className="text-[11px] font-mono text-slate-400 mb-2 uppercase tracking-wider flex items-center justify-between">
-                <span>Instant Evaluation / Demo Access:</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <button
-                  onClick={() => signIn("demo-admin", { callbackUrl: window.location.pathname })}
-                  className="flex items-center justify-start gap-2.5 p-2.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 text-xs font-medium transition-all group"
-                  title="Test as Network Administrator with full permissions"
-                >
-                  <ShieldCheck className="w-4 h-4 text-purple-400 shrink-0 group-hover:scale-110 transition-transform" />
-                  <div className="text-left">
-                    <div className="font-bold">NOC Administrator</div>
-                    <div className="text-[10px] text-purple-400/80">
-                      Full Admin &amp; Approver Access
-                    </div>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => signIn("demo-approved", { callbackUrl: window.location.pathname })}
-                  className="flex items-center justify-start gap-2.5 p-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-medium transition-all group"
-                  title="Test as Cleared Student with approved status"
-                >
-                  <UserCheck className="w-4 h-4 text-emerald-400 shrink-0 group-hover:scale-110 transition-transform" />
-                  <div className="text-left">
-                    <div className="font-bold">Approved Cadet</div>
-                    <div className="text-[10px] text-emerald-400/80">
-                      Cleared Student Access
-                    </div>
-                  </div>
-                </button>
-              </div>
-
-              <button
-                onClick={() => signIn("demo-student", { callbackUrl: window.location.pathname })}
-                className="w-full mt-2 flex items-center justify-center gap-2 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 text-slate-300 text-xs font-mono transition-all"
-                title="Test as newly registered cadet with Pending Approval status"
-              >
-                <Clock className="w-3.5 h-3.5 text-amber-400" />
-                <span>Test Cadet with Pending Clearance (Alex Rivera)</span>
-              </button>
-            </div>
           </div>
 
           <div className="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
@@ -287,11 +205,11 @@ export function ClearanceGate({
 
           <div className="space-y-3 mb-6">
             <button
-              onClick={() => signIn("demo-admin", { callbackUrl: window.location.pathname })}
+              onClick={() => signIn("google", { callbackUrl: window.location.pathname })}
               className="w-full flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs font-mono transition-all shadow-md shadow-purple-600/30"
             >
               <KeyRound className="w-4 h-4" />
-              <span>Switch to NOC Administrator Account</span>
+              <span>Switch to Administrator Google Account</span>
             </button>
 
             <Link
@@ -422,20 +340,6 @@ export function ClearanceGate({
               <RotateCcw className={`w-4 h-4 ${checkingLiveStatus ? "animate-spin" : ""}`} />
               <span>{checkingLiveStatus ? "Checking NOC Database..." : "Check Approval Status Now"}</span>
             </button>
-
-            {/* Quick Demo Switch for instant evaluator convenience */}
-            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center justify-between gap-3 text-xs">
-              <span className="text-slate-400">
-                Evaluating platform features?
-              </span>
-              <button
-                onClick={handleQuickDemoApproval}
-                disabled={selfApproving}
-                className="px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 text-xs font-mono font-bold transition-all whitespace-nowrap"
-              >
-                {selfApproving ? "Unlocking..." : "⚡ Quick Demo Clear"}
-              </button>
-            </div>
           </div>
 
           {/* Footer Controls */}
