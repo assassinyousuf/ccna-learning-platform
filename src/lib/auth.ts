@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { recordUser, getOrCreateUser } from "./google-sheets";
 
 // Canonical production URL for Vercel deployment
-export const CANONICAL_URL = "https://ccna-learning-platform-yousufs-projects-50c935d3.vercel.app";
+export const CANONICAL_URL = "https://ccna-learning-platform-nine.vercel.app";
 
 // Strictly detect if running on Vercel deployment (never confuse local production builds with Vercel)
 const isVercel = Boolean(process.env.VERCEL === "1" || process.env.VERCEL_ENV);
