@@ -163,7 +163,21 @@ export const authOptions: NextAuthOptions = {
     signIn: "/",
     error: "/",
   },
-  secret: process.env.NEXTAUTH_SECRET || "ccna-learning-platform-super-secret-key-2026",
+  secret: (() => {
+    const sec = process.env.NEXTAUTH_SECRET?.trim();
+    if (!sec) {
+      if (isVercel || process.env.NODE_ENV === "production") {
+        throw new Error(
+          "CRITICAL SECURITY CONFIGURATION ERROR: NEXTAUTH_SECRET is missing in production. You must define NEXTAUTH_SECRET in environment variables to prevent JWT session forgery."
+        );
+      }
+      console.warn(
+        "[SECURITY WARNING] NEXTAUTH_SECRET is missing in development. Falling back to local dev secret. Please add NEXTAUTH_SECRET to .env.local."
+      );
+      return "ccna-learning-platform-local-dev-secret-only-change-in-prod";
+    }
+    return sec;
+  })(),
   debug: process.env.NODE_ENV !== "production",
   logger: {
     error(code, metadata) {
