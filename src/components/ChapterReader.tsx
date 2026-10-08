@@ -30,13 +30,17 @@ import {
   Network,
   ArrowRight,
   Sliders,
-  Cpu
+  Cpu,
+  ExternalLink,
+  Minimize2,
+  Video
 } from "lucide-react";
 import { CiscoTerminal } from "@/components/CiscoTerminal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CiscoCommand, QuizQuestion } from "@/lib/curriculum";
 import { sounds } from "@/lib/sound-effects";
 import confetti from "canvas-confetti";
+import { getChapterVideo } from "@/lib/chapter-videos";
 
 interface TocItem {
   title: string;
@@ -54,6 +58,7 @@ interface ChapterReaderProps {
   ciscoCommands?: CiscoCommand[];
   quizQuestions?: QuizQuestion[];
   moduleId?: string;
+  initialVideoOpen?: boolean;
 }
 
 export function ChapterReader({
@@ -66,6 +71,7 @@ export function ChapterReader({
   ciscoCommands = [],
   quizQuestions = [],
   moduleId = "",
+  initialVideoOpen = false,
 }: ChapterReaderProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeAnchor, setActiveAnchor] = useState<string>("");
@@ -73,6 +79,14 @@ export function ChapterReader({
   const [zoomLevel, setZoomLevel] = useState(1);
   const [copiedText, setCopiedText] = useState<string | null>(null);
   const [fontSize, setFontSize] = useState<"sm" | "base" | "lg">("base");
+
+  // YouTube Video Lesson Companion States
+  const [showVideo, setShowVideo] = useState(initialVideoOpen);
+  const [videoMode, setVideoMode] = useState<"split" | "pip">("split");
+
+  const chapterVideo = useMemo(() => {
+    return getChapterVideo(moduleId || chapterNumber);
+  }, [moduleId, chapterNumber]);
 
   // Live Simulation Experience States
   const [readerMode, setReaderMode] = useState<"flow" | "workbench" | "stepper">("flow");
@@ -364,6 +378,63 @@ export function ChapterReader({
           </button>
         </div>
 
+        {/* Watch & Read Video Companion Trigger */}
+        {chapterVideo && (
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => {
+                setShowVideo(!showVideo);
+                sounds.playKeyClick();
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-sm border ${
+                showVideo
+                  ? "bg-rose-500/15 text-rose-500 dark:text-rose-400 border-rose-500/50 shadow-rose-500/10"
+                  : "bg-[var(--card)] text-[var(--foreground-muted)] hover:text-rose-500 dark:hover:text-rose-400 border-[var(--border)] hover:border-rose-500/30"
+              }`}
+              title="Watch Jeremy's IT Lab video lesson directly on-site while reading"
+            >
+              <Play className={`w-3.5 h-3.5 ${showVideo ? "fill-rose-500 text-rose-500" : "fill-current text-rose-500"}`} />
+              <span className="hidden sm:inline">Watch &amp; Read</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-500 dark:text-rose-400 font-bold">
+                {chapterVideo.day}
+              </span>
+            </button>
+
+            {showVideo && (
+              <div className="hidden sm:flex items-center bg-[var(--card)] border border-[var(--border)] rounded-lg p-0.5 text-[11px] font-mono">
+                <button
+                  onClick={() => {
+                    setVideoMode("split");
+                    sounds.playKeyClick();
+                  }}
+                  className={`px-2 py-0.5 rounded transition-colors ${
+                    videoMode === "split"
+                      ? "bg-rose-500 text-white font-bold"
+                      : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                  }`}
+                  title="Side-by-side split screen"
+                >
+                  Split
+                </button>
+                <button
+                  onClick={() => {
+                    setVideoMode("pip");
+                    sounds.playKeyClick();
+                  }}
+                  className={`px-2 py-0.5 rounded transition-colors ${
+                    videoMode === "pip"
+                      ? "bg-rose-500 text-white font-bold"
+                      : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                  }`}
+                  title="Floating Picture-in-Picture"
+                >
+                  PiP
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Right Tools: Font Size & Live CLI Launcher */}
         <div className="flex items-center gap-2">
           {/* Quick Terminal Trigger */}
@@ -423,55 +494,238 @@ export function ChapterReader({
       {/* ========================================================================= */}
       {/* 2. MAIN READING & SIMULATION WORKBENCH CONTAINER                          */}
       {/* ========================================================================= */}
-      <div className={`pt-6 ${readerMode === "workbench" ? "grid grid-cols-1 lg:grid-cols-12 gap-6" : "grid grid-cols-1 lg:grid-cols-4 gap-8"}`}>
-        {/* Left Sticky Table of Contents (Hidden in workbench mode to conserve space) */}
-        {readerMode !== "workbench" && (
-          <div className="lg:col-span-1 hidden lg:block">
-            <div className="sticky top-32 space-y-6">
-              <div className="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)] backdrop-blur-md max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none shadow-sm">
-                <div className="flex items-center gap-2 text-xs font-mono text-[var(--primary)] font-bold mb-3 tracking-wider uppercase">
-                  <List className="w-3.5 h-3.5" />
-                  <span>On This Page</span>
-                </div>
+      {(() => {
+        const isSplitVideo = showVideo && videoMode === "split" && Boolean(chapterVideo);
 
-                <nav className="space-y-1">
-                  {tableOfContents.map((item, idx) => {
-                    const isActive = activeAnchor === item.anchor;
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => scrollToAnchor(item.anchor)}
-                        className={`w-full text-left py-1.5 px-2.5 rounded-lg text-xs transition-all truncate block ${
-                          item.level === 3 ? "pl-5 text-[11px]" : ""
-                        } ${
-                          isActive
-                            ? "bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 font-bold border-l-2 border-cyan-400 shadow-sm"
-                            : "text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)]"
-                        }`}
-                      >
-                        {item.title}
-                      </button>
-                    );
-                  })}
-                </nav>
+        return (
+          <div
+            className={`pt-6 ${
+              isSplitVideo
+                ? "grid grid-cols-1 lg:grid-cols-12 gap-6"
+                : readerMode === "workbench"
+                ? "grid grid-cols-1 lg:grid-cols-12 gap-6"
+                : "grid grid-cols-1 lg:grid-cols-4 gap-8"
+            }`}
+          >
+            {/* Left Sticky Video Lesson Column (Dual-Screen Split View) */}
+            {isSplitVideo && chapterVideo && (
+              <div className="lg:col-span-5 space-y-4">
+                <div className="sticky top-28 space-y-4">
+                  <div className="p-4 sm:p-5 rounded-3xl bg-[var(--card)] border border-rose-500/30 shadow-xl space-y-3">
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                        <span className="font-mono text-rose-500 dark:text-rose-400 font-bold uppercase tracking-wider text-[11px]">
+                          {chapterVideo.day} • Video Lesson
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => {
+                            setVideoMode("pip");
+                            sounds.playKeyClick();
+                          }}
+                          className="p-1.5 rounded-lg text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)] transition-colors"
+                          title="Switch to Floating Picture-in-Picture"
+                        >
+                          <Minimize2 className="w-3.5 h-3.5" />
+                        </button>
+                        <a
+                          href={chapterVideo.videoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1.5 rounded-lg text-[var(--foreground-muted)] hover:text-rose-400 hover:bg-[var(--card-hover)] transition-colors"
+                          title="Open video on YouTube"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                        <button
+                          onClick={() => {
+                            setShowVideo(false);
+                            sounds.playKeyClick();
+                          }}
+                          className="p-1.5 rounded-lg text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)] transition-colors"
+                          title="Close Video Pane"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
 
-                <div className="mt-6 pt-4 border-t border-[var(--border)]">
-                  <button
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)] text-[11px] font-mono text-[var(--foreground-muted)] hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
-                  >
-                    <ArrowUp className="w-3 h-3" />
-                    <span>Back to Top</span>
-                  </button>
+                    {/* Responsive 16:9 Cinema Embed */}
+                    <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-inner border border-[var(--border)]">
+                      <iframe
+                        src={chapterVideo.embedUrl}
+                        title={chapterVideo.videoTitle}
+                        className="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                    </div>
+
+                    {/* Video Metadata & Instructor Credit */}
+                    <div className="space-y-1.5 pt-1">
+                      <h4 className="text-xs sm:text-sm font-bold text-[var(--foreground)] leading-snug">
+                        {chapterVideo.videoTitle}
+                      </h4>
+                      <div className="flex items-center justify-between text-[11px] font-mono text-[var(--foreground-muted)] pt-1 border-t border-[var(--border)]">
+                        <span>Jeremy McDonough (CCIE #59049)</span>
+                        <span className="text-rose-500 dark:text-rose-400 font-semibold">Dual Screen Active</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
+            )}
 
-        {/* Center / Left: Technical Content Area */}
-        <div className={`${readerMode === "workbench" ? "lg:col-span-7" : "lg:col-span-3"} space-y-8`}>
-          {/* Key Objectives Banner from the Book */}
+            {/* Left Sticky Table of Contents (Hidden in workbench and split video mode) */}
+            {readerMode !== "workbench" && !isSplitVideo && (
+              <div className="lg:col-span-1 hidden lg:block">
+                <div className="sticky top-32 space-y-6">
+                  <div className="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)] backdrop-blur-md max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none shadow-sm">
+                    <div className="flex items-center gap-2 text-xs font-mono text-[var(--primary)] font-bold mb-3 tracking-wider uppercase">
+                      <List className="w-3.5 h-3.5" />
+                      <span>On This Page</span>
+                    </div>
+
+                    <nav className="space-y-1">
+                      {tableOfContents.map((item, idx) => {
+                        const isActive = activeAnchor === item.anchor;
+                        return (
+                          <button
+                            key={idx}
+                            onClick={() => scrollToAnchor(item.anchor)}
+                            className={`w-full text-left py-1.5 px-2.5 rounded-lg text-xs transition-all truncate block ${
+                              item.level === 3 ? "pl-5 text-[11px]" : ""
+                            } ${
+                              isActive
+                                ? "bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 font-bold border-l-2 border-cyan-400 shadow-sm"
+                                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)]"
+                            }`}
+                          >
+                            {item.title}
+                          </button>
+                        );
+                      })}
+                    </nav>
+
+                    <div className="mt-6 pt-4 border-t border-[var(--border)]">
+                      <button
+                        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                        className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)] text-[11px] font-mono text-[var(--foreground-muted)] hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
+                      >
+                        <ArrowUp className="w-3 h-3" />
+                        <span>Back to Top</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Center / Right: Technical Content Area */}
+            <div className={`${
+              isSplitVideo
+                ? "lg:col-span-7"
+                : readerMode === "workbench"
+                ? "lg:col-span-7"
+                : "lg:col-span-3"
+            } space-y-8`}>
+              {/* Jeremy's IT Lab Lesson Companion Banner */}
+              {chapterVideo && (
+                <div className="p-5 sm:p-6 rounded-3xl bg-[var(--card)] border border-rose-500/25 shadow-xl relative overflow-hidden transition-all">
+                  <div className="absolute top-0 right-0 w-72 h-72 bg-rose-500/5 rounded-full blur-3xl pointer-events-none" />
+
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-500 dark:text-rose-400 flex items-center justify-center shrink-0 shadow-sm">
+                        <Play className="w-5 h-5 fill-rose-500 dark:fill-rose-400" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-[11px] font-mono uppercase tracking-wider text-rose-500 dark:text-rose-400 font-bold px-2 py-0.5 rounded-md bg-rose-500/10 border border-rose-500/20">
+                            Jeremy&apos;s IT Lab • {chapterVideo.day}
+                          </span>
+                          <span className="text-[10px] font-mono text-[var(--foreground-muted)]">
+                            CCIE #59049 Official CCNA Curriculum
+                          </span>
+                        </div>
+                        <h3 className="text-base sm:text-lg font-bold text-[var(--foreground)] mt-1">
+                          {chapterVideo.videoTitle}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="flex items-center gap-2 flex-wrap shrink-0">
+                      <button
+                        onClick={() => {
+                          setShowVideo(true);
+                          setVideoMode("split");
+                          sounds.playKeyClick();
+                        }}
+                        className={`px-3.5 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5 shadow-sm ${
+                          showVideo && videoMode === "split"
+                            ? "bg-rose-500 text-white font-bold shadow-rose-500/25"
+                            : "bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 dark:text-rose-400 border border-rose-500/30"
+                        }`}
+                      >
+                        <Columns className="w-3.5 h-3.5" />
+                        <span>Dual Split Screen</span>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setShowVideo(true);
+                          setVideoMode("pip");
+                          sounds.playKeyClick();
+                        }}
+                        className={`px-3.5 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5 shadow-sm ${
+                          showVideo && videoMode === "pip"
+                            ? "bg-rose-500 text-white font-bold shadow-rose-500/25"
+                            : "bg-[var(--background-subtle)] hover:bg-[var(--card-hover)] text-[var(--foreground)] border border-[var(--border)]"
+                        }`}
+                      >
+                        <Minimize2 className="w-3.5 h-3.5" />
+                        <span>Floating PiP</span>
+                      </button>
+
+                      <a
+                        href={chapterVideo.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-xl bg-[var(--background-subtle)] hover:bg-[var(--card-hover)] text-[var(--foreground-muted)] hover:text-rose-400 border border-[var(--border)] transition-colors"
+                        title="Open lesson in YouTube"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Video explanation footer */}
+                  <div className="mt-3 pt-3 border-t border-[var(--border)] flex flex-wrap items-center justify-between text-xs text-[var(--foreground-muted)] gap-2">
+                    <p className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                      <span>Watch Jeremy&apos;s lesson alongside your textbook notes with zero tab switching.</span>
+                    </p>
+                    {(!showVideo || videoMode !== "split") && (
+                      <button
+                        onClick={() => {
+                          setShowVideo(true);
+                          setVideoMode("split");
+                          sounds.playKeyClick();
+                        }}
+                        className="text-xs font-mono font-bold text-rose-500 dark:text-rose-400 hover:underline flex items-center gap-1"
+                      >
+                        <span>Open Side-by-Side</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Key Objectives Banner from the Book */}
           <div className="p-6 rounded-3xl bg-[var(--card)] border border-[var(--border)] shadow-xl relative overflow-hidden">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2 text-xs font-mono uppercase text-cyan-600 dark:text-cyan-400 font-bold tracking-wider">
@@ -1238,6 +1492,64 @@ export function ChapterReader({
           </div>
         )}
       </div>
+    );
+  })()}
+
+      {/* ========================================================================= */}
+      {/* FLOATING PICTURE-IN-PICTURE (PiP) COMPANION PLAYER                       */}
+      {/* ========================================================================= */}
+      {showVideo && videoMode === "pip" && chapterVideo && (
+        <div className="fixed bottom-6 right-6 z-50 w-[340px] sm:w-[420px] rounded-3xl overflow-hidden shadow-2xl border-2 border-rose-500/40 bg-[var(--card)]/95 backdrop-blur-xl transition-all animate-in fade-in slide-in-from-bottom-4 duration-200">
+          <div className="flex items-center justify-between px-3.5 py-2.5 bg-[var(--background-subtle)] border-b border-[var(--border)] text-xs">
+            <div className="flex items-center gap-2 truncate pr-2">
+              <Play className="w-3.5 h-3.5 text-rose-500 fill-rose-500 shrink-0" />
+              <span className="font-mono text-[var(--foreground)] text-[11px] font-bold truncate">
+                {chapterVideo.day}: {chapterVideo.videoTitle}
+              </span>
+            </div>
+            <div className="flex items-center gap-1 shrink-0">
+              <button
+                onClick={() => {
+                  setVideoMode("split");
+                  sounds.playKeyClick();
+                }}
+                className="p-1 rounded-md text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)]"
+                title="Expand to Side-by-Side Split View"
+              >
+                <Columns className="w-3.5 h-3.5" />
+              </button>
+              <a
+                href={chapterVideo.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-1 rounded-md text-[var(--foreground-muted)] hover:text-rose-500 hover:bg-[var(--card-hover)]"
+                title="Open in YouTube"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+              <button
+                onClick={() => {
+                  setShowVideo(false);
+                  sounds.playKeyClick();
+                }}
+                className="p-1 rounded-md text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)]"
+                title="Close Video Player"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+          <div className="relative w-full aspect-video bg-black">
+            <iframe
+              src={chapterVideo.embedUrl}
+              title={chapterVideo.videoTitle}
+              className="w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
 
       {/* ========================================================================= */}
       {/* 3. FLOATING QUICK TERMINAL DRAWER (Toggleable at bottom right)            */}
