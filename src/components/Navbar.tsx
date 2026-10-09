@@ -53,239 +53,249 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-18 py-2">
             {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 p-0.5 glow-cyan transition-transform group-hover:scale-105">
+            <Link href="/" className="flex items-center gap-3.5 group shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 p-0.5 glow-cyan transition-transform duration-300 group-hover:scale-105 shadow-md">
                 <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
                   <Network className="w-5 h-5 text-cyan-400" />
                 </div>
               </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-bold text-lg tracking-tight text-white group-hover:text-cyan-400 transition-colors">
-                    CCNA<span className="text-cyan-400">.Academy</span>
-                  </span>
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                    200-301
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400 font-mono hidden sm:block">
-                  Mastery Platform • by Yousuf
-                </p>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-lg tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+                  CCNA<span className="text-cyan-400">.Academy</span>
+                </span>
+                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-semibold tracking-wide">
+                  200-301
+                </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation Links & Quick Tools */}
-            <div className="hidden lg:flex items-center gap-3">
-              {/* Spotlight Search Trigger */}
-              <button
-                onClick={() => setSearchOpen(true)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all text-xs font-mono"
-              >
-                <Search className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Search 49 chapters...</span>
-                <kbd className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] border border-slate-700">Ctrl K</kbd>
-              </button>
-
-              {/* Subnet Calculator Trigger */}
-              <button
-                onClick={() => setSubnetCalcOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition-all text-xs font-mono"
-              >
-                <Calculator className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Subnet Calc</span>
-              </button>
-
-              {/* Sound Toggle */}
-              <button
-                onClick={toggleSound}
-                className="p-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all"
-                title={isMuted ? "Unmute sound effects" : "Mute sound effects"}
-              >
-                {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-cyan-400" />}
-              </button>
-            </div>
-
-            {/* Navigation Links */}
-            <nav className="hidden md:flex items-center gap-1">
+            {/* Center Navigation Links */}
+            <nav className="hidden md:flex items-center gap-2 lg:gap-3">
               <Link
                 href="/#curriculum"
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all"
               >
                 <BookOpen className="w-4 h-4 text-cyan-400" />
                 <span>Curriculum</span>
               </Link>
               <Link
-                href="/dashboard"
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
-              >
-                <LayoutDashboard className="w-4 h-4 text-emerald-400" />
-                <span>Dashboard</span>
-              </Link>
-              <Link
                 href="/practice-test"
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-amber-300 hover:text-white hover:bg-amber-500/10 border border-amber-500/20 rounded-lg transition-all"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium text-amber-300 hover:text-white hover:bg-amber-500/10 border border-amber-500/20 transition-all shadow-sm"
                 title="CCNA 200-301 Practice Exam Simulator & Test Center"
               >
                 <Award className="w-4 h-4 text-amber-400" />
                 <span>Exam Simulator</span>
               </Link>
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all"
+              >
+                <LayoutDashboard className="w-4 h-4 text-emerald-400" />
+                <span>Dashboard</span>
+              </Link>
+            </nav>
 
-              {/* GitHub Repo Link */}
+            {/* Right Tools & Auth Controls */}
+            <div className="hidden md:flex items-center gap-2.5">
+              {/* Spotlight Search Trigger */}
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-white transition-all text-xs font-mono"
+                title="Search chapters (Ctrl+K)"
+              >
+                <Search className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="hidden xl:inline">Search chapters...</span>
+                <kbd className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 border border-slate-700">Ctrl K</kbd>
+              </button>
+
+              {/* Subnet Calculator Trigger */}
+              <button
+                onClick={() => setSubnetCalcOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-white transition-all text-xs font-mono"
+                title="Open Subnet Calculator"
+              >
+                <Calculator className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="hidden lg:inline">Subnet Calc</span>
+              </button>
+
+              {/* Sound Toggle */}
+              <button
+                onClick={toggleSound}
+                className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all"
+                title={isMuted ? "Unmute sound effects" : "Mute sound effects"}
+              >
+                {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-cyan-400" />}
+              </button>
+
+              {/* GitHub Link */}
               <a
                 href="https://github.com/assassinyousuf/ccna-learning-platform"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
-                title="GitHub Repository by Md. Yousuf Hossain"
+                className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all"
+                title="GitHub Repository"
               >
-                <Github className="w-4 h-4 text-cyan-400" />
-                <span>GitHub</span>
+                <Github className="w-4 h-4" />
               </a>
 
-              {/* Architecture Badges */}
-              <div className="flex items-center gap-1.5 pl-3 border-l border-slate-800 ml-2">
-                <span className="flex items-center gap-1 text-[11px] text-slate-400 font-mono px-2 py-1 rounded bg-slate-900 border border-slate-800">
-                  <HardDrive className="w-3 h-3 text-blue-400" />
-                  <span>5TB Drive</span>
-                </span>
-                <span className="flex items-center gap-1 text-[11px] text-slate-400 font-mono px-2 py-1 rounded bg-slate-900 border border-slate-800">
-                  <FileSpreadsheet className="w-3 h-3 text-emerald-400" />
-                  <span>Sheets DB</span>
-                </span>
-              </div>
-            </nav>
-
-          {/* User Profile / Auth Button */}
-          <div className="hidden md:flex items-center gap-3">
-            {session?.user ? (
-              <div className="flex items-center gap-3 pl-3 border-l border-slate-800">
-                <Link
-                  href="/dashboard"
-                  className="flex items-center gap-2 text-sm text-slate-300 hover:text-white group"
-                >
-                  <div className="w-8 h-8 rounded-full bg-slate-800 border border-cyan-500/30 flex items-center justify-center overflow-hidden">
-                    {session.user.image ? (
-                      <img
-                        src={session.user.image}
-                        alt={session.user.name || "User"}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <User className="w-4 h-4 text-cyan-400" />
-                    )}
+              {/* User Profile / Auth Area */}
+              <div className="pl-2 border-l border-slate-800/80 ml-1">
+                {session?.user ? (
+                  <div className="flex items-center gap-2.5">
+                    <Link
+                      href="/dashboard"
+                      className="flex items-center gap-2 px-2 py-1 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-slate-900 transition-colors group"
+                    >
+                      <div className="w-8 h-8 rounded-full bg-slate-800 border border-cyan-500/30 flex items-center justify-center overflow-hidden">
+                        {session.user.image ? (
+                          <img
+                            src={session.user.image}
+                            alt={session.user.name || "User"}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <User className="w-4 h-4 text-cyan-400" />
+                        )}
+                      </div>
+                      <span className="font-medium text-xs text-slate-200">
+                        {session.user.name?.split(" ")[0] || "Student"}
+                      </span>
+                    </Link>
+                    <button
+                      onClick={() => signOut()}
+                      className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-colors"
+                      title="Sign Out"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                    </button>
                   </div>
-                  <span className="font-medium text-xs text-slate-200">
-                    {session.user.name?.split(" ")[0] || "Student"}
-                  </span>
-                </Link>
-                <button
-                  onClick={() => signOut()}
-                  className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
-                  title="Sign Out"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => signIn("demo-student", { callbackUrl: "/dashboard" })}
+                      className="px-3 py-1.5 rounded-xl text-xs font-medium border border-slate-800 hover:border-slate-700 bg-slate-900/80 text-slate-400 hover:text-slate-200 transition-colors"
+                      title="Explore without signing into Google"
+                    >
+                      Demo Access
+                    </button>
+                    <button
+                      onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                      className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 hover:opacity-95 transition-opacity glow-cyan shadow-md"
+                    >
+                      <LogIn className="w-3.5 h-3.5" />
+                      <span>Sign In</span>
+                    </button>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => signIn("demo-student", { callbackUrl: "/dashboard" })}
-                  className="px-3 py-1.5 rounded-xl text-xs font-medium border border-slate-700 bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
-                  title="Instant access without Google OAuth setup"
-                >
-                  Demo Student
-                </button>
-                <button
-                  onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 hover:opacity-90 transition-opacity glow-cyan"
-                >
-                  <LogIn className="w-3.5 h-3.5" />
-                  <span>Sign In with Google</span>
-                </button>
-              </div>
-            )}
-          </div>
+            </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex md:hidden">
+            {/* Mobile Menu Toggle */}
+            <div className="flex md:hidden items-center gap-2">
+              <button
+                onClick={() => setSubnetCalcOpen(true)}
+                className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400"
+                title="Subnet Calculator"
+              >
+                <Calculator className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-slate-400 hover:text-white rounded-xl bg-slate-900 border border-slate-800"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-b border-slate-800 bg-slate-950 px-6 pt-3 pb-6 space-y-3">
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-400 hover:text-white rounded-lg"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setSearchOpen(true);
+              }}
+              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 font-mono"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <span className="flex items-center gap-2">
+                <Search className="w-4 h-4 text-cyan-400" />
+                Search 49 chapters...
+              </span>
+              <kbd className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] text-slate-400">Ctrl K</kbd>
             </button>
-          </div>
-        </div>
-      </div>
 
-      {/* Mobile Dropdown */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-800 bg-slate-950 px-4 pt-2 pb-6 space-y-3">
-          <Link
-            href="/#modules"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900"
-          >
-            <BookOpen className="w-4 h-4 text-cyan-400" />
-            <span>Curriculum</span>
-          </Link>
-          <Link
-            href="/dashboard"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900"
-          >
-            <LayoutDashboard className="w-4 h-4 text-emerald-400" />
-            <span>Dashboard</span>
-          </Link>
-          <Link
-            href="/practice-test"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-amber-300 hover:bg-slate-900"
-          >
-            <Award className="w-4 h-4 text-amber-400" />
-            <span>Exam Simulator &amp; Test Center</span>
-          </Link>
-          <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-            {session?.user ? (
-              <div className="flex items-center justify-between w-full">
-                <span className="text-xs text-slate-300">{session.user.name}</span>
-                <button
-                  onClick={() => signOut()}
-                  className="text-xs text-red-400 flex items-center gap-1"
-                >
-                  <LogOut className="w-3.5 h-3.5" /> Sign Out
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-2 w-full">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    signIn("demo-student", { callbackUrl: "/dashboard" });
-                  }}
-                  className="w-full py-2 rounded-xl text-xs font-medium border border-slate-700 bg-slate-900 text-slate-200"
-                >
-                  Instant Student Access
-                </button>
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    signIn("google", { callbackUrl: "/dashboard" });
-                  }}
-                  className="w-full py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950"
-                >
-                  Sign In with Google
-                </button>
-              </div>
-            )}
+            <Link
+              href="/#curriculum"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+            >
+              <BookOpen className="w-4 h-4 text-cyan-400" />
+              <span>Full Curriculum (49 Modules)</span>
+            </Link>
+            <Link
+              href="/practice-test"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-amber-300 bg-amber-500/5 border border-amber-500/20"
+            >
+              <Award className="w-4 h-4 text-amber-400" />
+              <span>Exam Simulator &amp; Test Center</span>
+            </Link>
+            <Link
+              href="/dashboard"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+            >
+              <LayoutDashboard className="w-4 h-4 text-emerald-400" />
+              <span>Student Dashboard</span>
+            </Link>
+
+            <div className="pt-4 border-t border-slate-800">
+              {session?.user ? (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4 text-cyan-400" />
+                    <span className="text-xs text-slate-200 font-medium">{session.user.name}</span>
+                  </div>
+                  <button
+                    onClick={() => signOut()}
+                    className="text-xs text-red-400 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20"
+                  >
+                    <LogOut className="w-3.5 h-3.5" /> Sign Out
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      signIn("google", { callbackUrl: "/dashboard" });
+                    }}
+                    className="w-full py-3 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 flex items-center justify-center gap-2 shadow-md glow-cyan"
+                  >
+                    <LogIn className="w-3.5 h-3.5" />
+                    <span>Sign In with Google</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      signIn("demo-student", { callbackUrl: "/dashboard" });
+                    }}
+                    className="w-full py-2.5 rounded-xl text-xs font-medium border border-slate-800 bg-slate-900/80 text-slate-400 hover:text-slate-200"
+                  >
+                    Instant Student Demo Access
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </header>
+        )}
+      </header>
 
     {/* Global Interactive Modals */}
     <CommandPalette
