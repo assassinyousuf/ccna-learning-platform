@@ -377,20 +377,40 @@ export default function PracticeTestPage() {
     if (testMode === "DOMAIN_DRILL") totalSecs = 30 * 60;
     if (testMode === "QUICK_DRILL") totalSecs = 25 * 60;
 
-    setTimeTakenSeconds(totalSecs - secondsRemaining);
+    const totalSecsTaken = totalSecs - secondsRemaining;
+    setTimeTakenSeconds(totalSecsTaken);
     setTestState("REVIEW");
 
     // Calculate score
     let correctCount = 0;
-    testQuestions.forEach((q) => {
-      if (checkQuestionCorrect(q, userAnswers[q.id])) {
-        correctCount += 1;
-      }
+    const domainScoresSummary: Record<string, { total: number; correct: number; percentage: number; name: string }> = {};
+    DOMAINS.forEach((d) => {
+      domainScoresSummary[d.id] = { total: 0, correct: 0, percentage: 0, name: d.name };
     });
 
-    const percent = Math.round((correctCount / testQuestions.length) * 100);
-    // Official Cisco CCNA passing standard is 825/1000 (~82.5%)
-    if (percent >= 82) {
+    testQuestions.forEach((q) => {
+      const isCorrect = checkQuestionCorrect(q, userAnswers[q.id]);
+      if (isCorrect) correctCount += 1;
+
+      const dId = q.domainId || "1.0";
+      if (!domainScoresSummary[dId]) {
+        domainScoresSummary[dId] = { total: 0, correct: 0, percentage: 0, name: q.domainName || `Domain ${dId}` };
+      }
+      domainScoresSummary[dId].total += 1;
+      if (isCorrect) domainScoresSummary[dId].correct += 1;
+    });
+
+    Object.values(domainScoresSummary).forEach((ds) => {
+      ds.percentage = ds.total > 0 ? Math.round((ds.correct / ds.total) * 100) : 0;
+    });
+
+    const totalQuestions = testQuestions.length || 1;
+    const percent = Math.round((correctCount / totalQuestions) * 100);
+    const scaledScore = Math.round(300 + (percent / 100) * 700);
+    const passed = scaledScore >= 825;
+
+    // Official Cisco CCNA passing standard is 825/1000
+    if (passed) {
       confetti({
         particleCount: 200,
         spread: 90,
@@ -398,20 +418,52 @@ export default function PracticeTestPage() {
       });
     }
 
-    // Sync score to Gradebook
+    const examTitleMap: Record<string, string> = {
+      AUTHENTIC_100: "Authentic Cisco CCNA Mock Exam (100 Qs)",
+      STANDARD_60: "Standard Blueprint Exam (60 Qs)",
+      SIMLET_DRILL: "Cisco Simlet & Packet Tracer Drill",
+      DOMAIN_DRILL: "Cisco Domain Mastery Drill",
+      PART_TEST: "Textbook Part Exam Drill",
+      QUICK_DRILL: "Rapid Knowledge Check (20 Qs)",
+    };
+
+    const examPayload = {
+      examMode: testMode,
+      examTitle: examTitleMap[testMode] || `${testMode} Exam`,
+      scaledScore,
+      rawScore: correctCount,
+      totalQuestions,
+      percentage: percent,
+      passed,
+      domainScores: domainScoresSummary,
+      timeTakenSeconds: totalSecsTaken,
+      userId: session?.user?.email || "guest-cadet",
+      userEmail: session?.user?.email || "cadet@ccna.academy",
+    };
+
+    // Save to local client storage immediately for instant profile sync
     try {
-      fetch("/api/quiz/submit", {
+      const existingHistoryStr = localStorage.getItem("ccna_exam_history");
+      const existingHistory = existingHistoryStr ? JSON.parse(existingHistoryStr) : [];
+      existingHistory.unshift({
+        attemptId: `exam-${Date.now()}`,
+        ...examPayload,
+        timestamp: new Date().toISOString(),
+      });
+      localStorage.setItem("ccna_exam_history", JSON.stringify(existingHistory.slice(0, 20)));
+    } catch (err) {
+      console.warn("Could not write exam attempt to localStorage:", err);
+    }
+
+    // Sync score to Backend & Gradebook
+    try {
+      fetch("/api/exam/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          moduleId: `cisco-exam-${testMode.toLowerCase()}`,
-          answers: userAnswers,
-          userId: session?.user?.email || "guest-cadet",
-          userEmail: session?.user?.email || "cadet@ccna.academy",
-        }),
+        body: JSON.stringify(examPayload),
       });
     } catch (e) {
-      console.error("Failed to sync exam score:", e);
+      console.error("Failed to sync exam score to backend:", e);
     }
   };
 

@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
       userId: userId || "guest-user",
       userEmail: userEmail || "guest@ccna.local",
       moduleId: moduleData.id,
+      moduleTitle: moduleData.title || moduleData.rawTitle,
       score,
       total,
       percentage,

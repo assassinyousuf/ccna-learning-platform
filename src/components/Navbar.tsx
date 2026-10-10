@@ -95,7 +95,7 @@ export function Navbar() {
                 className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all"
               >
                 <LayoutDashboard className="w-4 h-4 text-emerald-400" />
-                <span>Dashboard</span>
+                <span>Profile &amp; Progress</span>
               </Link>
             </nav>
 
@@ -148,9 +148,10 @@ export function Navbar() {
                   <div className="flex items-center gap-2.5">
                     <Link
                       href="/dashboard"
-                      className="flex items-center gap-2 px-2 py-1 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-slate-900 transition-colors group"
+                      className="flex items-center gap-2.5 px-2.5 py-1 rounded-xl text-sm text-slate-300 hover:text-white hover:bg-slate-900 transition-colors group"
+                      title="View Student Profile, Scores & Milestone Track"
                     >
-                      <div className="w-8 h-8 rounded-full bg-slate-800 border border-cyan-500/30 flex items-center justify-center overflow-hidden">
+                      <div className="w-8 h-8 rounded-full bg-slate-800 border border-cyan-500/30 flex items-center justify-center overflow-hidden shrink-0">
                         {session.user.image ? (
                           <img
                             src={session.user.image}
@@ -161,9 +162,12 @@ export function Navbar() {
                           <User className="w-4 h-4 text-cyan-400" />
                         )}
                       </div>
-                      <span className="font-medium text-xs text-slate-200">
-                        {session.user.name?.split(" ")[0] || "Student"}
-                      </span>
+                      <div className="flex flex-col text-left">
+                        <span className="font-semibold text-xs text-slate-200 leading-tight">
+                          {session.user.name?.split(" ")[0] || "Cadet"}
+                        </span>
+                        <span className="text-[10px] font-mono text-cyan-400 leading-tight">Profile &amp; Scores</span>
+                      </div>
                     </Link>
                     <button
                       onClick={() => signOut()}
