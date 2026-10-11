@@ -103,3 +103,171 @@
   box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.15);
 }
 
+/* ==========================================================================
+   INTERFACE IDENTITY 1: NOC OPERATIONS COMMAND CENTER (Dashboard)
+   Cybernetic HUD flight deck aesthetic with neon telemetry edge bars.
+   ========================================================================== */
+.noc-cockpit {
+  background: radial-gradient(circle at 50% -20%, rgba(6, 182, 212, 0.08), transparent 70%),
+              #070b14;
+}
+
+.noc-tile {
+  background: #090e1c;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+}
+
+.noc-tile-amber {
+  border-top: 3px solid #f59e0b;
+}
+
+.noc-tile-cyan {
+  border-top: 3px solid #06b6d4;
+}
+
+.noc-tile-emerald {
+  border-top: 3px solid #10b981;
+}
+
+.noc-tile-violet {
+  border-top: 3px solid #8b5cf6;
+}
+
+.noc-tile:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   INTERFACE IDENTITY 2: OFFICIAL PEARSON VUE TEST TERMINAL (Exam Simulator)
+   Official certification workstation aesthetic with crisp high-contrast controls.
+   ========================================================================== */
+.vue-workstation {
+  background: #050811;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px -5px rgba(6, 182, 212, 0.1);
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+
+.vue-header-bar {
+  background: linear-gradient(180deg, #0b1329 0%, #080d1c 100%);
+  border-bottom: 2px solid #0284c7;
+}
+
+.vue-option-card {
+  background: #090f20;
+  border: 1px solid #1e293b;
+  border-radius: 0.875rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.vue-option-card:hover {
+  background: #0e1730;
+  border-color: #38bdf8;
+  transform: translateX(3px);
+}
+
+.vue-option-selected {
+  background: linear-gradient(90deg, rgba(6, 182, 212, 0.18) 0%, rgba(14, 23, 48, 0.9) 100%);
+  border-color: #06b6d4 !important;
+  box-shadow: 0 0 15px -3px rgba(6, 182, 212, 0.25);
+}
+
+/* Pearson VUE Exam Appointment Ticket */
+.vue-ticket-card {
+  background: linear-gradient(135deg, #070d1e 0%, #040813 100%);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vue-ticket-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0284c7 0%, #06b6d4 50%, #3b82f6 100%);
+}
+
+.vue-ticket-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 15px 35px -10px rgba(6, 182, 212, 0.2);
+}
+
+.vue-ticket-perforation {
+  background-image: radial-gradient(circle, transparent 4px, #070d1e 4px);
+  background-size: 12px 12px;
+}
+
+/* Simlet CRT Bezel */
+.simlet-crt-frame {
+  background: #02040a;
+  border: 2px solid #1e293b;
+  border-radius: 0.875rem;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+}
+
+/* ==========================================================================
+   INTERFACE IDENTITY 3: ENGINEERING CODEX & STUDY WORKBENCH (Chapter Reader)
+   Technical documentation codex with differentiated callouts.
+   ========================================================================== */
+.codex-workbench {
+  background: #070b14;
+}
+
+.codex-callout-tip {
+  background: rgba(245, 158, 11, 0.07);
+  border-left: 4px solid #f59e0b;
+  border-radius: 0.75rem;
+}
+
+.codex-callout-blueprint {
+  background: rgba(6, 182, 212, 0.07);
+  border-left: 4px solid #06b6d4;
+  border-radius: 0.75rem;
+}
+
+.codex-callout-cli {
+  background: rgba(16, 185, 129, 0.07);
+  border-left: 4px solid #10b981;
+  border-radius: 0.75rem;
+}
+
+/* ==========================================================================
+   INTERFACE IDENTITY 4: 5-PILLAR ARCHITECTURAL SLABS (Homepage)
+   Differentiated numbered slabs with individual color personalities.
+   ========================================================================== */
+.pillar-slab-1 {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.pillar-slab-2 {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.pillar-slab-3 {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.pillar-slab-4 {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.pillar-slab-5 {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(9, 14, 28, 0.9) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+

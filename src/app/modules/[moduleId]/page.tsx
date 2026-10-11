@@ -238,8 +238,9 @@ export default function ModuleReaderPage() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Top Breadcrumb & Actions */}
+    <div className="min-h-screen codex-workbench py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Breadcrumb & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-slate-800 gap-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-1">
@@ -312,21 +313,21 @@ export default function ModuleReaderPage() {
         <ChapterNotes moduleId={moduleId} chapterTitle={moduleData.title} />
       </div>
 
-      {/* Active Learning Navigation Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 mb-8">
+      {/* Active Learning Navigation Bar with Distinctive Codex Color Profiles */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 p-1.5 rounded-2xl bg-[#060a14] border border-slate-800 mb-8 shadow-xl">
         <button
           onClick={() => {
             setActiveTab("theory");
             sounds.playKeyClick();
           }}
-          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
+          className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-bold transition-all ${
             activeTab === "theory"
               ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-              : "text-slate-400 hover:text-white"
+              : "text-slate-400 hover:text-white hover:bg-slate-900"
           }`}
         >
-          <BookOpen className="w-3.5 h-3.5 shrink-0" />
-          <span className="truncate">1. Text</span>
+          <BookOpen className="w-4 h-4 shrink-0 text-cyan-400" />
+          <span className="truncate">1. Theory Codex</span>
         </button>
 
         <button
@@ -334,13 +335,13 @@ export default function ModuleReaderPage() {
             setActiveTab("simulator");
             sounds.playKeyClick();
           }}
-          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all relative ${
+          className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-bold transition-all relative ${
             activeTab === "simulator"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-              : "text-cyan-400 hover:text-white bg-cyan-500/5 border border-cyan-500/20"
+              ? "bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-md shadow-violet-500/30"
+              : "text-violet-400 hover:text-white hover:bg-violet-500/10"
           }`}
         >
-          <Zap className="w-3.5 h-3.5 shrink-0 text-cyan-400" />
+          <Zap className="w-4 h-4 shrink-0 text-violet-400" />
           <span className="truncate">2. CLI Sim</span>
         </button>
 
@@ -349,14 +350,14 @@ export default function ModuleReaderPage() {
             setActiveTab("flashcards");
             sounds.playKeyClick();
           }}
-          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
+          className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-bold transition-all ${
             activeTab === "flashcards"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-              : "text-slate-400 hover:text-white"
+              ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/30"
+              : "text-emerald-400 hover:text-white hover:bg-emerald-500/10"
           }`}
         >
-          <Layers className="w-3.5 h-3.5 shrink-0" />
-          <span className="truncate">3. Cards</span>
+          <Layers className="w-4 h-4 shrink-0 text-emerald-400" />
+          <span className="truncate">3. Flashcards</span>
         </button>
 
         <button
@@ -364,14 +365,14 @@ export default function ModuleReaderPage() {
             setActiveTab("commands");
             sounds.playKeyClick();
           }}
-          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
+          className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-bold transition-all ${
             activeTab === "commands"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-              : "text-slate-400 hover:text-white"
+              ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md shadow-amber-500/30 font-black"
+              : "text-amber-400 hover:text-white hover:bg-amber-500/10"
           }`}
         >
-          <Terminal className="w-3.5 h-3.5 shrink-0" />
-          <span className="truncate">4. CLI Ref ({moduleData.ciscoCommands.length})</span>
+          <Terminal className="w-4 h-4 shrink-0 text-amber-400" />
+          <span className="truncate">4. IOS Matrix ({moduleData.ciscoCommands.length})</span>
         </button>
 
         <button
@@ -379,14 +380,14 @@ export default function ModuleReaderPage() {
             setActiveTab("lab");
             sounds.playKeyClick();
           }}
-          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
+          className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-bold transition-all ${
             activeTab === "lab"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-              : "text-slate-400 hover:text-white"
+              ? "bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-md shadow-indigo-500/30"
+              : "text-indigo-400 hover:text-white hover:bg-indigo-500/10"
           }`}
         >
-          <Laptop className="w-3.5 h-3.5 shrink-0" />
-          <span className="truncate">5. Lab</span>
+          <Laptop className="w-4 h-4 shrink-0 text-indigo-400" />
+          <span className="truncate">5. Lab Guide</span>
         </button>
 
         <button
@@ -394,13 +395,13 @@ export default function ModuleReaderPage() {
             setActiveTab("quiz");
             sounds.playKeyClick();
           }}
-          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
+          className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-bold transition-all ${
             activeTab === "quiz"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-              : "text-slate-400 hover:text-white"
+              ? "bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md shadow-rose-500/30"
+              : "text-rose-400 hover:text-white hover:bg-rose-500/10"
           }`}
         >
-          <HelpCircle className="w-3.5 h-3.5 shrink-0" />
+          <HelpCircle className="w-4 h-4 shrink-0 text-rose-400" />
           <span className="truncate">6. Quiz ({moduleData.quiz.length})</span>
         </button>
 
@@ -409,14 +410,14 @@ export default function ModuleReaderPage() {
             setActiveTab("video");
             sounds.playKeyClick();
           }}
-          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
+          className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-bold transition-all ${
             activeTab === "video"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-              : "text-slate-400 hover:text-white"
+              ? "bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white shadow-md shadow-fuchsia-500/30"
+              : "text-fuchsia-400 hover:text-white hover:bg-fuchsia-500/10"
           }`}
         >
-          <Video className="w-3.5 h-3.5 shrink-0" />
-          <span className="truncate">7. Video</span>
+          <Video className="w-4 h-4 shrink-0 text-fuchsia-400" />
+          <span className="truncate">7. Video Proof</span>
         </button>
       </div>
 
@@ -743,5 +744,6 @@ export default function ModuleReaderPage() {
         )}
       </div>
     </div>
+  </div>
   );
 }
