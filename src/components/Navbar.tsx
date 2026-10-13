@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { CommandPalette } from "./CommandPalette";
 import { SubnetCalculatorModal } from "./SubnetCalculatorModal";
+import { ThemeToggle } from "./ThemeToggle";
 import { sounds } from "@/lib/sound-effects";
 
 export function Navbar() {
@@ -130,6 +131,9 @@ export function Navbar() {
               >
                 {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-cyan-400" />}
               </button>
+
+              {/* Theme Toggle (Light / Dark Switch) */}
+              <ThemeToggle />
 
               {/* GitHub Link */}
               <a
@@ -258,6 +262,12 @@ export function Navbar() {
               <LayoutDashboard className="w-4 h-4 text-emerald-400" />
               <span>Student Dashboard</span>
             </Link>
+
+            {/* Theme Toggle (Mobile) */}
+            <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-900/60 border border-slate-800">
+              <span className="text-xs font-mono text-slate-300">Interface Theme</span>
+              <ThemeToggle />
+            </div>
 
             <div className="pt-4 border-t border-slate-800">
               {session?.user ? (
