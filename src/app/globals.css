@@ -445,20 +445,95 @@ html.light .pillar-slab-5 {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
 }
 
+/* Global Navbar & Header in Light Mode */
+html.light header {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light header .text-white {
+  color: #0f172a !important;
+}
+
+html.light header .text-slate-300,
+html.light header .text-slate-400 {
+  color: #334155 !important;
+}
+
+html.light header .text-slate-300:hover,
+html.light header .text-slate-400:hover {
+  color: #0284c7 !important;
+}
+
+html.light header .bg-slate-900\/80,
+html.light header .bg-slate-900,
+html.light header .bg-slate-950,
+html.light header .bg-slate-950\/80 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+
+/* Sticky Chapter Reader HUD in Light Mode */
+html.light .sticky.top-16 {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-bottom: 1px solid #cbd5e1 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light .sticky.top-16 .bg-slate-950,
+html.light .sticky.top-16 .bg-slate-900 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light .sticky.top-16 .text-slate-300,
+html.light .sticky.top-16 .text-slate-400 {
+  color: #475569 !important;
+}
+
 /* Cisco CLI Terminal & Simlet screens MUST remain authentic dark high-contrast consoles in light mode */
 html.light .simlet-crt-frame,
 html.light .cli-box {
-  background: #020617 !important;
+  background-color: #020617 !important;
   color: #38bdf8 !important;
   border-color: #1e293b !important;
+  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.25) !important;
 }
+
+html.light .simlet-crt-frame *,
+html.light .cli-box * {
+  border-color: #1e293b;
+}
+
+html.light .simlet-crt-frame .bg-\[\#040711\],
+html.light .cli-box .bg-\[\#040711\],
+html.light .simlet-crt-frame .bg-\[\#060a14\],
+html.light .cli-box .bg-\[\#060a14\],
+html.light .simlet-crt-frame .bg-\[\#091124\],
+html.light .cli-box .bg-\[\#091124\],
+html.light .simlet-crt-frame .bg-slate-950,
+html.light .cli-box .bg-slate-950,
+html.light .simlet-crt-frame .bg-slate-900,
+html.light .cli-box .bg-slate-900 {
+  background-color: #040711 !important;
+}
+
 html.light .simlet-crt-frame .text-slate-300,
+html.light .cli-box .text-slate-300,
 html.light .simlet-crt-frame .text-slate-400,
-html.light .simlet-crt-frame .text-slate-500 {
+html.light .cli-box .text-slate-400,
+html.light .simlet-crt-frame .text-slate-500,
+html.light .cli-box .text-slate-500 {
   color: #94a3b8 !important;
 }
-html.light .simlet-crt-frame .text-white {
+
+html.light .simlet-crt-frame .text-white,
+html.light .cli-box .text-white {
   color: #f8fafc !important;
 }
+
 
 
