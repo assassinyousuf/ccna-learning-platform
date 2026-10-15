@@ -89,8 +89,17 @@ export function ChapterReader({
   const [subnetPrefix, setSubnetPrefix] = useState<number>(26);
 
   // In-Text Micro Simulation 3: Interactive Knowledge Checkpoint State
-  const [checkpointAnswer, setCheckpointAnswer] = useState<number | null>(null);
-  const [checkpointSubmitted, setCheckpointSubmitted] = useState<boolean>(false);
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState<number>(0);
+  const [checkpointAnswers, setCheckpointAnswers] = useState<Record<string, number>>({});
+  const [checkpointSubmittedMap, setCheckpointSubmittedMap] = useState<Record<string, boolean>>({});
+
+  // Sync active question with stepperIndex when in Stepper Mode
+  useEffect(() => {
+    if (quizQuestions && quizQuestions.length > 0) {
+      const mappedIndex = stepperIndex % quizQuestions.length;
+      setActiveQuestionIndex(mappedIndex);
+    }
+  }, [stepperIndex, quizQuestions]);
 
   // Split chapter text into sections for Stepper Mode
   const sections = useMemo(() => {
@@ -225,12 +234,27 @@ export function ChapterReader({
   };
 
   // Active quiz question for the in-text micro checkpoint
+  const totalQuestions = quizQuestions.length;
   const activeCheckpointQuestion = useMemo(() => {
-    if (quizQuestions && quizQuestions.length > 0) {
-      return quizQuestions[0];
-    }
-    return null;
-  }, [quizQuestions]);
+    if (!quizQuestions || quizQuestions.length === 0) return null;
+    return quizQuestions[activeQuestionIndex] || quizQuestions[0];
+  }, [quizQuestions, activeQuestionIndex]);
+
+  const currentQKey = activeCheckpointQuestion ? (activeCheckpointQuestion.id || `q-${activeQuestionIndex}`) : "";
+  const currentAnswer = activeCheckpointQuestion ? checkpointAnswers[currentQKey] ?? null : null;
+  const isCurrentSubmitted = activeCheckpointQuestion ? Boolean(checkpointSubmittedMap[currentQKey]) : false;
+
+  const answeredCount = useMemo(() => {
+    return Object.keys(checkpointSubmittedMap).filter((k) => checkpointSubmittedMap[k]).length;
+  }, [checkpointSubmittedMap]);
+
+  const correctCount = useMemo(() => {
+    if (!quizQuestions) return 0;
+    return quizQuestions.filter((q, idx) => {
+      const key = q.id || `q-${idx}`;
+      return checkpointSubmittedMap[key] && checkpointAnswers[key] === q.correctAnswer;
+    }).length;
+  }, [quizQuestions, checkpointAnswers, checkpointSubmittedMap]);
 
   const currentSection = sections[stepperIndex] || { title: title, content: fullText };
 
@@ -876,25 +900,101 @@ export function ChapterReader({
           {/* ===================================================================== */}
           {/* IN-TEXT LIVE SIMULATION 3: INTERACTIVE CHECKPOINT CHALLENGE          */}
           {/* ===================================================================== */}
+          {/* ===================================================================== */}
+          {/* IN-TEXT LIVE SIMULATION 3: INTERACTIVE CHECKPOINT CHALLENGE          */}
+          {/* ===================================================================== */}
           {activeCheckpointQuestion && (
-            <div className="p-6 sm:p-7 rounded-3xl bg-[#070d1e] border-2 border-amber-500/40 shadow-2xl relative">
-              <div className="flex items-center gap-2 text-xs font-mono uppercase text-amber-400 font-bold mb-3 tracking-wider">
-                <HelpCircle className="w-4 h-4" />
-                <span>Section Checkpoint: Test Your Active Recall</span>
+            <div className="p-6 sm:p-7 rounded-3xl bg-[#070d1e] border-2 border-amber-500/40 shadow-2xl relative transition-all">
+              {/* Top Header & Navigation Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+                    <HelpCircle className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-xs font-mono uppercase text-amber-400 font-bold tracking-wider">
+                        Section Checkpoint: Active Recall
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 font-bold">
+                        Question {activeQuestionIndex + 1} of {totalQuestions}
+                      </span>
+                      {readerMode === "stepper" && (
+                        <span className="hidden md:inline-block text-[10px] font-mono text-slate-400">
+                          • Synced with Objective {stepperIndex + 1}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] font-mono text-slate-400 mt-0.5">
+                      Test retention immediately to lock concepts into long-term memory.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Progress & Jump Navigator Pills */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  {totalQuestions > 1 && (
+                    <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-950 border border-slate-800">
+                      {quizQuestions.map((q, qIdx) => {
+                        const key = q.id || `q-${qIdx}`;
+                        const isSubmitted = Boolean(checkpointSubmittedMap[key]);
+                        const isCorrect = isSubmitted && checkpointAnswers[key] === q.correctAnswer;
+                        const isCurrent = qIdx === activeQuestionIndex;
+
+                        let pillStyle = "bg-slate-900 text-slate-400 border-slate-800 hover:text-white";
+                        if (isCurrent) {
+                          pillStyle = "bg-amber-500 text-slate-950 font-bold shadow-md ring-2 ring-amber-400/50";
+                        } else if (isSubmitted) {
+                          pillStyle = isCorrect
+                            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                            : "bg-rose-500/20 text-rose-300 border-rose-500/40";
+                        }
+
+                        return (
+                          <button
+                            key={qIdx}
+                            onClick={() => {
+                              setActiveQuestionIndex(qIdx);
+                              sounds.playKeyClick();
+                            }}
+                            className={`w-7 h-7 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center border ${pillStyle}`}
+                            title={`Question ${qIdx + 1}: ${
+                              isSubmitted ? (isCorrect ? "Correct" : "Needs Review") : "Unanswered"
+                            }`}
+                          >
+                            Q{qIdx + 1}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Score Badge */}
+                  {answeredCount > 0 && (
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
+                      {correctCount}/{totalQuestions} Correct
+                    </span>
+                  )}
+                </div>
               </div>
 
+              {/* Question Prompt */}
               <h4 className="text-sm sm:text-base font-semibold text-white mb-4 leading-relaxed">
+                <span className="text-amber-400 font-mono font-bold mr-2">
+                  {activeQuestionIndex + 1}.
+                </span>
                 {activeCheckpointQuestion.question}
               </h4>
 
-              <div className="space-y-2 mb-4">
+              {/* Options List */}
+              <div className="space-y-2 mb-5">
                 {activeCheckpointQuestion.options.map((opt, oIdx) => {
                   const letter = ["A", "B", "C", "D", "E"][oIdx];
-                  const isSelected = checkpointAnswer === oIdx;
+                  const isSelected = currentAnswer === oIdx;
                   const isCorrect = oIdx === activeCheckpointQuestion.correctAnswer;
 
                   let cardStyle = "bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 hover:bg-slate-900";
-                  if (checkpointSubmitted) {
+                  if (isCurrentSubmitted) {
                     if (isCorrect) {
                       cardStyle = "bg-emerald-500/15 border-emerald-500 text-emerald-200 font-semibold";
                     } else if (isSelected && !isCorrect) {
@@ -908,8 +1008,8 @@ export function ChapterReader({
                     <div
                       key={oIdx}
                       onClick={() => {
-                        if (!checkpointSubmitted) {
-                          setCheckpointAnswer(oIdx);
+                        if (!isCurrentSubmitted) {
+                          setCheckpointAnswers((prev) => ({ ...prev, [currentQKey]: oIdx }));
                           sounds.playKeyClick();
                         }
                       }}
@@ -924,39 +1024,108 @@ export function ChapterReader({
                 })}
               </div>
 
-              {/* Checkpoint submission button */}
-              {!checkpointSubmitted ? (
-                <button
-                  disabled={checkpointAnswer === null}
-                  onClick={() => {
-                    setCheckpointSubmitted(true);
-                    if (checkpointAnswer === activeCheckpointQuestion.correctAnswer) {
-                      sounds.playCommandSuccess();
-                      confetti({ particleCount: 80, spread: 60 });
-                    } else {
-                      sounds.playKeyClick();
-                    }
-                  }}
-                  className="w-full py-3 rounded-xl font-bold text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-md"
-                >
-                  Verify Answer
-                </button>
+              {/* Verification / Next Actions */}
+              {!isCurrentSubmitted ? (
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    disabled={currentAnswer === null}
+                    onClick={() => {
+                      setCheckpointSubmittedMap((prev) => ({ ...prev, [currentQKey]: true }));
+                      if (currentAnswer === activeCheckpointQuestion.correctAnswer) {
+                        sounds.playCommandSuccess();
+                        confetti({ particleCount: 80, spread: 60 });
+                      } else {
+                        sounds.playKeyClick();
+                      }
+                    }}
+                    className="flex-1 py-3 px-4 rounded-xl font-bold text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-md flex items-center justify-center gap-2"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Verify Answer (Q{activeQuestionIndex + 1})</span>
+                  </button>
+
+                  {activeQuestionIndex < totalQuestions - 1 && (
+                    <button
+                      onClick={() => {
+                        setActiveQuestionIndex((prev) => prev + 1);
+                        sounds.playKeyClick();
+                      }}
+                      className="py-3 px-4 rounded-xl font-mono text-xs font-bold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition-all flex items-center gap-1.5"
+                    >
+                      <span>Skip to Q{activeQuestionIndex + 2}</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
               ) : (
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono space-y-2">
-                  <div className="flex items-center gap-2">
-                    {checkpointAnswer === activeCheckpointQuestion.correctAnswer ? (
-                      <span className="text-emerald-400 font-bold flex items-center gap-1">
-                        <CheckCircle2 className="w-4 h-4" /> Correct Answer!
+                <div className="space-y-4">
+                  {/* Answer Feedback Banner */}
+                  <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono space-y-2">
+                    <div className="flex items-center justify-between">
+                      {currentAnswer === activeCheckpointQuestion.correctAnswer ? (
+                        <span className="text-emerald-400 font-bold flex items-center gap-1.5 text-sm">
+                          <CheckCircle2 className="w-4 h-4" /> Correct Answer! Perfect Recall!
+                        </span>
+                      ) : (
+                        <span className="text-rose-400 font-bold flex items-center gap-1.5 text-sm">
+                          <AlertTriangle className="w-4 h-4" /> Needs Review
+                        </span>
+                      )}
+                      <span className="text-slate-500 text-[11px]">
+                        Official Key: {activeCheckpointQuestion.answerLetter || activeCheckpointQuestion.officialAnswer}
                       </span>
-                    ) : (
-                      <span className="text-rose-400 font-bold flex items-center gap-1">
-                        <AlertTriangle className="w-4 h-4" /> Needs Review
-                      </span>
-                    )}
+                    </div>
+                    <p className="text-slate-300 leading-relaxed font-sans text-xs sm:text-sm">
+                      {activeCheckpointQuestion.explanation}
+                    </p>
                   </div>
-                  <p className="text-slate-300 leading-relaxed font-sans">
-                    {activeCheckpointQuestion.explanation}
-                  </p>
+
+                  {/* Dynamic Next Question Button */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                    <button
+                      onClick={() => {
+                        setCheckpointSubmittedMap((prev) => ({ ...prev, [currentQKey]: false }));
+                        sounds.playKeyClick();
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono text-slate-400 hover:text-white bg-slate-900 border border-slate-800 transition-all"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>Try Question Again</span>
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      {activeQuestionIndex > 0 && (
+                        <button
+                          onClick={() => {
+                            setActiveQuestionIndex((prev) => Math.max(0, prev - 1));
+                            sounds.playKeyClick();
+                          }}
+                          className="flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-mono font-bold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                          <span>Q{activeQuestionIndex}</span>
+                        </button>
+                      )}
+
+                      {activeQuestionIndex < totalQuestions - 1 ? (
+                        <button
+                          onClick={() => {
+                            setActiveQuestionIndex((prev) => Math.min(totalQuestions - 1, prev + 1));
+                            sounds.playKeyClick();
+                          }}
+                          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-lg shadow-amber-500/20 hover:brightness-110 transition-all"
+                        >
+                          <span>Next Question (Q{activeQuestionIndex + 2} of {totalQuestions})</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      ) : (
+                        <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
+                          <CheckCircle2 className="w-4 h-4" />
+                          <span>All {totalQuestions} Chapter Questions Completed!</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
