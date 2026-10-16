@@ -93,14 +93,6 @@ export function ChapterReader({
   const [checkpointAnswers, setCheckpointAnswers] = useState<Record<string, number>>({});
   const [checkpointSubmittedMap, setCheckpointSubmittedMap] = useState<Record<string, boolean>>({});
 
-  // Sync active question with stepperIndex when in Stepper Mode
-  useEffect(() => {
-    if (quizQuestions && quizQuestions.length > 0) {
-      const mappedIndex = stepperIndex % quizQuestions.length;
-      setActiveQuestionIndex(mappedIndex);
-    }
-  }, [stepperIndex, quizQuestions]);
-
   // Split chapter text into sections for Stepper Mode
   const sections = useMemo(() => {
     if (!fullText) return [];
@@ -116,6 +108,43 @@ export function ChapterReader({
       };
     });
   }, [fullText]);
+
+  // Contextually sync active question with stepperIndex based on section topic
+  useEffect(() => {
+    if (quizQuestions && quizQuestions.length > 0) {
+      if (sections.length > 0 && sections[stepperIndex]) {
+        const sec = sections[stepperIndex];
+        const titleLower = (sec.title || "").toLowerCase();
+        const contentLower = (sec.content || "").slice(0, 1000).toLowerCase();
+
+        let bestScore = 0;
+        let bestIdx = stepperIndex % quizQuestions.length;
+
+        quizQuestions.forEach((q, idx) => {
+          let score = 0;
+          const qWords = q.question.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 3);
+          for (const word of qWords) {
+            if (titleLower.includes(word)) score += 5;
+            else if (contentLower.includes(word)) score += 1;
+          }
+          if (q.officialAnswer) {
+            const ansWords = q.officialAnswer.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 3);
+            for (const word of ansWords) {
+              if (titleLower.includes(word)) score += 6;
+            }
+          }
+          if (score > bestScore) {
+            bestScore = score;
+            bestIdx = idx;
+          }
+        });
+
+        setActiveQuestionIndex(bestScore >= 4 ? bestIdx : (stepperIndex % quizQuestions.length));
+      } else {
+        setActiveQuestionIndex(stepperIndex % quizQuestions.length);
+      }
+    }
+  }, [stepperIndex, quizQuestions, sections]);
 
   // Track scroll progress
   useEffect(() => {
@@ -919,6 +948,9 @@ export function ChapterReader({
                       <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 font-bold">
                         Question {activeQuestionIndex + 1} of {totalQuestions}
                       </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                        Module {chapterNumber} Review
+                      </span>
                       {readerMode === "stepper" && (
                         <span className="hidden md:inline-block text-[10px] font-mono text-slate-400">
                           • Synced with Objective {stepperIndex + 1}
@@ -926,7 +958,7 @@ export function ChapterReader({
                       )}
                     </div>
                     <p className="text-[11px] font-mono text-slate-400 mt-0.5">
-                      Test retention immediately to lock concepts into long-term memory.
+                      Official Review Question from Jeremy McDowell&apos;s CCNA curriculum for Module {chapterNumber}: {title}.
                     </p>
                   </div>
                 </div>
