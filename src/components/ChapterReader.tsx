@@ -292,19 +292,19 @@ export function ChapterReader({
       {/* ========================================================================= */}
       {/* 1. STICKY SIMULATION WORKBENCH HUD HEADER                                 */}
       {/* ========================================================================= */}
-      <div className="sticky top-16 z-30 bg-[#070c18]/95 border-b border-cyan-500/30 backdrop-blur-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-xl">
+      <div className="sticky top-16 z-30 bg-[var(--card)]/95 border-b border-[var(--border)] backdrop-blur-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-xs font-mono text-cyan-300 font-bold">
-            <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--primary-muted)] border border-[var(--border-highlight)] text-xs font-mono text-[var(--primary)] font-bold">
+            <BookOpen className="w-3.5 h-3.5" />
             <span>Chapter {chapterNumber} Codex</span>
           </div>
 
-          <span className="text-slate-600 hidden sm:inline">•</span>
+          <span className="text-[var(--border)] hidden sm:inline">•</span>
 
           {/* Reading progress indicator */}
-          <span className="text-xs font-mono text-slate-300 hidden sm:inline">
+          <span className="text-xs font-mono text-[var(--foreground-muted)] hidden sm:inline">
             {readerMode === "stepper" ? (
-              <span className="text-cyan-400 font-bold">
+              <span className="text-[var(--primary)] font-bold">
                 Objective {stepperIndex + 1} of {sections.length}
               </span>
             ) : (
@@ -314,16 +314,16 @@ export function ChapterReader({
         </div>
 
         {/* INTERACTIVE WORKBENCH MODE SWITCHER */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono">
+        <div className="flex items-center gap-1 p-0.5 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] text-xs font-mono">
           <button
             onClick={() => {
               setReaderMode("flow");
               sounds.playKeyClick();
             }}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1.5 ${
               readerMode === "flow"
-                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[var(--card)] text-[var(--primary)] border border-[var(--border)] shadow-sm"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
             }`}
             title="Continuous Technical Codex reading view"
           >
@@ -413,9 +413,9 @@ export function ChapterReader({
       </div>
 
       {/* Progress Bar Line */}
-      <div className="sticky top-[105px] z-30 w-full bg-slate-900 h-1">
+      <div className="sticky top-[105px] z-30 w-full bg-[var(--border)] h-0.5">
         <div
-          className="bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 h-1 transition-all duration-150 shadow-sm shadow-cyan-500/50"
+          className="bg-[var(--primary)] h-0.5 transition-all duration-150"
           style={{ width: `${readerMode === "stepper" ? ((stepperIndex + 1) / sections.length) * 100 : scrollProgress}%` }}
         />
       </div>
@@ -428,8 +428,8 @@ export function ChapterReader({
         {readerMode !== "workbench" && (
           <div className="lg:col-span-1 hidden lg:block">
             <div className="sticky top-32 space-y-6">
-              <div className="p-4 rounded-2xl bg-[#090e1c] border border-slate-800/80 backdrop-blur-md max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none shadow-xl">
-                <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-bold mb-3 tracking-wider uppercase">
+              <div className="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)] backdrop-blur-md max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-none shadow-sm">
+                <div className="flex items-center gap-2 text-xs font-mono text-[var(--primary)] font-bold mb-3 tracking-wider uppercase">
                   <List className="w-3.5 h-3.5" />
                   <span>On This Page</span>
                 </div>

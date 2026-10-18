@@ -37,8 +37,16 @@ import {
   Calendar,
   Zap,
   Activity,
-  CheckSquare
+  CheckSquare,
+  Flame,
+  Sliders,
+  Globe,
+  Network as NetworkIcon
 } from "lucide-react";
+import { SubnetSpeedDrill } from "@/components/SubnetSpeedDrill";
+import { CiscoConfigGenerator } from "@/components/CiscoConfigGenerator";
+import { IPv6Eui64Visualizer } from "@/components/IPv6Eui64Visualizer";
+import { CablingLab } from "@/components/CablingLab";
 
 interface DomainSummary {
   id: string;
@@ -79,15 +87,29 @@ export default function DashboardPage() {
   const { data: session } = useSession();
   const allModules = getAllModules();
 
-  const [activeTab, setActiveTab] = useState<"overview" | "chapters" | "exams" | "quizzes" | "timeline">("overview");
+  const [activeTab, setActiveTab] = useState<
+    "overview" | "exams" | "quizzes" | "subnet-drill" | "config-gen" | "eui64" | "cabling" | "timeline"
+  >("overview");
   const [selectedVolume, setSelectedVolume] = useState<1 | 2>(1);
   const [chapterFilter, setChapterFilter] = useState<"ALL" | "COMPLETED" | "UNCOMPLETED">("ALL");
   const [progress, setProgress] = useState<Record<string, string>>({});
   const [examHistory, setExamHistory] = useState<ExamHistoryItem[]>([]);
   const [quizHistory, setQuizHistory] = useState<QuizHistoryItem[]>([]);
+  const [selectedExamDetail, setSelectedExamDetail] = useState<ExamHistoryItem | null>(null);
   const [summaryData, setSummaryData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedExamDetail, setSelectedExamDetail] = useState<ExamHistoryItem | null>(null);
+
+  // Deep-link direct tab support from URL query (e.g. /dashboard?tab=config-gen)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab");
+      const validTabs = ["overview", "exams", "quizzes", "subnet-drill", "config-gen", "eui64", "cabling", "timeline"];
+      if (tabParam && validTabs.includes(tabParam)) {
+        setActiveTab(tabParam as any);
+      }
+    }
+  }, []);
 
   // Load progress and history from Backend & LocalStorage
   const loadProgressAndData = async () => {
@@ -320,120 +342,129 @@ export default function DashboardPage() {
   return (
     <div className="noc-cockpit min-h-screen py-10 px-4 sm:px-6 lg:px-10 space-y-10">
       {/* 1. STUDENT IDENTITY & COMMAND CENTER PROFILE BANNER */}
-      <div className="p-8 sm:p-10 rounded-3xl bg-[#090e1c] border border-cyan-500/20 shadow-2xl relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute left-1/4 bottom-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+      <div className="p-8 sm:p-10 rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-xl relative overflow-hidden">
+        <div className="absolute right-0 top-0 w-96 h-96 bg-[var(--primary-muted)] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent" />
 
         <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           {/* User Bio & Cadet Insignia */}
           <div className="flex items-center gap-5">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 via-emerald-400 to-indigo-500 p-0.5 glow-cyan shrink-0 shadow-xl">
-              <div className="w-full h-full bg-[#050811] rounded-[14px] flex items-center justify-center overflow-hidden">
+            <div className="w-18 h-18 rounded-xl bg-gradient-to-br from-[var(--primary)] via-[var(--cobalt)] to-[var(--secondary)] p-0.5 shrink-0 shadow-md">
+              <div className="w-full h-full bg-[var(--background-subtle)] rounded-[10px] flex items-center justify-center overflow-hidden">
                 {session?.user?.image ? (
                   <img src={session.user.image} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
-                  <User className="w-9 h-9 text-cyan-400" />
+                  <User className="w-8 h-8 text-[var(--primary)]" />
                 )}
               </div>
             </div>
 
             <div>
               <div className="flex flex-wrap items-center gap-3">
-                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--foreground)] tracking-tight">
                   {session?.user?.name || "Cadet Engineer"}
                 </h1>
-                <span className={`text-xs font-mono px-3 py-1 rounded-full border font-semibold ${cadetRank.color}`}>
+                <span className={`text-xs font-mono px-3 py-0.5 rounded-full border font-semibold ${cadetRank.color}`}>
                   {cadetRank.title}
                 </span>
-                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300">
+                <span className="telemetry-badge">
                   {cadetRank.level}
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 font-mono flex items-center gap-2">
+              <p className="text-xs sm:text-sm text-[var(--foreground-muted)] mt-1.5 font-mono flex items-center gap-2">
                 <span>{session?.user?.email || "cadet@ccna.academy"}</span>
-                <span className="text-slate-600">•</span>
-                <span className="text-cyan-400">NOC Operations Flight Deck</span>
+                <span>•</span>
+                <span className="text-[var(--primary)] font-semibold">NOC Operations Command</span>
               </p>
             </div>
           </div>
 
-          {/* CCNA Readiness Semicircular Tachometer Gauge */}
-          <div className="flex items-center gap-6 bg-[#050811] border border-slate-800 p-5 rounded-2xl shadow-xl shrink-0 relative overflow-hidden">
-            <div className="relative flex flex-col items-center">
-              <div className="w-40 h-24 relative flex items-end justify-center">
-                <svg className="w-36 h-36 -rotate-90" viewBox="0 0 140 140">
-                  {/* Track */}
-                  <circle
-                    cx="70"
-                    cy="70"
-                    r="54"
-                    fill="none"
-                    stroke="#1e293b"
-                    strokeWidth="10"
-                    strokeDasharray="254"
-                    strokeDashoffset="85"
-                  />
-                  {/* Fill */}
-                  <circle
-                    cx="70"
-                    cy="70"
-                    r="54"
-                    fill="none"
-                    stroke="url(#readinessGrad)"
-                    strokeWidth="10"
-                    strokeDasharray="254"
-                    strokeDashoffset={Math.max(85, 254 - ((readinessScore - 300) / 700) * 169)}
-                    strokeLinecap="round"
-                    className="transition-all duration-1000 ease-out"
-                  />
-                  <defs>
-                    <linearGradient id="readinessGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#06b6d4" />
-                      <stop offset="70%" stopColor="#10b981" />
-                      <stop offset="100%" stopColor="#f59e0b" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <div className="absolute bottom-1 text-center">
-                  <span className="text-2xl sm:text-3xl font-black text-white font-mono leading-none block">
-                    {readinessScore}
-                  </span>
-                  <span className="text-[10px] text-slate-400 font-mono">/ 1000 SCALED</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                  TARGET: 825
+          {/* CCNA Readiness Radial Score Ring */}
+          <div className="flex items-center gap-5 bg-[var(--background-subtle)] border border-[var(--border)] p-4 sm:p-5 rounded-2xl shadow-lg shrink-0 relative">
+            <div className="relative w-28 h-28 flex items-center justify-center shrink-0">
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="readinessGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#06b6d4" />
+                    <stop offset="70%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="#f59e0b" />
+                  </linearGradient>
+                </defs>
+                {/* Track */}
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="48"
+                  fill="none"
+                  stroke="var(--border)"
+                  strokeWidth="8"
+                />
+                {/* Progress Ring */}
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="48"
+                  fill="none"
+                  stroke="url(#readinessGrad)"
+                  strokeWidth="8"
+                  strokeDasharray="301.59"
+                  strokeDashoffset={301.59 * (1 - Math.max(0.04, Math.min(1, (readinessScore - 300) / 700)))}
+                  strokeLinecap="round"
+                  className="transition-all duration-1000 ease-out"
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                <span className="text-2xl font-black text-[var(--foreground)] font-mono leading-none tracking-tight">
+                  {readinessScore}
                 </span>
-                <span className="text-[10px] font-mono text-cyan-400 font-medium">
-                  {readinessScore >= 825 ? "EXAM READY ✓" : "CALIBRATING"}
-                </span>
+                <span className="text-[10px] text-[var(--foreground-muted)] font-mono mt-0.5">/ 1000</span>
               </div>
             </div>
 
-            <div className="w-14 h-14 rounded-full border-2 border-cyan-500/40 bg-cyan-500/10 flex items-center justify-center glow-cyan shadow-sm shrink-0">
-              <Award className="w-7 h-7 text-cyan-400" />
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  TARGET: 825
+                </span>
+                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                  readinessScore >= 825 
+                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" 
+                    : "bg-cyan-500/10 text-cyan-400 border border-cyan-500/30"
+                }`}>
+                  {readinessScore >= 825 ? "EXAM READY ✓" : "CALIBRATING"}
+                </span>
+              </div>
+              <p className="text-xs text-[var(--foreground-muted)] font-mono">
+                {readinessScore >= 825 ? "Passing threshold cleared" : `${Math.max(0, 825 - readinessScore)} pts to target pass`}
+              </p>
+              <div className="flex items-center gap-2 mt-0.5">
+                <div className="w-7 h-7 rounded-lg border border-cyan-500/30 bg-cyan-500/10 flex items-center justify-center shrink-0">
+                  <Award className="w-4 h-4 text-cyan-400" />
+                </div>
+                <div className="text-[11px] font-mono text-[var(--foreground-muted)]">
+                  <span className="text-[var(--foreground)] font-semibold">Scaled CCNA</span> Metric
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Sync Status Sub-bar */}
-        <div className="mt-8 pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-slate-400">
+        <div className="mt-8 pt-6 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[var(--foreground-muted)]">
           <div className="flex flex-wrap items-center gap-6">
             <span className="flex items-center gap-2 text-emerald-400 font-medium">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
               NOC Telemetry Synced
             </span>
-            <span className="text-slate-700 hidden sm:inline">•</span>
+            <span className="text-[var(--border)] hidden sm:inline">•</span>
             <span className="flex items-center gap-1.5 text-blue-400">
               <HardDrive className="w-3.5 h-3.5" /> 5TB Google Drive Storage
             </span>
-            <span className="text-slate-700 hidden sm:inline">•</span>
+            <span className="text-[var(--border)] hidden sm:inline">•</span>
             <span className="flex items-center gap-1.5 text-emerald-400">
               <FileSpreadsheet className="w-3.5 h-3.5" /> Google Sheets Synced
             </span>
-            <span className="text-slate-700 hidden sm:inline">•</span>
+            <span className="text-[var(--border)] hidden sm:inline">•</span>
             <span className="flex items-center gap-1.5 text-purple-400">
               <Terminal className="w-3.5 h-3.5" /> 367 CLI Commands
             </span>
@@ -441,7 +472,7 @@ export default function DashboardPage() {
 
           <button
             onClick={loadProgressAndData}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/40 transition-colors text-xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)] text-[var(--foreground)] hover:border-cyan-500/40 transition-colors text-xs"
             title="Refresh gradebook data"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -461,16 +492,16 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-white font-mono">
+            <span className="text-3xl font-black text-[var(--foreground)] font-mono">
               {highestExamScore > 0 ? highestExamScore : "---"}
             </span>
-            <span className="text-xs text-slate-400 font-mono">
+            <span className="text-xs text-[var(--foreground-muted)] font-mono">
               {highestExamScore > 0 ? "/ 1000 Best" : "Not attempted"}
             </span>
           </div>
-          <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-1 border-t border-slate-800/80">
+          <div className="flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)] pt-1 border-t border-[var(--border)]">
             <span>Attempts: {examsTakenCount}</span>
-            <span className={examsPassedCount > 0 ? "text-emerald-400 font-bold" : "text-slate-500"}>
+            <span className={examsPassedCount > 0 ? "text-emerald-400 font-bold" : "text-[var(--foreground-muted)]"}>
               {examsPassedCount} Passed (&ge;825)
             </span>
           </div>
@@ -485,12 +516,12 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-white font-mono">
+            <span className="text-3xl font-black text-[var(--foreground)] font-mono">
               {averageQuizScore > 0 ? `${averageQuizScore}%` : "---"}
             </span>
-            <span className="text-xs text-slate-400 font-mono">Average Accuracy</span>
+            <span className="text-xs text-[var(--foreground-muted)] font-mono">Average Accuracy</span>
           </div>
-          <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-1 border-t border-slate-800/80">
+          <div className="flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)] pt-1 border-t border-[var(--border)]">
             <span>Taken: {quizzesTakenCount}</span>
             <span className="text-emerald-400 font-bold">
               {quizzesPassedCount} Passed (&ge;80%)
@@ -507,12 +538,12 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-white font-mono">
+            <span className="text-3xl font-black text-[var(--foreground)] font-mono">
               {completedChaptersCount}
             </span>
-            <span className="text-xs text-slate-400 font-mono">/ {allModules.length} Chapters</span>
+            <span className="text-xs text-[var(--foreground-muted)] font-mono">/ {allModules.length} Chapters</span>
           </div>
-          <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-1 border-t border-slate-800/80">
+          <div className="flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)] pt-1 border-t border-[var(--border)]">
             <span>Syllabus Coverage</span>
             <span className="text-cyan-400 font-bold">{progressPercent}%</span>
           </div>
@@ -527,12 +558,12 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black text-white font-mono">
+            <span className="text-3xl font-black text-[var(--foreground)] font-mono">
               {allModules.filter((m) => progress[`${m.id}_video`] === "SUBMITTED").length}
             </span>
-            <span className="text-xs text-slate-400 font-mono">Verified on Drive</span>
+            <span className="text-xs text-[var(--foreground-muted)] font-mono">Verified on Drive</span>
           </div>
-          <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-1 border-t border-slate-800/80">
+          <div className="flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)] pt-1 border-t border-[var(--border)]">
             <span>5-Pillar Protocol</span>
             <span className="text-purple-400 font-bold">Pillar 05 Ready</span>
           </div>
@@ -540,21 +571,21 @@ export default function DashboardPage() {
       </div>
 
       {/* 3. CISCO 6-DOMAIN BLUEPRINT MASTERY MATRIX */}
-      <div className="p-8 rounded-3xl bg-[#090e1c] border border-slate-800/90 space-y-6">
+      <div className="p-8 rounded-3xl bg-[var(--card)] border border-[var(--border)] space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
               <ShieldCheck className="w-4 h-4" />
               <span>Official Cisco Blueprint Standard</span>
             </div>
-            <h2 className="text-xl font-bold text-white">6-Domain Certification Mastery Matrix</h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <h2 className="text-xl font-bold text-[var(--foreground)]">6-Domain Certification Mastery Matrix</h2>
+            <p className="text-xs text-[var(--foreground-muted)] mt-1">
               Live tracking calculated across all mock exams and chapter assessments adhering to official blueprint weights.
             </p>
           </div>
           <Link
             href="/practice-test"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition-colors shrink-0"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/30 transition-colors shrink-0"
           >
             <span>Launch Exam Drill</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -567,21 +598,21 @@ export default function DashboardPage() {
             return (
               <div
                 key={domain.id}
-                className="p-5 rounded-2xl bg-[#050811] border border-slate-800/90 space-y-3"
+                className="p-5 rounded-2xl bg-[var(--background-subtle)] border border-[var(--border)] space-y-3"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <span className="text-[11px] font-mono text-cyan-400 font-semibold">
                       Domain {domain.id} • {Math.round(domain.weight * 100)}% Weight
                     </span>
-                    <h3 className="text-sm font-bold text-white mt-0.5 line-clamp-1">
+                    <h3 className="text-sm font-bold text-[var(--foreground)] mt-0.5 line-clamp-1">
                       {domain.name}
                     </h3>
                   </div>
                   <span
                     className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold uppercase shrink-0 ${
                       !hasData
-                        ? "bg-slate-800 text-slate-500"
+                        ? "bg-[var(--card)] text-[var(--foreground-muted)]"
                         : domain.status === "MASTERED"
                         ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                         : domain.status === "PROFICIENT"
@@ -595,12 +626,12 @@ export default function DashboardPage() {
 
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-slate-400">Score Accuracy</span>
-                    <span className="text-white font-bold">
+                    <span className="text-[var(--foreground-muted)]">Score Accuracy</span>
+                    <span className="text-[var(--foreground)] font-bold">
                       {hasData ? `${domain.percentage}%` : "---"}
                     </span>
                   </div>
-                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-[var(--border)] rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${
                         domain.percentage >= 85
@@ -612,7 +643,7 @@ export default function DashboardPage() {
                       style={{ width: `${hasData ? domain.percentage : 0}%` }}
                     />
                   </div>
-                  <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-0.5">
+                  <div className="flex items-center justify-between text-[11px] font-mono text-[var(--foreground-muted)] pt-0.5">
                     <span>{hasData ? `${domain.correctQuestions}/${domain.totalQuestions} Qs Correct` : "Take a mock test to calibrate"}</span>
                     <span>Target &ge;82%</span>
                   </div>
@@ -626,53 +657,101 @@ export default function DashboardPage() {
       {/* 4. MAIN INTERACTIVE TABS (FLIGHT DECK CONSOLE SWITCHER) */}
       <div className="space-y-6">
         {/* Navigation Tab Buttons */}
-        <div className="flex items-center gap-2 p-2 rounded-2xl bg-[#090e1c] border border-slate-800 overflow-x-auto shadow-inner">
+        <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--card)] border border-[var(--border)] overflow-x-auto shadow-inner">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeTab === "overview"
-                ? "bg-cyan-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/20"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-bold shadow-md"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
             }`}
           >
-            <LayoutDashboard className="w-4 h-4" />
-            <span>Mission Checklist ({completedChaptersCount}/49)</span>
+            <LayoutDashboard className="w-3.5 h-3.5" />
+            <span>Checklist ({completedChaptersCount}/49)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("subnet-drill")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+              activeTab === "subnet-drill"
+                ? "bg-amber-500 text-slate-950 font-bold shadow-md"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5 text-amber-500" />
+            <span>30s Subnet Blitz</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("config-gen")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+              activeTab === "config-gen"
+                ? "bg-cyan-500 text-slate-950 font-bold shadow-md"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+            }`}
+          >
+            <Sliders className="w-3.5 h-3.5 text-cyan-400" />
+            <span>IOS Config Generator</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("eui64")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+              activeTab === "eui64"
+                ? "bg-emerald-500 text-slate-950 font-bold shadow-md"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+            }`}
+          >
+            <Globe className="w-3.5 h-3.5 text-emerald-400" />
+            <span>IPv6 EUI-64 Flipper</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("cabling")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+              activeTab === "cabling"
+                ? "bg-purple-500 text-white font-bold shadow-md"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+            }`}
+          >
+            <NetworkIcon className="w-3.5 h-3.5 text-purple-400" />
+            <span>Cabling Lab</span>
           </button>
 
           <button
             onClick={() => setActiveTab("exams")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeTab === "exams"
-                ? "bg-amber-500 text-slate-950 font-bold shadow-lg shadow-amber-500/20"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-bold shadow-md"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
             }`}
           >
-            <Award className="w-4 h-4" />
-            <span>Practice Exam Scores ({examHistory.length})</span>
+            <Award className="w-3.5 h-3.5" />
+            <span>Mock Exams ({examHistory.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab("quizzes")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeTab === "quizzes"
-                ? "bg-emerald-400 text-slate-950 font-bold shadow-lg shadow-emerald-500/20"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-bold shadow-md"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
             }`}
           >
-            <HelpCircle className="w-4 h-4" />
-            <span>Quiz Results ({quizHistory.length})</span>
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span>Quizzes ({quizHistory.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab("timeline")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               activeTab === "timeline"
-                ? "bg-purple-500 text-white font-bold shadow-lg shadow-purple-500/20"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[var(--primary)] text-[var(--primary-foreground)] font-bold shadow-md"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
             }`}
           >
-            <Activity className="w-4 h-4" />
-            <span>Milestone History</span>
+            <Activity className="w-3.5 h-3.5" />
+            <span>Milestones</span>
           </button>
         </div>
 
@@ -1223,6 +1302,34 @@ export default function DashboardPage() {
                 ));
               })()}
             </div>
+          </div>
+        )}
+
+        {/* TAB: 30-SECOND SUBNET BLITZ DRILL */}
+        {activeTab === "subnet-drill" && (
+          <div className="space-y-6">
+            <SubnetSpeedDrill />
+          </div>
+        )}
+
+        {/* TAB: CISCO IOS CONFIGURATION WORKBENCH */}
+        {activeTab === "config-gen" && (
+          <div className="space-y-6">
+            <CiscoConfigGenerator />
+          </div>
+        )}
+
+        {/* TAB: IPV6 EUI-64 & SLAAC BIT-FLIPPER */}
+        {activeTab === "eui64" && (
+          <div className="space-y-6">
+            <IPv6Eui64Visualizer />
+          </div>
+        )}
+
+        {/* TAB: CABLING & PORT MATCHING LAB */}
+        {activeTab === "cabling" && (
+          <div className="space-y-6">
+            <CablingLab />
           </div>
         )}
       </div>

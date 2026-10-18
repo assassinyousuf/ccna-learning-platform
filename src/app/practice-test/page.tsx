@@ -548,6 +548,77 @@ export default function PracticeTestPage() {
   const flaggedCount = Object.values(flaggedQuestions).filter(Boolean).length;
   const currentQ = testQuestions[currentIndex];
 
+  // Keyboard shortcut listener for active exam mode (1-4, A-D, Enter, Arrow keys)
+  useEffect(() => {
+    if (testState !== "TESTING" || !currentQ) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if user is currently typing in an input or textarea (e.g., simlet CLI or whiteboard)
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target as HTMLElement)?.isContentEditable
+      ) {
+        return;
+      }
+
+      const key = e.key.toUpperCase();
+
+      // Number keys 1-6 or letters A-F to select options
+      const keyToOptionIdx: Record<string, number> = {
+        "1": 0, "A": 0,
+        "2": 1, "B": 1,
+        "3": 2, "C": 2,
+        "4": 3, "D": 3,
+        "5": 4, "E": 4,
+        "6": 5, "F": 5,
+      };
+
+      if (key in keyToOptionIdx && currentQ.options) {
+        const optIdx = keyToOptionIdx[key];
+        if (optIdx < currentQ.options.length) {
+          e.preventDefault();
+          if (currentQ.type === "single_choice") {
+            handleSelectSingleOption(currentQ.id, optIdx);
+          } else if (currentQ.type === "multi_choice") {
+            handleToggleMultiOption(currentQ.id, optIdx);
+          }
+          return;
+        }
+      }
+
+      // Flag question with 'M' (Mark) or Alt+F
+      if (key === "M" || (e.altKey && key === "F")) {
+        e.preventDefault();
+        toggleFlagQuestion(currentQ.id);
+        return;
+      }
+
+      // Enter or ArrowRight: Next Question
+      if (e.key === "Enter" || e.key === "ArrowRight") {
+        e.preventDefault();
+        sounds.playKeyClick();
+        if (currentIndex < testQuestions.length - 1) {
+          setCurrentIndex((prev) => prev + 1);
+        } else {
+          setConfirmSubmitModal(true);
+        }
+        return;
+      }
+
+      // ArrowLeft: Previous Question (if not strict Cisco mode)
+      if (e.key === "ArrowLeft" && !isStrictCiscoMode) {
+        e.preventDefault();
+        sounds.playKeyClick();
+        setCurrentIndex((prev) => Math.max(0, prev - 1));
+        return;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [testState, currentQ, currentIndex, testQuestions.length, isStrictCiscoMode]);
+
   // Filtered review questions
   const filteredReviewQuestions = useMemo(() => {
     if (reviewFilter === "INCORRECT") {
@@ -560,7 +631,7 @@ export default function PracticeTestPage() {
   }, [testQuestions, userAnswers, flaggedQuestions, reviewFilter]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       {/* ========================================================================= */}
       {/* SCREEN 1: EXAM SELECTION & CISCO TEST CENTER PORTAL                       */}
       {/* ========================================================================= */}
@@ -822,7 +893,7 @@ export default function PracticeTestPage() {
       {/* SCREEN 2: ACTIVE PEARSON VUE CISCO EXAM ENVIRONMENT                      */}
       {/* ========================================================================= */}
       {testState === "TESTING" && currentQ && (
-        <div className="flex flex-col min-h-screen bg-[#050811] select-none">
+        <div className="flex flex-col min-h-screen bg-[var(--background)] text-[var(--foreground)] select-none">
           {/* Pearson VUE Authentic Navy Header */}
           <header className="sticky top-0 z-40 vue-header-bar shadow-xl">
             <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">

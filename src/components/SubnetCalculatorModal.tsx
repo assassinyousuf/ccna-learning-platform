@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Calculator, X, Binary, Copy, Check, Info, Sparkles, Sliders } from "lucide-react";
+import { Calculator, X, Copy, Check, Flame } from "lucide-react";
 import { sounds } from "@/lib/sound-effects";
+import { SubnetSpeedDrill } from "./SubnetSpeedDrill";
 
 interface SubnetCalculatorModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface SubnetCalculatorModalProps {
 }
 
 export function SubnetCalculatorModal({ isOpen, onClose }: SubnetCalculatorModalProps) {
+  const [modalMode, setModalMode] = useState<"calc" | "drill">("calc");
   const [ip, setIp] = useState("192.168.10.135");
   const [cidr, setCidr] = useState(26);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -94,39 +96,70 @@ export function SubnetCalculatorModal({ isOpen, onClose }: SubnetCalculatorModal
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-2xl rounded-3xl bg-slate-950 border border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+      <div className="relative w-full max-w-2xl rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-4 border-b border-[var(--border)]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center">
-              <Calculator className="w-5 h-5 text-cyan-400" />
+            <div className="w-9 h-9 rounded-lg bg-[var(--primary-muted)] text-[var(--primary)] flex items-center justify-center border border-[var(--border-highlight)]">
+              <Calculator className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <span>IPv4 Subnet & Binary Calculator</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+              <h2 className="text-base font-bold text-[var(--foreground)] flex items-center gap-2">
+                <span>IPv4 Subnet &amp; Binary Calculator</span>
+                <span className="telemetry-badge telemetry-badge-cyan">
                   CCNA Ch. 11
                 </span>
               </h2>
-              <p className="text-xs text-slate-400 font-mono">
-                FLSM & VLSM Bitwise Calculation Engine
+              <p className="text-xs text-[var(--foreground-muted)] font-mono">
+                FLSM &amp; VLSM Bitwise Calculation Engine
               </p>
             </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 p-0.5 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] text-xs font-mono">
+              <button
+                onClick={() => setModalMode("calc")}
+                className={`px-3 py-1 rounded-md text-[11px] font-bold transition-all ${
+                  modalMode === "calc"
+                    ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                Calculator
+              </button>
+              <button
+                onClick={() => setModalMode("drill")}
+                className={`px-3 py-1 rounded-md text-[11px] font-bold transition-all flex items-center gap-1 ${
+                  modalMode === "drill"
+                    ? "bg-amber-500 text-slate-950 shadow-sm"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                <Flame className="w-3 h-3 text-amber-500" />
+                <span>30s Blitz</span>
+              </button>
+            </div>
+
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg hover:bg-[var(--background-subtle)] text-[var(--foreground-muted)] hover:text-[var(--foreground)] transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Interactive Inputs */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="sm:col-span-2 space-y-1.5">
-            <label className="text-xs font-mono text-slate-300">IPv4 Address</label>
+        {modalMode === "drill" ? (
+          <SubnetSpeedDrill />
+        ) : (
+          <>
+            {/* Interactive Inputs */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="sm:col-span-2 space-y-1">
+            <label className="text-xs font-mono text-[var(--foreground-muted)]">IPv4 Address</label>
             <input
               type="text"
               value={ip}
@@ -135,14 +168,14 @@ export function SubnetCalculatorModal({ isOpen, onClose }: SubnetCalculatorModal
                 sounds.playKeyClick();
               }}
               placeholder="192.168.1.1"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white font-mono text-sm focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] text-[var(--foreground)] font-mono text-sm focus:border-[var(--primary)] focus:outline-none"
             />
           </div>
 
-          <div className="space-y-1.5">
-            <label className="text-xs font-mono text-slate-300 flex justify-between">
+          <div className="space-y-1">
+            <label className="text-xs font-mono text-[var(--foreground-muted)] flex justify-between">
               <span>Prefix</span>
-              <span className="text-cyan-400 font-bold">/{cidr}</span>
+              <span className="text-[var(--primary)] font-bold">/{cidr}</span>
             </label>
             <input
               type="number"
@@ -153,14 +186,14 @@ export function SubnetCalculatorModal({ isOpen, onClose }: SubnetCalculatorModal
                 setCidr(Math.max(8, Math.min(30, parseInt(e.target.value) || 24)));
                 sounds.playKeyClick();
               }}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white font-mono text-sm focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] text-[var(--foreground)] font-mono text-sm focus:border-[var(--primary)] focus:outline-none"
             />
           </div>
         </div>
 
         {/* CIDR Slider */}
-        <div className="space-y-1">
-          <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-[10px] font-mono text-[var(--foreground-muted)]">
             <span>/8 (Class A)</span>
             <span>/16 (Class B)</span>
             <span>/24 (Class C)</span>
@@ -175,14 +208,14 @@ export function SubnetCalculatorModal({ isOpen, onClose }: SubnetCalculatorModal
               setCidr(parseInt(e.target.value));
               sounds.playKeyClick();
             }}
-            className="w-full accent-cyan-400 cursor-pointer"
+            className="w-full accent-[var(--primary)] cursor-pointer"
           />
         </div>
 
         {/* Results Grid */}
         {calc && (
           <div className="space-y-4">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
               {[
                 { label: "Network Address", val: calc.networkAddress, key: "net" },
                 { label: "Broadcast Address", val: calc.broadcastAddress, key: "bcast" },
@@ -193,14 +226,14 @@ export function SubnetCalculatorModal({ isOpen, onClose }: SubnetCalculatorModal
               ].map((item) => (
                 <div
                   key={item.key}
-                  className="p-3 rounded-2xl bg-slate-900/70 border border-slate-800/80 hover:border-slate-700 transition-colors group relative"
+                  className="p-3 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] hover:border-[var(--border-highlight)] transition-colors group relative"
                 >
-                  <p className="text-[10px] font-mono uppercase text-slate-400">{item.label}</p>
-                  <p className="text-sm font-bold text-white font-mono mt-0.5">{item.val}</p>
+                  <p className="text-[10px] font-mono uppercase text-[var(--foreground-muted)]">{item.label}</p>
+                  <p className="text-xs sm:text-sm font-bold text-[var(--foreground)] font-mono mt-0.5">{item.val}</p>
                   <button
                     onClick={() => handleCopy(item.val, item.key)}
-                    className="absolute top-2 right-2 p-1 rounded bg-slate-800 text-slate-400 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                    title="Copy"
+                    className="absolute top-2 right-2 p-1 rounded bg-[var(--card)] text-[var(--foreground-muted)] hover:text-[var(--foreground)] opacity-0 group-hover:opacity-100 transition-opacity"
+                    title="Copy value"
                   >
                     {copiedKey === item.key ? (
                       <Check className="w-3 h-3 text-emerald-400" />
@@ -213,64 +246,54 @@ export function SubnetCalculatorModal({ isOpen, onClose }: SubnetCalculatorModal
             </div>
 
             {/* Extra Metadata Badges */}
-            <div className="flex flex-wrap items-center gap-2 p-3 rounded-2xl bg-slate-900/50 border border-slate-800/60 text-xs font-mono">
-              <span className="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            <div className="flex flex-wrap items-center gap-2 p-3 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] text-xs font-mono">
+              <span className="telemetry-badge telemetry-badge-cyan">
                 {calc.usableHosts.toLocaleString()} Usable Hosts
               </span>
-              <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span className="telemetry-badge telemetry-badge-emerald">
                 {calc.ipClass}
               </span>
-              <span className={`px-2.5 py-1 rounded-lg border ${
-                calc.isPrivate
-                  ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
-                  : "bg-blue-500/10 text-blue-400 border-blue-500/20"
-              }`}>
-                {calc.isPrivate ? "RFC 1918 Private" : "Public Routable"}
+              <span className="telemetry-badge">
+                {calc.isPrivate ? "RFC 1918 Private Scope" : "Public Routable IP"}
               </span>
             </div>
 
             {/* 32-Bit Binary Visualizer */}
-            <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="flex items-center gap-1 text-slate-300">
-                  <Binary className="w-3.5 h-3.5 text-cyan-400" /> 32-Bit Binary Representation
-                </span>
-                <div className="flex items-center gap-3 text-[11px]">
-                  <span className="flex items-center gap-1 text-emerald-400">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Network ({cidr} bits)
+            <div className="p-3.5 rounded-lg bg-[var(--terminal-bg)] border border-[var(--terminal-border)] font-mono text-xs space-y-2">
+              <div className="flex items-center justify-between text-[11px] text-[var(--foreground-muted)]">
+                <span className="text-[var(--primary)] font-bold">32-Bit Binary Address Alignment</span>
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[var(--primary)] inline-block" />
+                    <span>Net ({cidr}b)</span>
                   </span>
-                  <span className="flex items-center gap-1 text-cyan-400">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400"></span> Host ({32 - cidr} bits)
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-slate-500 inline-block" />
+                    <span>Host ({32 - cidr}b)</span>
                   </span>
                 </div>
               </div>
 
-              {/* Bit Blocks by Octet */}
-              <div className="grid grid-cols-4 gap-2 pt-1 font-mono text-center">
-                {[0, 1, 2, 3].map((octetIdx) => (
-                  <div key={octetIdx} className="p-2 rounded-xl bg-slate-950 border border-slate-800/80">
-                    <div className="text-[10px] text-slate-500 mb-1">Octet {octetIdx + 1}</div>
-                    <div className="flex items-center justify-center gap-0.5 text-xs font-bold">
-                      {calc.binaryBits
-                        .slice(octetIdx * 8, (octetIdx + 1) * 8)
-                        .map((b, bIdx) => (
-                          <span
-                            key={bIdx}
-                            className={`w-3.5 py-0.5 rounded text-[11px] ${
-                              b.isNetwork
-                                ? "bg-emerald-500/20 text-emerald-400"
-                                : "bg-cyan-500/20 text-cyan-400"
-                            }`}
-                          >
-                            {b.bit}
-                          </span>
-                        ))}
-                    </div>
-                  </div>
+              <div className="flex flex-wrap gap-1 font-mono text-[11px]">
+                {calc.binaryBits.map((b, i) => (
+                  <React.Fragment key={i}>
+                    {i > 0 && i % 8 === 0 && <span className="text-slate-600 px-0.5">•</span>}
+                    <span
+                      className={`px-1 py-0.5 rounded font-bold ${
+                        b.isNetwork
+                          ? "bg-[var(--primary-muted)] text-[var(--primary)]"
+                          : "text-slate-500"
+                      }`}
+                    >
+                      {b.bit}
+                    </span>
+                  </React.Fragment>
                 ))}
               </div>
             </div>
           </div>
+        )}
+          </>
         )}
       </div>
     </div>

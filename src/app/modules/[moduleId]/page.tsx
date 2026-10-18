@@ -238,19 +238,19 @@ export default function ModuleReaderPage() {
   );
 
   return (
-    <div className="min-h-screen codex-workbench py-8">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Breadcrumb & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-slate-800 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-[var(--border)] gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-1">
-            <Link href="/" className="hover:text-cyan-400">Curriculum</Link>
+          <div className="flex items-center gap-2 text-xs font-mono text-[var(--foreground-muted)] mb-1">
+            <Link href="/" className="hover:text-[var(--primary)]">Curriculum</Link>
             <span>/</span>
-            <Link href={`/dashboard`} className="hover:text-cyan-400">Vol {moduleData.volume}</Link>
+            <Link href={`/dashboard`} className="hover:text-[var(--primary)]">Vol {moduleData.volume}</Link>
             <span>/</span>
-            <span className="text-cyan-400 font-semibold">Part {moduleData.partNumber}: {moduleData.partTitle}</span>
+            <span className="text-[var(--primary)] font-semibold">Part {moduleData.partNumber}: {moduleData.partTitle}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--foreground)] tracking-tight">
             {moduleData.title}
           </h1>
         </div>
@@ -260,7 +260,7 @@ export default function ModuleReaderPage() {
           {prevMod && (
             <Link
               href={`/modules/${prevMod.id}`}
-              className="p-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              className="p-2 rounded-lg text-xs font-semibold bg-[var(--card)] border border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)] transition-colors"
               title={`Previous: ${prevMod.title}`}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -270,10 +270,10 @@ export default function ModuleReaderPage() {
           <button
             onClick={handleToggleComplete}
             disabled={togglingCompletion}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
               isCompleted
-                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 glow-emerald"
-                : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700"
+                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                : "bg-[var(--card)] border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
             }`}
             title={isCompleted ? "Mark as unread" : "Mark chapter as studied & completed"}
           >
@@ -283,14 +283,14 @@ export default function ModuleReaderPage() {
 
           <Link
             href={`/modules/${moduleData.id}/quiz`}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[var(--card)] border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 transition-colors"
           >
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Attempt Quiz ({moduleData.quiz.length} Qs)</span>
           </Link>
           <Link
             href={`/modules/${moduleData.id}/submit-video`}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 hover:opacity-90 transition-opacity"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90 transition-opacity shadow-sm"
           >
             <Video className="w-3.5 h-3.5" />
             <span>Submit Lab Video</span>
@@ -299,7 +299,7 @@ export default function ModuleReaderPage() {
           {nextMod && (
             <Link
               href={`/modules/${nextMod.id}`}
-              className="p-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              className="p-2 rounded-lg text-xs font-semibold bg-[var(--card)] border border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)] transition-colors"
               title={`Next: ${nextMod.title}`}
             >
               <ChevronRight className="w-4 h-4" />
@@ -314,16 +314,16 @@ export default function ModuleReaderPage() {
       </div>
 
       {/* Active Learning Navigation Bar with Distinctive Codex Color Profiles */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 p-1.5 rounded-2xl bg-[#060a14] border border-slate-800 mb-8 shadow-xl">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 p-1.5 rounded-xl bg-[var(--card)] border border-[var(--border)] mb-8 shadow-sm">
         <button
           onClick={() => {
             setActiveTab("theory");
             sounds.playKeyClick();
           }}
-          className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl text-xs font-bold transition-all ${
+          className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-xs font-bold transition-all ${
             activeTab === "theory"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-              : "text-slate-400 hover:text-white hover:bg-slate-900"
+              ? "bg-[var(--primary-muted)] text-[var(--primary)] border border-[var(--border-highlight)] shadow-sm"
+              : "text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--background-subtle)]"
           }`}
         >
           <BookOpen className="w-4 h-4 shrink-0 text-cyan-400" />

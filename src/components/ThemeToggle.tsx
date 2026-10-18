@@ -17,10 +17,10 @@ export function ThemeToggle({ compact = false, className = "" }: ThemeToggleProp
     return (
       <button
         onClick={toggleTheme}
-        className={`p-1.5 rounded-xl border transition-all flex items-center justify-center ${
+        className={`p-1.5 rounded-lg border transition-all duration-150 flex items-center justify-center ${
           isDark
-            ? "bg-slate-900 border-slate-800 text-cyan-400 hover:text-white hover:border-cyan-500/40"
-            : "bg-amber-500/10 border-amber-500/30 text-amber-600 hover:bg-amber-500/20"
+            ? "bg-[var(--card)] border-[var(--border)] text-[var(--primary)] hover:border-[var(--primary)] hover:text-white"
+            : "bg-[var(--card)] border-[var(--border)] text-amber-600 hover:border-amber-500 hover:bg-amber-50"
         } ${className}`}
         title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
         aria-label="Toggle theme"
@@ -33,33 +33,32 @@ export function ThemeToggle({ compact = false, className = "" }: ThemeToggleProp
   return (
     <button
       onClick={toggleTheme}
-      className={`relative flex items-center gap-1.5 p-1 rounded-full border transition-all duration-300 ${
+      className={`relative inline-flex items-center gap-1 p-1 rounded-full border transition-all duration-200 ${
         isDark
-          ? "bg-slate-900/90 border-slate-800 hover:border-slate-700 text-slate-400"
-          : "bg-slate-200/80 border-slate-300 hover:border-slate-400 text-slate-700 shadow-inner"
+          ? "bg-[var(--background-subtle)] border-[var(--border)] text-slate-400 hover:border-slate-700"
+          : "bg-slate-200 border-slate-300 text-slate-600 hover:border-slate-400"
       } ${className}`}
       title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
       aria-label="Toggle theme"
     >
-      {/* Visual Track Indicators */}
       <span
-        className={`flex items-center justify-center w-6 h-6 rounded-full transition-all duration-300 ${
+        className={`flex items-center justify-center w-5 h-5 rounded-full text-xs transition-all duration-200 ${
           !isDark
-            ? "bg-amber-500 text-white shadow-md transform scale-105"
+            ? "bg-amber-500 text-white shadow-sm font-bold"
             : "text-slate-500 hover:text-slate-300"
         }`}
       >
-        <Sun className="w-3.5 h-3.5" />
+        <Sun className="w-3 h-3" />
       </span>
 
       <span
-        className={`flex items-center justify-center w-6 h-6 rounded-full transition-all duration-300 ${
+        className={`flex items-center justify-center w-5 h-5 rounded-full text-xs transition-all duration-200 ${
           isDark
-            ? "bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/30 transform scale-105"
+            ? "bg-[var(--primary)] text-slate-950 font-bold shadow-sm"
             : "text-slate-400 hover:text-slate-600"
         }`}
       >
-        <Moon className="w-3.5 h-3.5" />
+        <Moon className="w-3 h-3" />
       </span>
     </button>
   );

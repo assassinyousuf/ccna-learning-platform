@@ -134,14 +134,14 @@ export function CommandPalette({ isOpen, onClose, onOpenSubnetCalc }: CommandPal
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/70 backdrop-blur-md animate-fadeIn">
       <div
-        className="w-full max-w-xl rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl overflow-hidden"
+        className="w-full max-w-xl rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-2xl overflow-hidden"
         onKeyDown={handleKeyDown}
       >
         {/* Search Bar */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-800 bg-slate-900/50">
-          <Search className="w-4 h-4 text-cyan-400 shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[var(--border)] bg-[var(--background-subtle)]">
+          <Search className="w-4 h-4 text-[var(--primary)] shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -152,9 +152,9 @@ export function CommandPalette({ isOpen, onClose, onOpenSubnetCalc }: CommandPal
               sounds.playKeyClick();
             }}
             placeholder="Search all 49 chapters, Cisco commands, subnets... (e.g. OSPF, VLAN, ping)"
-            className="flex-1 bg-transparent text-sm text-white placeholder-slate-500 outline-none font-mono"
+            className="flex-1 bg-transparent text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] outline-none font-mono"
           />
-          <kbd className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px] font-mono text-slate-400">
+          <kbd className="px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--border)] text-[10px] font-mono text-[var(--foreground-muted)]">
             ESC
           </kbd>
         </div>
@@ -162,7 +162,7 @@ export function CommandPalette({ isOpen, onClose, onOpenSubnetCalc }: CommandPal
         {/* Results List */}
         <div className="max-h-[380px] overflow-y-auto p-2 space-y-1">
           {results.length === 0 ? (
-            <div className="p-8 text-center text-xs font-mono text-slate-500">
+            <div className="p-8 text-center text-xs font-mono text-[var(--foreground-muted)]">
               No results found for &quot;{query}&quot;
             </div>
           ) : (
@@ -177,26 +177,26 @@ export function CommandPalette({ isOpen, onClose, onOpenSubnetCalc }: CommandPal
                     item.action();
                   }}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-colors ${
+                  className={`flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-colors ${
                     isSelected
-                      ? "bg-cyan-500/10 border-l-2 border-cyan-400 text-white"
-                      : "text-slate-300 hover:bg-slate-900/60"
+                      ? "bg-[var(--primary-muted)] border-l-2 border-[var(--primary)] text-[var(--foreground)]"
+                      : "text-[var(--foreground-muted)] hover:bg-[var(--background-subtle)]"
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className={`p-2 rounded-lg ${
-                      isSelected ? "bg-cyan-500/20 text-cyan-300" : "bg-slate-900 text-slate-400"
+                    <div className={`p-1.5 rounded-md ${
+                      isSelected ? "bg-[var(--primary-muted)] text-[var(--primary)]" : "bg-[var(--background-subtle)] text-[var(--foreground-muted)]"
                     }`}>
                       <Icon className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-semibold truncate text-white">{item.title}</p>
-                      <p className="text-[11px] text-slate-400 truncate font-mono">{item.subtitle}</p>
+                      <p className="text-xs font-semibold truncate text-[var(--foreground)]">{item.title}</p>
+                      <p className="text-[11px] text-[var(--foreground-muted)] truncate font-mono">{item.subtitle}</p>
                     </div>
                   </div>
 
                   <ArrowRight className={`w-3.5 h-3.5 shrink-0 transition-opacity ${
-                    isSelected ? "text-cyan-400 opacity-100" : "opacity-0"
+                    isSelected ? "text-[var(--primary)] opacity-100" : "opacity-0"
                   }`} />
                 </div>
               );
@@ -205,12 +205,12 @@ export function CommandPalette({ isOpen, onClose, onOpenSubnetCalc }: CommandPal
         </div>
 
         {/* Footer Navigation Hints */}
-        <div className="flex items-center justify-between px-4 py-2 bg-slate-900/90 border-t border-slate-800 text-[10px] font-mono text-slate-400">
+        <div className="flex items-center justify-between px-4 py-2 bg-[var(--background-subtle)] border-t border-[var(--border)] text-[10px] font-mono text-[var(--foreground-muted)]">
           <div className="flex items-center gap-3">
-            <span><kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">↑/↓</kbd> Navigate</span>
-            <span><kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">↵</kbd> Select</span>
+            <span><kbd className="px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--border)]">↑/↓</kbd> Navigate</span>
+            <span><kbd className="px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--border)]">↵</kbd> Select</span>
           </div>
-          <span className="text-cyan-400">CCNA Spotlight Search</span>
+          <span className="text-[var(--primary)] font-semibold">CCNA Command Palette</span>
         </div>
       </div>
     </div>

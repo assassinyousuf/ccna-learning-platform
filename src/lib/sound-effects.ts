@@ -143,6 +143,37 @@ class SoundEngine {
       // Ignore
     }
   }
+
+  // Quiz correct chime
+  public playQuizCorrect() {
+    this.playSuccessFanfare();
+  }
+
+  // Quiz wrong buzz
+  public playQuizWrong() {
+    if (this.muted) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(160, this.ctx.currentTime);
+      osc.frequency.linearRampToValueAtTime(110, this.ctx.currentTime + 0.15);
+
+      gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.16);
+    } catch {
+      // Ignore
+    }
+  }
 }
 
 export const sounds = new SoundEngine();
