@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { recordUser } from "./google-sheets";
+import { recordUser, getOrCreateUser } from "./google-sheets";
 
 // Canonical production URL for Vercel deployment
 export const CANONICAL_URL = "https://ccna-learning-platform-yousufs-projects-50c935d3.vercel.app";
@@ -39,28 +39,73 @@ export const authOptions: NextAuthOptions = {
           }),
         ]
       : []),
-    // Demo / Instant Student Access Provider
+    // 1. Cadet Access (Pending Approval demo)
     CredentialsProvider({
       id: "demo-student",
-      name: "Instant Access (Student)",
+      name: "Cadet (Pending Clearance)",
       credentials: {
         name: { label: "Name", type: "text", placeholder: "Alex Rivera" },
         email: { label: "Email", type: "email", placeholder: "student@cisco.academy" },
       },
       async authorize(credentials) {
-        if (!credentials?.email) {
-          return {
-            id: "student-101",
-            name: "Cadet Network Engineer",
-            email: "student@ccna.academy",
-            image: "https://api.dicebear.com/7.x/bottts/svg?seed=cisco-student",
-          };
-        }
+        const email = credentials?.email || "student@cisco.academy";
+        const name = credentials?.name || "Alex Rivera";
+        const userRec = await getOrCreateUser({
+          userId: `cadet-${Buffer.from(email).toString("hex").slice(0, 8)}`,
+          email,
+          name,
+        });
         return {
-          id: `student-${Buffer.from(credentials.email).toString("hex").slice(0, 8)}`,
-          name: credentials.name || "CCNA Student",
-          email: credentials.email,
-          image: `https://api.dicebear.com/7.x/bottts/svg?seed=${credentials.email}`,
+          id: userRec.userId,
+          name: userRec.name,
+          email: userRec.email,
+          image: `https://api.dicebear.com/7.x/bottts/svg?seed=${email}`,
+          role: userRec.role,
+          status: userRec.status,
+        };
+      },
+    }),
+    // 2. Cleared Cadet Access (Approved)
+    CredentialsProvider({
+      id: "demo-approved",
+      name: "Approved Cadet (Cleared)",
+      credentials: {},
+      async authorize() {
+        const email = "sarah.connor@cyberdyne.net";
+        const userRec = await getOrCreateUser({
+          userId: "student-sarah",
+          email,
+          name: "Sarah Connor (Cleared Cadet)",
+        });
+        return {
+          id: userRec.userId,
+          name: userRec.name,
+          email: userRec.email,
+          image: `https://api.dicebear.com/7.x/bottts/svg?seed=${email}`,
+          role: userRec.role,
+          status: userRec.status,
+        };
+      },
+    }),
+    // 3. NOC Administrator Access
+    CredentialsProvider({
+      id: "demo-admin",
+      name: "NOC Administrator (Officer)",
+      credentials: {},
+      async authorize() {
+        const email = "admin@ccna.academy";
+        const userRec = await getOrCreateUser({
+          userId: "admin-demo",
+          email,
+          name: "Commander Network Admin",
+        });
+        return {
+          id: userRec.userId,
+          name: userRec.name,
+          email: userRec.email,
+          image: `https://api.dicebear.com/7.x/bottts/svg?seed=${email}`,
+          role: userRec.role,
+          status: userRec.status,
         };
       },
     }),
@@ -102,17 +147,34 @@ export const authOptions: NextAuthOptions = {
         token.email = user.email;
         token.name = user.name;
         token.picture = user.image;
+        if ((user as any).role) token.role = (user as any).role;
+        if ((user as any).status) token.status = (user as any).status;
+      }
+      if (token.email) {
+        try {
+          const userRec = await getOrCreateUser({
+            userId: (token.id as string) || (token.sub as string) || token.email,
+            email: token.email,
+            name: token.name || undefined,
+          });
+          token.role = userRec.role;
+          token.status = userRec.status;
+        } catch (err) {
+          console.error("[jwt callback error]", err);
+        }
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
-        if (token.sub) {
-          (session.user as { id?: string }).id = token.sub;
+        if (token.sub || token.id) {
+          (session.user as any).id = (token.id as string) || (token.sub as string);
         }
         if (token.email) session.user.email = token.email;
         if (token.name) session.user.name = token.name;
         if (token.picture) session.user.image = token.picture as string;
+        (session.user as any).role = token.role || "STUDENT";
+        (session.user as any).status = token.status || "PENDING";
       }
       return session;
     },
@@ -160,12 +222,10 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user }) {
       try {
         if (user && user.email) {
-          // Record user to Google Sheets / database
-          await recordUser({
+          await getOrCreateUser({
             userId: user.id || user.email,
             email: user.email,
             name: user.name || "Student",
-            joinedAt: new Date().toISOString(),
           });
         }
       } catch (err) {

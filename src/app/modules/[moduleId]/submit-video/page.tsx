@@ -21,6 +21,7 @@ import {
   ExternalLink,
   Sparkles
 } from "lucide-react";
+import { ClearanceGate } from "@/components/ClearanceGate";
 
 export default function SubmitVideoPage() {
   const params = useParams();
@@ -263,7 +264,8 @@ export default function SubmitVideoPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <ClearanceGate resourceTitle={moduleData ? `${moduleData.title} Video Lab` : "Video Lab Submission"}>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       {/* Header */}
       <div className="mb-8 pb-6 border-b border-slate-800 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 font-mono text-xs mb-3">
@@ -489,5 +491,6 @@ export default function SubmitVideoPage() {
         </div>
       )}
     </div>
+    </ClearanceGate>
   );
 }

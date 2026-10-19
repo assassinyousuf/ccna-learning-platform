@@ -47,6 +47,7 @@ import { SubnetSpeedDrill } from "@/components/SubnetSpeedDrill";
 import { CiscoConfigGenerator } from "@/components/CiscoConfigGenerator";
 import { IPv6Eui64Visualizer } from "@/components/IPv6Eui64Visualizer";
 import { CablingLab } from "@/components/CablingLab";
+import { ClearanceGate } from "@/components/ClearanceGate";
 
 interface DomainSummary {
   id: string;
@@ -340,7 +341,8 @@ export default function DashboardPage() {
   }, [examHistory]);
 
   return (
-    <div className="noc-cockpit min-h-screen py-10 px-4 sm:px-6 lg:px-10 space-y-10">
+    <ClearanceGate resourceTitle="Cadet Command Cockpit">
+      <div className="noc-cockpit min-h-screen py-10 px-4 sm:px-6 lg:px-10 space-y-10">
       {/* 1. STUDENT IDENTITY & COMMAND CENTER PROFILE BANNER */}
       <div className="p-8 sm:p-10 rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-xl relative overflow-hidden">
         <div className="absolute right-0 top-0 w-96 h-96 bg-[var(--primary-muted)] rounded-full blur-3xl pointer-events-none" />
@@ -1334,5 +1336,6 @@ export default function DashboardPage() {
         )}
       </div>
     </div>
+    </ClearanceGate>
   );
 }

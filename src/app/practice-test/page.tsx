@@ -48,6 +48,7 @@ import {
   CISCO_AUTHENTIC_SIMULATIONS,
   DragDropItem
 } from "@/data/cisco-exam-simulations";
+import { ClearanceGate } from "@/components/ClearanceGate";
 
 export interface UnifiedExamQuestion extends AuthenticExamQuestion {
   // Common normalized properties
@@ -631,7 +632,8 @@ export default function PracticeTestPage() {
   }, [testQuestions, userAnswers, flaggedQuestions, reviewFilter]);
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+    <ClearanceGate resourceTitle="CCNA Exam Simulator">
+      <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       {/* ========================================================================= */}
       {/* SCREEN 1: EXAM SELECTION & CISCO TEST CENTER PORTAL                       */}
       {/* ========================================================================= */}
@@ -1893,5 +1895,6 @@ export default function PracticeTestPage() {
         </div>
       )}
     </div>
+    </ClearanceGate>
   );
 }

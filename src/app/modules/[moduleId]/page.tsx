@@ -32,6 +32,7 @@ import {
   Loader2,
   Zap
 } from "lucide-react";
+import { ClearanceGate } from "@/components/ClearanceGate";
 
 export default function ModuleReaderPage() {
   const params = useParams();
@@ -238,7 +239,8 @@ export default function ModuleReaderPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] py-8">
+    <ClearanceGate resourceTitle={moduleData?.title || "CCNA Chapter Blueprint"}>
+      <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Breadcrumb & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-[var(--border)] gap-4">
@@ -748,5 +750,6 @@ export default function ModuleReaderPage() {
       </div>
     </div>
   </div>
+  </ClearanceGate>
   );
 }

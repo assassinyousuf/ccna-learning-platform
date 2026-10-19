@@ -174,6 +174,18 @@ class SoundEngine {
       // Ignore
     }
   }
+
+  public playExamPass() {
+    this.playSuccessFanfare();
+  }
+
+  public playExamFail() {
+    this.playQuizWrong();
+  }
+
+  public playReset() {
+    this.playKeyClick();
+  }
 }
 
 export const sounds = new SoundEngine();

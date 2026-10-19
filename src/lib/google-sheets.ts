@@ -1,10 +1,35 @@
 import { google } from "googleapis";
 
+export type UserRole = "ADMIN" | "STUDENT";
+export type UserStatus = "PENDING" | "APPROVED" | "REJECTED";
+
 export interface UserRecord {
   userId: string;
   email: string;
   name: string;
   joinedAt: string;
+  role: UserRole;
+  status: UserStatus;
+  approvedAt?: string;
+  approvedBy?: string;
+}
+
+export function getAdminEmails(): string[] {
+  const defaults = [
+    "assassinyousuf@gmail.com",
+    "admin@ccna.academy",
+    "admin@cisco.academy",
+  ];
+  const envAdmin = process.env.ADMIN_EMAIL ? [process.env.ADMIN_EMAIL.toLowerCase().trim()] : [];
+  const envAdmins = process.env.ADMIN_EMAILS
+    ? process.env.ADMIN_EMAILS.split(",").map((e) => e.toLowerCase().trim()).filter(Boolean)
+    : [];
+  return Array.from(new Set([...defaults, ...envAdmin, ...envAdmins]));
+}
+
+export function isUserAdmin(email: string): boolean {
+  if (!email) return false;
+  return getAdminEmails().includes(email.toLowerCase().trim());
 }
 
 export interface QuizAttemptRecord {
@@ -56,7 +81,58 @@ export interface VideoSubmissionRecord {
 
 // In-memory fallback for development when Google credentials are not yet configured
 const inMemoryStore = {
-  users: new Map<string, UserRecord>(),
+  users: new Map<string, UserRecord>([
+    [
+      "admin-yousuf",
+      {
+        userId: "admin-yousuf",
+        email: "assassinyousuf@gmail.com",
+        name: "Yousuf (Lead NOC Admin)",
+        joinedAt: new Date(Date.now() - 30 * 86400000).toISOString(),
+        role: "ADMIN",
+        status: "APPROVED",
+        approvedAt: new Date(Date.now() - 30 * 86400000).toISOString(),
+        approvedBy: "System",
+      },
+    ],
+    [
+      "admin-demo",
+      {
+        userId: "admin-demo",
+        email: "admin@ccna.academy",
+        name: "Commander Network Admin",
+        joinedAt: new Date(Date.now() - 15 * 86400000).toISOString(),
+        role: "ADMIN",
+        status: "APPROVED",
+        approvedAt: new Date(Date.now() - 15 * 86400000).toISOString(),
+        approvedBy: "System",
+      },
+    ],
+    [
+      "student-sarah",
+      {
+        userId: "student-sarah",
+        email: "sarah.connor@cyberdyne.net",
+        name: "Sarah Connor",
+        joinedAt: new Date(Date.now() - 5 * 86400000).toISOString(),
+        role: "STUDENT",
+        status: "APPROVED",
+        approvedAt: new Date(Date.now() - 4 * 86400000).toISOString(),
+        approvedBy: "admin@ccna.academy",
+      },
+    ],
+    [
+      "student-alex",
+      {
+        userId: "student-alex",
+        email: "student@cisco.academy",
+        name: "Alex Rivera",
+        joinedAt: new Date(Date.now() - 2 * 86400000).toISOString(),
+        role: "STUDENT",
+        status: "PENDING",
+      },
+    ],
+  ]),
   progress: new Map<string, Record<string, string>>(), // userId -> { moduleId: "COMPLETED" | "READ" | "IN_PROGRESS" }
   quizAttempts: [] as QuizAttemptRecord[],
   examAttempts: [] as ExamAttemptRecord[],
@@ -84,24 +160,141 @@ export async function recordUser(user: UserRecord): Promise<void> {
   const sheets = getSheetsClient();
   const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
+  inMemoryStore.users.set(user.userId, user);
+
   if (!sheets || !spreadsheetId) {
-    inMemoryStore.users.set(user.userId, user);
     return;
   }
 
   try {
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Users!A:D",
+      range: "Users!A:F",
       valueInputOption: "USER_ENTERED",
       requestBody: {
-        values: [[user.userId, user.email, user.name, user.joinedAt]],
+        values: [[user.userId, user.email, user.name, user.joinedAt, user.role, user.status]],
       },
     });
   } catch (error) {
     console.error("Error writing user to Google Sheets:", error);
-    inMemoryStore.users.set(user.userId, user);
   }
+}
+
+export async function getOrCreateUser(userData: {
+  userId: string;
+  email: string;
+  name?: string;
+}): Promise<UserRecord> {
+  const normEmail = userData.email.toLowerCase().trim();
+
+  // Search existing user
+  let existingUser = Array.from(inMemoryStore.users.values()).find(
+    (u) => u.email.toLowerCase() === normEmail || u.userId === userData.userId
+  );
+
+  if (existingUser) {
+    return existingUser;
+  }
+
+  const isAdmin = isUserAdmin(normEmail);
+  const newUser: UserRecord = {
+    userId: userData.userId,
+    email: normEmail,
+    name: userData.name || (isAdmin ? "Network Administrator" : "CCNA Cadet"),
+    joinedAt: new Date().toISOString(),
+    role: isAdmin ? "ADMIN" : "STUDENT",
+    status: isAdmin ? "APPROVED" : "PENDING",
+  };
+
+  await recordUser(newUser);
+  return newUser;
+}
+
+export async function getAllUsers(): Promise<UserRecord[]> {
+  const sheets = getSheetsClient();
+  const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+
+  if (sheets && spreadsheetId) {
+    try {
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: "Users!A2:F",
+      });
+      const rows = response.data.values || [];
+      if (rows.length > 0) {
+        rows.forEach((row) => {
+          if (row[0] && row[1]) {
+            const u: UserRecord = {
+              userId: row[0],
+              email: row[1],
+              name: row[2] || "Cadet",
+              joinedAt: row[3] || new Date().toISOString(),
+              role: (row[4] as UserRole) || (isUserAdmin(row[1]) ? "ADMIN" : "STUDENT"),
+              status: (row[5] as UserStatus) || (isUserAdmin(row[1]) ? "APPROVED" : "PENDING"),
+            };
+            inMemoryStore.users.set(u.userId, u);
+          }
+        });
+      }
+    } catch (err) {
+      console.warn("Could not read users from Google Sheets, using memory store:", err);
+    }
+  }
+
+  return Array.from(inMemoryStore.users.values()).sort(
+    (a, b) => new Date(b.joinedAt).getTime() - new Date(a.joinedAt).getTime()
+  );
+}
+
+export async function updateUserStatus(
+  userId: string,
+  status: UserStatus,
+  approvedBy?: string
+): Promise<UserRecord | null> {
+  const user =
+    inMemoryStore.users.get(userId) ||
+    Array.from(inMemoryStore.users.values()).find(
+      (u) => u.email.toLowerCase() === userId.toLowerCase() || u.userId === userId
+    );
+
+  if (!user) return null;
+  user.status = status;
+  if (status === "APPROVED") {
+    user.approvedAt = new Date().toISOString();
+    user.approvedBy = approvedBy || "Admin";
+  }
+  inMemoryStore.users.set(user.userId, user);
+  return user;
+}
+
+export async function updateUserRole(
+  userId: string,
+  role: UserRole
+): Promise<UserRecord | null> {
+  const user =
+    inMemoryStore.users.get(userId) ||
+    Array.from(inMemoryStore.users.values()).find(
+      (u) => u.email.toLowerCase() === userId.toLowerCase() || u.userId === userId
+    );
+
+  if (!user) return null;
+  user.role = role;
+  inMemoryStore.users.set(user.userId, user);
+  return user;
+}
+
+export async function deleteUserRecord(userId: string): Promise<boolean> {
+  const user =
+    inMemoryStore.users.get(userId) ||
+    Array.from(inMemoryStore.users.values()).find(
+      (u) => u.email.toLowerCase() === userId.toLowerCase() || u.userId === userId
+    );
+
+  if (user) {
+    inMemoryStore.users.delete(user.userId);
+    return true;
+  }
+  return false;
 }
 
 export async function recordQuizAttempt(attempt: QuizAttemptRecord): Promise<void> {

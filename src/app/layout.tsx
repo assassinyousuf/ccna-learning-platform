@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { FirebaseAnalyticsProvider } from "@/components/FirebaseAnalyticsProvider";
 
 export const metadata: Metadata = {
   title: "CCNA 200-301 Mastery: Cohort-Based Learning & Video Verification",
@@ -41,6 +42,7 @@ export default function RootLayout({
       </head>
       <body className="bg-[var(--background)] text-[var(--foreground)] flex flex-col min-h-screen selection:bg-[var(--primary)] selection:text-[var(--primary-foreground)] transition-colors duration-200">
         <Providers>
+          <FirebaseAnalyticsProvider />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
