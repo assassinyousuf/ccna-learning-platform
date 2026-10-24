@@ -137,22 +137,16 @@ export default function HomePage() {
                 <span>OAuth Notice: {authError === "OAuthCallback" ? "Google Callback Verification Failed" : authError}</span>
               </div>
               <p className="text-[var(--foreground-muted)] text-center leading-relaxed">
-                Google sign-in was interrupted. You can retry with Google below, or click Instant Student Access to immediately explore all modules and the exam simulator.
+                Google sign-in was interrupted. Please retry with your Google account below to authenticate.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-2 mt-1">
-                <button
-                  onClick={() => signIn("demo-student", { callbackUrl: "/dashboard" })}
-                  className="px-4 py-2 rounded-full bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400 transition-colors shadow-sm"
-                >
-                  Instant Student Access
-                </button>
                 <button
                   onClick={() => {
                     setAuthError(null);
                     window.history.replaceState({}, "", "/");
                     signIn("google", { callbackUrl: "/dashboard" });
                   }}
-                  className="px-4 py-2 rounded-full bg-[var(--background-subtle)] text-[var(--foreground)] font-medium text-xs border border-[var(--border)] hover:bg-[var(--card)] transition-colors"
+                  className="px-5 py-2.5 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs hover:bg-cyan-400 transition-colors shadow-sm"
                 >
                   Retry Google Sign-In
                 </button>
@@ -172,25 +166,13 @@ export default function HomePage() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             ) : (
-              <div className="flex flex-wrap items-center justify-center gap-2.5">
-                <button
-                  onClick={() => signIn("google", { callbackUrl: "/dashboard" }).catch(() => signIn("demo-student"))}
-                  className="flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 bg-white hover:bg-slate-100 transition-all shadow-xl group"
-                >
-                  <span>Start Free with Google</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                </button>
-                <button
-                  onClick={() => {
-                    sounds.playCommandSuccess();
-                    signIn("demo-student", { callbackUrl: "/dashboard" });
-                  }}
-                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-cyan-300 bg-slate-900/80 backdrop-blur-md border border-cyan-500/40 hover:bg-cyan-950/60 transition-all shadow-lg font-mono"
-                >
-                  <Zap className="w-4 h-4 text-cyan-400" />
-                  <span>Instant Cadet Access</span>
-                </button>
-              </div>
+              <button
+                onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                className="flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 bg-white hover:bg-slate-100 transition-all shadow-xl group"
+              >
+                <span>Start Free with Google</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </button>
             )}
 
             <Link

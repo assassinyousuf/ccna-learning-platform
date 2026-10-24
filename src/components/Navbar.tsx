@@ -369,14 +369,6 @@ export function Navbar() {
                 ) : (
                   <div className="flex items-center gap-1.5">
                     <button
-                      onClick={() => signIn("demo-student", { callbackUrl: "/dashboard" })}
-                      className="px-2.5 py-1.5 rounded-lg text-xs font-mono border border-[var(--border)] hover:border-cyan-500/40 bg-[var(--background-subtle)] text-[var(--foreground-muted)] hover:text-white transition-all flex items-center gap-1.5"
-                      title="Instant cadet demo bypass without Google OAuth"
-                    >
-                      <Terminal className="w-3 h-3 text-cyan-400" />
-                      <span>Cadet Demo</span>
-                    </button>
-                    <button
                       onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
                       className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 transition-all shadow-md shadow-cyan-500/20"
                     >
@@ -514,16 +506,6 @@ export function Navbar() {
                   >
                     <LogIn className="w-3.5 h-3.5" />
                     <span>Sign In with Google</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      signIn("demo-student", { callbackUrl: "/dashboard" });
-                    }}
-                    className="w-full py-2 rounded-lg text-xs font-mono border border-[var(--border)] bg-[var(--background-subtle)] text-[var(--foreground-muted)] hover:text-white flex items-center justify-center gap-2"
-                  >
-                    <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Instant Cadet Demo Access</span>
                   </button>
                 </div>
               )}
