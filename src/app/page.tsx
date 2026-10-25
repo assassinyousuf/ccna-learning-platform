@@ -46,8 +46,33 @@ import {
   Check,
   LayoutDashboard,
   Flame,
-  Sliders
+  Sliders,
+  Lock,
+  Shield
 } from "lucide-react";
+
+function GoogleIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24">
+      <path
+        fill="#4285F4"
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+      />
+    </svg>
+  );
+}
 
 export default function HomePage() {
   const { data: session } = useSession();
@@ -157,39 +182,60 @@ export default function HomePage() {
           {/* Primary Action Buttons (Antigravity Rounded Pill Format) */}
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-3.5">
             {session ? (
-              <Link
-                href="/dashboard"
-                className="flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 hover:brightness-110 transition-all shadow-xl shadow-cyan-500/25 group"
-              >
-                <LayoutDashboard className="w-4 h-4 text-slate-950" />
-                <span>Enter Mission Control</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+              <>
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 hover:brightness-110 transition-all shadow-xl shadow-cyan-500/25 group"
+                >
+                  <LayoutDashboard className="w-4 h-4 text-slate-950" />
+                  <span>Enter Mission Control</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/practice-test"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-amber-400 bg-slate-900/80 backdrop-blur-md border border-amber-500/30 hover:border-amber-400 hover:bg-amber-950/40 transition-all shadow-lg"
+                >
+                  <Award className="w-4 h-4 text-amber-400" />
+                  <span>CCNA Exam Simulator (450 Qs)</span>
+                </Link>
+
+                <a
+                  href="#packet-flight"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-slate-300 bg-slate-900/80 backdrop-blur-md border border-slate-700/60 hover:text-white hover:border-slate-500 transition-all shadow-lg"
+                >
+                  <Activity className="w-4 h-4 text-cyan-400 animate-pulse" />
+                  <span>Packet Flight Simulator</span>
+                </a>
+              </>
             ) : (
-              <button
-                onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-                className="flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 bg-white hover:bg-slate-100 transition-all shadow-xl group"
-              >
-                <span>Start Free with Google</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </button>
+              <>
+                <button
+                  onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                  className="flex items-center gap-2.5 px-7 py-3.5 rounded-full font-bold text-xs sm:text-sm text-slate-950 bg-white hover:bg-slate-100 transition-all shadow-xl group border border-slate-200"
+                >
+                  <GoogleIcon className="w-4 h-4" />
+                  <span>Sign In with Google</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform text-slate-700" />
+                </button>
+
+                <a
+                  href="#curriculum"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-cyan-300 bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-950/40 transition-all shadow-lg"
+                >
+                  <BookOpen className="w-4 h-4 text-cyan-400" />
+                  <span>Explore Syllabus Matrix</span>
+                </a>
+
+                <Link
+                  href="/practice-test"
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-amber-400 bg-slate-900/80 backdrop-blur-md border border-amber-500/30 hover:border-amber-400 hover:bg-amber-950/40 transition-all shadow-lg"
+                >
+                  <Award className="w-4 h-4 text-amber-400" />
+                  <span>CCNA Exam Simulator</span>
+                </Link>
+              </>
             )}
-
-            <Link
-              href="/practice-test"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-amber-400 bg-slate-900/80 backdrop-blur-md border border-amber-500/30 hover:border-amber-400 hover:bg-amber-950/40 transition-all shadow-lg"
-            >
-              <Award className="w-4 h-4 text-amber-400" />
-              <span>CCNA Exam Simulator (450 Qs)</span>
-            </Link>
-
-            <a
-              href="#packet-flight"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-slate-300 bg-slate-900/80 backdrop-blur-md border border-slate-700/60 hover:text-white hover:border-slate-500 transition-all shadow-lg"
-            >
-              <Activity className="w-4 h-4 text-cyan-400 animate-pulse" />
-              <span>Packet Flight Simulator</span>
-            </a>
 
             <button
               onClick={() => {
@@ -516,445 +562,632 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* SECTION: LIVE PACKET FLIGHT & OSI ENCAPSULATION SIMULATOR                */}
-      {/* ========================================================================= */}
-      <section id="packet-flight" className="py-20 sm:py-24 border-t border-[var(--border)] bg-[var(--background)] relative scroll-mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-mono mb-4">
-              <Activity className="w-3.5 h-3.5 animate-pulse" />
-              <span>OSI 7-LAYER PACKET FLIGHT &amp; PROTOCOL ENGINE</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
-              Watch Bits Fly: Real-Time Packet Traversal Engine
-            </h2>
-            <p className="mt-4 text-[var(--foreground-muted)] text-sm sm:text-base leading-relaxed">
-              Step through ICMP Echo pings, ARP broadcasts, 802.1Q trunk encapsulations, and OSPF link-state database synchronizations. Inspect Layer 2, Layer 3, and Layer 4 headers dynamically updated at every network hop.
-            </p>
-          </div>
-
-          <NetworkPacketSimulator />
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* SECTION: INTERACTIVE CCNA ENGINEERING TOOLSUITE                           */}
-      {/* ========================================================================= */}
-      <section className="py-20 border-t border-[var(--border)] bg-[var(--background-subtle)] relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-500 text-xs font-mono mb-3">
-              <Zap className="w-3.5 h-3.5" />
-              <span>HANDS-ON ACTIVE SKILL WORKBENCHES</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
-              Interactive CCNA Engineering Toolsuite
-            </h2>
-            <p className="mt-3 text-sm text-[var(--foreground-muted)] leading-relaxed">
-              Drill exam-critical calculations, syntax configurations, and layer-1 media logic directly in your browser.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* Tool 1 */}
-            <Link
-              href="/dashboard?tab=subnet-drill"
-              className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-amber-500/50 transition-all hover:-translate-y-1 group shadow-sm flex flex-col justify-between"
-            >
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Flame className="w-5 h-5" />
+      {session ? (
+        <>
+          {/* Cadet Mission Control Quick Jump Strip */}
+          <section className="py-6 border-t border-cyan-500/20 bg-cyan-950/20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold font-mono">
+                  {session.user?.name ? session.user.name.slice(0, 2).toUpperCase() : "CD"}
                 </div>
-                <h3 className="font-bold text-base text-[var(--foreground)] mb-1.5 flex items-center justify-between">
-                  <span>30s Subnet Blitz</span>
-                  <ArrowRight className="w-4 h-4 text-[var(--foreground-muted)] group-hover:text-amber-500 transition-colors" />
-                </h3>
-                <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">
-                  Rapid-fire mental math trainer for Network ID, Broadcast ID, and usable host ranges under 30-second exam pressure.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] font-mono text-amber-500 font-semibold">
-                LAUNCH TRAINER &rarr;
-              </div>
-            </Link>
-
-            {/* Tool 2 */}
-            <Link
-              href="/dashboard?tab=config-gen"
-              className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-cyan-500/50 transition-all hover:-translate-y-1 group shadow-sm flex flex-col justify-between"
-            >
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Sliders className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-base text-[var(--foreground)] mb-1.5 flex items-center justify-between">
-                  <span>IOS Config Generator</span>
-                  <ArrowRight className="w-4 h-4 text-[var(--foreground-muted)] group-hover:text-cyan-400 transition-colors" />
-                </h3>
-                <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">
-                  Synthesize deployable Cisco IOS configurations for 802.1Q sub-interfaces, OSPF areas, ACLs, NAT Overload, and DHCP.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] font-mono text-cyan-400 font-semibold">
-                OPEN WORKBENCH &rarr;
-              </div>
-            </Link>
-
-            {/* Tool 3 */}
-            <Link
-              href="/dashboard?tab=eui64"
-              className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-emerald-500/50 transition-all hover:-translate-y-1 group shadow-sm flex flex-col justify-between"
-            >
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Globe className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-base text-[var(--foreground)] mb-1.5 flex items-center justify-between">
-                  <span>IPv6 EUI-64 Flipper</span>
-                  <ArrowRight className="w-4 h-4 text-[var(--foreground-muted)] group-hover:text-emerald-400 transition-colors" />
-                </h3>
-                <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">
-                  Interactive bit-level visualizer demonstrating 48-bit MAC splitting, FFFE injection, and 7th-bit Universal/Local inversion.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] font-mono text-emerald-400 font-semibold">
-                EXPLORE BIT-FLIPPER &rarr;
-              </div>
-            </Link>
-
-            {/* Tool 4 */}
-            <Link
-              href="/dashboard?tab=cabling"
-              className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-purple-500/50 transition-all hover:-translate-y-1 group shadow-sm flex flex-col justify-between"
-            >
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Network className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-base text-[var(--foreground)] mb-1.5 flex items-center justify-between">
-                  <span>Layer 1 Cabling Lab</span>
-                  <ArrowRight className="w-4 h-4 text-[var(--foreground-muted)] group-hover:text-purple-400 transition-colors" />
-                </h3>
-                <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">
-                  Interactive media matching lab for Straight-Through, Crossover, Rollover console, Serial WAN, and Fiber optics.
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] font-mono text-purple-400 font-semibold">
-                ENTER CABLING LAB &rarr;
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* The 5-Pillar Active Learning Method Section */}
-      <section className="py-20 sm:py-28 border-y border-[var(--border)] bg-[var(--background-subtle)] relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--secondary-muted)] border border-emerald-500/25 text-emerald-400 text-xs font-mono mb-4">
-              <Compass className="w-3.5 h-3.5" />
-              <span>Section 1.4: Proven CCNA Study Methodology</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
-              The 5-Pillar Active Learning Framework
-            </h2>
-            <p className="mt-4 text-[var(--foreground-muted)] text-sm sm:text-base leading-relaxed">
-              &quot;Studying differs from simply reading passively. Be an active learner rather than a passive learner... Labbing is an essential part of any CCNA study plan. You have to get your hands dirty and apply what you’ve learned.&quot;
-            </p>
-          </div>
-
-          {/* Row 1: First 3 Pillars */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            {/* Pillar 1 */}
-            <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-[var(--primary-muted)] border border-[var(--border-highlight)] text-[var(--primary)] font-mono font-bold text-lg flex items-center justify-center mb-5">
-                  01
-                </div>
-                <div className="flex items-center gap-1.5 text-xs font-mono text-[var(--primary)] font-semibold mb-2">
-                  <BookOpen className="w-3.5 h-3.5" />
-                  <span>Active Ingestion</span>
-                </div>
-                <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
-                  Complete Study Reading
-                </h3>
-                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
-                  Engage deeply with all 49 chapters from Wendell Odom&apos;s CCNA Official Cert Guides (Vols 1 &amp; 2). Don&apos;t just skim—annotate and summarize.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
-                <span>Volume 1 &amp; 2 Theory</span>
-                <span className="text-[var(--primary)]">Foundation</span>
-              </div>
-            </div>
-
-            {/* Pillar 2 */}
-            <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono font-bold text-lg flex items-center justify-center mb-5">
-                  02
-                </div>
-                <div className="flex items-center gap-1.5 text-xs font-mono text-sky-400 font-semibold mb-2">
-                  <Calculator className="w-3.5 h-3.5" />
-                  <span>Mental Math</span>
-                </div>
-                <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
-                  Subnetting Muscle Memory
-                </h3>
-                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
-                  Calculate subnets in under 30 seconds using magic numbers and binary powers. Master VLSM and CIDR prefixes without pen and paper.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
-                <span>Subnet Speed Drills</span>
-                <span className="text-sky-400">&lt;30s Target</span>
-              </div>
-            </div>
-
-            {/* Pillar 3 */}
-            <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono font-bold text-lg flex items-center justify-center mb-5">
-                  03
-                </div>
-                <div className="flex items-center gap-1.5 text-xs font-mono text-purple-400 font-semibold mb-2">
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>Spaced Recall</span>
-                </div>
-                <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
-                  Active Recall Flashcards
-                </h3>
-                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
-                  Daily spaced-repetition testing across port numbers, protocol defaults, encapsulation types, and Cisco timers to defeat the forgetting curve.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
-                <span>Spaced Repetition</span>
-                <span className="text-purple-400">Daily Drills</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Row 2: Final 2 Pillars */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {/* Pillar 4 */}
-            <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono font-bold text-lg flex items-center justify-center mb-5">
-                  04
-                </div>
-                <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400 font-semibold mb-2">
-                  <Terminal className="w-3.5 h-3.5" />
-                  <span>CLI Mastery</span>
-                </div>
-                <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
-                  Appendix B Cisco IOS Labbing
-                </h3>
-                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
-                  Type every command from Appendix B inside Packet Tracer until fingers execute Cisco IOS configuration and troubleshooting commands automatically.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
-                <span>367 Cisco IOS Commands</span>
-                <span className="text-amber-400">Packet Tracer</span>
-              </div>
-            </div>
-
-            {/* Pillar 5 */}
-            <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono font-bold text-lg flex items-center justify-center mb-5">
-                  05
-                </div>
-                <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-semibold mb-2">
-                  <Video className="w-3.5 h-3.5" />
-                  <span>Proof-of-Skill</span>
-                </div>
-                <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
-                  Video Proof &amp; Peer Accountability
-                </h3>
-                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
-                  Record 2–5 minute screen captures explaining your running topology and show outputs. Teaching concepts and verifying lab results locks in mastery.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
-                <span>Google Drive Storage</span>
-                <span className="text-emerald-400">Feynman Technique</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Curriculum Explorer: Volumes, Parts, and Chapters */}
-      <section id="curriculum" className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--primary-muted)] border border-[var(--border-highlight)] text-[var(--primary)] text-xs font-mono mb-3">
-              <Layers className="w-3.5 h-3.5" />
-              <span>Full Textbook Syllabus</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
-              The 49-Chapter CCNA Master Curriculum
-            </h2>
-            <p className="mt-2 text-[var(--foreground-muted)] text-sm sm:text-base max-w-2xl leading-relaxed">
-              Organized into 2 volumes and 11 distinct pedagogical parts covering all official Cisco CCNA exam domains.
-            </p>
-          </div>
-
-          {/* Volume Switcher Tabs */}
-          <div className="flex items-center p-1 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] shrink-0 shadow-sm">
-            <button
-              onClick={() => {
-                setSelectedVolume(1);
-                setSelectedPart("all");
-              }}
-              className={`px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
-                selectedVolume === 1
-                  ? "bg-[var(--card)] text-[var(--foreground)] shadow-sm border border-[var(--border)]"
-                  : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-              }`}
-            >
-              Volume 1: Fundamentals (24 Ch)
-            </button>
-            <button
-              onClick={() => {
-                setSelectedVolume(2);
-                setSelectedPart("all");
-              }}
-              className={`px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
-                selectedVolume === 2
-                  ? "bg-[var(--card)] text-[var(--foreground)] shadow-sm border border-[var(--border)]"
-                  : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-              }`}
-            >
-              Volume 2: Advanced &amp; Security (25 Ch)
-            </button>
-          </div>
-        </div>
-
-        {/* Search Bar + Part Filter */}
-        <div className="space-y-4 mb-10">
-          <div className="relative max-w-md">
-            <Search className="w-4 h-4 text-[var(--foreground-muted)] absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search by topic, command, or concept (e.g. OSPF, VLAN, Subnetting)..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] focus:border-[var(--primary)] text-xs text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] outline-none transition-colors"
-            />
-          </div>
-
-          {currentVolumeData && !searchQuery && (
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-              <button
-                onClick={() => setSelectedPart("all")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono shrink-0 transition-all font-medium border ${
-                  selectedPart === "all"
-                    ? "bg-[var(--primary-muted)] text-[var(--primary)] border-[var(--border-highlight)]"
-                    : "bg-[var(--card)] text-[var(--foreground-muted)] border-[var(--border)] hover:text-[var(--foreground)]"
-                }`}
-              >
-                All Parts ({allModules.filter(m => m.volume === selectedVolume).length} Ch)
-              </button>
-              {currentVolumeData.parts.map((p) => (
-                <button
-                  key={p.partNumber}
-                  onClick={() => setSelectedPart(p.partNumber)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono shrink-0 transition-all font-medium border ${
-                    selectedPart === p.partNumber
-                      ? "bg-[var(--primary-muted)] text-[var(--primary)] border-[var(--border-highlight)]"
-                      : "bg-[var(--card)] text-[var(--foreground-muted)] border-[var(--border)] hover:text-[var(--foreground)]"
-                  }`}
-                >
-                  Part {p.partNumber}: {p.partTitle}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Module Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedModules.map((module) => (
-            <div
-              key={module.id}
-              className="group relative p-6 rounded-xl noc-surface noc-surface-interactive flex flex-col justify-between shadow-sm"
-            >
-              <div>
-                {/* Header info */}
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="telemetry-badge telemetry-badge-cyan">
-                    Vol {module.volume} • Part {module.partNumber}
-                  </span>
-                  <span className="text-[11px] font-mono text-[var(--foreground-muted)]">
-                    {module.readTime}
-                  </span>
-                </div>
-
-                <h3 className="text-base font-bold text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors mb-2 leading-snug">
-                  {module.title}
-                </h3>
-                <p className="text-xs text-[var(--foreground-muted)] line-clamp-2 leading-relaxed mb-5">
-                  {module.description}
-                </p>
-
-                {/* Badges for commands and quiz */}
-                <div className="flex flex-wrap items-center gap-1.5 mb-6">
-                  {module.ciscoCommands.length > 0 && (
-                    <span className="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--background-subtle)] text-[var(--foreground-muted)] border border-[var(--border)]">
-                      <Terminal className="w-3 h-3 text-[var(--primary)]" />
-                      {module.ciscoCommands.length} CLI cmds
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-white">
+                      Welcome, Cadet {session.user?.name || session.user?.email}
                     </span>
-                  )}
-                  {module.quiz.length > 0 && (
-                    <span className="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--background-subtle)] text-[var(--foreground-muted)] border border-[var(--border)]">
-                      <HelpCircle className="w-3 h-3 text-emerald-400" />
-                      {module.quiz.length} Quiz Qs
+                    <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                      SESSION ACTIVE
                     </span>
-                  )}
-                  {module.diagrams.length > 0 && (
-                    <span className="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--background-subtle)] text-[var(--foreground-muted)] border border-[var(--border)]">
-                      <Layers className="w-3 h-3 text-purple-400" />
-                      {module.diagrams.length} Diagrams
-                    </span>
-                  )}
+                  </div>
+                  <p className="text-[11px] text-slate-400 font-mono">
+                    Authorized training cockpit ready • 49 Chapters Unlocked
+                  </p>
                 </div>
               </div>
 
-              {/* Action buttons */}
-              <div className="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
                 <Link
-                  href={`/modules/${module.id}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[var(--primary)] hover:bg-[var(--primary-muted)] border border-[var(--border)] hover:border-[var(--border-highlight)] transition-all"
+                  href="/dashboard"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-colors flex items-center gap-1.5 shadow-sm"
                 >
-                  <span>Study Chapter</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  <span>Cadet Cockpit</span>
+                </Link>
+                <Link
+                  href="/practice-test"
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 transition-colors flex items-center gap-1.5"
+                >
+                  <Award className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Exam Center (450 Qs)</span>
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* ========================================================================= */}
+          {/* SECTION: LIVE PACKET FLIGHT & OSI ENCAPSULATION SIMULATOR                */}
+          {/* ========================================================================= */}
+          <section id="packet-flight" className="py-20 sm:py-24 border-t border-[var(--border)] bg-[var(--background)] relative scroll-mt-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-mono mb-4">
+                  <Activity className="w-3.5 h-3.5 animate-pulse" />
+                  <span>OSI 7-LAYER PACKET FLIGHT &amp; PROTOCOL ENGINE</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
+                  Watch Bits Fly: Real-Time Packet Traversal Engine
+                </h2>
+                <p className="mt-4 text-[var(--foreground-muted)] text-sm sm:text-base leading-relaxed">
+                  Step through ICMP Echo pings, ARP broadcasts, 802.1Q trunk encapsulations, and OSPF link-state database synchronizations. Inspect Layer 2, Layer 3, and Layer 4 headers dynamically updated at every network hop.
+                </p>
+              </div>
+
+              <NetworkPacketSimulator />
+            </div>
+          </section>
+
+          {/* ========================================================================= */}
+          {/* SECTION: INTERACTIVE CCNA ENGINEERING TOOLSUITE                           */}
+          {/* ========================================================================= */}
+          <section className="py-20 border-t border-[var(--border)] bg-[var(--background-subtle)] relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-500 text-xs font-mono mb-3">
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>HANDS-ON ACTIVE SKILL WORKBENCHES</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
+                  Interactive CCNA Engineering Toolsuite
+                </h2>
+                <p className="mt-3 text-sm text-[var(--foreground-muted)] leading-relaxed">
+                  Drill exam-critical calculations, syntax configurations, and layer-1 media logic directly in your browser.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {/* Tool 1 */}
+                <Link
+                  href="/dashboard?tab=subnet-drill"
+                  className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-amber-500/50 transition-all hover:-translate-y-1 group shadow-sm flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <Flame className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-bold text-base text-[var(--foreground)] mb-1.5 flex items-center justify-between">
+                      <span>30s Subnet Blitz</span>
+                      <ArrowRight className="w-4 h-4 text-[var(--foreground-muted)] group-hover:text-amber-500 transition-colors" />
+                    </h3>
+                    <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">
+                      Rapid-fire mental math trainer for Network ID, Broadcast ID, and usable host ranges under 30-second exam pressure.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] font-mono text-amber-500 font-semibold">
+                    LAUNCH TRAINER &rarr;
+                  </div>
                 </Link>
 
-                <div className="flex items-center gap-1.5">
-                  <Link
-                    href={`/modules/${module.id}/quiz`}
-                    title="Take Chapter Quiz"
-                    className="p-1.5 rounded-lg bg-[var(--background-subtle)] hover:bg-emerald-500/15 hover:text-emerald-400 text-[var(--foreground-muted)] transition-colors border border-[var(--border)]"
-                  >
-                    <HelpCircle className="w-3.5 h-3.5" />
-                  </Link>
-                  <Link
-                    href={`/modules/${module.id}/submit-video`}
-                    title="Submit Lab Video"
-                    className="p-1.5 rounded-lg bg-[var(--background-subtle)] hover:bg-purple-500/15 hover:text-purple-400 text-[var(--foreground-muted)] transition-colors border border-[var(--border)]"
-                  >
-                    <Video className="w-3.5 h-3.5" />
-                  </Link>
+                {/* Tool 2 */}
+                <Link
+                  href="/dashboard?tab=config-gen"
+                  className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-cyan-500/50 transition-all hover:-translate-y-1 group shadow-sm flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <Sliders className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-bold text-base text-[var(--foreground)] mb-1.5 flex items-center justify-between">
+                      <span>IOS Config Generator</span>
+                      <ArrowRight className="w-4 h-4 text-[var(--foreground-muted)] group-hover:text-cyan-400 transition-colors" />
+                    </h3>
+                    <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">
+                      Synthesize deployable Cisco IOS configurations for 802.1Q sub-interfaces, OSPF areas, ACLs, NAT Overload, and DHCP.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] font-mono text-cyan-400 font-semibold">
+                    OPEN WORKBENCH &rarr;
+                  </div>
+                </Link>
+
+                {/* Tool 3 */}
+                <Link
+                  href="/dashboard?tab=eui64"
+                  className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-emerald-500/50 transition-all hover:-translate-y-1 group shadow-sm flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <Globe className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-bold text-base text-[var(--foreground)] mb-1.5 flex items-center justify-between">
+                      <span>IPv6 EUI-64 Flipper</span>
+                      <ArrowRight className="w-4 h-4 text-[var(--foreground-muted)] group-hover:text-emerald-400 transition-colors" />
+                    </h3>
+                    <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">
+                      Interactive bit-level visualizer demonstrating 48-bit MAC splitting, FFFE injection, and 7th-bit Universal/Local inversion.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] font-mono text-emerald-400 font-semibold">
+                    EXPLORE BIT-FLIPPER &rarr;
+                  </div>
+                </Link>
+
+                {/* Tool 4 */}
+                <Link
+                  href="/dashboard?tab=cabling"
+                  className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] hover:border-purple-500/50 transition-all hover:-translate-y-1 group shadow-sm flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <Network className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-bold text-base text-[var(--foreground)] mb-1.5 flex items-center justify-between">
+                      <span>Layer 1 Cabling Lab</span>
+                      <ArrowRight className="w-4 h-4 text-[var(--foreground-muted)] group-hover:text-purple-400 transition-colors" />
+                    </h3>
+                    <p className="text-xs text-[var(--foreground-muted)] leading-relaxed">
+                      Interactive media matching lab for Straight-Through, Crossover, Rollover console, Serial WAN, and Fiber optics.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-[var(--border)] text-[10px] font-mono text-purple-400 font-semibold">
+                    ENTER CABLING LAB &rarr;
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* The 5-Pillar Active Learning Method Section */}
+          <section className="py-20 sm:py-28 border-y border-[var(--border)] bg-[var(--background-subtle)] relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--secondary-muted)] border border-emerald-500/25 text-emerald-400 text-xs font-mono mb-4">
+                  <Compass className="w-3.5 h-3.5" />
+                  <span>Section 1.4: Proven CCNA Study Methodology</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
+                  The 5-Pillar Active Learning Framework
+                </h2>
+                <p className="mt-4 text-[var(--foreground-muted)] text-sm sm:text-base leading-relaxed">
+                  &quot;Studying differs from simply reading passively. Be an active learner rather than a passive learner... Labbing is an essential part of any CCNA study plan. You have to get your hands dirty and apply what you’ve learned.&quot;
+                </p>
+              </div>
+
+              {/* Row 1: First 3 Pillars */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                {/* Pillar 1 */}
+                <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-lg bg-[var(--primary-muted)] border border-[var(--border-highlight)] text-[var(--primary)] font-mono font-bold text-lg flex items-center justify-center mb-5">
+                      01
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs font-mono text-[var(--primary)] font-semibold mb-2">
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>Active Ingestion</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
+                      Complete Study Reading
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
+                      Engage deeply with all 49 chapters from Wendell Odom&apos;s CCNA Official Cert Guides (Vols 1 &amp; 2). Don&apos;t just skim—annotate and summarize.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
+                    <span>Volume 1 &amp; 2 Theory</span>
+                    <span className="text-[var(--primary)]">Foundation</span>
+                  </div>
+                </div>
+
+                {/* Pillar 2 */}
+                <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono font-bold text-lg flex items-center justify-center mb-5">
+                      02
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs font-mono text-sky-400 font-semibold mb-2">
+                      <Calculator className="w-3.5 h-3.5" />
+                      <span>Mental Math</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
+                      Subnetting Muscle Memory
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
+                      Calculate subnets in under 30 seconds using magic numbers and binary powers. Master VLSM and CIDR prefixes without pen and paper.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
+                    <span>Subnet Speed Drills</span>
+                    <span className="text-sky-400">&lt;30s Target</span>
+                  </div>
+                </div>
+
+                {/* Pillar 3 */}
+                <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono font-bold text-lg flex items-center justify-center mb-5">
+                      03
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs font-mono text-purple-400 font-semibold mb-2">
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>Spaced Recall</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
+                      Active Recall Flashcards
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
+                      Daily spaced-repetition testing across port numbers, protocol defaults, encapsulation types, and Cisco timers to defeat the forgetting curve.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
+                    <span>Spaced Repetition</span>
+                    <span className="text-purple-400">Daily Drills</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 2: Final 2 Pillars */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                {/* Pillar 4 */}
+                <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono font-bold text-lg flex items-center justify-center mb-5">
+                      04
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400 font-semibold mb-2">
+                      <Terminal className="w-3.5 h-3.5" />
+                      <span>CLI Mastery</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
+                      Appendix B Cisco IOS Labbing
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
+                      Type every command from Appendix B inside Packet Tracer until fingers execute Cisco IOS configuration and troubleshooting commands automatically.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
+                    <span>367 Cisco IOS Commands</span>
+                    <span className="text-amber-400">Packet Tracer</span>
+                  </div>
+                </div>
+
+                {/* Pillar 5 */}
+                <div className="pillar-slab p-6 sm:p-8 flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono font-bold text-lg flex items-center justify-center mb-5">
+                      05
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-semibold mb-2">
+                      <Video className="w-3.5 h-3.5" />
+                      <span>Proof-of-Skill</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-[var(--foreground)] mb-2">
+                      Video Proof &amp; Peer Accountability
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
+                      Record 2–5 minute screen captures explaining your running topology and show outputs. Teaching concepts and verifying lab results locks in mastery.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)]">
+                    <span>Google Drive Storage</span>
+                    <span className="text-emerald-400">Feynman Technique</span>
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
+
+          {/* Curriculum Explorer: Volumes, Parts, and Chapters */}
+          <section id="curriculum" className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--primary-muted)] border border-[var(--border-highlight)] text-[var(--primary)] text-xs font-mono mb-3">
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>Full Textbook Syllabus</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
+                  The 49-Chapter CCNA Master Curriculum
+                </h2>
+                <p className="mt-2 text-[var(--foreground-muted)] text-sm sm:text-base max-w-2xl leading-relaxed">
+                  Organized into 2 volumes and 11 distinct pedagogical parts covering all official Cisco CCNA exam domains.
+                </p>
+              </div>
+
+              {/* Volume Switcher Tabs */}
+              <div className="flex items-center p-1 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] shrink-0 shadow-sm">
+                <button
+                  onClick={() => {
+                    setSelectedVolume(1);
+                    setSelectedPart("all");
+                  }}
+                  className={`px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
+                    selectedVolume === 1
+                      ? "bg-[var(--card)] text-[var(--foreground)] shadow-sm border border-[var(--border)]"
+                      : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  Volume 1: Fundamentals (24 Ch)
+                </button>
+                <button
+                  onClick={() => {
+                    setSelectedVolume(2);
+                    setSelectedPart("all");
+                  }}
+                  className={`px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-all ${
+                    selectedVolume === 2
+                      ? "bg-[var(--card)] text-[var(--foreground)] shadow-sm border border-[var(--border)]"
+                      : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  Volume 2: Advanced &amp; Security (25 Ch)
+                </button>
+              </div>
+            </div>
+
+            {/* Search Bar + Part Filter */}
+            <div className="space-y-4 mb-10">
+              <div className="relative max-w-md">
+                <Search className="w-4 h-4 text-[var(--foreground-muted)] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search by topic, command, or concept (e.g. OSPF, VLAN, Subnetting)..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 rounded-lg bg-[var(--background-subtle)] border border-[var(--border)] focus:border-[var(--primary)] text-xs text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] outline-none transition-colors"
+                />
+              </div>
+
+              {currentVolumeData && !searchQuery && (
+                <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+                  <button
+                    onClick={() => setSelectedPart("all")}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-mono shrink-0 transition-all font-medium border ${
+                      selectedPart === "all"
+                        ? "bg-[var(--primary-muted)] text-[var(--primary)] border-[var(--border-highlight)]"
+                        : "bg-[var(--card)] text-[var(--foreground-muted)] border-[var(--border)] hover:text-[var(--foreground)]"
+                    }`}
+                  >
+                    All Parts ({allModules.filter(m => m.volume === selectedVolume).length} Ch)
+                  </button>
+                  {currentVolumeData.parts.map((p) => (
+                    <button
+                      key={p.partNumber}
+                      onClick={() => setSelectedPart(p.partNumber)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-mono shrink-0 transition-all font-medium border ${
+                        selectedPart === p.partNumber
+                          ? "bg-[var(--primary-muted)] text-[var(--primary)] border-[var(--border-highlight)]"
+                          : "bg-[var(--card)] text-[var(--foreground-muted)] border-[var(--border)] hover:text-[var(--foreground)]"
+                      }`}
+                    >
+                      Part {p.partNumber}: {p.partTitle}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Module Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {displayedModules.map((module) => (
+                <div
+                  key={module.id}
+                  className="group relative p-6 rounded-xl noc-surface noc-surface-interactive flex flex-col justify-between shadow-sm"
+                >
+                  <div>
+                    {/* Header info */}
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="telemetry-badge telemetry-badge-cyan">
+                        Vol {module.volume} • Part {module.partNumber}
+                      </span>
+                      <span className="text-[11px] font-mono text-[var(--foreground-muted)]">
+                        {module.readTime}
+                      </span>
+                    </div>
+
+                    <h3 className="text-base font-bold text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors mb-2 leading-snug">
+                      {module.title}
+                    </h3>
+                    <p className="text-xs text-[var(--foreground-muted)] line-clamp-2 leading-relaxed mb-5">
+                      {module.description}
+                    </p>
+
+                    {/* Badges for commands and quiz */}
+                    <div className="flex flex-wrap items-center gap-1.5 mb-6">
+                      {module.ciscoCommands.length > 0 && (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--background-subtle)] text-[var(--foreground-muted)] border border-[var(--border)]">
+                          <Terminal className="w-3 h-3 text-[var(--primary)]" />
+                          {module.ciscoCommands.length} CLI cmds
+                        </span>
+                      )}
+                      {module.quiz.length > 0 && (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--background-subtle)] text-[var(--foreground-muted)] border border-[var(--border)]">
+                          <HelpCircle className="w-3 h-3 text-emerald-400" />
+                          {module.quiz.length} Quiz Qs
+                        </span>
+                      )}
+                      {module.diagrams.length > 0 && (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--background-subtle)] text-[var(--foreground-muted)] border border-[var(--border)]">
+                          <Layers className="w-3 h-3 text-purple-400" />
+                          {module.diagrams.length} Diagrams
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action buttons */}
+                  <div className="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <Link
+                      href={`/modules/${module.id}`}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[var(--primary)] hover:bg-[var(--primary-muted)] border border-[var(--border)] hover:border-[var(--border-highlight)] transition-all"
+                    >
+                      <span>Study Chapter</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </Link>
+
+                    <div className="flex items-center gap-1.5">
+                      <Link
+                        href={`/modules/${module.id}/quiz`}
+                        title="Take Chapter Quiz"
+                        className="p-1.5 rounded-lg bg-[var(--background-subtle)] hover:bg-emerald-500/15 hover:text-emerald-400 text-[var(--foreground-muted)] transition-colors border border-[var(--border)]"
+                      >
+                        <HelpCircle className="w-3.5 h-3.5" />
+                      </Link>
+                      <Link
+                        href={`/modules/${module.id}/submit-video`}
+                        title="Submit Lab Video"
+                        className="p-1.5 rounded-lg bg-[var(--background-subtle)] hover:bg-purple-500/15 hover:text-purple-400 text-[var(--foreground-muted)] transition-colors border border-[var(--border)]"
+                      >
+                        <Video className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </>
+      ) : (
+        /* ========================================================================= */
+        /* INDUSTRIAL ENTERPRISE CURRICULUM SYLLABUS & CLEARANCE GATE               */
+        /* ========================================================================= */
+        <section id="curriculum" className="py-20 sm:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[var(--border)] relative scroll-mt-16">
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-mono mb-4">
+              <Shield className="w-3.5 h-3.5 text-cyan-400" />
+              <span>OFFICIAL CISCO CCNA 200-301 v1.1 BLUEPRINT MATRIX</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[var(--foreground)] tracking-tight">
+              49-Chapter Master Curriculum Syllabus
+            </h2>
+            <p className="mt-4 text-[var(--foreground-muted)] text-sm sm:text-base leading-relaxed">
+              Engineered according to Wendell Odom&apos;s CCNA 200-301 Official Cert Guides (Volumes 1 &amp; 2). All 11 pedagogical parts covering 100% of the Cisco CCNA exam blueprint.
+            </p>
+          </div>
+
+          {/* Central High-Tech Clearance Prompt Card */}
+          <div className="mb-14 rounded-3xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-cyan-500/30 p-8 sm:p-10 backdrop-blur-xl shadow-2xl relative overflow-hidden text-center max-w-4xl mx-auto">
+            {/* Ambient Cyber Grid Accent */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl -z-10 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl -z-10 pointer-events-none" />
+
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-mono mb-6">
+              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <span>RESTRICTED PROTOCOL • CADET CLEARANCE REQUIRED</span>
+            </div>
+
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+              Cadet Sign-In Required to Unlock Full Blueprints
+            </h3>
+
+            <p className="text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed mb-8">
+              Full chapter study notes, syntax-highlighted Cisco IOS command emulators, 450 authentic exam questions with simlets, and Google Drive video lab submission pipelines are protected under standard Cisco Academy protocols.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-8">
+              <button
+                onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-400 text-slate-950 font-extrabold text-sm hover:brightness-110 transition-all shadow-xl shadow-cyan-500/25 group"
+              >
+                <GoogleIcon className="w-4 h-4" />
+                <span>Sign In with Google Account</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+
+              <button
+                onClick={() => setIsSubnetOpen(true)}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-all"
+              >
+                <Calculator className="w-4 h-4 text-emerald-400" />
+                <span>Try 32-Bit Subnet Drill (Public Preview)</span>
+              </button>
+            </div>
+
+            {/* Unlocked Features Badge Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800/80 text-left font-mono">
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                <div className="text-[10px] text-slate-500 uppercase">Curriculum</div>
+                <div className="text-xs font-bold text-cyan-300 mt-0.5">49 Chapters</div>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                <div className="text-[10px] text-slate-500 uppercase">Interactive CLI</div>
+                <div className="text-xs font-bold text-emerald-300 mt-0.5">367 Commands</div>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                <div className="text-[10px] text-slate-500 uppercase">Exam Simulator</div>
+                <div className="text-xs font-bold text-amber-300 mt-0.5">450 Questions</div>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                <div className="text-[10px] text-slate-500 uppercase">Video Verification</div>
+                <div className="text-xs font-bold text-purple-300 mt-0.5">5TB Cloud Pipeline</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Syllabus Volume & Part Architecture Matrix (Preview) */}
+          <div className="space-y-8">
+            {curriculum.volumes.map((vol) => (
+              <div key={vol.volumeNumber} className="rounded-2xl noc-surface border border-[var(--border)] p-6 sm:p-8">
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-[var(--border)]">
+                  <div>
+                    <span className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">
+                      Volume {vol.volumeNumber}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-[var(--foreground)] mt-0.5">
+                      {vol.title}
+                    </h3>
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-xs font-mono bg-[var(--background-subtle)] text-[var(--foreground-muted)] border border-[var(--border)]">
+                    {vol.volumeNumber === 1 ? "Chapters 1–24 (Fundamentals)" : "Chapters 25–49 (Advanced & Security)"}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {vol.parts.map((part) => {
+                    const partModules = allModules.filter(
+                      (m) => m.volume === vol.volumeNumber && m.partNumber === part.partNumber
+                    );
+                    const chStart = partModules[0]?.chapterNumber;
+                    const chEnd = partModules[partModules.length - 1]?.chapterNumber;
+
+                    return (
+                      <div
+                        key={part.partNumber}
+                        className="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)] flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)] mb-2">
+                            <span>Part {part.partNumber}</span>
+                            <span className="flex items-center gap-1 text-[11px] text-amber-400">
+                              <Lock className="w-3 h-3" />
+                              <span>Sign-In Required</span>
+                            </span>
+                          </div>
+                          <h4 className="font-bold text-sm text-[var(--foreground)] mb-2">
+                            {part.partTitle}
+                          </h4>
+                          <p className="text-xs text-[var(--foreground-muted)] font-mono">
+                            {partModules.length} Chapters {chStart && chEnd ? `(Ch ${chStart}–${chEnd})` : ""}
+                          </p>
+                        </div>
+
+                        <div className="mt-4 pt-3 border-t border-[var(--border)] flex items-center justify-between">
+                          <button
+                            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                            className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group font-mono"
+                          >
+                            <span>Authenticate to unlock</span>
+                            <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Architect & Lead Developer Profile Section */}
       <section className="py-20 sm:py-28 border-t border-[var(--border)] bg-[var(--background-subtle)] relative">
