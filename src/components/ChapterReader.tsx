@@ -445,8 +445,8 @@ export function ChapterReader({
                           item.level === 3 ? "pl-5 text-[11px]" : ""
                         } ${
                           isActive
-                            ? "bg-cyan-500/15 text-cyan-300 font-bold border-l-2 border-cyan-400 shadow-sm"
-                            : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+                            ? "bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 font-bold border-l-2 border-cyan-400 shadow-sm"
+                            : "text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)]"
                         }`}
                       >
                         {item.title}
@@ -455,10 +455,10 @@ export function ChapterReader({
                   })}
                 </nav>
 
-                <div className="mt-6 pt-4 border-t border-slate-800/80">
+                <div className="mt-6 pt-4 border-t border-[var(--border)]">
                   <button
                     onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-slate-400 hover:text-cyan-400 transition-colors"
+                    className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)] text-[11px] font-mono text-[var(--foreground-muted)] hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
                   >
                     <ArrowUp className="w-3 h-3" />
                     <span>Back to Top</span>
@@ -472,20 +472,20 @@ export function ChapterReader({
         {/* Center / Left: Technical Content Area */}
         <div className={`${readerMode === "workbench" ? "lg:col-span-7" : "lg:col-span-3"} space-y-8`}>
           {/* Key Objectives Banner from the Book */}
-          <div className="p-6 rounded-3xl bg-[#090e1c] border border-slate-800 shadow-xl relative overflow-hidden">
+          <div className="p-6 rounded-3xl bg-[var(--card)] border border-[var(--border)] shadow-xl relative overflow-hidden">
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2 text-xs font-mono uppercase text-cyan-400 font-bold tracking-wider">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase text-cyan-600 dark:text-cyan-400 font-bold tracking-wider">
                 <Sparkles className="w-4 h-4" />
                 <span>Chapter Objectives &amp; Blueprint Scope</span>
               </div>
-              <span className="text-[11px] font-mono text-slate-500 bg-slate-950 px-2.5 py-0.5 rounded-full border border-slate-800">
+              <span className="text-[11px] font-mono text-[var(--foreground-muted)] bg-[var(--background-subtle)] px-2.5 py-0.5 rounded-full border border-[var(--border)]">
                 Vol {volume} • Ch {chapterNumber}
               </span>
             </div>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {keyPoints.map((pt, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 shrink-0" />
+                <li key={idx} className="flex items-start gap-2.5 text-xs text-[var(--foreground-muted)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 dark:bg-cyan-400 mt-1.5 shrink-0" />
                   <span className="leading-relaxed">{pt}</span>
                 </li>
               ))}
@@ -744,7 +744,7 @@ export function ChapterReader({
           {/* ===================================================================== */}
           {/* COMPLETE TEXTBOOK MARKDOWN READER                                     */}
           {/* ===================================================================== */}
-          <article className={`p-8 sm:p-10 rounded-3xl bg-[#080d1a] border border-slate-800/80 shadow-2xl backdrop-blur-md prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-300 prose-strong:text-white prose-code:text-cyan-300 prose-code:bg-slate-950 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-table:border prose-table:border-slate-800 ${fontSizeClasses[fontSize]}`}>
+          <article className={`p-8 sm:p-10 rounded-3xl bg-[var(--card)] border border-[var(--border)] shadow-xl backdrop-blur-md prose dark:prose-invert max-w-none prose-headings:text-[var(--foreground)] prose-p:text-[var(--foreground)] prose-strong:text-[var(--foreground)] prose-code:text-cyan-600 dark:text-cyan-300 prose-code:bg-[var(--background-subtle)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-table:border prose-table:border-[var(--border)] ${fontSizeClasses[fontSize]}`}>
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -754,13 +754,13 @@ export function ChapterReader({
                   return (
                     <h2
                       id={anchor}
-                      className="text-xl sm:text-2xl font-bold text-white pt-8 pb-2 border-b border-slate-800/80 scroll-mt-36 group flex items-center justify-between"
+                      className="text-xl sm:text-2xl font-bold text-[var(--foreground)] pt-8 pb-2 border-b border-[var(--border)] scroll-mt-36 group flex items-center justify-between"
                       {...props}
                     >
                       <span>{children}</span>
                       <a
                         href={`#${anchor}`}
-                        className="text-slate-600 hover:text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity text-sm font-mono ml-2"
+                        className="text-[var(--foreground-muted)] hover:text-cyan-500 dark:hover:text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity text-sm font-mono ml-2"
                         title="Link to section"
                       >
                         #
@@ -774,7 +774,7 @@ export function ChapterReader({
                   return (
                     <h3
                       id={anchor}
-                      className="text-lg sm:text-xl font-bold text-white pt-6 pb-1 scroll-mt-36"
+                      className="text-lg sm:text-xl font-bold text-[var(--foreground)] pt-6 pb-1 scroll-mt-36"
                       {...props}
                     >
                       {children}
@@ -790,9 +790,9 @@ export function ChapterReader({
                   );
 
                   if (hasBlockOrImage) {
-                    return <div className="my-4 text-slate-300 leading-relaxed" {...props}>{children}</div>;
+                    return <div className="my-4 text-[var(--foreground)] leading-relaxed" {...props}>{children}</div>;
                   }
-                  return <p className="my-4 text-slate-300 leading-relaxed" {...props}>{children}</p>;
+                  return <p className="my-4 text-[var(--foreground)] leading-relaxed" {...props}>{children}</p>;
                 },
                 // Interactive Click-to-Zoom Images
                 img: ({ node, src, alt, ...props }) => {
@@ -891,19 +891,19 @@ export function ChapterReader({
                 },
                 // Styled Tables
                 table: ({ children, ...props }) => (
-                  <div className="my-6 overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/60 not-prose">
-                    <table className="w-full text-left text-xs border-collapse divide-y divide-slate-800" {...props}>
+                  <div className="my-6 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--background-subtle)] not-prose">
+                    <table className="w-full text-left text-xs border-collapse divide-y divide-[var(--border)]" {...props}>
                       {children}
                     </table>
                   </div>
                 ),
                 th: ({ children, ...props }) => (
-                  <th className="py-3 px-4 bg-slate-900/80 font-mono text-slate-300 font-semibold" {...props}>
+                  <th className="py-3 px-4 bg-[var(--card)] font-mono text-[var(--foreground)] font-semibold border-b border-[var(--border)]" {...props}>
                     {children}
                   </th>
                 ),
                 td: ({ children, ...props }) => (
-                  <td className="py-2.5 px-4 text-slate-300 border-t border-slate-800/60" {...props}>
+                  <td className="py-2.5 px-4 text-[var(--foreground)] border-t border-[var(--border)]" {...props}>
                     {children}
                   </td>
                 ),

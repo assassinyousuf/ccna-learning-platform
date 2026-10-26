@@ -648,42 +648,42 @@ export default function PracticeTestPage() {
               <span>Official Cisco Certified Network Associate (200-301 CCNA) Simulation</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-              CCNA 200-301 <span className="text-cyan-400">Exam Simulator</span> &amp; Test Center
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[var(--foreground)] tracking-tight leading-tight">
+              CCNA 200-301 <span className="text-cyan-500 dark:text-cyan-400">Exam Simulator</span> &amp; Test Center
             </h1>
-            <p className="text-sm sm:text-base text-slate-300 mt-6 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base text-[var(--foreground-muted)] mt-6 max-w-3xl mx-auto leading-relaxed">
               Experience the actual Cisco certification exam environment delivered via Pearson VUE. Practice with authentic multiple-choice questions, interactive Drag-and-Drop matching, live CLI Simlets with simulated routers/switches, and official 6-domain score scaling.
             </p>
 
             {/* Test Center Specification Badges */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-10 pt-10 border-t border-slate-800/80 max-w-4xl mx-auto">
-              <div className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80 shadow-md">
-                <span className="text-2xl sm:text-3xl font-black text-white font-mono">{allQuestionsPool.length}</span>
-                <span className="text-xs text-slate-400 block font-mono mt-1">Question Bank</span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 mt-10 pt-10 border-t border-[var(--border)] max-w-4xl mx-auto">
+              <div className="p-5 rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-sm">
+                <span className="text-2xl sm:text-3xl font-black text-[var(--foreground)] font-mono">{allQuestionsPool.length}</span>
+                <span className="text-xs text-[var(--foreground-muted)] block font-mono mt-1">Question Bank</span>
               </div>
-              <div className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80 shadow-md">
-                <span className="text-2xl sm:text-3xl font-black text-cyan-400 font-mono">120 Mins</span>
-                <span className="text-xs text-slate-400 block font-mono mt-1">Official Duration</span>
+              <div className="p-5 rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-sm">
+                <span className="text-2xl sm:text-3xl font-black text-cyan-600 dark:text-cyan-400 font-mono">120 Mins</span>
+                <span className="text-xs text-[var(--foreground-muted)] block font-mono mt-1">Official Duration</span>
               </div>
-              <div className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80 shadow-md">
-                <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">825 / 1000</span>
-                <span className="text-xs text-slate-400 block font-mono mt-1">Passing Standard</span>
+              <div className="p-5 rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-sm">
+                <span className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 font-mono">825 / 1000</span>
+                <span className="text-xs text-[var(--foreground-muted)] block font-mono mt-1">Passing Standard</span>
               </div>
-              <div className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80 shadow-md">
-                <span className="text-2xl sm:text-3xl font-black text-purple-400 font-mono">6 Domains</span>
-                <span className="text-xs text-slate-400 block font-mono mt-1">Cisco Blueprint</span>
+              <div className="p-5 rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-sm">
+                <span className="text-2xl sm:text-3xl font-black text-purple-600 dark:text-purple-400 font-mono">6 Domains</span>
+                <span className="text-xs text-[var(--foreground-muted)] block font-mono mt-1">Cisco Blueprint</span>
               </div>
             </div>
 
             {/* Strict Cisco Exam Engine Toggle */}
-            <div className="mt-10 inline-flex flex-wrap items-center justify-center gap-3 p-2 rounded-2xl bg-slate-950/90 border border-slate-800 text-xs sm:text-sm shadow-md">
-              <span className="text-slate-400 font-medium pl-3">Exam Navigation Rule:</span>
+            <div className="mt-10 inline-flex flex-wrap items-center justify-center gap-3 p-2 rounded-2xl bg-[var(--card)] border border-[var(--border)] text-xs sm:text-sm shadow-sm">
+              <span className="text-[var(--foreground-muted)] font-medium pl-3">Exam Navigation Rule:</span>
               <button
                 onClick={() => setIsStrictCiscoMode(true)}
                 className={`px-4 py-2 rounded-xl font-semibold transition-all ${
                   isStrictCiscoMode
                     ? "bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md glow-amber"
-                    : "text-slate-400 hover:text-white"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
                 }`}
               >
                 Strict Cisco Exam Mode (No Back Button)
@@ -693,7 +693,7 @@ export default function PracticeTestPage() {
                 className={`px-4 py-2 rounded-xl font-semibold transition-all ${
                   !isStrictCiscoMode
                     ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md glow-cyan"
-                    : "text-slate-400 hover:text-white"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
                 }`}
               >
                 Study Mode (Back &amp; Palette Allowed)
@@ -707,35 +707,35 @@ export default function PracticeTestPage() {
             <div className="vue-ticket-card p-8 sm:p-9 flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between gap-2 mb-6">
-                  <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
+                  <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300 border border-blue-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
                     VUE-200-301-OFFICIAL
                   </span>
-                  <span className="text-[11px] font-mono text-emerald-400 font-bold flex items-center gap-1.5 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
                     STATUS: AUTHORIZED
                   </span>
                 </div>
 
-                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center mb-5 shadow-md">
+                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-500 dark:text-blue-400 flex items-center justify-center mb-5 shadow-sm">
                   <Award className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">200-301 CCNA Full Exam</h3>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">200-301 CCNA Full Exam</h3>
+                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
                   Definitive Pearson VUE certification session. 100 questions covering all 6 blueprint domains, interactive Simlets, Packet Tracer DNDs, and scaled 300–1000 grading.
                 </p>
 
-                <div className="mt-6 p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2 text-xs font-mono">
-                  <div className="flex justify-between text-slate-400">
+                <div className="mt-6 p-4 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)] space-y-2 text-xs font-mono">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>Items Count:</span>
-                    <span className="text-white font-bold">100 Questions</span>
+                    <span className="text-[var(--foreground)] font-bold">100 Questions</span>
                   </div>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>Testing Time:</span>
-                    <span className="text-cyan-400 font-bold">120 Minutes</span>
+                    <span className="text-cyan-600 dark:text-cyan-400 font-bold">120 Minutes</span>
                   </div>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>Passing Score:</span>
-                    <span className="text-emerald-400 font-bold">825 / 1000</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">825 / 1000</span>
                   </div>
                 </div>
               </div>
@@ -753,35 +753,35 @@ export default function PracticeTestPage() {
             <div className="vue-ticket-card p-8 sm:p-9 flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between gap-2 mb-6">
-                  <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
+                  <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
                     VUE-BENCHMARK-60
                   </span>
-                  <span className="text-[11px] font-mono text-cyan-400 font-bold flex items-center gap-1.5 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  <span className="text-[11px] font-mono text-cyan-600 dark:text-cyan-400 font-bold flex items-center gap-1.5 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 dark:bg-cyan-400" />
                     DIAGNOSTIC BENCHMARK
                   </span>
                 </div>
 
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mb-5 shadow-md">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mb-5 shadow-sm">
                   <Layers className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Standard Diagnostic Mock</h3>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">Standard Diagnostic Mock</h3>
+                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
                   Fast-track 60-question assessment calibrated across all 6 Cisco domains. Includes 2 Simlets &amp; 2 Drag-and-Drops for high-yield evaluation.
                 </p>
 
-                <div className="mt-6 p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2 text-xs font-mono">
-                  <div className="flex justify-between text-slate-400">
+                <div className="mt-6 p-4 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)] space-y-2 text-xs font-mono">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>Items Count:</span>
-                    <span className="text-white font-bold">60 Questions</span>
+                    <span className="text-[var(--foreground)] font-bold">60 Questions</span>
                   </div>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>Testing Time:</span>
-                    <span className="text-emerald-400 font-bold">90 Minutes</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">90 Minutes</span>
                   </div>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>Passing Score:</span>
-                    <span className="text-emerald-400 font-bold">825 / 1000</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">825 / 1000</span>
                   </div>
                 </div>
               </div>
@@ -799,35 +799,35 @@ export default function PracticeTestPage() {
             <div className="vue-ticket-card p-8 sm:p-9 flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between gap-2 mb-6">
-                  <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
+                  <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-300 border border-purple-500/40 text-[10px] font-mono uppercase font-bold tracking-widest">
                     VUE-PBQ-SIMLET
                   </span>
-                  <span className="text-[11px] font-mono text-purple-400 font-bold flex items-center gap-1.5 bg-purple-500/10 px-2.5 py-1 rounded-lg border border-purple-500/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  <span className="text-[11px] font-mono text-purple-600 dark:text-purple-400 font-bold flex items-center gap-1.5 bg-purple-500/10 px-2.5 py-1 rounded-lg border border-purple-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
                     HANDS-ON LABS
                   </span>
                 </div>
 
-                <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center mb-5 shadow-md">
+                <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-500 dark:text-purple-400 flex items-center justify-center mb-5 shadow-sm">
                   <Terminal className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Simlet &amp; PBQ Lab Drill</h3>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">Simlet &amp; PBQ Lab Drill</h3>
+                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] leading-relaxed">
                   Focus purely on high-stakes interactive questions: live router/switch CLI simlets, 802.1Q trunks, OSPF neighbor diagnostics, and DND matching.
                 </p>
 
-                <div className="mt-6 p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-2 text-xs font-mono">
-                  <div className="flex justify-between text-slate-400">
+                <div className="mt-6 p-4 rounded-xl bg-[var(--background-subtle)] border border-[var(--border)] space-y-2 text-xs font-mono">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>Items Type:</span>
-                    <span className="text-white font-bold">Simlets + DNDs</span>
+                    <span className="text-[var(--foreground)] font-bold">Simlets + DNDs</span>
                   </div>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>Testing Time:</span>
-                    <span className="text-purple-400 font-bold">45 Minutes</span>
+                    <span className="text-purple-600 dark:text-purple-400 font-bold">45 Minutes</span>
                   </div>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[var(--foreground-muted)]">
                     <span>CLI Console:</span>
-                    <span className="text-emerald-400 font-bold">Simulated IOS</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">Simulated IOS</span>
                   </div>
                 </div>
               </div>
@@ -843,14 +843,14 @@ export default function PracticeTestPage() {
           </div>
 
           {/* Quick Drills & Domain Selector Section with Spacious Layout */}
-          <div className="max-w-6xl mx-auto p-10 sm:p-12 rounded-3xl glass-panel space-y-8 shadow-2xl">
+          <div className="max-w-6xl mx-auto p-10 sm:p-12 rounded-3xl glass-panel space-y-8 shadow-xl">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div>
-                <h3 className="text-xl font-bold text-white flex items-center gap-2.5">
-                  <Compass className="w-5 h-5 text-cyan-400" />
+                <h3 className="text-xl font-bold text-[var(--foreground)] flex items-center gap-2.5">
+                  <Compass className="w-5 h-5 text-cyan-500 dark:text-cyan-400" />
                   <span>Targeted Domain &amp; Rapid Practice</span>
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1.5">
+                <p className="text-xs sm:text-sm text-[var(--foreground-muted)] mt-1.5">
                   Focus on specific Cisco examination domains or launch a quick 20-question randomized sprint.
                 </p>
               </div>
@@ -877,11 +877,11 @@ export default function PracticeTestPage() {
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-cyan-400">Domain {domain.id}</span>
-                    <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-900 text-slate-400 border border-slate-800">
+                    <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[var(--background-subtle)] text-[var(--foreground-muted)] border border-[var(--border)]">
                       {Math.round(domain.weight * 100)}% Weight
                     </span>
                   </div>
-                  <h4 className="text-sm sm:text-base font-bold text-white mt-2 group-hover:text-cyan-300 transition-colors leading-snug">
+                  <h4 className="text-sm sm:text-base font-bold text-[var(--foreground)] mt-2 group-hover:text-cyan-500 dark:group-hover:text-cyan-300 transition-colors leading-snug">
                     {domain.name}
                   </h4>
                 </div>
@@ -909,7 +909,7 @@ export default function PracticeTestPage() {
                     <h2 className="text-xs sm:text-sm font-bold text-white tracking-wide">
                       200-301 CCNA: Cisco Certified Network Associate
                     </h2>
-                    <p className="text-[10px] font-mono text-slate-400">
+                    <p className="text-[10px] font-mono text-slate-300">
                       Candidate: {session?.user?.name || "Yousuf Hossain"} • ID: CSCO-{session?.user ? "18492048" : "94827103"}
                     </p>
                   </div>
@@ -1011,7 +1011,7 @@ export default function PracticeTestPage() {
             <div className="vue-workstation p-6 sm:p-8 space-y-4">
               {/* Question Type Badge */}
               <div className="flex items-center justify-between">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400">
                   {currentQ.type === "simlet" && "Performance-Based Simlet (CLI Console)"}
                   {currentQ.type === "drag_drop" && "Interactive Drag-and-Drop Matching"}
                   {currentQ.type === "multi_choice" && `Multiple Choice (Select ${currentQ.selectCount || 2})`}
@@ -1019,14 +1019,14 @@ export default function PracticeTestPage() {
                 </span>
 
                 {currentQ.moduleTitle && (
-                  <span className="text-xs font-mono text-slate-400">
+                  <span className="text-xs font-mono text-[var(--foreground-muted)]">
                     Source: Ch {currentQ.chapterNumber} • {currentQ.moduleTitle}
                   </span>
                 )}
               </div>
 
               {/* Question Text */}
-              <h3 className="text-base sm:text-lg font-semibold text-white leading-relaxed">
+              <h3 className="text-base sm:text-lg font-semibold text-[var(--foreground)] leading-relaxed">
                 {currentQ.question}
               </h3>
             </div>
@@ -1275,12 +1275,12 @@ export default function PracticeTestPage() {
             {/* ============================================================= */}
             {currentQ.type === "multi_choice" && currentQ.options && (
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs font-mono text-slate-400 px-1">
-                  <span className="text-amber-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                <div className="flex items-center justify-between text-xs font-mono text-[var(--foreground-muted)] px-1">
+                  <span className="text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
                     <CheckSquare className="w-4 h-4" />
                     Select exactly {currentQ.selectCount || 2} options:
                   </span>
-                  <span className="bg-[#050811] px-2.5 py-1 rounded-lg border border-slate-800 font-bold text-cyan-300">
+                  <span className="bg-[var(--background-subtle)] px-2.5 py-1 rounded-lg border border-[var(--border)] font-bold text-cyan-600 dark:text-cyan-300">
                     Selected: {(userAnswers[currentQ.id] || []).length} of {currentQ.selectCount || 2}
                   </span>
                 </div>
@@ -1301,13 +1301,13 @@ export default function PracticeTestPage() {
                       <div
                         className={`w-7 h-7 rounded-lg font-mono text-xs font-black flex items-center justify-center shrink-0 border transition-all ${
                           isSelected
-                            ? "bg-cyan-400 text-slate-950 border-cyan-300 shadow-md shadow-cyan-400/40"
-                            : "bg-[#050811] text-slate-400 border-slate-700"
+                            ? "bg-cyan-500 text-slate-950 border-cyan-400 shadow-sm"
+                            : "bg-[var(--card)] text-[var(--foreground-muted)] border-[var(--border)]"
                         }`}
                       >
                         {isSelected ? "✓" : letter}
                       </div>
-                      <span className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-0.5">
+                      <span className="text-xs sm:text-sm text-[var(--foreground)] leading-relaxed pt-0.5">
                         {opt}
                       </span>
                     </div>
@@ -1321,11 +1321,11 @@ export default function PracticeTestPage() {
             {/* ============================================================= */}
             {currentQ.type === "single_choice" && currentQ.options && (
               <div className="space-y-3">
-                <div className="text-xs font-mono text-slate-400 px-1 flex items-center justify-between">
-                  <span className="text-cyan-400 font-semibold uppercase tracking-wider">
+                <div className="text-xs font-mono text-[var(--foreground-muted)] px-1 flex items-center justify-between">
+                  <span className="text-cyan-600 dark:text-cyan-400 font-semibold uppercase tracking-wider">
                     Select the single best answer:
                   </span>
-                  <span className="text-[11px] text-slate-500">Click option to select</span>
+                  <span className="text-[11px] text-[var(--foreground-muted)]">Click option to select</span>
                 </div>
 
                 {currentQ.options.map((opt, oIdx) => {
@@ -1343,13 +1343,13 @@ export default function PracticeTestPage() {
                       <div
                         className={`w-7 h-7 rounded-full font-mono text-xs font-black flex items-center justify-center shrink-0 border transition-all ${
                           isSelected
-                            ? "bg-cyan-400 text-slate-950 border-cyan-300 shadow-md shadow-cyan-400/40 ring-2 ring-cyan-500/20"
-                            : "bg-[#050811] text-slate-400 border-slate-700"
+                            ? "bg-cyan-500 text-slate-950 border-cyan-400 shadow-sm ring-2 ring-cyan-500/20"
+                            : "bg-[var(--card)] text-[var(--foreground-muted)] border-[var(--border)]"
                         }`}
                       >
                         {letter}
                       </div>
-                      <span className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-0.5">
+                      <span className="text-xs sm:text-sm text-[var(--foreground)] leading-relaxed pt-0.5">
                         {opt}
                       </span>
                     </div>
