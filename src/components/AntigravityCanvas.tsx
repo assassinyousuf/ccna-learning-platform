@@ -2,31 +2,16 @@
 
 import React, { useEffect, useRef } from "react";
 
-interface Particle {
-  baseX: number;
-  baseY: number;
+interface NodeParticle {
   x: number;
   y: number;
   vx: number;
   vy: number;
-  radius: number;
-  angle: number;
-  ringRadius: number;
-  color: string;
-  length: number;
-  width: number;
-  phase: number;
-  speed: number;
-}
-
-interface DustParticle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  size: number;
-  alpha: number;
+  baseRadius: number;
+  pulseSpeed: number;
   pulsePhase: number;
+  colorType: "primary" | "accent" | "muted";
+  hasHalo: boolean;
 }
 
 export function AntigravityCanvas() {
@@ -39,119 +24,90 @@ export function AntigravityCanvas() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
+    let dpr = window.devicePixelRatio || 1;
+    let width = 0;
+    let height = 0;
 
-    // Spectrum colors matching https://antigravity.google/
-    const spectrumColors = [
-      "#38bdf8", // Sky Blue
-      "#3b82f6", // Royal Blue
-      "#6366f1", // Indigo
-      "#8b5cf6", // Violet
-      "#ec4899", // Magenta
-      "#f43f5e", // Rose
-      "#f97316", // Coral Orange
-      "#eab308", // Sun Gold
-      "#10b981", // Emerald
-      "#06b6d4", // Cyan
-    ];
+    let isDark = document.documentElement.classList.contains("dark");
 
-    let particles: Particle[] = [];
-    let dust: DustParticle[] = [];
+    // Watch for theme changes on html element
+    const themeObserver = new MutationObserver(() => {
+      isDark = document.documentElement.classList.contains("dark");
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
-    // Mouse tracking for dynamic antigravity repulsion
+    // Mouse tracking for interactive ethereal aura
     const mouse = {
-      x: -1000,
-      y: -1000,
-      radius: 170, // Repulsion vortex radius
+      x: -2000,
+      y: -2000,
+      radius: 160,
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
+    let particles: NodeParticle[] = [];
+
+    const resizeCanvas = () => {
+      const parent = canvas.parentElement;
+      const rect = parent?.getBoundingClientRect() || {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
+
+      width = rect.width;
+      height = rect.height;
+      dpr = window.devicePixelRatio || 1;
+
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.scale(dpr, dpr);
+      initParticles();
+    };
+
+    const initParticles = () => {
+      particles = [];
+      // Calculate particle density: airy, elegant, not crowded
+      const count = Math.min(Math.floor((width * height) / 14000), 75);
+
+      for (let i = 0; i < count; i++) {
+        const randType = Math.random();
+        const colorType: "primary" | "accent" | "muted" =
+          randType < 0.45 ? "primary" : randType < 0.75 ? "accent" : "muted";
+
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: (Math.random() - 0.5) * 0.35,
+          baseRadius: 1.2 + Math.random() * 1.4, // Crisp, tiny micro-nodes (1.2px - 2.6px)
+          pulseSpeed: 0.015 + Math.random() * 0.02,
+          pulsePhase: Math.random() * Math.PI * 2,
+          colorType,
+          hasHalo: Math.random() < 0.25, // 25% have a soft luminous halo
+        });
+      }
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
     };
 
-    const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
+    const handlePointerLeave = () => {
+      mouse.x = -2000;
+      mouse.y = -2000;
     };
 
-    const initParticles = () => {
-      particles = [];
-      dust = [];
-      const centerX = width / 2;
-      const centerY = height * 0.44; // Positioned behind the main hero title
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("pointermove", handlePointerMove);
+    document.addEventListener("pointerleave", handlePointerLeave);
 
-      // Concentric Radial Swarm (14 expanding orbital rings)
-      const ringCount = 14;
-      const minRadius = 90;
-      const maxRadius = Math.max(width * 0.46, 520);
-      const ringStep = (maxRadius - minRadius) / ringCount;
-
-      for (let r = 0; r < ringCount; r++) {
-        const ringRadius = minRadius + r * ringStep;
-        // More particles in outer rings to maintain density
-        const countInRing = Math.floor(18 + r * 5.2);
-
-        for (let i = 0; i < countInRing; i++) {
-          const angle = (i / countInRing) * Math.PI * 2 + (r % 2 === 0 ? 0 : 0.08);
-          // Chromatic spectrum gradient mapped to angle and ring index
-          const colorIndex = Math.floor(
-            ((angle / (Math.PI * 2) + r * 0.04) % 1) * spectrumColors.length
-          );
-          const color = spectrumColors[colorIndex] || "#38bdf8";
-
-          // Calculate initial position on ring with subtle natural jitter
-          const jitterR = ringRadius + (Math.random() - 0.5) * 14;
-          const px = centerX + Math.cos(angle) * jitterR;
-          const py = centerY + Math.sin(angle) * jitterR * 0.82; // Slight elliptical ratio
-
-          particles.push({
-            baseX: px,
-            baseY: py,
-            x: px,
-            y: py,
-            vx: 0,
-            vy: 0,
-            radius: jitterR,
-            angle: angle,
-            ringRadius: ringRadius,
-            color: color,
-            length: 5.5 + Math.random() * 5.5, // Pill dash length
-            width: 2.2 + Math.random() * 1.4, // Pill dash width
-            phase: Math.random() * Math.PI * 2,
-            speed: 0.0008 + Math.random() * 0.0012,
-          });
-        }
-      }
-
-      // Ambient Space Dust (micro-particles floating in deep space)
-      const dustCount = Math.floor((width * height) / 16000);
-      for (let i = 0; i < dustCount; i++) {
-        dust.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.25,
-          vy: (Math.random() - 0.5) * 0.25,
-          size: 0.8 + Math.random() * 1.6,
-          alpha: 0.2 + Math.random() * 0.4,
-          pulsePhase: Math.random() * Math.PI * 2,
-        });
-      }
-    };
-
-    const handleResize = () => {
-      width = canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
-      height = canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
-      initParticles();
-    };
-
-    window.addEventListener("resize", handleResize);
-    canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("mouseleave", handleMouseLeave);
-
-    initParticles();
+    resizeCanvas();
 
     let time = 0;
 
@@ -159,86 +115,122 @@ export function AntigravityCanvas() {
       time += 1;
       ctx.clearRect(0, 0, width, height);
 
-      const centerX = width / 2;
-      const centerY = height * 0.44;
+      // Color tokens adapted smoothly for dark and light modes
+      const colors = isDark
+        ? {
+            primary: "rgba(56, 189, 248, ", // Cyan-400
+            accent: "rgba(129, 140, 248, ",  // Indigo-400
+            muted: "rgba(148, 163, 184, ",   // Slate-400
+            line: "rgba(56, 189, 248, ",     // Filament
+            cursorLine: "rgba(6, 182, 212, ",
+          }
+        : {
+            primary: "rgba(2, 132, 199, ",   // Sky-600
+            accent: "rgba(99, 102, 241, ",   // Indigo-500
+            muted: "rgba(100, 116, 139, ",   // Slate-500
+            line: "rgba(14, 116, 144, ",     // Filament
+            cursorLine: "rgba(2, 132, 199, ",
+          };
 
-      // 1. Render Ambient Space Dust
-      for (let i = 0; i < dust.length; i++) {
-        const d = dust[i];
-        d.x += d.vx;
-        d.y += d.vy;
-        d.pulsePhase += 0.02;
+      const maxConnectDist = 135;
+      const pLen = particles.length;
 
-        if (d.x < 0) d.x = width;
-        if (d.x > width) d.x = 0;
-        if (d.y < 0) d.y = height;
-        if (d.y > height) d.y = 0;
+      // 1. Render delicate network filaments between close nodes
+      for (let i = 0; i < pLen; i++) {
+        const p1 = particles[i];
 
-        const currentAlpha = d.alpha * (0.6 + 0.4 * Math.sin(d.pulsePhase));
-        ctx.fillStyle = `rgba(148, 163, 184, ${currentAlpha})`;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2);
-        ctx.fill();
+        for (let j = i + 1; j < pLen; j++) {
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxConnectDist) {
+            // Ethereal gradient alpha: fades gracefully with distance
+            const alpha = (1 - dist / maxConnectDist) * (isDark ? 0.16 : 0.12);
+            ctx.strokeStyle = `${colors.line}${alpha})`;
+            ctx.lineWidth = 0.75;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+
+        // Connection to interactive cursor aura
+        const mdx = p1.x - mouse.x;
+        const mdy = p1.y - mouse.y;
+        const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+
+        if (mDist < mouse.radius) {
+          const mAlpha = (1 - mDist / mouse.radius) * (isDark ? 0.35 : 0.22);
+          ctx.strokeStyle = `${colors.cursorLine}${mAlpha})`;
+          ctx.lineWidth = 0.85;
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+        }
       }
 
-      // 2. Render Antigravity Radial Swarm Particles
-      for (let i = 0; i < particles.length; i++) {
+      // 2. Render particle nodes
+      for (let i = 0; i < pLen; i++) {
         const p = particles[i];
 
-        // Harmonic zero-gravity breathing motion
-        const breathingOffset = Math.sin(time * 0.015 + p.phase) * 8;
-        const targetRadius = p.ringRadius + breathingOffset;
-        
-        // Gentle angular drift
-        const targetAngle = p.angle + Math.cos(time * 0.008 + p.phase) * 0.02;
-        
-        const targetX = centerX + Math.cos(targetAngle) * targetRadius;
-        const targetY = centerY + Math.sin(targetAngle) * targetRadius * 0.82;
+        // Smooth physics & gentle drift
+        p.x += p.vx;
+        p.y += p.vy;
+        p.pulsePhase += p.pulseSpeed;
 
-        // Antigravity Cursor Repulsion Physics
+        // Interactive gentle repulsion from cursor
         const dx = p.x - mouse.x;
         const dy = p.y - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < mouse.radius && dist > 0) {
-          // Force inversely proportional to distance (gravitational repulsion vortex)
-          const force = (1 - dist / mouse.radius) * 14;
-          p.vx += (dx / dist) * force;
-          p.vy += (dy / dist) * force;
+          const force = (1 - dist / mouse.radius) * 1.8;
+          p.x += (dx / dist) * force;
+          p.y += (dy / dist) * force;
         }
 
-        // Spring return to harmonic equilibrium
-        const springK = 0.045;
-        const dampening = 0.88;
+        // Soft screen edge boundary wrap
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
+        if (p.y < -10) p.y = height + 10;
+        if (p.y > height + 10) p.y = -10;
 
-        p.vx += (targetX - p.x) * springK;
-        p.vy += (targetY - p.y) * springK;
+        // Organic harmonic pulse
+        const pulse = 0.8 + 0.25 * Math.sin(p.pulsePhase);
+        const radius = p.baseRadius * pulse;
+        const baseAlpha = isDark ? 0.65 : 0.55;
+        const alpha = baseAlpha * pulse;
 
-        p.vx *= dampening;
-        p.vy *= dampening;
+        const colorPrefix = colors[p.colorType];
 
-        p.x += p.vx;
-        p.y += p.vy;
+        // Soft luminous halo for accent nodes
+        if (p.hasHalo) {
+          const haloGrad = ctx.createRadialGradient(
+            p.x,
+            p.y,
+            0,
+            p.x,
+            p.y,
+            radius * (isDark ? 6 : 4.5)
+          );
+          haloGrad.addColorStop(0, `${colorPrefix}${isDark ? 0.3 : 0.18})`);
+          haloGrad.addColorStop(1, `${colorPrefix}0)`);
 
-        // Calculate tangent dash orientation
-        const renderAngle = Math.atan2(p.y - centerY, p.x - centerX) + Math.PI / 2;
+          ctx.fillStyle = haloGrad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, radius * (isDark ? 6 : 4.5), 0, Math.PI * 2);
+          ctx.fill();
+        }
 
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(renderAngle);
-
-        // Render rounded dash pill
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 6;
-
+        // Crisp central node
+        ctx.fillStyle = `${colorPrefix}${alpha})`;
         ctx.beginPath();
-        const halfL = p.length / 2;
-        const halfW = p.width / 2;
-        ctx.roundRect(-halfW, -halfL, p.width, p.length, p.width);
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
         ctx.fill();
-
-        ctx.restore();
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -248,16 +240,17 @@ export function AntigravityCanvas() {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", handleResize);
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      canvas.removeEventListener("mouseleave", handleMouseLeave);
+      themeObserver.disconnect();
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("pointermove", handlePointerMove);
+      document.removeEventListener("pointerleave", handlePointerLeave);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-auto"
+      className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ zIndex: 1 }}
     />
   );
