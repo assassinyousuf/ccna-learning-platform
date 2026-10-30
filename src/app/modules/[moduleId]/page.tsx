@@ -11,6 +11,7 @@ import { CiscoTerminal } from "@/components/CiscoTerminal";
 import { ChapterFlashcards } from "@/components/ChapterFlashcards";
 import { ChapterNotes } from "@/components/ChapterNotes";
 import { sounds } from "@/lib/sound-effects";
+import { getChapterVideo } from "@/lib/chapter-videos";
 import {
   BookOpen,
   HelpCircle,
@@ -30,7 +31,9 @@ import {
   Search,
   CheckSquare,
   Loader2,
-  Zap
+  Zap,
+  Play,
+  Columns
 } from "lucide-react";
 import { ClearanceGate } from "@/components/ClearanceGate";
 
@@ -41,8 +44,10 @@ export default function ModuleReaderPage() {
   const moduleData = getModuleById(moduleId);
   const nextMod = getNextModule(moduleId);
   const prevMod = getPreviousModule(moduleId);
+  const chapterVideo = moduleData ? getChapterVideo(moduleData.id) : undefined;
 
   const [activeTab, setActiveTab] = useState<"theory" | "simulator" | "flashcards" | "commands" | "lab" | "quiz" | "video">("theory");
+  const [startWatchAndRead, setStartWatchAndRead] = useState(false);
   const [cmdSearch, setCmdSearch] = useState("");
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
 
@@ -419,7 +424,7 @@ export default function ModuleReaderPage() {
           }`}
         >
           <Video className="w-4 h-4 shrink-0 text-fuchsia-400" />
-          <span className="truncate">7. Video Proof</span>
+          <span className="truncate">7. Video Lesson &amp; Proof</span>
         </button>
       </div>
 
@@ -446,6 +451,7 @@ export default function ModuleReaderPage() {
                 ciscoCommands={chapterFullData.ciscoCommands?.length ? chapterFullData.ciscoCommands : moduleData.ciscoCommands}
                 quizQuestions={(chapterFullData.quiz && chapterFullData.quiz.length > 0) ? chapterFullData.quiz : (moduleData.quiz || [])}
                 moduleId={moduleData.id}
+                initialVideoOpen={startWatchAndRead}
               />
             ) : (
               <div className="p-8 text-center text-slate-400 text-xs">
@@ -704,47 +710,105 @@ export default function ModuleReaderPage() {
           </div>
         )}
 
-        {/* TAB 5: ACTIVE VIDEO PROOF GATEWAY */}
+        {/* TAB 7: OFFICIAL VIDEO LESSON & ACTIVE LAB PROOF */}
         {activeTab === "video" && (
-          <div className="p-8 rounded-3xl bg-slate-900/60 border border-slate-800 text-center max-w-3xl mx-auto space-y-6">
-            <div className="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mx-auto">
-              <Video className="w-8 h-8" />
-            </div>
+          <div className="space-y-8 max-w-5xl mx-auto">
+            {chapterVideo && (
+              <div className="p-6 sm:p-8 rounded-3xl bg-[var(--card)] border border-rose-500/30 shadow-2xl space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--border)]">
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <span className="text-xs font-mono px-3 py-1 rounded-full bg-rose-500/15 text-rose-500 dark:text-rose-400 border border-rose-500/30 font-bold uppercase tracking-wider">
+                        Official Video Course • {chapterVideo.day}
+                      </span>
+                      <span className="text-xs font-mono text-[var(--foreground-muted)]">
+                        Jeremy&apos;s IT Lab (CCIE #59049)
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-[var(--foreground)] mt-2">
+                      {chapterVideo.videoTitle}
+                    </h3>
+                  </div>
 
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono mb-2">
-                <span>Pillar 05: Active Recall &amp; Proof-of-Skill</span>
-              </div>
-              <h3 className="text-2xl font-bold text-white">
-                Submit Video Proof: {moduleData.rawTitle}
-              </h3>
-              <p className="text-xs text-slate-400 mt-2 max-w-lg mx-auto leading-relaxed">
-                {moduleData.labMission.videoSubmissionPrompt}
-              </p>
-            </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      onClick={() => {
+                        setStartWatchAndRead(true);
+                        setActiveTab("theory");
+                        sounds.playCommandSuccess();
+                      }}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold font-mono text-xs text-white bg-rose-500 hover:bg-rose-400 transition-colors shadow-lg shadow-rose-500/20"
+                    >
+                      <Columns className="w-4 h-4" />
+                      <span>Watch &amp; Read (Split Codex)</span>
+                    </button>
 
-            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-around text-xs font-mono">
-              <div>
-                <span className="text-slate-500">Target Storage:</span>
-                <span className="text-blue-400 font-bold ml-1.5">5TB Google Drive</span>
-              </div>
-              <div>
-                <span className="text-slate-500">Gradebook:</span>
-                <span className="text-emerald-400 font-bold ml-1.5">Google Sheets</span>
-              </div>
-              <div>
-                <span className="text-slate-500">Recorder:</span>
-                <span className="text-purple-400 font-bold ml-1.5">In-Browser Ready</span>
-              </div>
-            </div>
+                    <a
+                      href={chapterVideo.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-mono font-semibold bg-[var(--background-subtle)] text-[var(--foreground-muted)] hover:text-rose-400 border border-[var(--border)] transition-colors"
+                    >
+                      <span>YouTube</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
 
-            <Link
-              href={`/modules/${moduleData.id}/submit-video`}
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-95 transition-opacity text-sm shadow-xl"
-            >
-              <span>Open Screen Recorder &amp; Uploader</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+                {/* Cinema Screen Video Player */}
+                <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-black shadow-2xl border border-[var(--border)]">
+                  <iframe
+                    src={chapterVideo.embedUrl}
+                    title={chapterVideo.videoTitle}
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Video Proof Submission Card */}
+            <div className="p-8 rounded-3xl bg-[var(--card)] border border-[var(--border)] text-center space-y-6 shadow-xl">
+              <div className="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mx-auto">
+                <Video className="w-7 h-7" />
+              </div>
+
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono mb-2">
+                  <span>Pillar 05: Active Recall &amp; Proof-of-Skill</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-[var(--foreground)]">
+                  Submit Video Proof: {moduleData.rawTitle}
+                </h3>
+                <p className="text-xs text-[var(--foreground-muted)] mt-2 max-w-lg mx-auto leading-relaxed">
+                  {moduleData.labMission.videoSubmissionPrompt}
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[var(--background-subtle)] border border-[var(--border)] flex items-center justify-around text-xs font-mono">
+                <div>
+                  <span className="text-[var(--foreground-muted)]">Target Storage:</span>
+                  <span className="text-blue-400 font-bold ml-1.5">5TB Google Drive</span>
+                </div>
+                <div>
+                  <span className="text-[var(--foreground-muted)]">Gradebook:</span>
+                  <span className="text-emerald-400 font-bold ml-1.5">Google Sheets</span>
+                </div>
+                <div>
+                  <span className="text-[var(--foreground-muted)]">Recorder:</span>
+                  <span className="text-purple-400 font-bold ml-1.5">In-Browser Ready</span>
+                </div>
+              </div>
+
+              <Link
+                href={`/modules/${moduleData.id}/submit-video`}
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-95 transition-opacity text-sm shadow-xl"
+              >
+                <span>Open Screen Recorder &amp; Uploader</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         )}
       </div>
