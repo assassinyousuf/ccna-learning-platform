@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
 import { getModuleById } from "@/lib/curriculum";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ moduleId: string }> }
 ) {
   try {
+    const clientIp = getClientIp(request);
+    const rateCheck = checkRateLimit(`chapter-get-${clientIp}`, 120, 60000);
+    if (!rateCheck.success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a moment." },
+        { status: 429, headers: { "Retry-After": String(rateCheck.reset) } }
+      );
+    }
+
     const { moduleId } = await params;
     
     // Strict input validation to prevent path traversal

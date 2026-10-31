@@ -1,13 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { recordVideoSubmission, getUserSubmissions } from "@/lib/google-sheets";
+import { recordVideoSubmission, getUserSubmissions, isUserAdmin } from "@/lib/google-sheets";
 import { getModuleById } from "@/lib/curriculum";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    const clientIp = getClientIp(req);
+
+    // Rate limiting: max 10 submissions per minute
+    const rateCheck = checkRateLimit(`video-sub-${session?.user?.email || clientIp}`, 10, 60000);
+    if (!rateCheck.success) {
+      return NextResponse.json(
+        { error: "Too many submissions. Please wait a minute." },
+        { status: 429, headers: { "Retry-After": String(rateCheck.reset) } }
+      );
+    }
+
+    if (!session?.user?.email) {
+      return NextResponse.json(
+        { error: "Authentication required to submit lab proof." },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
-    const { userId, userEmail, moduleId, driveFileId, driveUrl } = body;
+    const { moduleId, driveFileId, driveUrl } = body;
 
     if (!moduleId || !driveUrl) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -23,12 +43,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid driveUrl format" }, { status: 400 });
     }
 
-    // Bind authenticated identity from session if available to prevent IDOR spoofing
-    const session = await getServerSession(authOptions);
-    const resolvedUserId = session?.user 
-      ? ((session.user as any).id || session.user.email || "student") 
-      : (userId || "guest-user");
-    const resolvedUserEmail = session?.user?.email || userEmail || "guest@ccna.local";
+    // Strictly bind authenticated identity from verified session token
+    const resolvedUserId = (session.user as any).id || session.user.email;
+    const resolvedUserEmail = session.user.email;
 
     const mod = getModuleById(moduleId);
     const canonicalModuleId = mod ? mod.id : moduleId;
@@ -61,11 +78,16 @@ export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(req.url);
   const requestedUserId = searchParams.get("userId");
-  
-  // Default to session user if logged in, otherwise requested or guest-user
-  const targetUserId = session?.user 
-    ? ((session.user as any).id || session.user.email || requestedUserId || "guest-user")
-    : (requestedUserId || "guest-user");
+
+  let targetUserId = "guest-user";
+  if (session?.user?.email) {
+    const isAdmin = isUserAdmin(session.user.email);
+    if (requestedUserId && isAdmin) {
+      targetUserId = requestedUserId;
+    } else {
+      targetUserId = (session.user as any).id || session.user.email;
+    }
+  }
 
   const submissions = await getUserSubmissions(targetUserId);
   return NextResponse.json({ submissions });
