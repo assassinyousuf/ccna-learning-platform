@@ -33,7 +33,7 @@ interface ClearanceGateProps {
 export function ClearanceGate({
   children,
   requireAdmin = false,
-  resourceTitle = "Cadet Terminal",
+  resourceTitle = "Study Portal",
 }: ClearanceGateProps) {
   const { data: session, status } = useSession();
   const [checkingLiveStatus, setCheckingLiveStatus] = useState(false);
@@ -64,10 +64,10 @@ export function ClearanceGate({
           if (showFeedback) {
             if (data.user.status === "APPROVED") {
               sounds.playExamPass();
-              setFeedbackMsg("Clearance Confirmed! Welcome aboard, Cadet.");
+              setFeedbackMsg("Approval Confirmed! Welcome to your CCNA Study Portal.");
             } else if (data.user.status === "PENDING") {
               sounds.playCommandSuccess();
-              setFeedbackMsg("Status checked: Still pending administrator clearance.");
+              setFeedbackMsg("Status checked: Still awaiting administrator approval.");
             }
           }
         }
@@ -103,10 +103,10 @@ export function ClearanceGate({
           <div className="absolute -inset-1 rounded-2xl bg-cyan-500/20 blur-md -z-10 animate-ping opacity-50" />
         </div>
         <h2 className="text-xl font-bold font-mono text-white mb-2">
-          ESTABLISHING NOC TUNNEL
+          CONNECTING TO PLATFORM
         </h2>
         <p className="text-xs text-slate-400 font-mono">
-          Verifying clearance credentials &amp; role tokens...
+          Verifying account credentials &amp; permissions...
         </p>
       </div>
     );
@@ -117,10 +117,6 @@ export function ClearanceGate({
     return (
       <div className="min-h-[85vh] flex items-center justify-center p-4 sm:p-6">
         <div className="max-w-xl w-full bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden">
-          {/* Subtle Cyber Grid Accent */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -z-10 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl -z-10 pointer-events-none" />
-
           {/* Header Icon */}
           <div className="flex items-center gap-3.5 mb-6">
             <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 shadow-lg shadow-amber-500/10">
@@ -142,17 +138,15 @@ export function ClearanceGate({
           </div>
 
           <p className="text-sm text-slate-300 leading-relaxed mb-6">
-            You are attempting to access protected training infrastructure. Under
-            standard Cisco Academy protocols, cadets must authenticate and receive
-            clearance before unlocking interactive blueprint modules, practice
-            exams, and lab verification consoles.
+            Please sign in with your Google account to access interactive study
+            modules, practice exams, and lab verification pipelines.
           </p>
 
           {/* Primary Sign In Actions */}
           <div className="space-y-3 mb-6">
             <button
               onClick={() => signIn("google", { callbackUrl: window.location.pathname })}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-cyan-500/20"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-sm transition-all shadow-md"
             >
               <LogIn className="w-4 h-4" />
               <span>Sign In with Google Account</span>
@@ -164,10 +158,10 @@ export function ClearanceGate({
               href="/"
               className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 font-mono"
             >
-              ← Return to Public Overview
+              ← Return to Syllabus Overview
             </Link>
             <span className="text-[11px] font-mono text-slate-500">
-              Clearance Engine v2.4
+              Auth Gateway
             </span>
           </div>
         </div>
@@ -189,14 +183,14 @@ export function ClearanceGate({
                 403 Forbidden
               </span>
               <h1 className="text-xl sm:text-2xl font-bold text-white mt-1">
-                Administrator Clearance Required
+                Administrator Access Required
               </h1>
             </div>
           </div>
 
           <p className="text-sm text-slate-300 leading-relaxed mb-6">
-            The requested terminal is restricted strictly to Network Operations
-            Center Administrators. Your current cadet identity (
+            This management area is restricted strictly to platform administrators.
+            Your current account (
             <span className="text-cyan-400 font-mono font-semibold">
               {session.user.email}
             </span>
@@ -216,7 +210,7 @@ export function ClearanceGate({
               href="/dashboard"
               className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all"
             >
-              <span>Return to Cadet Dashboard</span>
+              <span>Return to Study Dashboard</span>
             </Link>
           </div>
         </div>
@@ -238,15 +232,15 @@ export function ClearanceGate({
                 Access Revoked
               </span>
               <h1 className="text-xl sm:text-2xl font-bold text-white mt-1">
-                Clearance Denied / Revoked
+                Account Status: Inactive
               </h1>
             </div>
           </div>
 
           <p className="text-sm text-slate-300 leading-relaxed mb-6">
-            Your account ({session.user.email}) has been marked as revoked or
-            denied by the platform administrator. If you believe this is in error,
-            please contact your cohort instructor or administrator.
+            Your account ({session.user.email}) has been marked as inactive by the
+            platform administrator. If you believe this is in error, please contact
+            your course administrator.
           </p>
 
           <div className="flex items-center gap-3">
@@ -275,9 +269,6 @@ export function ClearanceGate({
     return (
       <div className="min-h-[85vh] flex items-center justify-center p-4 sm:p-6">
         <div className="max-w-xl w-full bg-slate-900/90 border border-amber-500/30 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden">
-          {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl -z-10 pointer-events-none" />
-
           {/* Header */}
           <div className="flex items-start gap-4 mb-6">
             <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 shadow-lg shadow-amber-500/10">
@@ -287,39 +278,38 @@ export function ClearanceGate({
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
-                  Cadet Clearance Pending
+                  Account Approval Pending
                 </span>
                 <span className="text-[10px] font-mono text-slate-500">
                   STATUS: PENDING
                 </span>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold text-white mt-1">
-                Awaiting Administrator Authorization
+                Awaiting Administrator Confirmation
               </h1>
             </div>
           </div>
 
-          {/* Cadet Identity Card */}
+          {/* Student Identity Card */}
           <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 mb-6 font-mono text-xs">
             <div className="flex items-center justify-between text-slate-400">
-              <span>Cadet Account:</span>
-              <span className="text-white font-bold">{session.user.name || "Cadet"}</span>
+              <span>Student Account:</span>
+              <span className="text-white font-bold">{session.user.name || "Student"}</span>
             </div>
             <div className="flex items-center justify-between text-slate-400">
               <span>Registered Email:</span>
               <span className="text-cyan-400 font-semibold">{session.user.email}</span>
             </div>
             <div className="flex items-center justify-between text-slate-400">
-              <span>Clearance Protocol:</span>
-              <span className="text-amber-400">ADMIN-REVIEW-REQUIRED</span>
+              <span>Status:</span>
+              <span className="text-amber-400">AWAITING-ADMIN-APPROVAL</span>
             </div>
           </div>
 
           <p className="text-sm text-slate-300 leading-relaxed mb-6">
-            Your account has been registered with the Central Network Operations
-            Center. Under cohort security guidelines, the platform administrator
-            must grant approval before curriculum study modules, lab video
-            submissions, and official exam simulators are unlocked for your profile.
+            Your registration is being reviewed. The platform administrator will grant
+            approval shortly to enable full chapter reading, video lab submissions,
+            and practice exam score tracking.
           </p>
 
           {/* Notification Feedback */}
@@ -335,10 +325,10 @@ export function ClearanceGate({
             <button
               onClick={() => refreshStatus(true)}
               disabled={checkingLiveStatus}
-              className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all shadow-md disabled:opacity-50"
             >
               <RotateCcw className={`w-4 h-4 ${checkingLiveStatus ? "animate-spin" : ""}`} />
-              <span>{checkingLiveStatus ? "Checking NOC Database..." : "Check Approval Status Now"}</span>
+              <span>{checkingLiveStatus ? "Checking Database..." : "Check Approval Status Now"}</span>
             </button>
           </div>
 
