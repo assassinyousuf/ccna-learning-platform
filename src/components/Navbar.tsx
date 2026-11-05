@@ -137,7 +137,7 @@ export function Navbar() {
                 <Link
                   href="/admin"
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30 hover:bg-purple-500/25 transition-all shadow-sm whitespace-nowrap"
-                  title="Central Cadet Clearance & Permissions Portal"
+                  title="Administrator & Permissions Portal"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
                   <span>Admin Portal</span>
