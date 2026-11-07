@@ -60,3 +60,13 @@ $$\text{Learn} \longrightarrow \text{Practice} \longrightarrow \text{Quiz} \long
 - **Database**: Google Sheets API (v4) via Service Account
 - **Video & File Storage**: Google Drive API (v3) via direct resumable client upload
 - **Deployment**: Vercel (Edge Network) + GitHub
+
+---
+
+## ⚡ Interactive Engineering Toolsuite
+
+- **Live Cisco IOS Terminal**: Authentic Catalyst 2960-X & ISR 4331 CLI emulator (`show mac address-table`, `show ip int brief`, `show ip route`).
+- **Network Topology & OSPF Visualizer**: Active 802.1Q trunk diagrams and OSPFv2 Area 0 backbone convergence state table.
+- **32-Bit Subnet Speed Drill**: Rapid mental math practice for network boundaries, broadcast addresses, and usable host calculations.
+- **IPv6 EUI-64 Bit Flipper**: Step-by-step 48-bit MAC splitting, FFFE injection, and 7th-bit Universal/Local inversion.
+- **Layer 1 Cabling Lab**: Practical media matching for straight-through, crossover, rollover, serial, and fiber links.
