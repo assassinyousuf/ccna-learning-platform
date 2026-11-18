@@ -70,3 +70,20 @@ $$\text{Learn} \longrightarrow \text{Practice} \longrightarrow \text{Quiz} \long
 - **32-Bit Subnet Speed Drill**: Rapid mental math practice for network boundaries, broadcast addresses, and usable host calculations.
 - **IPv6 EUI-64 Bit Flipper**: Step-by-step 48-bit MAC splitting, FFFE injection, and 7th-bit Universal/Local inversion.
 - **Layer 1 Cabling Lab**: Practical media matching for straight-through, crossover, rollover, serial, and fiber links.
+
+
+---
+
+## 📚 Engineering Documentation & Study Guides
+
+- **[Cisco IOS Command Quick Reference](docs/ccna-cli-reference.md)**: Command modes, interface provisioning, VLAN switching, and show commands.
+- **[IPv4 Subnetting & VLSM Guide](docs/ipv4-subnetting-guide.md)**: The 4-step Magic Number method, CIDR tables, and worked calculations.
+- **[VLANs, Trunking & Inter-VLAN Routing](docs/vlan-trunking-routing.md)**: 802.1Q tags, DTP negotiation, Router-on-a-Stick, and Layer 3 SVIs.
+- **[Spanning Tree Protocol (STP & RSTP)](docs/spanning-tree-protocol.md)**: Root bridge election, port roles/states, PortFast, and BPDU Guard.
+- **[OSPFv2 Routing Protocol Deep Dive](docs/ospf-configuration-guide.md)**: OSPF neighbor state machine, DR/BDR election, and metric calculations.
+- **[Access Control Lists (ACLs)](docs/access-control-lists.md)**: Standard and extended ACL syntax, wildcard masks, and interface placement.
+- **[Network Address Translation (NAT/PAT)](docs/network-address-translation.md)**: Inside/Outside definitions, static/dynamic NAT, and PAT overload.
+- **[Network Automation & APIs](docs/network-automation-apis.md)**: SDN planes, JSON/YAML data encoding, REST APIs, and Ansible playbooks.
+- **[Exam Readiness Checklist & Time Protocol](docs/exam-readiness-checklist.md)**: 200-301 CCNA blueprint weights, pace management, and 7-day countdown.
+- **[Packet Tracer Lab Matrix & Rubrics](docs/packet-tracer-lab-matrix.md)**: 49-chapter hands-on lab exercises and verification commands.
+- **[Platform Architecture Specification](docs/platform-architecture.md)**: Architecture documentation covering Next.js 15, NextAuth, and Cloud Firestore.
